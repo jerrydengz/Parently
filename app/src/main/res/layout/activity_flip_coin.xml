@@ -22,7 +22,34 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="27dp"
         android:layout_marginTop="35dp"
+        android:layout_marginBottom="95dp"
         android:text="Back"
+        app:layout_constraintBottom_toTopOf="@+id/imgCoin"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgCoin"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="53dp"
+        android:layout_marginEnd="53dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnFlip"
+        app:srcCompat="@drawable/coin_head" />
+
+    <Button
+        android:id="@+id/btnFlip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="93dp"
+        android:layout_marginEnd="57dp"
+        android:layout_marginBottom="37dp"
+        android:text="Flip"
+        app:layout_constraintBottom_toTopOf="@+id/imgCoin"
+        app:layout_constraintEnd_toEndOf="@+id/imgCoin"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
