@@ -1,4 +1,4 @@
-package cmpt276.phosphorus.childapp.utils;
+package cmpt276.phosphorus.childapp.coinflip.utils;
 
 import androidx.annotation.DrawableRes;
 
@@ -9,9 +9,7 @@ public enum CoinSide {
     HEAD(R.drawable.coin_head),
     TAILS(R.drawable.coin_tail);
 
-    private @DrawableRes
-    final
-    int imgId;
+    private @DrawableRes final int imgId;
 
     CoinSide(@DrawableRes int imgId) {
         this.imgId = imgId;

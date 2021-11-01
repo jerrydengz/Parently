@@ -6,6 +6,8 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import cmpt276.phosphorus.childapp.coinflip.ChooseChildActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -28,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void createFlipCoinBtn() {
         Button button = findViewById(R.id.btnFlipCoin);
-        button.setOnClickListener(view -> startActivity(FlipCoinActivity.makeIntent(this)));
+        button.setOnClickListener(view -> startActivity(ChooseChildActivity.makeIntent(this)));
     }
 
     private void createTimeoutBtn() {

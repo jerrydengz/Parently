@@ -1,4 +1,4 @@
-package cmpt276.phosphorus.childapp;
+package cmpt276.phosphorus.childapp.coinflip;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
@@ -10,21 +10,33 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Random;
 
-import cmpt276.phosphorus.childapp.utils.CoinFlipAnimationDirection;
-import cmpt276.phosphorus.childapp.utils.CoinSide;
+import cmpt276.phosphorus.childapp.R;
+import cmpt276.phosphorus.childapp.coinflip.utils.CoinFlipIntent;
+import cmpt276.phosphorus.childapp.coinflip.utils.CoinFlipAnimationDirection;
+import cmpt276.phosphorus.childapp.coinflip.utils.CoinSide;
+
 
 // Main Menu -> Select child page & head -> flip and keep track
 public class FlipCoinActivity extends AppCompatActivity {
 
-    private CoinSide coinSide = CoinSide.HEAD;
+    private final CoinSide DEFAULT_SIDE = CoinSide.HEAD;
 
-    public static Intent makeIntent(Context context) {
-        return new Intent(context, FlipCoinActivity.class);
+    private CoinSide winningSide;
+    private String child;
+    private CoinSide coinSide;
+
+    // todo change string to children obj
+    public static Intent makeIntent(Context context, String child, CoinSide coinSide) {
+        Intent intent = new Intent(context, FlipCoinActivity.class);
+        intent.putExtra(CoinFlipIntent.CHILD, child);
+        intent.putExtra(CoinFlipIntent.COIN_SIDE, coinSide.name());
+        return intent;
     }
 
     @Override
@@ -32,9 +44,18 @@ public class FlipCoinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flip_coin);
 
+        this.extractIntentData();
+        this.coinSide = this.DEFAULT_SIDE;
+
         this.updateCoinDisplay();
         this.createBackBtn();
         this.createFlipBtn();
+    }
+
+    private void extractIntentData() {
+        Intent intent = getIntent();
+        this.winningSide = CoinSide.valueOf(intent.getStringExtra(CoinFlipIntent.COIN_SIDE));
+        this.child = intent.getStringExtra(CoinFlipIntent.CHILD);
     }
 
     private void flipCoinState() {
@@ -44,6 +65,9 @@ public class FlipCoinActivity extends AppCompatActivity {
     private void updateCoinDisplay() {
         ImageView coinImg = findViewById(R.id.imgCoin);
         coinImg.setImageResource(this.coinSide.getImgId());
+
+        TextView currentSide = findViewById(R.id.textCurrentSide);
+        currentSide.setText(this.coinSide.name());
     }
 
     private void randomlyChooseSide() {
@@ -89,7 +113,7 @@ public class FlipCoinActivity extends AppCompatActivity {
     }
 
     private void createBackBtn() {
-        Button button = findViewById(R.id.btnBackFlipCoin);
+        Button button = findViewById(R.id.btnFlip);
         button.setOnClickListener(view -> finish());
     }
 

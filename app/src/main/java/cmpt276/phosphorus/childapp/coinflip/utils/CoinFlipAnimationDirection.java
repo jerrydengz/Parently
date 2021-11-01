@@ -1,4 +1,4 @@
-package cmpt276.phosphorus.childapp.utils;
+package cmpt276.phosphorus.childapp.coinflip.utils;
 
 import androidx.annotation.AnimatorRes;
 
@@ -9,8 +9,7 @@ public enum CoinFlipAnimationDirection {
     FORWARD(R.animator.flip_forward),
     BACKWARD(R.animator.flip_backward);
 
-    private final
-    int animationId;
+    private final int animationId;
 
     CoinFlipAnimationDirection(@AnimatorRes int animationId) {
         this.animationId = animationId;
