@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChildManager {
-    private List<String> children;
-    private List<CoinFlipResult> flips;
+    private final List<String> children;
+    private final List<CoinFlipResult> flips;
 
     public ChildManager(){
         this.children = new ArrayList<>();

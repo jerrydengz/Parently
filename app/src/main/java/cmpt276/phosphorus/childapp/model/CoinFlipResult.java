@@ -4,10 +4,10 @@ import java.time.LocalDateTime;
 
 //Stored the result of a coin flip
 public class CoinFlipResult {
-    private String sidePicker;
-    private LocalDateTime time;
-    private boolean isHeads;
-    private boolean didWin;
+    private final String sidePicker;
+    private final LocalDateTime time;
+    private final boolean isHeads;
+    private final boolean didWin;
 
     public CoinFlipResult(String pick, boolean heads, boolean win) {
         this.sidePicker = pick;
