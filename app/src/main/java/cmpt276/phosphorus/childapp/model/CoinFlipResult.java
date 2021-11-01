@@ -9,16 +9,16 @@ public class CoinFlipResult {
     private boolean isHeads;
     private boolean didWin;
 
-    public CoinFlipResult(String pick, boolean flip, boolean win){
+    public CoinFlipResult(String pick, boolean heads, boolean win) {
         this.sidePicker = pick;
         this.time = LocalDateTime.now();
-        this.isHeads = flip;
+        this.isHeads = heads;
         this.didWin = win;
     }
 
     public String getSidePicker(){return this.sidePicker;}
 
-    public boolean isDidWin(){return this.didWin;}
+    public boolean getDidWin(){return this.didWin;}
 
     public LocalDateTime getTime(){return this.time;}
 
