@@ -16,6 +16,13 @@ public class CoinFlipResult {
         this.didWin = win;
     }
 
+    public CoinFlipResult(boolean heads){
+        this.sidePicker = "";
+        this.time = LocalDateTime.now();
+        this.isHeads = heads;
+        this.didWin = false;
+    }
+
     public String getSidePicker(){return this.sidePicker;}
 
     public boolean getDidWin(){return this.didWin;}
