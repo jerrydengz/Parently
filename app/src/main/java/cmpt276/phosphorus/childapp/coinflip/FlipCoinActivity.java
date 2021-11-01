@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,8 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Random;
 
 import cmpt276.phosphorus.childapp.R;
-import cmpt276.phosphorus.childapp.coinflip.utils.CoinFlipIntent;
 import cmpt276.phosphorus.childapp.coinflip.utils.CoinFlipAnimationDirection;
+import cmpt276.phosphorus.childapp.coinflip.utils.CoinFlipIntent;
 import cmpt276.phosphorus.childapp.coinflip.utils.CoinSide;
 
 
@@ -39,6 +40,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         return intent;
     }
 
+    // todo remember who picked last
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,9 +72,13 @@ public class FlipCoinActivity extends AppCompatActivity {
         currentSide.setText(this.coinSide.name());
     }
 
+    private int getDelayBetween(int x) {
+        return (4 * x) + 25; // 4x + 25 | https://www.desmos.com/calculator/ya6hvzdgxj
+    }
+
     private void randomlyChooseSide() {
-        int MIN_FLIPS = 5;
-        int MAX_FLIPS = 10;
+        int MIN_FLIPS = 10;
+        int MAX_FLIPS = 20;
 
         Random random = new Random();
         CoinSide[] coinSide = CoinSide.values();
@@ -81,33 +87,47 @@ public class FlipCoinActivity extends AppCompatActivity {
         int totalRandomFlips = random.nextInt((MAX_FLIPS - MIN_FLIPS) + 1) + MIN_FLIPS;
 
         for (int i = 0; i < totalRandomFlips; i++) {
-            (new Handler()).postDelayed(this::flipCoin, (150 * 2) * i);
+            int delay = getDelayBetween(i);
+            // *2 the delay because flip coin rotates twice, and *i to queue them up so animations don't overlap
+            (new Handler()).postDelayed(() -> flipCoin(delay), (delay * 2L) * i);
         }
 
         if (this.coinSide != randomSide) {
-            this.flipCoin();
+            this.flipCoin(getDelayBetween(totalRandomFlips + 1));
+        }
+
+        this.sideLanded();
+    }
+
+    private void sideLanded(){
+        // todo activity change/particles/back button?
+
+        if(this.coinSide == this.winningSide){
+            // use children manager to find use by this.child and add
+        } else {
+            // Children loses
         }
     }
 
-    private ObjectAnimator rotateCoin90Degree(CoinFlipAnimationDirection direction) {
+    private ObjectAnimator rotateCoin90Degree(CoinFlipAnimationDirection direction, int rotationDelay) {
         ImageView coinImg = findViewById(R.id.imgCoin);
 
         ObjectAnimator anim = (ObjectAnimator) AnimatorInflater.loadAnimator(FlipCoinActivity.this, direction.getAnimationId());
         anim.setTarget(coinImg);
-        anim.setDuration(150);
+        anim.setDuration(rotationDelay);
         anim.start();
 
         return anim;
     }
 
-    private void flipCoin() {
-        ObjectAnimator anim = this.rotateCoin90Degree(CoinFlipAnimationDirection.FORWARD);
+    private void flipCoin(int rotationDelay) {
+        ObjectAnimator anim = this.rotateCoin90Degree(CoinFlipAnimationDirection.FORWARD, rotationDelay);
 
         anim.addListener(new AnimatorListenerAdapter() {
             public void onAnimationEnd(Animator animation) {
                 flipCoinState();
                 updateCoinDisplay();
-                rotateCoin90Degree(CoinFlipAnimationDirection.BACKWARD);
+                rotateCoin90Degree(CoinFlipAnimationDirection.BACKWARD, rotationDelay);
             }
         });
     }
