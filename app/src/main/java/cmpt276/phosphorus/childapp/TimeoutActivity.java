@@ -6,8 +6,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import java.util.Locale;
@@ -17,18 +22,18 @@ import java.util.Locale;
  * a child's timeout.
  */
 
-// TODO: Options for time and custom time input
-
 public class TimeoutActivity extends AppCompatActivity {
 
     // Time is in milliseconds, 1000ms = 1s
-    private static final long START_TIME = 120000;
+    private static long START_TIME = 60000;
 
     private TextView tvCountDown;
+    private RadioGroup timeGroup;
     private Button btnStartAndPause;
     private Button btnReset;
 
     private CountDownTimer cdTimer;
+    private EditText customTimeInput;
     private boolean isTimerRunning;
     private long timeLeft = START_TIME;
 
@@ -37,12 +42,18 @@ public class TimeoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeout);
 
+        tvCountDown = findViewById(R.id.tvCountDown);
+        customTimeInput = findViewById(R.id.inputCustomNumber);
+
         this.createBackBtn();
         this.setUpStartAndPauseBtn();
         this.setUpResetBtn();
-        tvCountDown = findViewById(R.id.tvCountDown);
+        this.createTimeOptions();
+        this.setUpCustomInput();
+
         updateCountDownText();
     }
+
 
     private void setUpStartAndPauseBtn() {
         btnStartAndPause = findViewById(R.id.btnStartAndPause);
@@ -80,12 +91,16 @@ public class TimeoutActivity extends AppCompatActivity {
                 btnStartAndPause.setText(getString(R.string.start));
                 btnStartAndPause.setVisibility(View.INVISIBLE);
                 btnReset.setVisibility(View.VISIBLE);
+                timeGroup.setVisibility(View.VISIBLE);
+                customTimeInput.setVisibility(View.VISIBLE);
             }
         }.start();
 
         isTimerRunning = true;
         btnStartAndPause.setText(getString(R.string.pause));
         btnReset.setVisibility(View.INVISIBLE);
+        timeGroup.setVisibility(View.INVISIBLE);
+        customTimeInput.setVisibility(View.INVISIBLE);
     }
 
     private void pauseTimer() {
@@ -93,6 +108,8 @@ public class TimeoutActivity extends AppCompatActivity {
         isTimerRunning = false;
         btnStartAndPause.setText(getString(R.string.start));
         btnReset.setVisibility(View.VISIBLE);
+        timeGroup.setVisibility(View.VISIBLE);
+        customTimeInput.setVisibility(View.VISIBLE);
     }
 
     private void resetTimer() {
@@ -101,8 +118,58 @@ public class TimeoutActivity extends AppCompatActivity {
         btnReset.setVisibility(View.INVISIBLE);
         btnStartAndPause.setVisibility(View.VISIBLE);
     }
+
+    private void createTimeOptions() {
+        timeGroup = findViewById(R.id.radio_group_time_options);
+        int[] timeOptions = getResources().getIntArray(R.array.time_options);
+
+        for (int options : timeOptions) {
+            RadioButton button = new RadioButton(this);
+            button.setText(getString(R.string.time_selected, options));
+            button.setOnClickListener(v -> {
+                START_TIME = options * 60000L;
+                timeLeft = START_TIME;
+                updateCountDownText();
+                customTimeInput.setVisibility(View.INVISIBLE);
+            });
+            timeGroup.addView((button));
+            // Only accounts for base time (1 minute), need to refactor for saving data if needed
+            if(options * 60000L == START_TIME){
+                button.setChecked(true);
+            }
+        }
+        // Custom time button
+        RadioButton button = new RadioButton(this);
+        button.setText(getString(R.string.custom));
+        button.setOnClickListener(v -> customTimeInput.setVisibility(View.VISIBLE));
+        timeGroup.addView(button);
+    }
+
+    private void setUpCustomInput() {
+        customTimeInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!customTimeInput.getText().toString().matches("")){
+                    String customInput = customTimeInput.getText().toString();
+                    long customTime = Long.parseLong(customInput);
+                    START_TIME = customTime * 60000L;
+                    timeLeft = START_TIME;
+                    updateCountDownText();
+                }
+            }
+        });
+    }
+
     // Turns milliseconds it is given to minutes and seconds for timer
-    // TODO: Account for hours (when user input > 59min)?
+    // Account for hours (when user input > 59min)?
     private void updateCountDownText() {
         int minutes = (int) ((timeLeft / 1000) / 60);
         int seconds = (int) ((timeLeft / 1000) % 60);

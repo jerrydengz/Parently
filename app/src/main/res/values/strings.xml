@@ -5,4 +5,7 @@
     <string name="reset">Reset</string>
     <string name="empty_timer">00:00</string>
     <string name="back">Back</string>
+    <string name="custom">Custom</string>
+    <string name="time_selected">"%1$d minutes</string>
+    <string name="custom_minutes">Custom Minutes</string>
 </resources>

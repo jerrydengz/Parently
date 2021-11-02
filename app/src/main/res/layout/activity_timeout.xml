@@ -48,4 +48,28 @@
         app:layout_constraintStart_toStartOf="@+id/btnStartAndPause"
         app:layout_constraintTop_toBottomOf="@+id/btnStartAndPause" />
 
+    <RadioGroup
+        android:id="@+id/radio_group_time_options"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/inputCustomNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/custom_minutes"
+        android:inputType="number"
+        android:minHeight="48dp"
+        android:visibility="invisible"
+        android:maxLength="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radio_group_time_options"
+        tools:visibility="visible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
