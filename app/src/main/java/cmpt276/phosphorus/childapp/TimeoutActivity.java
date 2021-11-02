@@ -90,26 +90,20 @@ public class TimeoutActivity extends AppCompatActivity {
                 isTimerRunning = false;
                 btnStartAndPause.setText(getString(R.string.start));
                 btnStartAndPause.setVisibility(View.INVISIBLE);
-                btnReset.setVisibility(View.VISIBLE);
-                timeGroup.setVisibility(View.VISIBLE);
-                customTimeInput.setVisibility(View.VISIBLE);
+                setVisibilities();
             }
         }.start();
 
         isTimerRunning = true;
         btnStartAndPause.setText(getString(R.string.pause));
-        btnReset.setVisibility(View.INVISIBLE);
-        timeGroup.setVisibility(View.INVISIBLE);
-        customTimeInput.setVisibility(View.INVISIBLE);
+        setVisibilities();
     }
 
     private void pauseTimer() {
         cdTimer.cancel();
         isTimerRunning = false;
         btnStartAndPause.setText(getString(R.string.start));
-        btnReset.setVisibility(View.VISIBLE);
-        timeGroup.setVisibility(View.VISIBLE);
-        customTimeInput.setVisibility(View.VISIBLE);
+        setVisibilities();
     }
 
     private void resetTimer() {
@@ -117,6 +111,19 @@ public class TimeoutActivity extends AppCompatActivity {
         updateCountDownText();
         btnReset.setVisibility(View.INVISIBLE);
         btnStartAndPause.setVisibility(View.VISIBLE);
+    }
+
+    private void setVisibilities() {
+        if(isTimerRunning){
+            btnReset.setVisibility(View.INVISIBLE);
+            timeGroup.setVisibility(View.INVISIBLE);
+            customTimeInput.setVisibility(View.INVISIBLE);
+        }
+        else{
+            btnReset.setVisibility(View.VISIBLE);
+            timeGroup.setVisibility(View.VISIBLE);
+            customTimeInput.setVisibility(View.VISIBLE);
+        }
     }
 
     private void createTimeOptions() {
@@ -131,6 +138,8 @@ public class TimeoutActivity extends AppCompatActivity {
                 timeLeft = START_TIME;
                 updateCountDownText();
                 customTimeInput.setVisibility(View.INVISIBLE);
+                btnStartAndPause.setVisibility(View.VISIBLE);
+                customTimeInput.setText("");
             });
             timeGroup.addView((button));
             // Only accounts for base time (1 minute), need to refactor for saving data if needed
@@ -141,7 +150,12 @@ public class TimeoutActivity extends AppCompatActivity {
         // Custom time button
         RadioButton button = new RadioButton(this);
         button.setText(getString(R.string.custom));
-        button.setOnClickListener(v -> customTimeInput.setVisibility(View.VISIBLE));
+        button.setOnClickListener(v -> {
+            customTimeInput.setVisibility(View.VISIBLE);
+            btnStartAndPause.setVisibility(View.INVISIBLE);
+            btnReset.setVisibility(View.INVISIBLE);
+            tvCountDown.setText(getString(R.string.empty_timer));
+        });
         timeGroup.addView(button);
     }
 
@@ -158,11 +172,15 @@ public class TimeoutActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if(!customTimeInput.getText().toString().matches("")){
-                    String customInput = customTimeInput.getText().toString();
-                    long customTime = Long.parseLong(customInput);
-                    START_TIME = customTime * 60000L;
-                    timeLeft = START_TIME;
-                    updateCountDownText();
+                    int input = Integer.parseInt(customTimeInput.getText().toString());
+                    if(!(input == 0)){
+                        String customInput = customTimeInput.getText().toString();
+                        long customTime = Long.parseLong(customInput);
+                        START_TIME = customTime * 60000L;
+                        timeLeft = START_TIME;
+                        updateCountDownText();
+                        btnStartAndPause.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         });
