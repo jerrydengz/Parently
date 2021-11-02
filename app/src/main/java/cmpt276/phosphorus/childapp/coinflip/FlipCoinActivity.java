@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,7 +22,7 @@ import cmpt276.phosphorus.childapp.coinflip.utils.CoinFlipIntent;
 import cmpt276.phosphorus.childapp.coinflip.utils.CoinSide;
 
 
-// Main Menu -> Select child page & head -> flip and keep track
+// Main Menu -> Select child page -> Choose head -> flip and keep track
 public class FlipCoinActivity extends AppCompatActivity {
 
     private final CoinSide DEFAULT_SIDE = CoinSide.HEAD;
@@ -77,7 +76,7 @@ public class FlipCoinActivity extends AppCompatActivity {
     }
 
     private void randomlyChooseSide() {
-        int MIN_FLIPS = 10;
+        int MIN_FLIPS = 15;
         int MAX_FLIPS = 20;
 
         Random random = new Random();
@@ -97,16 +96,6 @@ public class FlipCoinActivity extends AppCompatActivity {
         }
 
         this.sideLanded();
-    }
-
-    private void sideLanded(){
-        // todo activity change/particles/back button?
-
-        if(this.coinSide == this.winningSide){
-            // use children manager to find use by this.child and add
-        } else {
-            // Children loses
-        }
     }
 
     private ObjectAnimator rotateCoin90Degree(CoinFlipAnimationDirection direction, int rotationDelay) {
@@ -130,6 +119,16 @@ public class FlipCoinActivity extends AppCompatActivity {
                 rotateCoin90Degree(CoinFlipAnimationDirection.BACKWARD, rotationDelay);
             }
         });
+    }
+
+    private void sideLanded() {
+        // todo activity change/particles/back button?
+
+        if (this.coinSide == this.winningSide) {
+            // use children manager to find use by this.child and add
+        } else {
+            // Children loses
+        }
     }
 
     private void createBackBtn() {
