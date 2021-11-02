@@ -6,23 +6,46 @@
     android:layout_height="match_parent"
     tools:context=".TimeoutActivity">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="177dp"
-        android:layout_marginEnd="166dp"
-        android:text="timeout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/btnBackTimeout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="27dp"
         android:layout_marginTop="35dp"
-        android:text="Back"
+        android:text="@string/back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvCountDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/empty_timer"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnStartAndPause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/start"
+        app:layout_constraintEnd_toEndOf="@+id/tvCountDown"
+        app:layout_constraintStart_toStartOf="@+id/tvCountDown"
+        app:layout_constraintTop_toBottomOf="@+id/tvCountDown" />
+
+    <Button
+        android:id="@+id/btnReset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/reset"
+        android:visibility="invisible"
+        tools:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/btnStartAndPause"
+        app:layout_constraintStart_toStartOf="@+id/btnStartAndPause"
+        app:layout_constraintTop_toBottomOf="@+id/btnStartAndPause" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
