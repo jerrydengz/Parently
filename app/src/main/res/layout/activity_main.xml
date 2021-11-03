@@ -4,34 +4,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/lavendar"
     tools:context=".MainActivity">
-
-    <Button
-        android:id="@+id/btnChildren"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="139dp"
-        android:layout_marginTop="94dp"
-        android:text="CHILDERN"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnFlipCoin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="99dp"
-        android:text="FLIP COIN"
-        app:layout_constraintStart_toStartOf="@+id/btnChildren"
-        app:layout_constraintTop_toBottomOf="@+id/btnChildren" />
+        android:text="@string/flip_coin_button"
+        android:drawableLeft="@drawable/coin_flip_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.468" />
+
+    <Button
+        android:id="@+id/btnChildren"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/childern_button"
+        android:drawableLeft="@drawable/children_icon"
+        app:layout_constraintBottom_toTopOf="@+id/btnFlipCoin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.753" />
 
     <Button
         android:id="@+id/btnTimeout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
-        android:text="TIMEOUT"
-        app:layout_constraintStart_toStartOf="@+id/btnFlipCoin"
-        app:layout_constraintTop_toBottomOf="@+id/btnFlipCoin" />
+        android:text="@string/timeout_button"
+        android:drawableLeft="@drawable/timer_icon_filled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnFlipCoin"
+        app:layout_constraintVertical_bias="0.205" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
