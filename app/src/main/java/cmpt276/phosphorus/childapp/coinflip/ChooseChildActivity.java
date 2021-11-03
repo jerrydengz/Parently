@@ -35,7 +35,6 @@ public class ChooseChildActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.listChildren);
         // todo use modal
         List<String> list = Arrays.asList("Josh", "Jerry", "Jack", "Jason", "Kevin", "Bill", "Henry", "George");
-
         // Ref https://android--code.blogspot.com/2015/08/android-listview-text-size.html
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list) {
             @Override

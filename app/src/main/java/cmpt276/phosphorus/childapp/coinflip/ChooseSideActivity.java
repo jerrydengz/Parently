@@ -25,7 +25,7 @@ public class ChooseSideActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_side);
+        setContentView(R.layout.activity_flip_coin_choose_side);
 
         this.extractIntentData();
 

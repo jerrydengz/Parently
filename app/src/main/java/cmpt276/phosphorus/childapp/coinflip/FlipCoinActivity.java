@@ -68,7 +68,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         coinImg.setImageResource(this.coinSide.getImgId());
 
         TextView currentSide = findViewById(R.id.textCurrentSide);
-        currentSide.setText(this.coinSide.name());
+        currentSide.setText(getString(this.coinSide.getTitleId()));
     }
 
     private int getDelayBetween(int x) {
