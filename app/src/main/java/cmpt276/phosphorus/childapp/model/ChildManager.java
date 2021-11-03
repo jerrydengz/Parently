@@ -1,28 +1,53 @@
 package cmpt276.phosphorus.childapp.model;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 public class ChildManager {
-    private final List<String> children;
-    private final List<CoinFlipResult> flips;
 
-    public ChildManager(){
-        this.children = new ArrayList<>();
-        this.flips = new ArrayList<>();
+    private static ChildManager instance;
+    private final List<Children> allChildren;
+
+    private ChildManager() {
+        this.allChildren = new ArrayList<>();
     }
 
-    public void addChild(String name){this.children.add(name);}
+    public static ChildManager getInstance() {
+        if (instance == null) {
+            instance = new ChildManager();
+        }
 
-    public void addFlip(CoinFlipResult result){this.flips.add(result);}
+        return instance;
+    }
 
-    public String getChild(int index){return this.children.get(index);}
+    public void addChildren(@NotNull Children children) {
+        this.allChildren.add(Objects.requireNonNull(children));
+    }
 
-    public CoinFlipResult getFlip(int index){return this.flips.get(index);}
+    public void addChildren(@NotNull Children... childrens) {
+        Arrays.asList(childrens).forEach(this::addChildren); // Add children already checks for null
+    }
 
-    public String getFlipTime(int index){return getFlip(index).getFormattedTime();}
+    public Children getChildrenByUUID(@NotNull UUID uuid) {
+        return this.allChildren.stream().filter(children -> children.getUUID().equals(uuid)).findFirst().orElse(null);
+    }
 
-    public int getNumFlips(){return this.flips.size();}
+    public List<Children> getAllChildren() {
+        return this.allChildren;
+    }
 
-    public int getNumChild(){return this.children.size();}
+    public boolean removeChildren(UUID byChildrenUUID) {
+        Children target = this.getChildrenByUUID(byChildrenUUID);
+        return this.removeChildren(target);
+    }
+
+    public boolean removeChildren(Children children) {
+        return this.allChildren.remove(children);
+    }
+
 }

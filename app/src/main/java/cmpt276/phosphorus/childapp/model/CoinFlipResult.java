@@ -1,41 +1,66 @@
 package cmpt276.phosphorus.childapp.model;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.time.LocalDateTime;
+import java.util.Objects;
 
-//Stored the result of a coin flip
+// todo temp, change this to the one from CoinAnimation branch
+enum CoinSide {
+    HEAD,
+    TAILS
+}
+
+// Stored the result of a coin flip
 public class CoinFlipResult {
-    private final String sidePicker;
+
     private final LocalDateTime time;
-    private final boolean isHeads;
-    private final boolean didWin;
+    private final CoinSide pickedSide;
+    private final CoinSide flipResault;
 
-    public CoinFlipResult(String pick, boolean heads, boolean win) {
-        this.sidePicker = pick;
-        this.time = LocalDateTime.now();
-        this.isHeads = heads;
-        this.didWin = win;
+    // Normal way to create resaults
+    public CoinFlipResult(@NotNull CoinSide pickedSide, @NotNull CoinSide flipResault) {
+        this(LocalDateTime.now(), pickedSide, flipResault);
     }
 
-    public CoinFlipResult(boolean heads){
-        this.sidePicker = "";
-        this.time = LocalDateTime.now();
-        this.isHeads = heads;
-        this.didWin = false;
+    // We might want this for saving/loading the resault, not sure yet. Will leave for now
+    public CoinFlipResult(@NotNull LocalDateTime time, @NotNull CoinSide pickedSide, @NotNull CoinSide flipResault) {
+        this.time = Objects.requireNonNull(time, "Resault cannot have a null time");
+        this.pickedSide = Objects.requireNonNull(pickedSide, "Resault cannot have null pickedSide");
+        this.flipResault = Objects.requireNonNull(flipResault, "Resault cannot have null flipSide");
     }
 
-    public String getSidePicker(){return this.sidePicker;}
-
-    public boolean getDidWin(){return this.didWin;}
-
-    public LocalDateTime getTime(){return this.time;}
-
-    //gets date/time in format YYYY/MM/DD HH:mm
-    public String getFormattedTime(){
-        String result = "" + time.getYear();
-        result += "/" + time.getMonth() + "/" + time.getDayOfYear();
-        result += " " + time.getHour() + ":" + time.getMinute();
-        return result;
+    public LocalDateTime getTime() {
+        return this.time;
     }
 
-    public boolean isHeads(){return this.isHeads;}
+    // Gets date/time in format YYYY/MM/DD HH:mm
+    public String getFormattedTime() {
+        return this.time.getYear() + // YYYY
+                "/" + this.time.getMonth() + // /MM
+                "/" + this.time.getDayOfYear() + // /DD
+                " " + this.time.getHour() + ":" + this.time.getHour(); // HH:mm
+    }
+
+    public CoinSide getPickedSide() {
+        return this.pickedSide;
+    }
+
+    public CoinSide getFlipResault() {
+        return this.flipResault;
+    }
+
+    public boolean getDidWin() {
+        return this.pickedSide == this.flipResault;
+    }
+
+    @Override
+    public String toString() {
+        return "CoinFlipResult{" +
+                "time=" + time +
+                ", pickedSide=" + pickedSide +
+                ", flipResault=" + flipResault +
+                '}';
+    }
+
 }
