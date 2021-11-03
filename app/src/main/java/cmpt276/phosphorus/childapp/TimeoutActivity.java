@@ -26,6 +26,11 @@ public class TimeoutActivity extends AppCompatActivity {
 
     // Time is in milliseconds, 1000ms = 1s
     private static long START_TIME = 60000;
+    
+    // Interval in milliseconds the timer updates its countdown
+    public static final int COUNT_DOWN_INTERVAL = 1000;
+
+    public static final long NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS = 60000L;
 
     private TextView tvCountDown;
     private RadioGroup timeGroup;
@@ -78,7 +83,7 @@ public class TimeoutActivity extends AppCompatActivity {
     }
 
     private void startTimer() {
-        cdTimer = new CountDownTimer(timeLeft, 1000) {
+        cdTimer = new CountDownTimer(timeLeft, COUNT_DOWN_INTERVAL) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timeLeft = millisUntilFinished;
@@ -114,16 +119,10 @@ public class TimeoutActivity extends AppCompatActivity {
     }
 
     private void setVisibilities() {
-        if(isTimerRunning){
-            btnReset.setVisibility(View.INVISIBLE);
-            timeGroup.setVisibility(View.INVISIBLE);
-            customTimeInput.setVisibility(View.INVISIBLE);
-        }
-        else{
-            btnReset.setVisibility(View.VISIBLE);
-            timeGroup.setVisibility(View.VISIBLE);
-            customTimeInput.setVisibility(View.VISIBLE);
-        }
+        int currentView = isTimerRunning ? View.INVISIBLE : View.VISIBLE;
+        btnReset.setVisibility(currentView);
+        timeGroup.setVisibility(currentView);
+        customTimeInput.setVisibility(currentView);
     }
 
     private void createTimeOptions() {
@@ -134,7 +133,7 @@ public class TimeoutActivity extends AppCompatActivity {
             RadioButton button = new RadioButton(this);
             button.setText(getString(R.string.time_selected, options));
             button.setOnClickListener(v -> {
-                START_TIME = options * 60000L;
+                START_TIME = options * NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS;
                 timeLeft = START_TIME;
                 updateCountDownText();
                 customTimeInput.setVisibility(View.INVISIBLE);
@@ -171,12 +170,11 @@ public class TimeoutActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!customTimeInput.getText().toString().matches("")){
-                    int input = Integer.parseInt(customTimeInput.getText().toString());
-                    if(!(input == 0)){
-                        String customInput = customTimeInput.getText().toString();
-                        long customTime = Long.parseLong(customInput);
-                        START_TIME = customTime * 60000L;
+                String customInput = customTimeInput.getText().toString();
+                if(!customInput.isEmpty()){
+                    long input = Long.parseLong(customInput);
+                    if(input != 0){
+                        START_TIME = input * NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS;
                         timeLeft = START_TIME;
                         updateCountDownText();
                         btnStartAndPause.setVisibility(View.VISIBLE);
