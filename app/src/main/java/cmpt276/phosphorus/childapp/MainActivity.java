@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+
+import cmpt276.phosphorus.childapp.coinflip.ChooseChildActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -11,6 +14,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Disables light-mode so coins background dont look janky
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         this.createChildrenBtn();
         this.createFlipCoinBtn();
@@ -24,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void createFlipCoinBtn() {
         Button button = findViewById(R.id.btnFlipCoin);
-        button.setOnClickListener(view -> startActivity(FlipCoinActivity.makeIntent(this)));
+        button.setOnClickListener(view -> startActivity(ChooseChildActivity.makeIntent(this)));
     }
 
     private void createTimeoutBtn() {

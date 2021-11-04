@@ -9,11 +9,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ChildApp">
+
         <activity
-            android:name=".TimeoutActivity"
+            android:name=".coinflip.FlipCoinActivity"
             android:exported="true" />
         <activity
-            android:name=".FlipCoinActivity"
+            android:name=".coinflip.ChooseSideActivity"
+            android:exported="true" />
+        <activity
+            android:name=".coinflip.ChooseChildActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".TimeoutActivity"
             android:exported="true" />
         <activity
             android:name=".ChildrenActivity"
