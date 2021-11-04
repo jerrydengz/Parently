@@ -3,4 +3,16 @@
     <string name="flip_coin_button">FLIP COIN</string>
     <string name="children_button">CHILDREN</string>
     <string name="timeout_button">TIMEOUT</string>
+    <string name="pause">Pause</string>
+    <string name="start">Start</string>
+    <string name="reset">Reset</string>
+    <string name="empty_timer">00:00</string>
+    <string name="back">Back</string>
+    <string name="custom">Custom</string>
+    <string name="time_selected">"%1$d minutes</string>
+    <string name="custom_minutes">Custom Minutes</string>
+    <string name="flip_coin_choose_child_title">Choose a Child</string>
+    <string name="flip_coin_flip_button">Flip</string>
+    <string name="flip_coin_flip_head_title">Heads</string>
+    <string name="flip_coin_flip_tails_title">Tails</string>
 </resources>
