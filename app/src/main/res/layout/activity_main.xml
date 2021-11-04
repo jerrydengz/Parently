@@ -7,6 +7,10 @@
     android:background="@drawable/lavendar"
     tools:context=".MainActivity">
 
+
+    <!--https://stackoverflow.com/questions/3470420/is-it-possible-to-evenly-distribute-buttons-across-the-width-of-a-linearlayout/3470733#3470733-->
+    <!--https://stackoverflow.com/questions/56954471/button-drawable-icon-not-showing/56954619-->
+    <!--https://material.io/components/buttons/android#using-buttons-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,13 +22,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/btnTimeout"
+            android:id="@+id/btnChildren"
             android:layout_width="200dp"
             android:layout_height="50dp"
-            android:drawableLeft="@drawable/timer_icon_filled"
-            android:text="@string/timeout_button" />
+            android:text="@string/children_button"
+            app:icon="@drawable/children_icon"
+            tools:ignore="TextContrastCheck" />
 
-<!--https://stackoverflow.com/questions/3470420/is-it-possible-to-evenly-distribute-buttons-across-the-width-of-a-linearlayout/3470733#3470733-->
         <Space
             android:layout_width="0dp"
             android:layout_height="60sp">
@@ -34,8 +38,9 @@
             android:id="@+id/btnFlipCoin"
             android:layout_width="200dp"
             android:layout_height="50dp"
-            android:drawableLeft="@drawable/coin_flip_icon"
-            android:text="@string/flip_coin_button" />
+            android:text="@string/flip_coin_button"
+            app:icon="@drawable/coin_flip_icon"
+            tools:ignore="TextContrastCheck" />
 
         <Space
             android:layout_width="0dp"
@@ -43,11 +48,12 @@
         </Space>
 
         <Button
-            android:id="@+id/btnChildren"
+            android:id="@+id/btnTimeout"
             android:layout_width="200dp"
             android:layout_height="50dp"
-            android:drawableLeft="@drawable/children_icon"
-            android:text="@string/childern_button" />
+            android:text="@string/timeout_button"
+            app:icon="@drawable/timer_icon_filled"
+            tools:ignore="TextContrastCheck" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
