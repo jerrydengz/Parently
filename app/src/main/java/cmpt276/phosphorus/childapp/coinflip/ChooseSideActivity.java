@@ -11,7 +11,7 @@ import java.util.UUID;
 
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.coinflip.utils.CoinFlipIntent;
-import cmpt276.phosphorus.childapp.coinflip.utils.CoinSide;
+import cmpt276.phosphorus.childapp.utils.CoinSide;
 
 public class ChooseSideActivity extends AppCompatActivity {
 

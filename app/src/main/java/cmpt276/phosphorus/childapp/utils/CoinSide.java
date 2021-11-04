@@ -1,4 +1,4 @@
-package cmpt276.phosphorus.childapp.coinflip.utils;
+package cmpt276.phosphorus.childapp.utils;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.StringRes;
