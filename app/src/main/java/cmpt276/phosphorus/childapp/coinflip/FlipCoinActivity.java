@@ -15,11 +15,14 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Random;
+import java.util.UUID;
 
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.coinflip.utils.CoinFlipAnimationDirection;
 import cmpt276.phosphorus.childapp.coinflip.utils.CoinFlipIntent;
 import cmpt276.phosphorus.childapp.coinflip.utils.CoinSide;
+import cmpt276.phosphorus.childapp.model.Child;
+import cmpt276.phosphorus.childapp.model.ChildManager;
 
 
 // Main Menu -> Select child page -> Choose head -> flip and keep track
@@ -27,14 +30,13 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     private final CoinSide DEFAULT_SIDE = CoinSide.HEAD;
 
+    private Child child;
     private CoinSide winningSide;
-    private String child;
     private CoinSide coinSide;
 
-    // todo change string to children obj
-    public static Intent makeIntent(Context context, String child, CoinSide coinSide) {
+    public static Intent makeIntent(Context context, UUID childUUID, CoinSide coinSide) {
         Intent intent = new Intent(context, FlipCoinActivity.class);
-        intent.putExtra(CoinFlipIntent.CHILD, child);
+        intent.putExtra(CoinFlipIntent.CHILD_UUID, childUUID.toString());
         intent.putExtra(CoinFlipIntent.COIN_SIDE, coinSide.name());
         return intent;
     }
@@ -55,8 +57,10 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     private void extractIntentData() {
         Intent intent = getIntent();
+        UUID intentUUID = UUID.fromString(intent.getStringExtra(CoinFlipIntent.CHILD_UUID));
+
         this.winningSide = CoinSide.valueOf(intent.getStringExtra(CoinFlipIntent.COIN_SIDE));
-        this.child = intent.getStringExtra(CoinFlipIntent.CHILD);
+        this.child = ChildManager.getInstance().getChildByUUID(intentUUID);
     }
 
     private void flipCoinState() {

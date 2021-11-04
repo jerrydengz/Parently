@@ -12,10 +12,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import cmpt276.phosphorus.childapp.R;
+import cmpt276.phosphorus.childapp.model.Child;
+import cmpt276.phosphorus.childapp.model.ChildManager;
 
 public class ChooseChildActivity extends AppCompatActivity {
 
@@ -31,16 +33,19 @@ public class ChooseChildActivity extends AppCompatActivity {
         this.updateChildrenList();
     }
 
+    // todo gotta worry about duplicates
     private void updateChildrenList() {
         ListView listView = findViewById(R.id.listChildren);
-        // todo use modal
-        List<String> list = Arrays.asList("Josh", "Jerry", "Jack", "Jason", "Kevin", "Bill", "Henry", "George");
+
+        List<Child> children = ChildManager.getInstance().getAllChildren();
+        List<String> childrenNames = children.stream().map(Child::getName).collect(Collectors.toList());
+
         // Ref https://android--code.blogspot.com/2015/08/android-listview-text-size.html
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list) {
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, childrenNames) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
-                TextView tv = (TextView) view.findViewById(android.R.id.text1);
+                TextView tv = view.findViewById(android.R.id.text1);
                 tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
                 tv.setPadding(50, 100, 0, 100);
                 return view;
@@ -49,7 +54,7 @@ public class ChooseChildActivity extends AppCompatActivity {
 
 
         listView.setOnItemClickListener((adapterView, view, position, l) -> {
-            startActivity(ChooseSideActivity.makeIntent(this, list.get(position)));
+            startActivity(ChooseSideActivity.makeIntent(this, children.get(position).getUUID()));
             finish(); // We don't want users coming back here
         });
 

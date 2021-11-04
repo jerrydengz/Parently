@@ -11,19 +11,19 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class Children {
+public class Child {
 
     private final UUID uuid;
     private final List<CoinFlipResult> coinFlipResults;
     private String name;
 
-    // Normal way to create users
-    public Children(@NotNull String name) {
+    // Normal way to create children
+    public Child(@NotNull String name) {
         this(UUID.randomUUID(), new ArrayList<>(), name);
     }
 
     // We might want this for saving/loading the children, not sure yet. Will leave for now
-    public Children(@NotNull UUID uuid, @NotNull List<CoinFlipResult> coinFlipResults, @NotNull String name) {
+    public Child(@NotNull UUID uuid, @NotNull List<CoinFlipResult> coinFlipResults, @NotNull String name) {
         this.uuid = Objects.requireNonNull(uuid, "Children UUID cannot be null");
         this.coinFlipResults = Objects.requireNonNull(coinFlipResults, "Children flips results cannot be null");
         this.setName(name); // setName already makes sure name isn't null || empty
@@ -68,8 +68,8 @@ public class Children {
     public boolean equals(Object o) {
         if (this == o) {return true;}
         if (o == null || getClass() != o.getClass()) return false;
-        Children children = (Children) o;
-        return Objects.equals(this.uuid, children.getUUID()) && Objects.equals(this.name, children.getName());
+        Child child = (Child) o;
+        return Objects.equals(this.uuid, child.getUUID()) && Objects.equals(this.name, child.getName());
     }
 
     @NonNull

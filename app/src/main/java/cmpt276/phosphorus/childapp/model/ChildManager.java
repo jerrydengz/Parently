@@ -11,7 +11,7 @@ import java.util.UUID;
 public class ChildManager {
 
     private static ChildManager instance;
-    private final List<Children> allChildren;
+    private final List<Child> allChildren;
 
     private ChildManager() {
         this.allChildren = new ArrayList<>();
@@ -25,29 +25,29 @@ public class ChildManager {
         return instance;
     }
 
-    public void addChildren(@NotNull Children children) {
-        this.allChildren.add(Objects.requireNonNull(children));
+    public void addChild(@NotNull Child child) {
+        this.allChildren.add(Objects.requireNonNull(child));
     }
 
-    public void addChildren(@NotNull Children... childrens) {
-        Arrays.asList(childrens).forEach(this::addChildren); // Add children already checks for null
+    public void addChildren(@NotNull Child... children) {
+        Arrays.asList(children).forEach(this::addChild); // Add children already checks for null
     }
 
-    public Children getChildrenByUUID(@NotNull UUID uuid) {
-        return this.allChildren.stream().filter(children -> children.getUUID().equals(uuid)).findFirst().orElse(null);
+    public Child getChildByUUID(@NotNull UUID uuid) {
+        return this.allChildren.stream().filter(child -> child.getUUID().equals(uuid)).findFirst().orElse(null);
     }
 
-    public List<Children> getAllChildren() {
+    public List<Child> getAllChildren() {
         return this.allChildren;
     }
 
-    public boolean removeChildren(UUID byChildrenUUID) {
-        Children target = this.getChildrenByUUID(byChildrenUUID);
-        return this.removeChildren(target);
+    public boolean removeChild(UUID byChildUUID) {
+        Child target = this.getChildByUUID(byChildUUID);
+        return this.removeChild(target);
     }
 
-    public boolean removeChildren(Children children) {
-        return this.allChildren.remove(children);
+    public boolean removeChild(Child child) {
+        return this.allChildren.remove(child);
     }
 
 }

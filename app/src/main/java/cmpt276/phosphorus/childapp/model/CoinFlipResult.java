@@ -8,11 +8,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-// todo temp, change this to the one from CoinAnimation branch
-enum CoinSide {
-    HEAD,
-    TAILS
-}
+import cmpt276.phosphorus.childapp.coinflip.utils.CoinSide;
 
 // Stored the result of a coin flip
 public class CoinFlipResult {
