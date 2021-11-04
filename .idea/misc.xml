@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
-        <entry key="..\:/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_timeout.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Jack/AndroidStudioProjects/ChildApp/app/src/main/res/layout/activity_children.xml" value="0.2957427536231884" />
+        <entry key="..\:/Users/Jack/AndroidStudioProjects/ChildApp/app/src/main/res/layout/activity_flip_coin.xml" value="0.2957427536231884" />
+        <entry key="..\:/Users/Jack/AndroidStudioProjects/ChildApp/app/src/main/res/layout/activity_main.xml" value="0.2957427536231884" />
+        <entry key="..\:/Users/Jack/AndroidStudioProjects/ChildApp/app/src/main/res/layout/activity_timeout.xml" value="0.2957427536231884" />
+        <entry key="..\:/Users/mattf/AndroidStudioProjects/ParentApp-master/app/src/main/res/layout/activity_main.xml" value="0.12291666666666666" />
       </map>
     </option>
   </component>
