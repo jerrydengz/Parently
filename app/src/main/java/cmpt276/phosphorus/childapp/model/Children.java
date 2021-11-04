@@ -1,5 +1,7 @@
 package cmpt276.phosphorus.childapp.model;
 
+import androidx.annotation.NonNull;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -46,30 +48,31 @@ public class Children {
     }
 
     public void setName(@NotNull String name) {
-        if (name == null || name.isEmpty()) {
+        if (name.isEmpty()) {
             throw new IllegalArgumentException("Name cannot be null or empty");
         }
 
         this.name = name;
     }
 
-    // Returns sorted coin resaults from Oldest -> Newest
+    // Returns sorted coin results from Oldest -> Newest
     public List<CoinFlipResult> getCoinFlipResults() {
         return this.coinFlipResults.stream().sorted(Comparator.comparing(CoinFlipResult::getTime)).collect(Collectors.toList());
     }
 
-    public void addCoinFlipResault(@NotNull CoinFlipResult coinFlipResult) {
-        this.coinFlipResults.add(Objects.requireNonNull(coinFlipResult, "Cannot add a null coin resualt"));
+    public void addCoinFlipResult(@NotNull CoinFlipResult coinFlipResult) {
+        this.coinFlipResults.add(Objects.requireNonNull(coinFlipResult, "Cannot add a null coin result"));
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) {return true;}
         if (o == null || getClass() != o.getClass()) return false;
         Children children = (Children) o;
         return Objects.equals(this.uuid, children.getUUID()) && Objects.equals(this.name, children.getName());
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Children{" +
