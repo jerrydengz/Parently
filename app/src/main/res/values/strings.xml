@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">ChildApp</string>
+
+    <string name="flip_coin_choose_child_title">Choose a Child</string>
+    <string name="flip_coin_flip_button">Flip</string>
+    <string name="flip_coin_flip_head_title">Heads</string>
+    <string name="flip_coin_flip_tails_title">Tails</string>
 </resources>
