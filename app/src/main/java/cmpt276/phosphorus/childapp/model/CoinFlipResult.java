@@ -1,8 +1,11 @@
 package cmpt276.phosphorus.childapp.model;
 
+import androidx.annotation.NonNull;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 // todo temp, change this to the one from CoinAnimation branch
@@ -16,50 +19,49 @@ public class CoinFlipResult {
 
     private final LocalDateTime time;
     private final CoinSide pickedSide;
-    private final CoinSide flipResault;
+    private final CoinSide flipResult;
 
-    // Normal way to create resaults
-    public CoinFlipResult(@NotNull CoinSide pickedSide, @NotNull CoinSide flipResault) {
-        this(LocalDateTime.now(), pickedSide, flipResault);
+    // Normal way to create results
+    public CoinFlipResult(@NotNull CoinSide pickedSide, @NotNull CoinSide flipResult) {
+        this(LocalDateTime.now(), pickedSide, flipResult);
     }
 
-    // We might want this for saving/loading the resault, not sure yet. Will leave for now
-    public CoinFlipResult(@NotNull LocalDateTime time, @NotNull CoinSide pickedSide, @NotNull CoinSide flipResault) {
-        this.time = Objects.requireNonNull(time, "Resault cannot have a null time");
-        this.pickedSide = Objects.requireNonNull(pickedSide, "Resault cannot have null pickedSide");
-        this.flipResault = Objects.requireNonNull(flipResault, "Resault cannot have null flipSide");
+    // We might want this for saving/loading the result, not sure yet. Will leave for now
+    public CoinFlipResult(@NotNull LocalDateTime time, @NotNull CoinSide pickedSide, @NotNull CoinSide flipResult) {
+        this.time = Objects.requireNonNull(time, "Result cannot have a null time");
+        this.pickedSide = Objects.requireNonNull(pickedSide, "Result cannot have null pickedSide");
+        this.flipResult = Objects.requireNonNull(flipResult, "Result cannot have null flipSide");
     }
 
     public LocalDateTime getTime() {
         return this.time;
     }
 
-    // Gets date/time in format YYYY/MM/DD HH:mm
+    // Gets date/time in format YYYY/MM/DD HH:mm:ss
     public String getFormattedTime() {
-        return this.time.getYear() + // YYYY
-                "/" + this.time.getMonth() + // /MM
-                "/" + this.time.getDayOfYear() + // /DD
-                " " + this.time.getHour() + ":" + this.time.getHour(); // HH:mm
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy MM dd HH:mm:ss");
+        return time.format(format);
     }
 
     public CoinSide getPickedSide() {
         return this.pickedSide;
     }
 
-    public CoinSide getFlipResault() {
-        return this.flipResault;
+    public CoinSide getFlipResult() {
+        return this.flipResult;
     }
 
     public boolean getDidWin() {
-        return this.pickedSide == this.flipResault;
+        return this.pickedSide == this.flipResult;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "CoinFlipResult{" +
                 "time=" + time +
                 ", pickedSide=" + pickedSide +
-                ", flipResault=" + flipResault +
+                ", flipResult=" + flipResult +
                 '}';
     }
 
