@@ -20,10 +20,10 @@ import java.util.UUID;
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.coinflip.utils.CoinFlipAnimationDirection;
 import cmpt276.phosphorus.childapp.coinflip.utils.CoinFlipIntent;
-import cmpt276.phosphorus.childapp.model.CoinFlipResult;
-import cmpt276.phosphorus.childapp.utils.CoinSide;
 import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
+import cmpt276.phosphorus.childapp.model.CoinFlipResult;
+import cmpt276.phosphorus.childapp.utils.CoinSide;
 
 
 // Main Menu -> Select child page -> Choose head -> flip and keep track
@@ -62,7 +62,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         String childUUIDVal = intent.getStringExtra(CoinFlipIntent.CHILD_UUID);
 
         this.chosenWinningSide = CoinSide.valueOf(coinFlipVal);
-        this.child = ChildManager.getInstance().getChildByUUID( UUID.fromString(childUUIDVal));
+        this.child = ChildManager.getInstance().getChildByUUID(UUID.fromString(childUUIDVal));
     }
 
     private void flipCoinState() {
@@ -127,8 +127,10 @@ public class FlipCoinActivity extends AppCompatActivity {
         });
     }
 
+    // todo activity change/particles/back button?
     private void sideLanded() {
-        // todo activity change/particles/back button?
+        CoinFlipResult coinFlipResult = new CoinFlipResult(this.chosenWinningSide, this.currentCoinSide);
+        this.child.addCoinFlipResult(coinFlipResult);
 
         if (this.currentCoinSide == this.chosenWinningSide) {
             // use children manager to find use by this.child and add
