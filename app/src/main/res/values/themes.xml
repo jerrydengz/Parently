@@ -3,7 +3,7 @@
     <style name="Theme.ChildApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. The app bar, buttons -->
         <item name="colorPrimary">@color/purple_c1</item>
-<!--    chances the info bar (very top)    -->
+        <!--    changes the info bar (very top)    -->
         <item name="colorPrimaryVariant">@color/purple_c2</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
