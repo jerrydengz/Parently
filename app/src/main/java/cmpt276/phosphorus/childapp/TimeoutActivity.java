@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
@@ -40,7 +41,8 @@ public class TimeoutActivity extends AppCompatActivity {
     private CountDownTimer cdTimer;
     private EditText customTimeInput;
     private boolean isTimerRunning;
-    private long timeLeft = START_TIME;
+    private long timeLeft;
+    private long endTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +57,6 @@ public class TimeoutActivity extends AppCompatActivity {
         this.setUpResetBtn();
         this.createTimeOptions();
         this.setUpCustomInput();
-
-        updateCountDownText();
     }
 
 
@@ -65,8 +65,7 @@ public class TimeoutActivity extends AppCompatActivity {
         btnStartAndPause.setOnClickListener(v -> {
             if(!isTimerRunning){
                 startTimer();
-            }
-            else{
+            } else{
                 pauseTimer();
             }
         });
@@ -83,6 +82,9 @@ public class TimeoutActivity extends AppCompatActivity {
     }
 
     private void startTimer() {
+        // Helper variable for saving data regarding timer
+        endTime = System.currentTimeMillis() + timeLeft;
+
         cdTimer = new CountDownTimer(timeLeft, COUNT_DOWN_INTERVAL) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -123,6 +125,10 @@ public class TimeoutActivity extends AppCompatActivity {
         btnReset.setVisibility(currentView);
         timeGroup.setVisibility(currentView);
         customTimeInput.setVisibility(currentView);
+
+        if(timeLeft == 0){
+            btnStartAndPause.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void createTimeOptions() {
@@ -141,8 +147,8 @@ public class TimeoutActivity extends AppCompatActivity {
                 customTimeInput.setText("");
             });
             timeGroup.addView((button));
-            // Only accounts for base time (1 minute), need to refactor for saving data if needed
-            if(options * 60000L == START_TIME){
+
+            if(options * NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS == START_TIME){
                 button.setChecked(true);
             }
         }
@@ -193,6 +199,51 @@ public class TimeoutActivity extends AppCompatActivity {
         String timeLeftFormatted = String.format(Locale.getDefault(),
                 "%02d:%02d", minutes, seconds);
         tvCountDown.setText(timeLeftFormatted);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putLong("timeLeft", timeLeft);
+        editor.putLong("endTime", endTime);
+        editor.putBoolean("isTimerRunning", isTimerRunning);
+
+        editor.apply();
+
+        if(cdTimer != null) {
+            cdTimer.cancel();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+
+        timeLeft = prefs.getLong("timeLeft", START_TIME);
+        isTimerRunning = prefs.getBoolean("isTimerRunning", false);
+
+        updateCountDownText();
+        setVisibilities();
+
+        if(isTimerRunning){
+            endTime = prefs.getLong("endTime", 0);
+            timeLeft = endTime - System.currentTimeMillis();
+
+            if(timeLeft < 0){
+                timeLeft = 0;
+                isTimerRunning = false;
+                updateCountDownText();
+                setVisibilities();
+            } else{
+                startTimer();
+            }
+        }
     }
 
     public static Intent makeIntent(Context context) {
