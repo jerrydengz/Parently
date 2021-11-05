@@ -1,27 +1,30 @@
 package cmpt276.phosphorus.childapp;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.UUID;
 
 import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
 
 public class ChildrenConfigureActivity extends AppCompatActivity {
 
-    private boolean isEditingChild; // TODO for editing
+    private boolean isEditingChild;
     private EditText childNameEditText;
-    private String childName = "";
+    private String childName;
+    private String childUUID;
     private static final String CONFIGURATION_STATE = "ChildConfigurationState";
+    private static final String CHILD_UUID_TAG = "ChildUUIDTag";
+    private static final String CHILD_NAME_TAG = "ChildNameTag";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,7 @@ public class ChildrenConfigureActivity extends AppCompatActivity {
 
         this.createBackBtn();
         this.createSaveBtn();
+        this.extractIntent();
         this.registerTextWatcher();
     }
 
@@ -52,6 +56,11 @@ public class ChildrenConfigureActivity extends AppCompatActivity {
 
         childNameEditText = findViewById(R.id.name_edit_text);
         childNameEditText.addTextChangedListener(nameTextWatcher);
+
+        // initialize EditText box to the child name to edited
+        if(isEditingChild){
+            childNameEditText.setText(childName);
+        }
     }
 
     private void createBackBtn(){
@@ -74,6 +83,9 @@ public class ChildrenConfigureActivity extends AppCompatActivity {
                 dialogWarning.setPositiveButton("OK", (dialogInterface, i) -> {});
                 dialogWarning.show();
 
+            }else if (isEditingChild){
+               childManager.getChildByUUID(UUID.fromString(childUUID)).setName(childName.trim());
+               finish();
             }else{
                 childManager.addChild(new Child(childName.trim()));
                 finish();
@@ -81,23 +93,26 @@ public class ChildrenConfigureActivity extends AppCompatActivity {
         });
     }
 
-    // TODO Editing - putExtras for childObj and position
-    public static Intent makeIntent(Context context, Child childObj, int position, boolean isEditing){
+    public static Intent makeIntent(Context context, Child childObj, boolean isEditing){
         Intent intent = new Intent(context, ChildrenConfigureActivity.class);
 
         intent.putExtra(CONFIGURATION_STATE, isEditing);
 
-        // TODO add intent extras for editing
+        if(isEditing){
+            intent.putExtra(CHILD_UUID_TAG, childObj.getUUID().toString());
+            intent.putExtra(CHILD_NAME_TAG, childObj.getName());
+        }
 
         return intent;
     }
 
-    // TODO Editing - extract extras from intent to edit
     private void extractIntent() {
         Intent packageInfo = getIntent();
 
         isEditingChild = packageInfo.getBooleanExtra(CONFIGURATION_STATE, false);
-
+        if(isEditingChild){
+            childUUID = packageInfo.getStringExtra(CHILD_UUID_TAG);
+            childName = packageInfo.getStringExtra(CHILD_NAME_TAG);
+        }
     }
-
 }

@@ -17,7 +17,6 @@ import cmpt276.phosphorus.childapp.model.ChildManager;
 public class ChildrenActivity extends AppCompatActivity {
 
     private ChildManager childManager;
-    private final int NEW_CHILD_IDX = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +41,7 @@ public class ChildrenActivity extends AppCompatActivity {
         Button button = findViewById(R.id.configureChildrenBtn);
         button.setOnClickListener(view -> startActivity(
                 ChildrenConfigureActivity.makeIntent(
-                this, null, NEW_CHILD_IDX, false)
+                this, null, false)
         ));
     }
 
@@ -70,7 +69,7 @@ public class ChildrenActivity extends AppCompatActivity {
             Intent intent = ChildrenConfigureActivity.makeIntent(
                     this,
                     childManager.getAllChildren().get(position),
-                    position, true);
+                     true);
             startActivity(intent);
         });
     }

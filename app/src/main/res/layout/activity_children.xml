@@ -9,8 +9,8 @@
 
     <ListView
         android:id="@+id/listViewChildren"
-        android:layout_width="362dp"
-        android:layout_height="450dp"
+        android:layout_width="366dp"
+        android:layout_height="481dp"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -18,7 +18,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintVertical_bias="0.153" />
 
     <Button
         android:id="@+id/btnBackChildren"
@@ -35,7 +35,7 @@
         android:id="@+id/configureChildrenBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="36dp"
+        android:layout_marginEnd="28dp"
         android:layout_marginBottom="44dp"
         android:text="@string/add_child_btn_text"
         app:layout_constraintBottom_toBottomOf="parent"
