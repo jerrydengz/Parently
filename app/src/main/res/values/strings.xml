@@ -15,4 +15,9 @@
     <string name="flip_coin_flip_button">Flip</string>
     <string name="flip_coin_flip_head_title">Heads</string>
     <string name="flip_coin_flip_tails_title">Tails</string>
+    <string name="shared_pref_pref">prefs</string>
+    <string name="shared_pref_start_time">startTime</string>
+    <string name="shared_pref_time_left">timeLeft</string>
+    <string name="shared_pref_end_time">endTime</string>
+    <string name="shared_pref_is_timer_running">isTimerRunning</string>
 </resources>

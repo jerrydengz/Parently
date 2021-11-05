@@ -23,10 +23,14 @@ import java.util.Locale;
  * a child's timeout.
  */
 
+    // Code assisted by https://www.youtube.com/playlist?list=PLrnPJCHvNZuB8wxqXCwKw2_NkyEmFwcSd
+
 public class TimeoutActivity extends AppCompatActivity {
 
     // Time is in milliseconds, 1000ms = 1s
-    private static long START_TIME = 60000;
+    private long startTime = 60000;
+    private long timeLeft;
+    private long endTime;
     
     // Interval in milliseconds the timer updates its countdown
     public static final int COUNT_DOWN_INTERVAL = 1000;
@@ -41,8 +45,6 @@ public class TimeoutActivity extends AppCompatActivity {
     private CountDownTimer cdTimer;
     private EditText customTimeInput;
     private boolean isTimerRunning;
-    private long timeLeft;
-    private long endTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +60,6 @@ public class TimeoutActivity extends AppCompatActivity {
         this.createTimeOptions();
         this.setUpCustomInput();
     }
-
 
     private void setUpStartAndPauseBtn() {
         btnStartAndPause = findViewById(R.id.btnStartAndPause);
@@ -114,7 +115,7 @@ public class TimeoutActivity extends AppCompatActivity {
     }
 
     private void resetTimer() {
-        timeLeft = START_TIME;
+        timeLeft = startTime;
         updateCountDownText();
         btnReset.setVisibility(View.INVISIBLE);
         btnStartAndPause.setVisibility(View.VISIBLE);
@@ -135,33 +136,27 @@ public class TimeoutActivity extends AppCompatActivity {
         timeGroup = findViewById(R.id.radio_group_time_options);
         int[] timeOptions = getResources().getIntArray(R.array.time_options);
 
+        SharedPreferences prefs = getSharedPreferences(
+                getString(R.string.shared_pref_pref), MODE_PRIVATE);
+
         for (int options : timeOptions) {
             RadioButton button = new RadioButton(this);
             button.setText(getString(R.string.time_selected, options));
             button.setOnClickListener(v -> {
-                START_TIME = options * NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS;
-                timeLeft = START_TIME;
+                startTime = options * NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS;
+                timeLeft = startTime;
                 updateCountDownText();
-                customTimeInput.setVisibility(View.INVISIBLE);
                 btnStartAndPause.setVisibility(View.VISIBLE);
                 customTimeInput.setText("");
+                button.setChecked(true);
             });
             timeGroup.addView((button));
 
-            if(options * NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS == START_TIME){
+            if(options * NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS ==
+                    prefs.getLong(getString(R.string.shared_pref_start_time), startTime)){
                 button.setChecked(true);
             }
         }
-        // Custom time button
-        RadioButton button = new RadioButton(this);
-        button.setText(getString(R.string.custom));
-        button.setOnClickListener(v -> {
-            customTimeInput.setVisibility(View.VISIBLE);
-            btnStartAndPause.setVisibility(View.INVISIBLE);
-            btnReset.setVisibility(View.INVISIBLE);
-            tvCountDown.setText(getString(R.string.empty_timer));
-        });
-        timeGroup.addView(button);
     }
 
     private void setUpCustomInput() {
@@ -177,11 +172,12 @@ public class TimeoutActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 String customInput = customTimeInput.getText().toString();
+                timeGroup.clearCheck();
                 if(!customInput.isEmpty()){
                     long input = Long.parseLong(customInput);
                     if(input != 0){
-                        START_TIME = input * NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS;
-                        timeLeft = START_TIME;
+                        startTime = input * NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS;
+                        timeLeft = startTime;
                         updateCountDownText();
                         btnStartAndPause.setVisibility(View.VISIBLE);
                     }
@@ -205,12 +201,14 @@ public class TimeoutActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(
+                getString(R.string.shared_pref_pref), MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
-        editor.putLong("timeLeft", timeLeft);
-        editor.putLong("endTime", endTime);
-        editor.putBoolean("isTimerRunning", isTimerRunning);
+        editor.putLong(getString(R.string.shared_pref_start_time), startTime);
+        editor.putLong(getString(R.string.shared_pref_time_left), timeLeft);
+        editor.putLong(getString(R.string.shared_pref_end_time), endTime);
+        editor.putBoolean(getString(R.string.shared_pref_is_timer_running), isTimerRunning);
 
         editor.apply();
 
@@ -223,16 +221,20 @@ public class TimeoutActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(
+                getString(R.string.shared_pref_pref), MODE_PRIVATE);
 
-        timeLeft = prefs.getLong("timeLeft", START_TIME);
-        isTimerRunning = prefs.getBoolean("isTimerRunning", false);
+        startTime = prefs.getLong(getString(R.string.shared_pref_start_time),
+                NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS);
+        timeLeft = prefs.getLong(getString(R.string.shared_pref_time_left), startTime);
+        isTimerRunning = prefs.getBoolean(
+                getString(R.string.shared_pref_is_timer_running), false);
 
         updateCountDownText();
         setVisibilities();
 
         if(isTimerRunning){
-            endTime = prefs.getLong("endTime", 0);
+            endTime = prefs.getLong(getString(R.string.shared_pref_end_time), 0);
             timeLeft = endTime - System.currentTimeMillis();
 
             if(timeLeft < 0){
