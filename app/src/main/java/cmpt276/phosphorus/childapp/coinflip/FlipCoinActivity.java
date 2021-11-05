@@ -20,9 +20,10 @@ import java.util.UUID;
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.coinflip.utils.CoinFlipAnimationDirection;
 import cmpt276.phosphorus.childapp.coinflip.utils.CoinFlipIntent;
-import cmpt276.phosphorus.childapp.utils.CoinSide;
 import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
+import cmpt276.phosphorus.childapp.model.CoinFlipResult;
+import cmpt276.phosphorus.childapp.utils.CoinSide;
 
 
 // Main Menu -> Select child page -> Choose head -> flip and keep track
@@ -31,13 +32,13 @@ public class FlipCoinActivity extends AppCompatActivity {
     private final CoinSide DEFAULT_SIDE = CoinSide.HEAD;
 
     private Child child;
-    private CoinSide winningSide;
-    private CoinSide coinSide;
+    private CoinSide chosenWinningSide;
+    private CoinSide currentCoinSide;
 
-    public static Intent makeIntent(Context context, UUID childUUID, CoinSide coinSide) {
+    public static Intent makeIntent(Context context, UUID childUUID, CoinSide chosenCoinSide) {
         Intent intent = new Intent(context, FlipCoinActivity.class);
         intent.putExtra(CoinFlipIntent.CHILD_UUID, childUUID.toString());
-        intent.putExtra(CoinFlipIntent.COIN_SIDE, coinSide.name());
+        intent.putExtra(CoinFlipIntent.CHOSEN_COIN_SIDE, chosenCoinSide.name());
         return intent;
     }
 
@@ -48,7 +49,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         setContentView(R.layout.activity_flip_coin);
 
         this.extractIntentData();
-        this.coinSide = this.DEFAULT_SIDE;
+        this.currentCoinSide = this.DEFAULT_SIDE;
 
         this.updateCoinDisplay();
         this.createBackBtn();
@@ -57,22 +58,23 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     private void extractIntentData() {
         Intent intent = getIntent();
-        UUID intentUUID = UUID.fromString(intent.getStringExtra(CoinFlipIntent.CHILD_UUID));
+        String coinFlipVal = intent.getStringExtra(CoinFlipIntent.CHOSEN_COIN_SIDE);
+        String childUUIDVal = intent.getStringExtra(CoinFlipIntent.CHILD_UUID);
 
-        this.winningSide = CoinSide.valueOf(intent.getStringExtra(CoinFlipIntent.COIN_SIDE));
-        this.child = ChildManager.getInstance().getChildByUUID(intentUUID);
+        this.chosenWinningSide = CoinSide.valueOf(coinFlipVal);
+        this.child = ChildManager.getInstance().getChildByUUID(UUID.fromString(childUUIDVal));
     }
 
     private void flipCoinState() {
-        this.coinSide = (this.coinSide == CoinSide.HEAD) ? CoinSide.TAILS : CoinSide.HEAD;
+        this.currentCoinSide = (this.currentCoinSide == CoinSide.HEAD) ? CoinSide.TAILS : CoinSide.HEAD;
     }
 
     private void updateCoinDisplay() {
         ImageView coinImg = findViewById(R.id.imgCoin);
-        coinImg.setImageResource(this.coinSide.getImgId());
+        coinImg.setImageResource(this.currentCoinSide.getImgId());
 
         TextView currentSide = findViewById(R.id.textCurrentSide);
-        currentSide.setText(getString(this.coinSide.getTitleId()));
+        currentSide.setText(getString(this.currentCoinSide.getTitleId()));
     }
 
     private int getDelayBetween(int x) {
@@ -95,7 +97,7 @@ public class FlipCoinActivity extends AppCompatActivity {
             (new Handler()).postDelayed(() -> flipCoin(delay), (delay * 2L) * i);
         }
 
-        if (this.coinSide != randomSide) {
+        if (this.currentCoinSide != randomSide) {
             this.flipCoin(getDelayBetween(totalRandomFlips + 1));
         }
 
@@ -125,10 +127,12 @@ public class FlipCoinActivity extends AppCompatActivity {
         });
     }
 
+    // todo activity change/particles/back button?
     private void sideLanded() {
-        // todo activity change/particles/back button?
+        CoinFlipResult coinFlipResult = new CoinFlipResult(this.chosenWinningSide, this.currentCoinSide);
+        this.child.addCoinFlipResult(coinFlipResult);
 
-        if (this.coinSide == this.winningSide) {
+        if (this.currentCoinSide == this.chosenWinningSide) {
             // use children manager to find use by this.child and add
         } else {
             // Children loses
