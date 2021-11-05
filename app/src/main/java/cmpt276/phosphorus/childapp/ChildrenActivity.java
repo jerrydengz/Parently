@@ -31,6 +31,13 @@ public class ChildrenActivity extends AppCompatActivity {
         this.createOnClickCallBack();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        populateChildListView();
+    }
+
     private void createConfigureChildBtn() {
         Button button = findViewById(R.id.configureChildrenBtn);
         button.setOnClickListener(view -> startActivity(ChildrenConfigureActivity.makeIntent(
