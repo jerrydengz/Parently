@@ -20,10 +20,9 @@ import java.util.UUID;
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.coinflip.utils.CoinFlipAnimationDirection;
 import cmpt276.phosphorus.childapp.coinflip.utils.CoinFlipIntent;
+import cmpt276.phosphorus.childapp.utils.CoinSide;
 import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
-import cmpt276.phosphorus.childapp.model.CoinFlipResult;
-import cmpt276.phosphorus.childapp.utils.CoinSide;
 
 
 // Main Menu -> Select child page -> Choose head -> flip and keep track
@@ -32,13 +31,13 @@ public class FlipCoinActivity extends AppCompatActivity {
     private final CoinSide DEFAULT_SIDE = CoinSide.HEAD;
 
     private Child child;
-    private CoinSide chosenWinningSide;
-    private CoinSide currentCoinSide;
+    private CoinSide winningSide;
+    private CoinSide coinSide;
 
-    public static Intent makeIntent(Context context, UUID childUUID, CoinSide chosenCoinSide) {
+    public static Intent makeIntent(Context context, UUID childUUID, CoinSide coinSide) {
         Intent intent = new Intent(context, FlipCoinActivity.class);
         intent.putExtra(CoinFlipIntent.CHILD_UUID, childUUID.toString());
-        intent.putExtra(CoinFlipIntent.CHOSEN_COIN_SIDE, chosenCoinSide.name());
+        intent.putExtra(CoinFlipIntent.COIN_SIDE, coinSide.name());
         return intent;
     }
 
@@ -49,7 +48,10 @@ public class FlipCoinActivity extends AppCompatActivity {
         setContentView(R.layout.activity_flip_coin);
 
         this.extractIntentData();
-        this.currentCoinSide = this.DEFAULT_SIDE;
+        // We set the last child here b/c the person may have exited the past pages and haven't
+        // properly flipped a coin
+        ChildManager.getInstance().setLastCoinChooserChild(this.child);
+        this.coinSide = this.DEFAULT_SIDE;
 
         this.updateCoinDisplay();
         this.createBackBtn();
@@ -58,23 +60,22 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     private void extractIntentData() {
         Intent intent = getIntent();
-        String coinFlipVal = intent.getStringExtra(CoinFlipIntent.CHOSEN_COIN_SIDE);
-        String childUUIDVal = intent.getStringExtra(CoinFlipIntent.CHILD_UUID);
+        UUID intentUUID = UUID.fromString(intent.getStringExtra(CoinFlipIntent.CHILD_UUID));
 
-        this.chosenWinningSide = CoinSide.valueOf(coinFlipVal);
-        this.child = ChildManager.getInstance().getChildByUUID(UUID.fromString(childUUIDVal));
+        this.winningSide = CoinSide.valueOf(intent.getStringExtra(CoinFlipIntent.COIN_SIDE));
+        this.child = ChildManager.getInstance().getChildByUUID(intentUUID);
     }
 
     private void flipCoinState() {
-        this.currentCoinSide = (this.currentCoinSide == CoinSide.HEAD) ? CoinSide.TAILS : CoinSide.HEAD;
+        this.coinSide = (this.coinSide == CoinSide.HEAD) ? CoinSide.TAILS : CoinSide.HEAD;
     }
 
     private void updateCoinDisplay() {
         ImageView coinImg = findViewById(R.id.imgCoin);
-        coinImg.setImageResource(this.currentCoinSide.getImgId());
+        coinImg.setImageResource(this.coinSide.getImgId());
 
         TextView currentSide = findViewById(R.id.textCurrentSide);
-        currentSide.setText(getString(this.currentCoinSide.getTitleId()));
+        currentSide.setText(getString(this.coinSide.getTitleId()));
     }
 
     private int getDelayBetween(int x) {
@@ -97,7 +98,7 @@ public class FlipCoinActivity extends AppCompatActivity {
             (new Handler()).postDelayed(() -> flipCoin(delay), (delay * 2L) * i);
         }
 
-        if (this.currentCoinSide != randomSide) {
+        if (this.coinSide != randomSide) {
             this.flipCoin(getDelayBetween(totalRandomFlips + 1));
         }
 
@@ -127,12 +128,10 @@ public class FlipCoinActivity extends AppCompatActivity {
         });
     }
 
-    // todo activity change/particles/back button?
     private void sideLanded() {
-        CoinFlipResult coinFlipResult = new CoinFlipResult(this.chosenWinningSide, this.currentCoinSide);
-        this.child.addCoinFlipResult(coinFlipResult);
+        // todo activity change/particles/back button?
 
-        if (this.currentCoinSide == this.chosenWinningSide) {
+        if (this.coinSide == this.winningSide) {
             // use children manager to find use by this.child and add
         } else {
             // Children loses
