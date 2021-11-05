@@ -1,10 +1,16 @@
 package cmpt276.phosphorus.childapp.model;
 
+import android.content.Context;
+
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -64,15 +70,37 @@ public class ChildManager {
         this.lastCoinChooserChild = lastCoinChooserChild;
     }
 
-    public JSONArray getJSON() throws JSONException {
+    private JSONArray getJSON() throws JSONException {
         JSONArray result = new JSONArray();
+        JSONArray childArr = new JSONArray();
         JSONObject lastChild = new JSONObject();
+        JSONObject children = new JSONObject();
         lastChild.put("lastCoinChooserChild", this.lastCoinChooserChild.getJSONChild());
         result.put(lastChild);
         for(Child i : this.allChildren){
-            result.put(i.getJSONChild());
+            childArr.put(i.getJSONChild());
         }
+        children.put("allChildren", childArr);
+        result.put(children);
         return result;
     }
 
+    public void saveData(Context context){
+        try {
+            JSONArray data = getJSON();
+            File dir = new File(context.getFilesDir(), "childData");
+            if(!dir.exists()){dir.mkdir();}
+            File saveData = new File(dir, "child_data.json");
+            try (FileWriter writer = new FileWriter(saveData)) {
+                writer.write(data.toString());
+                writer.flush();
+            }
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void readData(){
+
+    }
 }
