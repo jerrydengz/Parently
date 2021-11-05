@@ -90,6 +90,10 @@ public class ChildManager {
         this.lastCoinChooserChild = lastCoinChooserChild;
     }
 
+    private boolean isEmpty(){
+        return this.allChildren.isEmpty();
+    }
+
     private void dummyData() {
         Child child1 = new Child("Bob");
         child1.addCoinFlipResult(new CoinFlipResult(

@@ -19,8 +19,6 @@ import cmpt276.phosphorus.childapp.utils.CoinSide;
 
 public class ChooseSideActivity extends AppCompatActivity {
 
-    private Child nextChild;
-
     public static Intent makeIntent(Context context) {
         return new Intent(context, ChooseSideActivity.class);
     }
@@ -53,6 +51,8 @@ public class ChooseSideActivity extends AppCompatActivity {
 
     private void displayChildName() {
         Child nextChild = ChildManager.getInstance().getNextCoinFlipper();
+        if (nextChild == null)
+            return;
 
         TextView textView = findViewById(R.id.textSideChooseTitle);
         textView.setPaintFlags(textView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
