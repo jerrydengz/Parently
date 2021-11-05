@@ -20,10 +20,10 @@ import java.util.UUID;
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.coinflip.utils.CoinFlipAnimationDirection;
 import cmpt276.phosphorus.childapp.coinflip.utils.CoinFlipIntent;
-import cmpt276.phosphorus.childapp.model.CoinFlipResult;
-import cmpt276.phosphorus.childapp.utils.CoinSide;
 import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
+import cmpt276.phosphorus.childapp.model.CoinFlipResult;
+import cmpt276.phosphorus.childapp.utils.CoinSide;
 
 
 // Main Menu -> Select child page -> Choose head -> flip and keep track
@@ -42,7 +42,10 @@ public class FlipCoinActivity extends AppCompatActivity {
         return intent;
     }
 
-    // todo remember who picked last
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, FlipCoinActivity.class);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,10 +64,15 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     private void extractIntentData() {
         Intent intent = getIntent();
+
+        if (!(intent.hasExtra(CoinFlipIntent.CHILD_UUID) && intent.hasExtra(CoinFlipIntent.CHOSEN_COIN_SIDE)))
+            return;
+
+        CoinSide chosenSide = CoinSide.valueOf(intent.getStringExtra(CoinFlipIntent.CHOSEN_COIN_SIDE));
         UUID intentUUID = UUID.fromString(intent.getStringExtra(CoinFlipIntent.CHILD_UUID));
 
-        this.winningSide = CoinSide.valueOf(intent.getStringExtra(CoinFlipIntent.CHOSEN_COIN_SIDE));
-        this.child = ChildManager.getInstance().getChildByUUID(intentUUID);
+        this.winningSide = chosenSide;
+        this.child =  ChildManager.getInstance().getChildByUUID(intentUUID);
     }
 
     private void flipCoinState() {
@@ -131,6 +139,9 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     // todo activity change/particles/back button?
     private void sideLanded() {
+        if (!this.isChildChoosing())
+            return;
+
         boolean didWin = this.coinSide == this.winningSide;
 
         if (didWin) {
@@ -139,6 +150,10 @@ public class FlipCoinActivity extends AppCompatActivity {
         } else {
             // Children loses
         }
+    }
+
+    private boolean isChildChoosing() {
+        return this.coinSide != null && this.child != null;
     }
 
     private void createBackBtn() {

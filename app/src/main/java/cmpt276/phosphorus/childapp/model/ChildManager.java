@@ -53,6 +53,10 @@ public class ChildManager {
         return this.allChildren.remove(child);
     }
 
+    public boolean isEmpty(){
+        return this.allChildren.isEmpty();
+    }
+
     public Child getLastCoinChooserChild() {
         return this.lastCoinChooserChild;
     }
