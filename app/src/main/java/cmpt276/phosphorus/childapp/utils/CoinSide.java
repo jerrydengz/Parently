@@ -3,6 +3,9 @@ package cmpt276.phosphorus.childapp.utils;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.StringRes;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import cmpt276.phosphorus.childapp.R;
 
 public enum CoinSide {
@@ -27,4 +30,12 @@ public enum CoinSide {
         return titleId;
     }
 
+    public JSONObject getJSON() throws JSONException {
+        JSONObject inner = new JSONObject();
+        JSONObject outer = new JSONObject();
+        inner.put("imageID", this.imgId);
+        inner.put("title", this.titleId);
+        outer.put("CoinSide", inner);
+        return outer;
+    }
 }

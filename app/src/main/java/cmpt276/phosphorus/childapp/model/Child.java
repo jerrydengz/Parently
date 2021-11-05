@@ -1,8 +1,13 @@
 package cmpt276.phosphorus.childapp.model;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -80,6 +85,20 @@ public class Child {
                 ", name='" + this.name + '\'' +
                 ", coinFlipResults=" + this.coinFlipResults +
                 '}';
+    }
+
+    protected JSONObject getJSONChild() throws JSONException{
+        JSONObject inner = new JSONObject();
+        JSONObject outer = new JSONObject();
+        JSONArray flips = new JSONArray();
+        inner.put("UUID", this.uuid);
+        inner.put("name", this.name);
+        for(CoinFlipResult i : this.coinFlipResults){
+            flips.put(i.toJSON());
+        }
+        inner.put("coinFlipResults", flips);
+        outer.put("child", inner);
+        return outer;
     }
 
 }

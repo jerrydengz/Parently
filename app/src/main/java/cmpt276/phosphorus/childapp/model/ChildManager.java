@@ -1,6 +1,9 @@
 package cmpt276.phosphorus.childapp.model;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,6 +62,17 @@ public class ChildManager {
 
     public void setLastCoinChooserChild(Child lastCoinChooserChild) {
         this.lastCoinChooserChild = lastCoinChooserChild;
+    }
+
+    public JSONArray getJSON() throws JSONException {
+        JSONArray result = new JSONArray();
+        JSONObject lastChild = new JSONObject();
+        lastChild.put("lastCoinChooserChild", this.lastCoinChooserChild.getJSONChild());
+        result.put(lastChild);
+        for(Child i : this.allChildren){
+            result.put(i.getJSONChild());
+        }
+        return result;
     }
 
 }
