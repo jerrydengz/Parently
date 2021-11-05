@@ -43,8 +43,6 @@ public class TimeoutActivity extends AppCompatActivity {
     private boolean isTimerRunning;
     private long timeLeft = START_TIME;
 
-    private ConstraintLayout constraintLayout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +50,6 @@ public class TimeoutActivity extends AppCompatActivity {
 
         tvCountDown = findViewById(R.id.tvCountDown);
         customTimeInput = findViewById(R.id.inputCustomNumber);
-        constraintLayout = findViewById(R.id.timeoutLayout);
-
 
         this.createBackBtn();
         this.setUpStartAndPauseBtn();
@@ -130,6 +126,7 @@ public class TimeoutActivity extends AppCompatActivity {
         customTimeInput.setVisibility(currentView);
 
         int background = isTimerRunning ? R.drawable.relaxing_background : 0;
+        ConstraintLayout constraintLayout = findViewById(R.id.timeoutLayout);
         constraintLayout.setBackgroundResource(background);
     }
 
