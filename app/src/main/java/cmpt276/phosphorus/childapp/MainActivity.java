@@ -6,7 +6,14 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
-import cmpt276.phosphorus.childapp.coinflip.ChooseChildActivity;
+import java.util.UUID;
+
+import cmpt276.phosphorus.childapp.coinflip.ChooseSideActivity;
+import cmpt276.phosphorus.childapp.coinflip.CoinFlipHistoryActivity;
+import cmpt276.phosphorus.childapp.model.Child;
+import cmpt276.phosphorus.childapp.model.ChildManager;
+import cmpt276.phosphorus.childapp.model.CoinFlipResult;
+import cmpt276.phosphorus.childapp.utils.CoinSide;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void createFlipCoinBtn() {
         Button button = findViewById(R.id.btnFlipCoin);
-        button.setOnClickListener(view -> startActivity(ChooseChildActivity.makeIntent(this)));
+        button.setOnClickListener(view -> startActivity(ChooseSideActivity.makeIntent(this)));
     }
 
     private void createTimeoutBtn() {
