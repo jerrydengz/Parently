@@ -15,4 +15,10 @@
     <string name="flip_coin_flip_button">Flip</string>
     <string name="flip_coin_flip_head_title">Heads</string>
     <string name="flip_coin_flip_tails_title">Tails</string>
+    <string name="title_activity_children_configure">ChildrenConfigureActivity</string>
+    <string name="add_child_btn_text">New Child</string>
+    <string name="back_btn_text">Back</string>
+    <string name="save_btn_text">SAVE</string>
+    <string name="name_edit_txt">Name</string>
+    <string name="child_name_txt"><b>Child Name</b></string>
 </resources>
