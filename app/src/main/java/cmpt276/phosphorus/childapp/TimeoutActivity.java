@@ -1,6 +1,7 @@
 package cmpt276.phosphorus.childapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -123,6 +124,10 @@ public class TimeoutActivity extends AppCompatActivity {
         btnReset.setVisibility(currentView);
         timeGroup.setVisibility(currentView);
         customTimeInput.setVisibility(currentView);
+
+        int background = isTimerRunning ? R.drawable.relaxing_background : 0;
+        ConstraintLayout constraintLayout = findViewById(R.id.timeoutLayout);
+        constraintLayout.setBackgroundResource(background);
     }
 
     private void createTimeOptions() {
