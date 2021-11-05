@@ -1,6 +1,7 @@
 package cmpt276.phosphorus.childapp;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import cmpt276.phosphorus.childapp.model.Child;
@@ -16,37 +18,15 @@ import cmpt276.phosphorus.childapp.model.ChildManager;
 
 public class ChildrenConfigureActivity extends AppCompatActivity {
 
-    private ChildManager childManager;
-    private boolean isEditingChild;
+    private boolean isEditingChild; // TODO for editing
     private EditText childNameEditText;
     private String childName = "";
     private static final String CONFIGURATION_STATE = "ChildConfigurationState";
-
-    // TODO ask brian the conditions on error checking and saving
-    private final TextWatcher nameTextWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-            // get contents of the edit text field
-            childName = childNameEditText.getText().toString();
-
-            // error checking
-            // no empty string name
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_children_configure);
-        childManager = ChildManager.getInstance();
 
         this.createBackBtn();
         this.createSaveBtn();
@@ -54,6 +34,22 @@ public class ChildrenConfigureActivity extends AppCompatActivity {
     }
 
     private void registerTextWatcher() {
+        TextWatcher nameTextWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // get contents of the edit text field
+                childName = childNameEditText.getText().toString();
+            }
+        };
+
         childNameEditText = findViewById(R.id.name_edit_text);
         childNameEditText.addTextChangedListener(nameTextWatcher);
     }
@@ -64,17 +60,24 @@ public class ChildrenConfigureActivity extends AppCompatActivity {
     }
 
     private void createSaveBtn() {
+        ChildManager childManager = ChildManager.getInstance();
         Button button = findViewById(R.id.btnSave);
         button.setOnClickListener(view -> {
 
-            if(!childName.trim().equals("")){
-                childManager.addChild(new Child(childName));
+            // let user to continue to edit and change, till valid entry is entered, or exit
+            if(childName.trim().isEmpty()){
+                // https://www.youtube.com/watch?v=_5bSz4tsdP4
+                AlertDialog.Builder dialogWarning = new AlertDialog.Builder(this);
+                dialogWarning.setTitle("Invalid Name");
+                dialogWarning.setMessage("Make sure you aren't entering an empty name!");
+
+                dialogWarning.setPositiveButton("OK", (dialogInterface, i) -> {});
+                dialogWarning.show();
 
             }else{
-                Toast.makeText(getApplicationContext(), "Invalid Name. Child Profile Not Created", Toast.LENGTH_SHORT).show();
+                childManager.addChild(new Child(childName.trim()));
+                finish();
             }
-
-            finish();
         });
     }
 

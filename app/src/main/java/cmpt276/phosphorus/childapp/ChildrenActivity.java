@@ -40,7 +40,8 @@ public class ChildrenActivity extends AppCompatActivity {
 
     private void createConfigureChildBtn() {
         Button button = findViewById(R.id.configureChildrenBtn);
-        button.setOnClickListener(view -> startActivity(ChildrenConfigureActivity.makeIntent(
+        button.setOnClickListener(view -> startActivity(
+                ChildrenConfigureActivity.makeIntent(
                 this, null, NEW_CHILD_IDX, false)
         ));
     }
@@ -51,13 +52,6 @@ public class ChildrenActivity extends AppCompatActivity {
     }
 
     private void populateChildListView() {
-        childManager.addChild(new Child("Jerry"));
-        childManager.addChild(new Child("Jack"));
-        childManager.addChild(new Child("Johnson"));
-        childManager.addChild(new Child("Joshua"));
-        childManager.addChild(new Child("Jonathan"));
-        childManager.addChild(new Child("Josh"));
-
         List<Child> childProfileList = childManager.getAllChildren();
         ArrayAdapter<Child> listAdapter = new ArrayAdapter<>(
                 this,
@@ -74,7 +68,7 @@ public class ChildrenActivity extends AppCompatActivity {
         // switch to ChildConfigureActivity to edit selected child object
         listView.setOnItemClickListener((adapter, view, position, arg) -> {
             Intent intent = ChildrenConfigureActivity.makeIntent(
-                    getApplicationContext(),
+                    this,
                     childManager.getAllChildren().get(position),
                     position, true);
             startActivity(intent);
