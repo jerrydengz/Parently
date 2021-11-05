@@ -20,6 +20,7 @@ import java.util.UUID;
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.coinflip.utils.CoinFlipAnimationDirection;
 import cmpt276.phosphorus.childapp.coinflip.utils.CoinFlipIntent;
+import cmpt276.phosphorus.childapp.model.CoinFlipResult;
 import cmpt276.phosphorus.childapp.utils.CoinSide;
 import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
@@ -128,11 +129,13 @@ public class FlipCoinActivity extends AppCompatActivity {
         });
     }
 
+    // todo activity change/particles/back button?
     private void sideLanded() {
-        // todo activity change/particles/back button?
+        boolean didWin = this.coinSide == this.winningSide;
 
-        if (this.coinSide == this.winningSide) {
-            // use children manager to find use by this.child and add
+        if (didWin) {
+            CoinFlipResult coinFlipResult = new CoinFlipResult(this.winningSide, this.coinSide);
+            this.child.addCoinFlipResult(coinFlipResult);
         } else {
             // Children loses
         }
