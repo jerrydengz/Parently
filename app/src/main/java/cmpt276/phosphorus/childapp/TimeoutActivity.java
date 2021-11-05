@@ -1,6 +1,7 @@
 package cmpt276.phosphorus.childapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.Intent;
@@ -77,7 +78,7 @@ public class TimeoutActivity extends AppCompatActivity {
         btnReset.setOnClickListener(v -> resetTimer());
     }
 
-    private void createBackBtn(){
+    private void createBackBtn() {
         Button button = findViewById(R.id.btnBackTimeout);
         button.setOnClickListener(view -> finish());
     }
@@ -212,6 +213,9 @@ public class TimeoutActivity extends AppCompatActivity {
 
         editor.apply();
 
+        if(isTimerRunning){
+            startTimeoutNotificationService();
+        }
         if(cdTimer != null) {
             cdTimer.cancel();
         }
@@ -220,6 +224,8 @@ public class TimeoutActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        stopTimeoutNotificationService();
 
         SharedPreferences prefs = getSharedPreferences(
                 getString(R.string.shared_pref_pref), MODE_PRIVATE);
@@ -246,6 +252,16 @@ public class TimeoutActivity extends AppCompatActivity {
                 startTimer();
             }
         }
+    }
+
+    public void startTimeoutNotificationService() {
+        Intent serviceIntent = new Intent(this, TimeoutNotificationService.class);
+        ContextCompat.startForegroundService(this, serviceIntent);
+    }
+
+    public void stopTimeoutNotificationService() {
+        Intent serviceIntent = new Intent(this, TimeoutNotificationService.class);
+        stopService(serviceIntent);
     }
 
     public static Intent makeIntent(Context context) {
