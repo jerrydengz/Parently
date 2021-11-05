@@ -11,10 +11,13 @@ import java.util.UUID;
 public class ChildManager {
 
     private static ChildManager instance;
+
     private final List<Child> allChildren;
+    private Child lastCoinChooserChild;
 
     private ChildManager() {
         this.allChildren = new ArrayList<>();
+        this.lastCoinChooserChild = null;
     }
 
     public static ChildManager getInstance() {
@@ -48,6 +51,14 @@ public class ChildManager {
 
     public boolean removeChild(Child child) {
         return this.allChildren.remove(child);
+    }
+
+    public Child getLastCoinChooserChild() {
+        return this.lastCoinChooserChild;
+    }
+
+    public void setLastCoinChooserChild(Child lastCoinChooserChild) {
+        this.lastCoinChooserChild = lastCoinChooserChild;
     }
 
 }

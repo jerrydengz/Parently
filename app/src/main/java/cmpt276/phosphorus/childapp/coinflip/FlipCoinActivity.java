@@ -48,6 +48,9 @@ public class FlipCoinActivity extends AppCompatActivity {
         setContentView(R.layout.activity_flip_coin);
 
         this.extractIntentData();
+        // We set the last child here b/c the person may have exited the past pages and haven't
+        // properly flipped a coin
+        ChildManager.getInstance().setLastCoinChooserChild(this.child);
         this.coinSide = this.DEFAULT_SIDE;
 
         this.updateCoinDisplay();

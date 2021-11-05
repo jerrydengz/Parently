@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
+import cmpt276.phosphorus.childapp.utils.Emoji;
 
 public class ChooseChildActivity extends AppCompatActivity {
 
@@ -36,9 +37,14 @@ public class ChooseChildActivity extends AppCompatActivity {
     // todo gotta worry about duplicates
     private void updateChildrenList() {
         ListView listView = findViewById(R.id.listChildren);
+        ChildManager childManager = ChildManager.getInstance();
 
-        List<Child> children = ChildManager.getInstance().getAllChildren();
-        List<String> childrenNames = children.stream().map(Child::getName).collect(Collectors.toList());
+        List<Child> children = childManager.getAllChildren();
+        List<String> childrenNames = children.stream().map(child -> {
+            String childName = child.getName();
+            boolean didPickLast = child.equals(ChildManager.getInstance().getLastCoinChooserChild());
+            return didPickLast ? (childName + " - " + Emoji.STAR.get()) : childName;
+        }).collect(Collectors.toList());
 
         // Ref https://android--code.blogspot.com/2015/08/android-listview-text-size.html
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, childrenNames) {
@@ -52,9 +58,13 @@ public class ChooseChildActivity extends AppCompatActivity {
             }
         };
 
-
         listView.setOnItemClickListener((adapterView, view, position, l) -> {
-            startActivity(ChooseSideActivity.makeIntent(this, children.get(position).getUUID()));
+            Child selectedChild = children.get(position);
+            if (selectedChild.equals(ChildManager.getInstance().getLastCoinChooserChild())) {
+                return; // todo Do we want to enforce them not choosing them again?
+            }
+
+            startActivity(ChooseSideActivity.makeIntent(this, selectedChild.getUUID()));
             finish(); // We don't want users coming back here
         });
 
