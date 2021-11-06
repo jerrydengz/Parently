@@ -3,6 +3,7 @@ package cmpt276.phosphorus.childapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -128,6 +129,10 @@ public class TimeoutActivity extends AppCompatActivity {
         timeGroup.setVisibility(currentView);
         customTimeInput.setVisibility(currentView);
 
+        if(timeLeft == startTime){
+            btnReset.setVisibility(View.INVISIBLE);
+        }
+
         if(timeLeft == 0){
             btnStartAndPause.setVisibility(View.INVISIBLE);
         }
@@ -147,6 +152,7 @@ public class TimeoutActivity extends AppCompatActivity {
                 startTime = options * NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS;
                 timeLeft = startTime;
                 updateCountDownText();
+                setVisibilities();
                 btnStartAndPause.setVisibility(View.VISIBLE);
                 customTimeInput.setText("");
                 button.setChecked(true);
@@ -190,12 +196,16 @@ public class TimeoutActivity extends AppCompatActivity {
     // Turns milliseconds it is given to minutes and seconds for timer
     // Account for hours (when user input > 59min)?
     private void updateCountDownText() {
+        String timeLeftFormatted = timeLeftFormatter(timeLeft);
+        tvCountDown.setText(timeLeftFormatted);
+    }
+
+    public static String timeLeftFormatter(long timeLeft) {
         int minutes = (int) ((timeLeft / 1000) / 60);
         int seconds = (int) ((timeLeft / 1000) % 60);
 
-        String timeLeftFormatted = String.format(Locale.getDefault(),
+        return String.format(Locale.getDefault(),
                 "%02d:%02d", minutes, seconds);
-        tvCountDown.setText(timeLeftFormatted);
     }
 
     @Override
@@ -226,6 +236,7 @@ public class TimeoutActivity extends AppCompatActivity {
         super.onStart();
 
         stopTimeoutNotificationService();
+        stopNotification(1);
 
         SharedPreferences prefs = getSharedPreferences(
                 getString(R.string.shared_pref_pref), MODE_PRIVATE);
@@ -262,6 +273,12 @@ public class TimeoutActivity extends AppCompatActivity {
     public void stopTimeoutNotificationService() {
         Intent serviceIntent = new Intent(this, TimeoutNotificationService.class);
         stopService(serviceIntent);
+    }
+
+    public void stopNotification(int id) {
+        NotificationManager notificationManager = (NotificationManager)
+                getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.cancel(id);
     }
 
     public static Intent makeIntent(Context context) {
