@@ -26,7 +26,10 @@
     <string name="shared_pref_time_left">timeLeft</string>
     <string name="shared_pref_end_time">endTime</string>
     <string name="shared_pref_is_timer_running">isTimerRunning</string>
+    <string name="timeout_remaining">Time Remaining</string>
     <string name="timeout_finished">Timeout Finished!</string>
     <string name="stop_timeout">Stop Timeout</string>
     <string name="alarm_icon">Alarm Warning Icon</string>
+    <string name="timer_notification_service_channel">Timer Notification Service Channel</string>
+    <string name="timeout_notification_channel_desc">Timer is running notification</string>
 </resources>
