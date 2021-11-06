@@ -103,10 +103,7 @@ public class TimeoutActivity extends AppCompatActivity {
                 btnStartAndPause.setText(getString(R.string.start));
                 btnStartAndPause.setVisibility(View.INVISIBLE);
                 setVisibilities();
-
-                FragmentManager manager = getSupportFragmentManager();
-                TimeoutMessageFragment dialog = new TimeoutMessageFragment();
-                dialog.show(manager, "MessageDialog");
+                createAlertDialog();
             }
         }.start();
 
@@ -193,6 +190,7 @@ public class TimeoutActivity extends AppCompatActivity {
                 timeGroup.clearCheck();
                 if(!customInput.isEmpty()){
                     long input = Long.parseLong(customInput);
+                    btnReset.setVisibility(View.INVISIBLE);
                     if(input != 0){
                         startTime = input * NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS;
                         timeLeft = startTime;
@@ -202,7 +200,6 @@ public class TimeoutActivity extends AppCompatActivity {
                         // Unique case so not using setVisibilities()
                         timeLeft = 0;
                         updateCountDownText();
-                        btnReset.setVisibility(View.INVISIBLE);
                         btnStartAndPause.setVisibility(View.INVISIBLE);
                     }
                 }
@@ -276,15 +273,17 @@ public class TimeoutActivity extends AppCompatActivity {
                 isTimerRunning = false;
                 updateCountDownText();
                 setVisibilities();
-
-                FragmentManager manager = getSupportFragmentManager();
-                TimeoutMessageFragment dialog = new TimeoutMessageFragment();
-                dialog.show(manager, "MessageDialog");
-
+                createAlertDialog();
             } else{
                 startTimer();
             }
         }
+    }
+
+    private void createAlertDialog() {
+        FragmentManager manager = getSupportFragmentManager();
+        TimeoutMessageFragment dialog = new TimeoutMessageFragment();
+        dialog.show(manager, "MessageDialog");
     }
 
     public void startTimeoutNotificationService() {
