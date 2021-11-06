@@ -2,10 +2,13 @@ package cmpt276.phosphorus.childapp;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -30,9 +33,15 @@ public class TimeoutMessageFragment extends AppCompatDialogFragment {
         player.setLooping(true);
         player.start();
 
+        // Code from https://developer.android.com/reference/android/os/Vibrator
+        Vibrator vibrator = (Vibrator) requireActivity()
+                .getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(VibrationEffect.createOneShot(10000, 100));
+
         Button btn = view.findViewById(R.id.btnStopTimeout);
         btn.setOnClickListener(v -> {
             player.stop();
+            vibrator.cancel();
             dismiss();
         });
         return new AlertDialog.Builder(getActivity())
