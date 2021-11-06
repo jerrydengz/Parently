@@ -1,3 +1,6 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+/.name
+/render.experimental.xml
+/vcs.xml
