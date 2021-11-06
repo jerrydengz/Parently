@@ -192,6 +192,12 @@ public class TimeoutActivity extends AppCompatActivity {
                         timeLeft = startTime;
                         updateCountDownText();
                         btnStartAndPause.setVisibility(View.VISIBLE);
+                    } else {
+                        // Unique case so not using setVisibilities()
+                        timeLeft = 0;
+                        updateCountDownText();
+                        btnReset.setVisibility(View.INVISIBLE);
+                        btnStartAndPause.setVisibility(View.INVISIBLE);
                     }
                 }
             }
