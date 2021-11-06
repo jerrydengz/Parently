@@ -113,6 +113,8 @@ public class TimeoutNotificationService extends Service {
             timeLeft = endTime - System.currentTimeMillis();
         }
 
+        Intent endIntent = new Intent(this, TimeoutActivity.class);
+
         editor.putLong(getString(R.string.shared_pref_end_time), endTime);
         cdTimer = new CountDownTimer(timeLeft, COUNT_DOWN_INTERVAL) {
             @Override
@@ -134,7 +136,7 @@ public class TimeoutNotificationService extends Service {
 
             @Override
             public void onFinish() {
-                // todo: alert dialog
+                startActivity(endIntent);
             }
         }.start();
 

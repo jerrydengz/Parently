@@ -3,6 +3,7 @@ package cmpt276.phosphorus.childapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentManager;
 
 import android.app.NotificationManager;
 import android.content.Context;
@@ -102,6 +103,10 @@ public class TimeoutActivity extends AppCompatActivity {
                 btnStartAndPause.setText(getString(R.string.start));
                 btnStartAndPause.setVisibility(View.INVISIBLE);
                 setVisibilities();
+
+                FragmentManager manager = getSupportFragmentManager();
+                TimeoutMessageFragment dialog = new TimeoutMessageFragment();
+                dialog.show(manager, "MessageDialog");
             }
         }.start();
 
@@ -122,6 +127,7 @@ public class TimeoutActivity extends AppCompatActivity {
         updateCountDownText();
         btnReset.setVisibility(View.INVISIBLE);
         btnStartAndPause.setVisibility(View.VISIBLE);
+        btnStartAndPause.setText(getString(R.string.start));
     }
 
     private void setVisibilities() {
@@ -270,6 +276,11 @@ public class TimeoutActivity extends AppCompatActivity {
                 isTimerRunning = false;
                 updateCountDownText();
                 setVisibilities();
+
+                FragmentManager manager = getSupportFragmentManager();
+                TimeoutMessageFragment dialog = new TimeoutMessageFragment();
+                dialog.show(manager, "MessageDialog");
+
             } else{
                 startTimer();
             }
