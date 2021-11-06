@@ -33,7 +33,6 @@ public class ChildrenActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         populateChildListView();
     }
 
