@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -24,11 +25,20 @@ public class ChildrenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_children);
 
+        this.setTitle(getString(R.string.child_activity_title));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         childManager = ChildManager.getInstance();
-        this.createBackBtn();
         this.createConfigureChildBtn();
         this.populateChildListView();
         this.createOnClickCallBack();
+    }
+
+    // If user select the top left back button
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -43,11 +53,6 @@ public class ChildrenActivity extends AppCompatActivity {
                 ChildrenConfigureActivity.makeIntent(
                 this, null)
         ));
-    }
-
-    private void createBackBtn(){
-        Button button = findViewById(R.id.btnBackChildren);
-        button.setOnClickListener(view -> finish());
     }
 
     private void populateChildListView() {

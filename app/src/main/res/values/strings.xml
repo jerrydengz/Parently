@@ -11,6 +11,8 @@
     <string name="custom">Custom</string>
     <string name="time_selected">"%1$d minutes</string>
     <string name="custom_minutes">Custom Minutes</string>
+    <string name="timeout_title">Timer</string>
+
 
     <string name="flip_coin_history_action_title">History</string>
     <string name="flip_coin_choose_action_title">Choose a side</string>
@@ -18,12 +20,16 @@
     <string name="flip_coin_flip_button">Flip</string>
     <string name="flip_coin_flip_head_title">Heads</string>
     <string name="flip_coin_flip_tails_title">Tails</string>
+
     <string name="title_activity_children_configure">ChildrenConfigureActivity</string>
     <string name="add_child_btn_text">New Child</string>
     <string name="back_btn_text">Back</string>
     <string name="save_btn_text">SAVE</string>
     <string name="name_edit_txt">Name</string>
     <string name="child_name_txt"><b>Child Name</b></string>
+    <string name="child_activity_title">Children</string>
+    <string name="child_configure_edit_title">Editing</string>
+    <string name="child_configure_create_title">Creating</string>
     <string name="timeout_finished">Timeout Finished!</string>
     <string name="stop_timeout">Stop Timeout</string>
     <string name="alarm_icon">Alarm Warning Icon</string>

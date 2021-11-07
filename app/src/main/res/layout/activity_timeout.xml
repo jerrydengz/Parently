@@ -7,16 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".timeout.TimeoutActivity">
 
-    <Button
-        android:id="@+id/btnBackTimeout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="27dp"
-        android:layout_marginTop="35dp"
-        android:text="@string/back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/tvCountDown"
         android:layout_width="wrap_content"

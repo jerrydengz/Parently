@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,11 +22,22 @@ import cmpt276.phosphorus.childapp.model.ChildManager;
 
 public class ChildrenConfigureActivity extends AppCompatActivity {
 
+    private static final String CHILD_UUID_TAG = "ChildUUIDTag";
+
     private ChildManager childManager;
     private EditText childNameEditText;
     private String childName = "";
     private UUID childUUID;
-    private static final String CHILD_UUID_TAG = "ChildUUIDTag";
+
+    public static Intent makeIntent(Context context, Child childObj) {
+        Intent intent = new Intent(context, ChildrenConfigureActivity.class);
+
+        if (childObj != null) {
+            intent.putExtra(CHILD_UUID_TAG, childObj.getUUID().toString());
+        }
+
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,16 +45,22 @@ public class ChildrenConfigureActivity extends AppCompatActivity {
         setContentView(R.layout.activity_children_configure);
         childManager = ChildManager.getInstance();
 
-        this.createBackBtn();
         this.createSaveBtn();
         this.createDeleteBtn();
         this.registerTextWatcher();
         this.extractIntent();
+
+        // Gotta get intent info before we change the title
+        int titleId = this.isEditingChild() ? R.string.child_configure_edit_title : R.string.child_configure_create_title;
+        this.setTitle(getString(titleId));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void createBackBtn() {
-        Button button = findViewById(R.id.btnBackChildrenConfigure);
-        button.setOnClickListener(view -> finish());
+    // If user select the top left back button
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return super.onOptionsItemSelected(item);
     }
 
     // https://youtu.be/y6StJRn-Y-A
@@ -141,16 +159,6 @@ public class ChildrenConfigureActivity extends AppCompatActivity {
         };
 
         childNameEditText.addTextChangedListener(nameTextWatcher);
-    }
-
-    public static Intent makeIntent(Context context, Child childObj) {
-        Intent intent = new Intent(context, ChildrenConfigureActivity.class);
-
-        if (childObj != null) {
-            intent.putExtra(CHILD_UUID_TAG, childObj.getUUID().toString());
-        }
-
-        return intent;
     }
 
     private boolean isDuplicateChildName(String childName) {
