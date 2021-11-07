@@ -151,7 +151,7 @@ public class TimeoutActivity extends AppCompatActivity {
         int[] timeOptions = getResources().getIntArray(R.array.time_options);
 
         SharedPreferences prefs = getSharedPreferences(
-                getString(R.string.shared_pref_pref), MODE_PRIVATE);
+                TimeoutPrefConst.PREFERENCE_PREF, MODE_PRIVATE);
 
         for (int options : timeOptions) {
             RadioButton button = new RadioButton(this);
@@ -168,7 +168,7 @@ public class TimeoutActivity extends AppCompatActivity {
             timeGroup.addView((button));
 
             if(options * NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS ==
-                    prefs.getLong(getString(R.string.shared_pref_start_time), startTime)){
+                    prefs.getLong(TimeoutPrefConst.START_TIME, startTime)){
                 button.setChecked(true);
             }
         }
@@ -227,13 +227,13 @@ public class TimeoutActivity extends AppCompatActivity {
         super.onStop();
 
         SharedPreferences prefs = getSharedPreferences(
-                getString(R.string.shared_pref_pref), MODE_PRIVATE);
+                TimeoutPrefConst.PREFERENCE_PREF, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
-        editor.putLong(getString(R.string.shared_pref_start_time), startTime);
-        editor.putLong(getString(R.string.shared_pref_time_left), timeLeft);
-        editor.putLong(getString(R.string.shared_pref_end_time), endTime);
-        editor.putBoolean(getString(R.string.shared_pref_is_timer_running), isTimerRunning);
+        editor.putLong(TimeoutPrefConst.START_TIME, startTime);
+        editor.putLong(TimeoutPrefConst.TIME_LEFT, timeLeft);
+        editor.putLong(TimeoutPrefConst.END_TIME, endTime);
+        editor.putBoolean(TimeoutPrefConst.IS_TIMER_RUNNING, isTimerRunning);
 
         editor.apply();
 
@@ -253,19 +253,19 @@ public class TimeoutActivity extends AppCompatActivity {
         stopNotification(1);
 
         SharedPreferences prefs = getSharedPreferences(
-                getString(R.string.shared_pref_pref), MODE_PRIVATE);
+                TimeoutPrefConst.PREFERENCE_PREF, MODE_PRIVATE);
 
-        startTime = prefs.getLong(getString(R.string.shared_pref_start_time),
+        startTime = prefs.getLong(TimeoutPrefConst.START_TIME,
                 NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS);
-        timeLeft = prefs.getLong(getString(R.string.shared_pref_time_left), startTime);
+        timeLeft = prefs.getLong(TimeoutPrefConst.TIME_LEFT, startTime);
         isTimerRunning = prefs.getBoolean(
-                getString(R.string.shared_pref_is_timer_running), false);
+                TimeoutPrefConst.IS_TIMER_RUNNING, false);
 
         updateCountDownText();
         setVisibilities();
 
         if(isTimerRunning){
-            endTime = prefs.getLong(getString(R.string.shared_pref_end_time), 0);
+            endTime = prefs.getLong(TimeoutPrefConst.END_TIME, 0);
             timeLeft = endTime - System.currentTimeMillis();
 
             if(timeLeft < 0){
