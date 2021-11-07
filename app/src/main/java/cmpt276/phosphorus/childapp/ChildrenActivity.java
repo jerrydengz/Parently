@@ -9,7 +9,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,8 +16,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
@@ -59,12 +56,10 @@ public class ChildrenActivity extends AppCompatActivity {
     }
 
     private void populateChildListView() {
-        List<Child> childProfileList = childManager.getAllChildren();
         ArrayAdapter<Child> listAdapter = new ChildListAdapter();
 
         ListView listView = findViewById(R.id.listViewChildren);
         listView.setAdapter(listAdapter);
-
     }
 
     private void createOnClickCallBack() {
