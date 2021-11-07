@@ -2,7 +2,10 @@ package cmpt276.phosphorus.childapp.utils;
 
 public enum Emoji {
 
-    STAR(0x2B50);
+    STAR(0x2B50),
+    SAD(0x1F627),
+    HAPPY(0x1F600),
+    ;
 
     private final int unicode;
 
