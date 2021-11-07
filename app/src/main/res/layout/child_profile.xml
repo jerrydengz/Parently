@@ -1,22 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@drawable/list_view_background">
 
+    <Space
+        android:id="@+id/space"
+        android:layout_width="20sp"
+        android:layout_height="10sp"
+        android:layout_marginStart="44dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SmallSp" />
 
     <ImageView
         android:id="@+id/childProfileIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_marginStart="16dp"
         android:maxWidth="80sp"
         android:maxHeight="80sp"
-        android:minWidth="80sp"
-        android:minHeight="80sp"
-        app:srcCompat="@drawable/child_profile_img"
-        tools:ignore="ContentDescription,RtlHardcoded" />
+        android:minWidth="60sp"
+        android:minHeight="60sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/space" />
+
+    <Space
+        android:id="@+id/space1"
+        android:layout_width="250dp"
+        android:layout_height="10sp"
+        android:layout_marginStart="44dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/childProfileIcon"
+        tools:ignore="SmallSp" />
 
     <TextView
         android:id="@+id/child_profile_name"
@@ -24,11 +42,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="21dp"
-        android:layout_marginEnd="79dp"
+        android:layout_marginStart="30sp"
+        android:layout_marginTop="21sp"
         android:layout_toEndOf="@+id/childProfileIcon"
         android:text="@string/child_name_txt"
-        android:textSize="32sp" />
+        android:textSize="28sp"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/childProfileIcon"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

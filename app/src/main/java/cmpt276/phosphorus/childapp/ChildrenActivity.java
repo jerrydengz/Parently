@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -62,6 +64,7 @@ public class ChildrenActivity extends AppCompatActivity {
 
         ListView listView = findViewById(R.id.listViewChildren);
         listView.setAdapter(listAdapter);
+
     }
 
     private void createOnClickCallBack() {
@@ -107,6 +110,7 @@ public class ChildrenActivity extends AppCompatActivity {
             // Set the name
             TextView childName = childView.findViewById(R.id.child_profile_name);
             childName.setText(childProfile.getName());
+            childName.setTypeface(null, Typeface.BOLD);
 
             return childView;
         }
