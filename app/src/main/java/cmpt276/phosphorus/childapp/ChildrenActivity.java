@@ -1,13 +1,20 @@
 package cmpt276.phosphorus.childapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -51,10 +58,7 @@ public class ChildrenActivity extends AppCompatActivity {
 
     private void populateChildListView() {
         List<Child> childProfileList = childManager.getAllChildren();
-        ArrayAdapter<Child> listAdapter = new ArrayAdapter<>(
-                this,
-                R.layout.child_profile,
-                childProfileList);
+        ArrayAdapter<Child> listAdapter = new ChildListAdapter();
 
         ListView listView = findViewById(R.id.listViewChildren);
         listView.setAdapter(listAdapter);
@@ -74,6 +78,39 @@ public class ChildrenActivity extends AppCompatActivity {
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, ChildrenActivity.class);
+    }
+
+    // https://www.youtube.com/watch?v=WRANgDgM2Zg
+    private class ChildListAdapter extends ArrayAdapter<Child>{
+
+        public ChildListAdapter() {
+            super(ChildrenActivity.this, R.layout.child_profile, childManager.getAllChildren());
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+            View childView = convertView;
+
+            if (childView == null) {
+                childView = getLayoutInflater().inflate(R.layout.child_profile, parent, false);
+            }
+
+
+            Child childProfile = childManager.getAllChildren().get(position);
+
+            // Set the image
+            ImageView childIcon = childView.findViewById(R.id.childProfileIcon);
+            childIcon.setImageResource(R.drawable.child_profile_img);
+
+            // Set the name
+            TextView childName = childView.findViewById(R.id.child_profile_name);
+            childName.setText(childProfile.getName());
+
+            return childView;
+        }
+
     }
 
 }
