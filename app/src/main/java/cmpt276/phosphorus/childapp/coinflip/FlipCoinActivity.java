@@ -47,7 +47,6 @@ public class FlipCoinActivity extends AppCompatActivity {
         return intent;
     }
 
-    // todo remember who picked last
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +63,6 @@ public class FlipCoinActivity extends AppCompatActivity {
         this.coinSide = this.DEFAULT_SIDE;
 
         this.updateCoinDisplay();
-        this.createBackBtn();
         this.createFlipBtn();
     }
 
@@ -75,33 +73,12 @@ public class FlipCoinActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void extractIntentData() {
-        Intent intent = getIntent();
-        this.winningSide = CoinSide.valueOf(intent.getStringExtra(CoinFlipIntent.CHOSEN_COIN_SIDE));
-    }
-
-    private void flipCoinState() {
-        this.coinSide = (this.coinSide == CoinSide.HEAD) ? CoinSide.TAILS : CoinSide.HEAD;
-    }
-
-    private void updateCoinDisplay() {
-        ImageView coinImg = findViewById(R.id.imgCoin);
-        coinImg.setImageResource(this.coinSide.getImgId());
-
-        TextView currentSide = findViewById(R.id.textCurrentSide);
-        currentSide.setText(getString(this.coinSide.getTitleId()));
-    }
-
-    private int getDelayBetween(int x) {
-        return (4 * x) + 25; // 4x + 25 | https://www.desmos.com/calculator/ya6hvzdgxj
-    }
-
     private void randomlyChooseSide() {
         Button button = findViewById(R.id.btnFlip);
         button.setVisibility(View.INVISIBLE);
 
-        int MIN_FLIPS = 10;
-        int MAX_FLIPS = 15;
+        final int MIN_FLIPS = 10;
+        final int MAX_FLIPS = 15;
 
         Random random = new Random();
         CoinSide[] coinSide = CoinSide.values();
@@ -124,6 +101,10 @@ public class FlipCoinActivity extends AppCompatActivity {
             button.setVisibility(View.VISIBLE);
             button.setText("Ok");
         }, afterAllAnimations + 50); // Extra 50ms just in case
+    }
+
+    private int getDelayBetween(int x) {
+        return (4 * x) + 25; // 4x + 25 | https://www.desmos.com/calculator/ya6hvzdgxj
     }
 
     private ObjectAnimator rotateCoin90Degree(CoinFlipAnimationDirection direction, int rotationDelay) {
@@ -160,28 +141,44 @@ public class FlipCoinActivity extends AppCompatActivity {
         }
 
         String toastMsg = coinFlipResult.getDidWin() ? "You won!" + Emoji.HAPPY.get() : "You lost " + Emoji.SAD.get();
-        Toast toast = Toast.makeText(this, toastMsg, Toast.LENGTH_LONG);
-        ViewGroup group = (ViewGroup) toast.getView();
-        TextView messageTextView = (TextView) group.getChildAt(0);
-        messageTextView.setTextSize(25);
-        toast.show();
+        this.showLargeToast(toastMsg);
     }
 
-    private void createBackBtn() {
-        Button button = findViewById(R.id.btnFlip);
-        button.setOnClickListener(view -> finish());
+    private void updateCoinDisplay() {
+        ImageView coinImg = findViewById(R.id.imgCoin);
+        coinImg.setImageResource(this.coinSide.getImgId());
+
+        TextView currentSide = findViewById(R.id.textCurrentSide);
+        currentSide.setText(getString(this.coinSide.getTitleId()));
+    }
+
+    private void extractIntentData() {
+        Intent intent = getIntent();
+        this.winningSide = CoinSide.valueOf(intent.getStringExtra(CoinFlipIntent.CHOSEN_COIN_SIDE));
+    }
+
+    private void flipCoinState() {
+        this.coinSide = (this.coinSide == CoinSide.HEAD) ? CoinSide.TAILS : CoinSide.HEAD;
     }
 
     private void createFlipBtn() {
         Button button = findViewById(R.id.btnFlip);
         button.setOnClickListener(view -> {
             if (!this.hasFlipped) {
-                this.hasFlipped = true;
+                this.hasFlipped = true; // Makes it so next time we press the btn we go back
                 this.randomlyChooseSide();
             } else {
                 finish();
             }
         });
+    }
+
+    private void showLargeToast(String msg) {
+        Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
+        ViewGroup group = (ViewGroup) toast.getView();
+        TextView messageTextView = (TextView) group.getChildAt(0);
+        messageTextView.setTextSize(25);
+        toast.show();
     }
 
 }

@@ -51,7 +51,7 @@ public class ChooseSideActivity extends AppCompatActivity {
 
     private void displayChildName() {
         Child nextChild = ChildManager.getInstance().getNextCoinFlipper();
-        if (nextChild == null)
+        if (nextChild == null) // If there aren't any children created yet
             return;
 
         TextView textView = findViewById(R.id.textSideChooseTitle);
