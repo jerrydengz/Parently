@@ -100,29 +100,29 @@ public class TimeoutNotificationService extends Service {
 
     private void startServiceTimer() {
         SharedPreferences prefs = getSharedPreferences(
-                getString(R.string.shared_pref_pref), MODE_PRIVATE);
+                TimeoutPrefConst.PREFERENCE_PREF, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
-        long startTime = prefs.getLong(getString(R.string.shared_pref_start_time),
+        long startTime = prefs.getLong(TimeoutPrefConst.START_TIME,
                 NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS);
-        long timeLeft = prefs.getLong(getString(R.string.shared_pref_time_left), startTime);
+        long timeLeft = prefs.getLong(TimeoutPrefConst.TIME_LEFT, startTime);
 
         endTime = System.currentTimeMillis() + timeLeft;
         if(isTimerRunning) {
-            endTime = prefs.getLong(getString(R.string.shared_pref_end_time), 0);
+            endTime = prefs.getLong(TimeoutPrefConst.END_TIME, 0);
             timeLeft = endTime - System.currentTimeMillis();
         }
 
         Intent endIntent = new Intent(this, TimeoutActivity.class);
 
-        editor.putLong(getString(R.string.shared_pref_end_time), endTime);
+        editor.putLong(TimeoutPrefConst.END_TIME, endTime);
         cdTimer = new CountDownTimer(timeLeft, COUNT_DOWN_INTERVAL) {
             @Override
             public void onTick(long millisUntilFinished) {
                 String timeLeftFormatted = timeLeftFormatter(millisUntilFinished);
 
                 // Continually update time left for inner timer
-                editor.putLong(getString(R.string.shared_pref_time_left),
+                editor.putLong(TimeoutPrefConst.TIME_LEFT,
                         endTime - System.currentTimeMillis());
                 editor.apply();
 
