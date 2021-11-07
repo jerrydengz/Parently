@@ -11,6 +11,11 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+// ==============================================================================================
+//
+// Child object to keep track of children
+//
+// ==============================================================================================
 public class Child {
 
     private final UUID uuid;

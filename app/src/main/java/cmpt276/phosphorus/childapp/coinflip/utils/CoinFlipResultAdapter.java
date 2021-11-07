@@ -14,6 +14,11 @@ import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
 import cmpt276.phosphorus.childapp.model.CoinFlipResult;
 
+// ==============================================================================================
+//
+// Display all the coin flip resaults with a more spaced out look
+//
+// ==============================================================================================
 public class CoinFlipResultAdapter extends ArrayAdapter<CoinFlipResult> {
 
     public CoinFlipResultAdapter(Context context, List<CoinFlipResult> results) {

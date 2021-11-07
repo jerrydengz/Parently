@@ -16,6 +16,11 @@ import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
 
+// ==============================================================================================
+//
+// Display all the current children
+//
+// ==============================================================================================
 public class ChildrenActivity extends AppCompatActivity {
 
     private ChildManager childManager;

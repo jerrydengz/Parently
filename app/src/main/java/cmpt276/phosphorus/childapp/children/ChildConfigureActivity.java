@@ -18,6 +18,12 @@ import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
 
+// ==============================================================================================
+//
+// Activity to handle both creating, and editing of children selected
+// from the ChildrenActivity list
+//
+// ==============================================================================================
 public class ChildConfigureActivity extends AppCompatActivity {
 
     private static final String CHILD_UUID_TAG = "ChildUUIDTag";

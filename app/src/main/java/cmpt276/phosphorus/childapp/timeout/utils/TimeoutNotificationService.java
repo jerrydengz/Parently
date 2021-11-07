@@ -27,6 +27,11 @@ import cmpt276.phosphorus.childapp.timeout.TimeoutActivity;
         https://www.youtube.com/watch?v=FbpD5RZtbCc
     */
 
+// ==============================================================================================
+//
+// Manages the timeout notifications when leaving the app
+//
+// ==============================================================================================
 public class TimeoutNotificationService extends Service {
     public static final String CHANNEL_ID = "TimerNotificationServiceChannel";
 

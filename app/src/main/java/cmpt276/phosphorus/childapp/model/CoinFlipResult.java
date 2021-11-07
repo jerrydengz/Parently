@@ -8,7 +8,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
+// ==============================================================================================
+//
 // Stored the result of a coin flip
+//
+// ==============================================================================================
 public class CoinFlipResult {
 
     private final LocalDateTime time;

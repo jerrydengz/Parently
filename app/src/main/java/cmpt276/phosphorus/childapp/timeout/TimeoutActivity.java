@@ -27,13 +27,14 @@ import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.timeout.utils.TimeoutNotificationService;
 import cmpt276.phosphorus.childapp.timeout.utils.TimeoutPrefConst;
 
-/**
- * Represents a count down timer for the parent to use for
- * a child's timeout.
- */
-
 // Code assisted by https://www.youtube.com/playlist?list=PLrnPJCHvNZuB8wxqXCwKw2_NkyEmFwcSd
 
+// ==============================================================================================
+//
+// Represents a count down timer for the parent to use for
+// a child's timeout
+//
+// ==============================================================================================
 public class TimeoutActivity extends AppCompatActivity {
 
     // Interval in milliseconds the timer updates its countdown

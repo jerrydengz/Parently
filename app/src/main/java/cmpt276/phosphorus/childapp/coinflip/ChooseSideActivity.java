@@ -17,6 +17,12 @@ import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
 import cmpt276.phosphorus.childapp.model.CoinSide;
 
+// ==============================================================================================
+//
+// Allows the user to either choose heads or tails. A child is automatically selected
+// Will not show child name if there aren't any (but can still flip)
+//
+// ==============================================================================================
 public class ChooseSideActivity extends AppCompatActivity {
 
     public static Intent makeIntent(Context context) {

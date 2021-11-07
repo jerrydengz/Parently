@@ -23,7 +23,6 @@ import java.util.Random;
 
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.coinflip.utils.CoinFlipAnimationDirection;
-import cmpt276.phosphorus.childapp.coinflip.utils.CoinFlipIntent;
 import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
 import cmpt276.phosphorus.childapp.model.CoinFlipResult;
@@ -31,9 +30,14 @@ import cmpt276.phosphorus.childapp.model.CoinSide;
 import cmpt276.phosphorus.childapp.utils.Emoji;
 
 
-// Main Menu -> Select child page -> Choose head -> flip and keep track
+// ==============================================================================================
+//
+// Allows the user to flip the coin with it deciding weither you won or lost (chosen in the ChooseSideActivity)
+//
+// ==============================================================================================
 public class FlipCoinActivity extends AppCompatActivity {
 
+    private static final String CHOSEN_COIN_SIDE = "CHOSEN_COIN_SIDE";
     private final CoinSide DEFAULT_SIDE = CoinSide.HEAD;
 
     private boolean hasFlipped = false;
@@ -43,7 +47,7 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     public static Intent makeIntent(Context context, CoinSide coinSide) {
         Intent intent = new Intent(context, FlipCoinActivity.class);
-        intent.putExtra(CoinFlipIntent.CHOSEN_COIN_SIDE, coinSide.name());
+        intent.putExtra(CHOSEN_COIN_SIDE, coinSide.name());
         return intent;
     }
 
@@ -154,7 +158,7 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     private void extractIntentData() {
         Intent intent = getIntent();
-        this.winningSide = CoinSide.valueOf(intent.getStringExtra(CoinFlipIntent.CHOSEN_COIN_SIDE));
+        this.winningSide = CoinSide.valueOf(intent.getStringExtra(this.CHOSEN_COIN_SIDE));
     }
 
     private void flipCoinState() {

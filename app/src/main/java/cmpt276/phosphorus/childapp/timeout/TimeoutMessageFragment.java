@@ -16,6 +16,11 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import cmpt276.phosphorus.childapp.R;
 
+// ==============================================================================================
+//
+// Displays the finish alert notification to the user
+//
+// ==============================================================================================
 public class TimeoutMessageFragment extends AppCompatDialogFragment {
 
     @NonNull

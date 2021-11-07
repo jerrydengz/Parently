@@ -10,6 +10,11 @@ import cmpt276.phosphorus.childapp.children.ChildrenActivity;
 import cmpt276.phosphorus.childapp.coinflip.ChooseSideActivity;
 import cmpt276.phosphorus.childapp.timeout.TimeoutActivity;
 
+// ==============================================================================================
+//
+// The main menu and landing page of the app
+//
+// ==============================================================================================
 public class MainActivity extends AppCompatActivity {
 
     @Override

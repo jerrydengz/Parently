@@ -5,6 +5,12 @@ import androidx.annotation.StringRes;
 
 import cmpt276.phosphorus.childapp.R;
 
+// ==============================================================================================
+//
+// Enum to store the two possible sides of a coin, as well as keeping track of the image ID &
+// title ID
+//
+// ==============================================================================================
 public enum CoinSide {
 
     HEAD(R.drawable.coin_head, R.string.flip_coin_flip_head_title),
