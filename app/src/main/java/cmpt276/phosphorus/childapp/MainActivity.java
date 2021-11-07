@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import cmpt276.phosphorus.childapp.coinflip.ChooseChildActivity;
 import cmpt276.phosphorus.childapp.coinflip.FlipCoinActivity;
-import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Disables light-mode so coins background dont look janky
+        // Disables light-mode so coins background don't look sus
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         this.createChildrenBtn();

@@ -40,7 +40,7 @@ public class ChildrenActivity extends AppCompatActivity {
         Button button = findViewById(R.id.configureChildrenBtn);
         button.setOnClickListener(view -> startActivity(
                 ChildrenConfigureActivity.makeIntent(
-                this, null, false)
+                this, null)
         ));
     }
 
@@ -67,8 +67,7 @@ public class ChildrenActivity extends AppCompatActivity {
         listView.setOnItemClickListener((adapter, view, position, arg) -> {
             Intent intent = ChildrenConfigureActivity.makeIntent(
                     this,
-                    childManager.getAllChildren().get(position),
-                     true);
+                    childManager.getAllChildren().get(position));
             startActivity(intent);
         });
     }

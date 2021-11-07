@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,13 +21,10 @@ import cmpt276.phosphorus.childapp.model.ChildManager;
 public class ChildrenConfigureActivity extends AppCompatActivity {
 
     private ChildManager childManager;
-    private boolean isEditingChild;
     private EditText childNameEditText;
     private String childName = "";
     private UUID childUUID;
-    private static final String CONFIGURATION_STATE = "ChildConfigurationState";
     private static final String CHILD_UUID_TAG = "ChildUUIDTag";
-    private static final String CHILD_NAME_TAG = "ChildNameTag";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +35,8 @@ public class ChildrenConfigureActivity extends AppCompatActivity {
         this.createBackBtn();
         this.createSaveBtn();
         this.createDeleteBtn();
-        this.extractIntent();
         this.registerTextWatcher();
-        this.initializeEditingMode();
+        this.extractIntent();
     }
 
     private void createBackBtn() {
@@ -48,11 +45,11 @@ public class ChildrenConfigureActivity extends AppCompatActivity {
     }
 
     // https://youtu.be/y6StJRn-Y-A
-    private void showErrorAlert(String title, String dec) {
+    private void showDialogAlert(String title, String dec) {
         AlertDialog.Builder dialogWarning = new AlertDialog.Builder(this);
         dialogWarning.setTitle(title);
         dialogWarning.setMessage(dec);
-        dialogWarning.setPositiveButton("OK", null);
+        dialogWarning.setPositiveButton(getResources().getString(R.string.dialog_confirm), null);
         dialogWarning.show();
     }
 
@@ -66,16 +63,18 @@ public class ChildrenConfigureActivity extends AppCompatActivity {
 
             // let user to continue to edit and change, till valid entry is entered, or exit
             if (nameTemp.isEmpty()) {
-                this.showErrorAlert("Invalid Name", "Make sure you aren't entering an empty name!");
+                this.showDialogAlert(getResources().getString(R.string.dialog_title_invalid_name),
+                        getResources().getString(R.string.dialog_msg_invalid_name));
                 return;
             }
 
-            if (isDuplicateChildName(nameTemp) && !(isEditingChild && nameTemp.equals(child.getName()))) {
-                this.showErrorAlert("Duplicate Child Name Found", "Please enter a unique child name.");
+            if (isDuplicateChildName(nameTemp) && !(isEditingChild() && nameTemp.equals(child.getName()))) {
+                this.showDialogAlert(getResources().getString(R.string.dialog_title_dupe_name),
+                        getResources().getString(R.string.dialog_msg_dupe_name));
                 return;
             }
 
-            if (isEditingChild) {
+            if (isEditingChild()) {
                 child.setName(nameTemp);
             } else {
                 childManager.addChild(new Child(nameTemp));
@@ -90,24 +89,34 @@ public class ChildrenConfigureActivity extends AppCompatActivity {
         button.setOnClickListener(view -> {
             // https://youtu.be/y6StJRn-Y-A
             AlertDialog.Builder dialogWarning = new AlertDialog.Builder(this);
-            dialogWarning.setTitle("Delete Child");
-            dialogWarning.setMessage("Are you sure you want to delete this child? 👀👮⚠🚨‍");
-
-            dialogWarning.setPositiveButton("YES", (dialogInterface, i) -> {
-                childManager.removeChild(childUUID);
-                finish();
-            });
-            dialogWarning.setNegativeButton("NO", null);
+            dialogWarning.setTitle(getResources().getString(R.string.dialog_title_delete));
+            dialogWarning.setMessage(getResources().getString(R.string.dialog_msg_delete));
+            dialogWarning.setPositiveButton(getResources().getString(R.string.dialog_positive),
+                    (dialogInterface, i) -> {
+                        childManager.removeChild(childUUID);
+                        finish();
+                    });
+            dialogWarning.setNegativeButton(getResources().getString(R.string.dialog_negative), null);
             dialogWarning.show();
         });
     }
 
     private void extractIntent() {
         Intent packageInfo = getIntent();
-        isEditingChild = packageInfo.getBooleanExtra(CONFIGURATION_STATE, false);
-        if (isEditingChild) {
+        Button button = findViewById(R.id.btnDelete);
+        TextView txtView = findViewById(R.id.configure_child_title);
+
+        if (packageInfo.hasExtra(CHILD_UUID_TAG)) {
+            // initialize fields and EditText for editing a child profile
             childUUID = UUID.fromString(packageInfo.getStringExtra(CHILD_UUID_TAG));
-            childName = packageInfo.getStringExtra(CHILD_NAME_TAG);
+            childName = childManager.getChildByUUID(childUUID).getName();
+
+            txtView.setText(childName);
+            childNameEditText.setText(childName);
+            button.setVisibility(View.VISIBLE);
+        } else {
+            txtView.setText(R.string.add_child_title);
+            button.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -133,24 +142,11 @@ public class ChildrenConfigureActivity extends AppCompatActivity {
         childNameEditText.addTextChangedListener(nameTextWatcher);
     }
 
-    private void initializeEditingMode() {
-        Button button = findViewById(R.id.btnDelete);
-        if (isEditingChild) {
-            childNameEditText.setText(childName);
-            button.setVisibility(View.VISIBLE);
-        } else {
-            button.setVisibility(View.INVISIBLE);
-        }
-    }
-
-    public static Intent makeIntent(Context context, Child childObj, boolean isEditing) {
+    public static Intent makeIntent(Context context, Child childObj) {
         Intent intent = new Intent(context, ChildrenConfigureActivity.class);
 
-        intent.putExtra(CONFIGURATION_STATE, isEditing);
-
-        if (isEditing) {
+        if (childObj != null) {
             intent.putExtra(CHILD_UUID_TAG, childObj.getUUID().toString());
-            intent.putExtra(CHILD_NAME_TAG, childObj.getName());
         }
 
         return intent;
@@ -161,6 +157,10 @@ public class ChildrenConfigureActivity extends AppCompatActivity {
                 .stream()
                 .map(Child::getName)
                 .anyMatch(childName::equals);
+    }
+
+    private boolean isEditingChild() {
+        return childUUID != null;
     }
 
 }
