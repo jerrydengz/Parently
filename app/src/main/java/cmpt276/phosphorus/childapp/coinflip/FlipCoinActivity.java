@@ -8,14 +8,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Random;
-import java.util.UUID;
 
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.coinflip.utils.CoinFlipAnimationDirection;
@@ -24,6 +28,7 @@ import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
 import cmpt276.phosphorus.childapp.model.CoinFlipResult;
 import cmpt276.phosphorus.childapp.utils.CoinSide;
+import cmpt276.phosphorus.childapp.utils.Emoji;
 
 
 // Main Menu -> Select child page -> Choose head -> flip and keep track
@@ -31,27 +36,28 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     private final CoinSide DEFAULT_SIDE = CoinSide.HEAD;
 
+    private boolean hasFlipped = false;
     private Child child;
     private CoinSide winningSide;
     private CoinSide coinSide;
 
-    public static Intent makeIntent(Context context, UUID childUUID, CoinSide coinSide) {
+    public static Intent makeIntent(Context context, CoinSide coinSide) {
         Intent intent = new Intent(context, FlipCoinActivity.class);
-        intent.putExtra(CoinFlipIntent.CHILD_UUID, childUUID.toString());
         intent.putExtra(CoinFlipIntent.CHOSEN_COIN_SIDE, coinSide.name());
         return intent;
     }
 
-    public static Intent makeIntent(Context context) {
-        return new Intent(context, FlipCoinActivity.class);
-    }
-
+    // todo remember who picked last
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flip_coin);
 
+        this.setTitle(getString(R.string.flip_coin_flip_action_title));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         this.extractIntentData();
+        this.child = ChildManager.getInstance().getNextCoinFlipper();
         // We set the last child here b/c the person may have exited the past pages and haven't
         // properly flipped a coin
         ChildManager.getInstance().setLastCoinChooserChild(this.child);
@@ -62,17 +68,16 @@ public class FlipCoinActivity extends AppCompatActivity {
         this.createFlipBtn();
     }
 
+    // If user select the top left back button
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return super.onOptionsItemSelected(item);
+    }
+
     private void extractIntentData() {
         Intent intent = getIntent();
-
-        if (!(intent.hasExtra(CoinFlipIntent.CHILD_UUID) && intent.hasExtra(CoinFlipIntent.CHOSEN_COIN_SIDE)))
-            return;
-
-        CoinSide chosenSide = CoinSide.valueOf(intent.getStringExtra(CoinFlipIntent.CHOSEN_COIN_SIDE));
-        UUID intentUUID = UUID.fromString(intent.getStringExtra(CoinFlipIntent.CHILD_UUID));
-
-        this.winningSide = chosenSide;
-        this.child =  ChildManager.getInstance().getChildByUUID(intentUUID);
+        this.winningSide = CoinSide.valueOf(intent.getStringExtra(CoinFlipIntent.CHOSEN_COIN_SIDE));
     }
 
     private void flipCoinState() {
@@ -92,8 +97,11 @@ public class FlipCoinActivity extends AppCompatActivity {
     }
 
     private void randomlyChooseSide() {
-        int MIN_FLIPS = 15;
-        int MAX_FLIPS = 20;
+        Button button = findViewById(R.id.btnFlip);
+        button.setVisibility(View.INVISIBLE);
+
+        int MIN_FLIPS = 10;
+        int MAX_FLIPS = 15;
 
         Random random = new Random();
         CoinSide[] coinSide = CoinSide.values();
@@ -101,17 +109,21 @@ public class FlipCoinActivity extends AppCompatActivity {
         CoinSide randomSide = coinSide[random.nextInt(coinSide.length)];
         int totalRandomFlips = random.nextInt((MAX_FLIPS - MIN_FLIPS) + 1) + MIN_FLIPS;
 
-        for (int i = 0; i < totalRandomFlips; i++) {
+        int closetEvenNumber = Math.round(totalRandomFlips / 2) * 2;
+        totalRandomFlips = (randomSide == this.coinSide) ? closetEvenNumber : closetEvenNumber + 1;
+
+        for (int i = 1; i <= totalRandomFlips; i++) {
             int delay = getDelayBetween(i);
             // *2 the delay because flip coin rotates twice, and *i to queue them up so animations don't overlap
             (new Handler()).postDelayed(() -> flipCoin(delay), (delay * 2L) * i);
         }
 
-        if (this.coinSide != randomSide) {
-            this.flipCoin(getDelayBetween(totalRandomFlips + 1));
-        }
-
-        this.sideLanded();
+        long afterAllAnimations = (getDelayBetween(totalRandomFlips) * 2L) * totalRandomFlips;
+        (new Handler()).postDelayed(() -> {
+            this.sideLanded();
+            button.setVisibility(View.VISIBLE);
+            button.setText("Ok");
+        }, afterAllAnimations + 50); // Extra 50ms just in case
     }
 
     private ObjectAnimator rotateCoin90Degree(CoinFlipAnimationDirection direction, int rotationDelay) {
@@ -119,6 +131,7 @@ public class FlipCoinActivity extends AppCompatActivity {
 
         ObjectAnimator anim = (ObjectAnimator) AnimatorInflater.loadAnimator(FlipCoinActivity.this, direction.getAnimationId());
         anim.setTarget(coinImg);
+        anim.setInterpolator(new LinearInterpolator());
         anim.setDuration(rotationDelay);
         anim.start();
 
@@ -130,8 +143,8 @@ public class FlipCoinActivity extends AppCompatActivity {
 
         anim.addListener(new AnimatorListenerAdapter() {
             public void onAnimationEnd(Animator animation) {
-                flipCoinState();
                 updateCoinDisplay();
+                flipCoinState();
                 rotateCoin90Degree(CoinFlipAnimationDirection.BACKWARD, rotationDelay);
             }
         });
@@ -139,21 +152,19 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     // todo activity change/particles/back button?
     private void sideLanded() {
-        if (!this.isChildChoosing())
-            return;
-
-        boolean didWin = this.coinSide == this.winningSide;
-
-        if (didWin) {
-            CoinFlipResult coinFlipResult = new CoinFlipResult(this.winningSide, this.coinSide);
+        // Means there aren't any avaliable children (i.e. empty)
+        CoinFlipResult coinFlipResult = new CoinFlipResult(this.winningSide, this.coinSide);
+        if (this.child != null) {
             this.child.addCoinFlipResult(coinFlipResult);
-        } else {
-            // Children loses
+            ChildManager.getInstance().setLastCoinChooserChild(this.child);
         }
-    }
 
-    private boolean isChildChoosing() {
-        return this.coinSide != null && this.child != null;
+        String toastMsg = coinFlipResult.getDidWin() ? "You won!" + Emoji.HAPPY.get() : "You lost " + Emoji.SAD.get();
+        Toast toast = Toast.makeText(this, toastMsg, Toast.LENGTH_LONG);
+        ViewGroup group = (ViewGroup) toast.getView();
+        TextView messageTextView = (TextView) group.getChildAt(0);
+        messageTextView.setTextSize(25);
+        toast.show();
     }
 
     private void createBackBtn() {
@@ -163,7 +174,14 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     private void createFlipBtn() {
         Button button = findViewById(R.id.btnFlip);
-        button.setOnClickListener(view -> this.randomlyChooseSide());
+        button.setOnClickListener(view -> {
+            if (!this.hasFlipped) {
+                this.hasFlipped = true;
+                this.randomlyChooseSide();
+            } else {
+                finish();
+            }
+        });
     }
 
 }
