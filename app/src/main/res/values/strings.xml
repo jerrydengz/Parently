@@ -24,6 +24,9 @@
     <string name="save_btn_text">SAVE</string>
     <string name="name_edit_txt">Name</string>
     <string name="child_name_txt"><b>Child Name</b></string>
+    <string name="timeout_finished">Timeout Finished!</string>
+    <string name="stop_timeout">Stop Timeout</string>
+    <string name="alarm_icon">Alarm Warning Icon</string>
     <string name="delete_btn_txt">Delete</string>
     <string name="dialog_confirm">OK</string>
     <string name="dialog_positive">YES</string>

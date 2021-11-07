@@ -1,10 +1,14 @@
 package cmpt276.phosphorus.childapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentManager;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
@@ -23,10 +27,14 @@ import java.util.Locale;
  * a child's timeout.
  */
 
+    // Code assisted by https://www.youtube.com/playlist?list=PLrnPJCHvNZuB8wxqXCwKw2_NkyEmFwcSd
+
 public class TimeoutActivity extends AppCompatActivity {
 
     // Time is in milliseconds, 1000ms = 1s
-    private static long START_TIME = 60000;
+    private long startTime = 60000;
+    private long timeLeft;
+    private long endTime;
     
     // Interval in milliseconds the timer updates its countdown
     public static final int COUNT_DOWN_INTERVAL = 1000;
@@ -41,7 +49,6 @@ public class TimeoutActivity extends AppCompatActivity {
     private CountDownTimer cdTimer;
     private EditText customTimeInput;
     private boolean isTimerRunning;
-    private long timeLeft = START_TIME;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,18 +63,14 @@ public class TimeoutActivity extends AppCompatActivity {
         this.setUpResetBtn();
         this.createTimeOptions();
         this.setUpCustomInput();
-
-        updateCountDownText();
     }
-
 
     private void setUpStartAndPauseBtn() {
         btnStartAndPause = findViewById(R.id.btnStartAndPause);
         btnStartAndPause.setOnClickListener(v -> {
             if(!isTimerRunning){
                 startTimer();
-            }
-            else{
+            } else{
                 pauseTimer();
             }
         });
@@ -78,12 +81,15 @@ public class TimeoutActivity extends AppCompatActivity {
         btnReset.setOnClickListener(v -> resetTimer());
     }
 
-    private void createBackBtn(){
+    private void createBackBtn() {
         Button button = findViewById(R.id.btnBackTimeout);
         button.setOnClickListener(view -> finish());
     }
 
     private void startTimer() {
+        // Helper variable for saving data regarding timer
+        endTime = System.currentTimeMillis() + timeLeft;
+
         cdTimer = new CountDownTimer(timeLeft, COUNT_DOWN_INTERVAL) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -97,6 +103,7 @@ public class TimeoutActivity extends AppCompatActivity {
                 btnStartAndPause.setText(getString(R.string.start));
                 btnStartAndPause.setVisibility(View.INVISIBLE);
                 setVisibilities();
+                createAlertDialog();
             }
         }.start();
 
@@ -113,10 +120,11 @@ public class TimeoutActivity extends AppCompatActivity {
     }
 
     private void resetTimer() {
-        timeLeft = START_TIME;
+        timeLeft = startTime;
         updateCountDownText();
         btnReset.setVisibility(View.INVISIBLE);
         btnStartAndPause.setVisibility(View.VISIBLE);
+        btnStartAndPause.setText(getString(R.string.start));
     }
 
     private void setVisibilities() {
@@ -124,6 +132,14 @@ public class TimeoutActivity extends AppCompatActivity {
         btnReset.setVisibility(currentView);
         timeGroup.setVisibility(currentView);
         customTimeInput.setVisibility(currentView);
+
+        if(timeLeft == startTime){
+            btnReset.setVisibility(View.INVISIBLE);
+        }
+
+        if(timeLeft == 0){
+            btnStartAndPause.setVisibility(View.INVISIBLE);
+        }
 
         int background = isTimerRunning ? R.drawable.relaxing_background : 0;
         ConstraintLayout constraintLayout = findViewById(R.id.timeoutLayout);
@@ -134,33 +150,28 @@ public class TimeoutActivity extends AppCompatActivity {
         timeGroup = findViewById(R.id.radio_group_time_options);
         int[] timeOptions = getResources().getIntArray(R.array.time_options);
 
+        SharedPreferences prefs = getSharedPreferences(
+                TimeoutPrefConst.PREFERENCE_PREF, MODE_PRIVATE);
+
         for (int options : timeOptions) {
             RadioButton button = new RadioButton(this);
             button.setText(getString(R.string.time_selected, options));
             button.setOnClickListener(v -> {
-                START_TIME = options * NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS;
-                timeLeft = START_TIME;
+                startTime = options * NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS;
+                timeLeft = startTime;
                 updateCountDownText();
-                customTimeInput.setVisibility(View.INVISIBLE);
+                setVisibilities();
                 btnStartAndPause.setVisibility(View.VISIBLE);
                 customTimeInput.setText("");
+                button.setChecked(true);
             });
             timeGroup.addView((button));
-            // Only accounts for base time (1 minute), need to refactor for saving data if needed
-            if(options * 60000L == START_TIME){
+
+            if(options * NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS ==
+                    prefs.getLong(TimeoutPrefConst.START_TIME, startTime)){
                 button.setChecked(true);
             }
         }
-        // Custom time button
-        RadioButton button = new RadioButton(this);
-        button.setText(getString(R.string.custom));
-        button.setOnClickListener(v -> {
-            customTimeInput.setVisibility(View.VISIBLE);
-            btnStartAndPause.setVisibility(View.INVISIBLE);
-            btnReset.setVisibility(View.INVISIBLE);
-            tvCountDown.setText(getString(R.string.empty_timer));
-        });
-        timeGroup.addView(button);
     }
 
     private void setUpCustomInput() {
@@ -176,13 +187,20 @@ public class TimeoutActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 String customInput = customTimeInput.getText().toString();
+                timeGroup.clearCheck();
                 if(!customInput.isEmpty()){
                     long input = Long.parseLong(customInput);
+                    btnReset.setVisibility(View.INVISIBLE);
                     if(input != 0){
-                        START_TIME = input * NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS;
-                        timeLeft = START_TIME;
+                        startTime = input * NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS;
+                        timeLeft = startTime;
                         updateCountDownText();
                         btnStartAndPause.setVisibility(View.VISIBLE);
+                    } else {
+                        // Unique case so not using setVisibilities()
+                        timeLeft = 0;
+                        updateCountDownText();
+                        btnStartAndPause.setVisibility(View.INVISIBLE);
                     }
                 }
             }
@@ -192,12 +210,96 @@ public class TimeoutActivity extends AppCompatActivity {
     // Turns milliseconds it is given to minutes and seconds for timer
     // Account for hours (when user input > 59min)?
     private void updateCountDownText() {
+        String timeLeftFormatted = timeLeftFormatter(timeLeft);
+        tvCountDown.setText(timeLeftFormatted);
+    }
+
+    public static String timeLeftFormatter(long timeLeft) {
         int minutes = (int) ((timeLeft / 1000) / 60);
         int seconds = (int) ((timeLeft / 1000) % 60);
 
-        String timeLeftFormatted = String.format(Locale.getDefault(),
+        return String.format(Locale.getDefault(),
                 "%02d:%02d", minutes, seconds);
-        tvCountDown.setText(timeLeftFormatted);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        SharedPreferences prefs = getSharedPreferences(
+                TimeoutPrefConst.PREFERENCE_PREF, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putLong(TimeoutPrefConst.START_TIME, startTime);
+        editor.putLong(TimeoutPrefConst.TIME_LEFT, timeLeft);
+        editor.putLong(TimeoutPrefConst.END_TIME, endTime);
+        editor.putBoolean(TimeoutPrefConst.IS_TIMER_RUNNING, isTimerRunning);
+
+        editor.apply();
+
+        if(isTimerRunning){
+            startTimeoutNotificationService();
+        }
+        if(cdTimer != null) {
+            cdTimer.cancel();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        stopTimeoutNotificationService();
+        stopNotification(1);
+
+        SharedPreferences prefs = getSharedPreferences(
+                TimeoutPrefConst.PREFERENCE_PREF, MODE_PRIVATE);
+
+        startTime = prefs.getLong(TimeoutPrefConst.START_TIME,
+                NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS);
+        timeLeft = prefs.getLong(TimeoutPrefConst.TIME_LEFT, startTime);
+        isTimerRunning = prefs.getBoolean(
+                TimeoutPrefConst.IS_TIMER_RUNNING, false);
+
+        updateCountDownText();
+        setVisibilities();
+
+        if(isTimerRunning){
+            endTime = prefs.getLong(TimeoutPrefConst.END_TIME, 0);
+            timeLeft = endTime - System.currentTimeMillis();
+
+            if(timeLeft < 0){
+                timeLeft = 0;
+                isTimerRunning = false;
+                updateCountDownText();
+                setVisibilities();
+                createAlertDialog();
+            } else{
+                startTimer();
+            }
+        }
+    }
+
+    private void createAlertDialog() {
+        FragmentManager manager = getSupportFragmentManager();
+        TimeoutMessageFragment dialog = new TimeoutMessageFragment();
+        dialog.show(manager, "MessageDialog");
+    }
+
+    public void startTimeoutNotificationService() {
+        Intent serviceIntent = new Intent(this, TimeoutNotificationService.class);
+        ContextCompat.startForegroundService(this, serviceIntent);
+    }
+
+    public void stopTimeoutNotificationService() {
+        Intent serviceIntent = new Intent(this, TimeoutNotificationService.class);
+        stopService(serviceIntent);
+    }
+
+    public void stopNotification(int id) {
+        NotificationManager notificationManager = (NotificationManager)
+                getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.cancel(id);
     }
 
     public static Intent makeIntent(Context context) {
