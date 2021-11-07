@@ -6,7 +6,9 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import cmpt276.phosphorus.childapp.children.ChildrenActivity;
 import cmpt276.phosphorus.childapp.coinflip.ChooseSideActivity;
+import cmpt276.phosphorus.childapp.timeout.TimeoutActivity;
 
 public class MainActivity extends AppCompatActivity {
 

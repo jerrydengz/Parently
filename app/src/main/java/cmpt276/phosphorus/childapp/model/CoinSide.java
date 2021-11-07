@@ -1,4 +1,4 @@
-package cmpt276.phosphorus.childapp.utils;
+package cmpt276.phosphorus.childapp.model;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.StringRes;

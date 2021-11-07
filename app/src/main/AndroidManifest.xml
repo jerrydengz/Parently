@@ -25,15 +25,15 @@
             android:screenOrientation="portrait" />
         <activity
             android:launchMode="singleTop"
-            android:name=".TimeoutActivity"
+            android:name=".timeout.TimeoutActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ChildrenActivity"
+            android:name=".children.ChildrenActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ChildrenConfigureActivity"
+            android:name=".children.ChildrenConfigureActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
@@ -47,7 +47,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".TimeoutNotificationService" />
+        <service android:name=".timeout.utils.TimeoutNotificationService" />
     </application>
 
 </manifest>

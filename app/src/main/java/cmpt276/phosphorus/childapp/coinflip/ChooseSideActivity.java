@@ -15,7 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
-import cmpt276.phosphorus.childapp.utils.CoinSide;
+import cmpt276.phosphorus.childapp.model.CoinSide;
 
 public class ChooseSideActivity extends AppCompatActivity {
 

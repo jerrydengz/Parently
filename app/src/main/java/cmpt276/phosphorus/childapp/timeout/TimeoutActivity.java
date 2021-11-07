@@ -1,4 +1,4 @@
-package cmpt276.phosphorus.childapp;
+package cmpt276.phosphorus.childapp.timeout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -21,6 +21,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import java.util.Locale;
+
+import cmpt276.phosphorus.childapp.R;
+import cmpt276.phosphorus.childapp.timeout.utils.TimeoutNotificationService;
+import cmpt276.phosphorus.childapp.timeout.utils.TimeoutPrefConst;
 
 /**
  * Represents a count down timer for the parent to use for

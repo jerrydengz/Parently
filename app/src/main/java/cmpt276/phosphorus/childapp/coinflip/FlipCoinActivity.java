@@ -27,7 +27,7 @@ import cmpt276.phosphorus.childapp.coinflip.utils.CoinFlipIntent;
 import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
 import cmpt276.phosphorus.childapp.model.CoinFlipResult;
-import cmpt276.phosphorus.childapp.utils.CoinSide;
+import cmpt276.phosphorus.childapp.model.CoinSide;
 import cmpt276.phosphorus.childapp.utils.Emoji;
 
 

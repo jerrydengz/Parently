@@ -8,8 +8,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-import cmpt276.phosphorus.childapp.utils.CoinSide;
-
 // Stored the result of a coin flip
 public class CoinFlipResult {
 

@@ -1,4 +1,4 @@
-package cmpt276.phosphorus.childapp;
+package cmpt276.phosphorus.childapp.timeout.utils;
 
 /**
  * Represents a class containing string constants

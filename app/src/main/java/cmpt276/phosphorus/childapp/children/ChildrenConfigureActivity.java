@@ -1,4 +1,4 @@
-package cmpt276.phosphorus.childapp;
+package cmpt276.phosphorus.childapp.children;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.UUID;
 
+import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
 

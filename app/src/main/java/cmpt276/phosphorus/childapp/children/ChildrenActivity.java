@@ -1,4 +1,4 @@
-package cmpt276.phosphorus.childapp;
+package cmpt276.phosphorus.childapp.children;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import java.util.List;
 
+import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
 

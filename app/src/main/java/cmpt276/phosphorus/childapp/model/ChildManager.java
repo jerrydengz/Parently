@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-import cmpt276.phosphorus.childapp.utils.CoinSide;
-
 public class ChildManager {
 
     private static ChildManager instance;

@@ -1,4 +1,4 @@
-package cmpt276.phosphorus.childapp;
+package cmpt276.phosphorus.childapp.timeout;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -13,6 +13,8 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
+
+import cmpt276.phosphorus.childapp.R;
 
 public class TimeoutMessageFragment extends AppCompatDialogFragment {
 
