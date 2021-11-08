@@ -6,6 +6,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
@@ -44,6 +45,7 @@ public class FlipCoinActivity extends AppCompatActivity {
     private Child child;
     private CoinSide winningSide;
     private CoinSide coinSide;
+    private MediaPlayer resultSound;
 
     public static Intent makeIntent(Context context, CoinSide coinSide) {
         Intent intent = new Intent(context, FlipCoinActivity.class);
@@ -144,7 +146,14 @@ public class FlipCoinActivity extends AppCompatActivity {
             ChildManager.getInstance().setLastCoinChooserChild(this.child);
         }
 
-        String toastMsg = coinFlipResult.getDidWin() ? "You won!" + Emoji.HAPPY.get() : "You lost " + Emoji.SAD.get();
+        Boolean didWin = coinFlipResult.getDidWin();
+        String toastMsg = didWin ? "You won!" + Emoji.HAPPY.get() : "You lost " + Emoji.SAD.get();
+        if(didWin){
+            resultSound = MediaPlayer.create(this, R.raw.victory);
+        }else{
+            resultSound = MediaPlayer.create(this, R.raw.defeat_sound);
+        }
+        resultSound.start();
         this.showLargeToast(toastMsg);
     }
 
@@ -170,8 +179,14 @@ public class FlipCoinActivity extends AppCompatActivity {
         button.setOnClickListener(view -> {
             if (!this.hasFlipped) {
                 this.hasFlipped = true; // Makes it so next time we press the btn we go back
+
+                MediaPlayer mPlayer = MediaPlayer.create(this, R.raw.coin_flip);
+                mPlayer.start();
+
                 this.randomlyChooseSide();
+
             } else {
+                resultSound.stop();
                 finish();
             }
         });

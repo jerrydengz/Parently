@@ -78,10 +78,14 @@ public class TimeoutNotificationService extends Service {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Timer Notification Service Channel";
-            String description = "Timer is running notification";
+            CharSequence name = getString(R.string.timer_notification_service_channel);
+            String description = getString(R.string.timeout_notification_channel_desc);
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+
+            // Disable alarm sound that plays as long as notification is alive
+            channel.setSound(null, null);
+
             channel.setDescription(description);
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
@@ -96,7 +100,7 @@ public class TimeoutNotificationService extends Service {
                 this, 0, notificationIntent, 0);
 
         notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentText("Time Remaining")
+                .setContentText(getString(R.string.timeout_remaining))
                 .setSmallIcon(R.drawable.timer_icon)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
@@ -122,6 +126,7 @@ public class TimeoutNotificationService extends Service {
         }
 
         Intent endIntent = new Intent(this, TimeoutActivity.class);
+        endIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         editor.putLong(TimeoutPrefConst.END_TIME, endTime);
         cdTimer = new CountDownTimer(timeLeft, COUNT_DOWN_INTERVAL) {
