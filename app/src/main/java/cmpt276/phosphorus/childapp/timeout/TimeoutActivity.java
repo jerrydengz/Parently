@@ -1,13 +1,20 @@
 package cmpt276.phosphorus.childapp.timeout;
 
+import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -19,7 +26,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentManager;
 
 import java.util.Locale;
 
@@ -44,6 +50,13 @@ public class TimeoutActivity extends AppCompatActivity {
     private long startTime = 60000;
     private long timeLeft;
     private long endTime;
+
+    // For Alertdialog Vibration
+    public static final int VIBRATION_LENGTH = 1000;
+    public static final int NO_VIBRATION = 500;
+    public static final int VIBRATION_AMPLITUDE = 150;
+    public static final int NO_AMPLITUDE = 0;
+
     private TextView tvCountDown;
     private RadioGroup timeGroup;
     private Button btnStartAndPause;
@@ -122,7 +135,7 @@ public class TimeoutActivity extends AppCompatActivity {
                 btnStartAndPause.setText(getString(R.string.start));
                 btnStartAndPause.setVisibility(View.INVISIBLE);
                 setVisibilities();
-                createAlertDialog();
+                showTimeoutAlertDialog();
             }
         }.start();
 
@@ -284,17 +297,45 @@ public class TimeoutActivity extends AppCompatActivity {
                 isTimerRunning = false;
                 updateCountDownText();
                 setVisibilities();
-                createAlertDialog();
+                showTimeoutAlertDialog();
             } else {
                 startTimer();
             }
         }
     }
 
-    private void createAlertDialog() {
-        FragmentManager manager = getSupportFragmentManager();
-        TimeoutMessageFragment dialog = new TimeoutMessageFragment();
-        dialog.show(manager, "MessageDialog");
+    private void showTimeoutAlertDialog() {
+        View view = LayoutInflater.from(this)
+                .inflate(R.layout.timeout_finished_notification_layout, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(view);
+        final AlertDialog alertDialog = builder.create();
+
+        alertDialog.setOnShowListener(dialog -> {
+            // Code from https://stackoverflow.com/questions/27473245/how-to-play-ringtone-sound-in-android-with-infinite-loop/27473353
+            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+            MediaPlayer player = MediaPlayer.create(getApplicationContext(),
+                    notification);
+            player.setLooping(true);
+            player.start();
+
+            // Code from https://developer.android.com/reference/android/os/Vibrator
+            Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            long[] timings = {VIBRATION_LENGTH, NO_VIBRATION};
+            int[] amplitudes = {VIBRATION_AMPLITUDE, NO_AMPLITUDE};
+            vibrator.vibrate(VibrationEffect.createWaveform(timings, amplitudes, 0));
+
+            Button btn = view.findViewById(R.id.btnStopTimeout);
+            btn.setOnClickListener(v -> {
+                player.stop();
+                vibrator.cancel();
+                dialog.dismiss();
+            });
+        });
+        alertDialog.setCancelable(false);
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.show();
     }
 
     public void startTimeoutNotificationService() {

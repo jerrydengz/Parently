@@ -27,12 +27,15 @@
     <string name="save_btn_text">SAVE</string>
     <string name="name_edit_txt">Name</string>
     <string name="child_name_txt"><b>Child Name</b></string>
+    <string name="timeout_remaining">Time Remaining</string>
     <string name="child_activity_title">Children</string>
     <string name="child_configure_edit_title">Editing</string>
     <string name="child_configure_create_title">Creating</string>
     <string name="timeout_finished">Timeout Finished!</string>
-    <string name="stop_timeout">Stop Timeout</string>
+    <string name="stop_timeout">Stop Alarm</string>
     <string name="alarm_icon">Alarm Warning Icon</string>
+    <string name="timer_notification_service_channel">Timer Notification Service Channel</string>
+    <string name="timeout_notification_channel_desc">Timer is running notification</string>
     <string name="delete_btn_txt">Delete</string>
     <string name="dialog_confirm">OK</string>
     <string name="dialog_positive">YES</string>
