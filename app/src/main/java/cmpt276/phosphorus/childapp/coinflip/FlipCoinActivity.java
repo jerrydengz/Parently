@@ -142,15 +142,17 @@ public class FlipCoinActivity extends AppCompatActivity {
         // Means there aren't any avaliable children (i.e. empty)
         CoinFlipResult coinFlipResult = new CoinFlipResult(this.winningSide, this.coinSide);
         if (this.child != null) {
+            ChildManager childManager = ChildManager.getInstance();
             this.child.addCoinFlipResult(coinFlipResult);
-            ChildManager.getInstance().setLastCoinChooserChild(this.child);
+            childManager.saveToFile();
+            childManager.setLastCoinChooserChild(this.child);
         }
 
         Boolean didWin = coinFlipResult.getDidWin();
         String toastMsg = didWin ? "You won!" + Emoji.HAPPY.get() : "You lost " + Emoji.SAD.get();
-        if(didWin){
+        if (didWin) {
             resultSound = MediaPlayer.create(this, R.raw.victory);
-        }else{
+        } else {
             resultSound = MediaPlayer.create(this, R.raw.defeat_sound);
         }
         resultSound.start();
@@ -167,7 +169,7 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     private void extractIntentData() {
         Intent intent = getIntent();
-        this.winningSide = CoinSide.valueOf(intent.getStringExtra(this.CHOSEN_COIN_SIDE));
+        this.winningSide = CoinSide.valueOf(intent.getStringExtra(CHOSEN_COIN_SIDE));
     }
 
     private void flipCoinState() {

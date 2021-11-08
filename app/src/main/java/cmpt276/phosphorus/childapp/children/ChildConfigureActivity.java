@@ -105,6 +105,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
                 this.childManager.addChild(new Child(cleanedName));
             }
 
+            this.childManager.saveToFile();
             finish();
         });
     }
@@ -118,6 +119,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
             dialogWarning.setMessage(getResources().getString(R.string.dialog_msg_delete));
             dialogWarning.setPositiveButton(getResources().getString(R.string.dialog_positive), (dialogInterface, i) -> {
                 this.childManager.removeChild(this.child);
+                this.childManager.saveToFile();
                 finish();
             });
             dialogWarning.setNegativeButton(getResources().getString(R.string.dialog_negative), null);

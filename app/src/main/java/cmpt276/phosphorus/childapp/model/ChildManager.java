@@ -51,7 +51,6 @@ public class ChildManager {
 
     public void addChild(@NotNull Child child) {
         this.allChildren.add(Objects.requireNonNull(child));
-        saveToFile();
     }
 
     public Child getChild(@NotNull CoinFlipResult targetCoinFlip) {
@@ -91,7 +90,6 @@ public class ChildManager {
         if(isRemoved && child == this.lastCoinChooserChild){
             this.lastCoinChooserChild = this.getNextCoinFlipper();
         }
-        this.saveToFile();
         return isRemoved;
     }
 
@@ -124,7 +122,7 @@ public class ChildManager {
 
     //https://docs.oracle.com/javase/7/docs/api/java/io/FileWriter.html
     //saves children to file
-    private void saveToFile() {
+    public void saveToFile() {
         Gson gson = getGson();
         try {
             Writer writer = new FileWriter(file);//writes to designated file
