@@ -38,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
         this.createFlipCoinBtn();
         this.createTimeoutBtn();
 
-        ChildManager childManager = ChildManager.getInstance(this);
-        childManager.getFromFile();
     }
 
     private void createChildrenBtn() {

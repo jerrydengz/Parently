@@ -71,8 +71,8 @@ public class Child {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {return true;}
-        if (o == null || getClass() != o.getClass()) return false;
+        if(this == o){return true;}
+        if(o == null || getClass() != o.getClass()){return false;}
         Child child = (Child) o;
         return Objects.equals(this.uuid, child.getUUID()) && Objects.equals(this.name, child.getName());
     }
@@ -100,5 +100,4 @@ public class Child {
         outer.put("child", inner);
         return outer;
     }
-
 }
