@@ -45,6 +45,7 @@ public class FlipCoinActivity extends AppCompatActivity {
     private Child child;
     private CoinSide winningSide;
     private CoinSide coinSide;
+    private MediaPlayer resultSound;
 
     public static Intent makeIntent(Context context, CoinSide coinSide) {
         Intent intent = new Intent(context, FlipCoinActivity.class);
@@ -145,7 +146,14 @@ public class FlipCoinActivity extends AppCompatActivity {
             ChildManager.getInstance().setLastCoinChooserChild(this.child);
         }
 
-        String toastMsg = coinFlipResult.getDidWin() ? "You won!" + Emoji.HAPPY.get() : "You lost " + Emoji.SAD.get();
+        Boolean didWin = coinFlipResult.getDidWin();
+        String toastMsg = didWin ? "You won!" + Emoji.HAPPY.get() : "You lost " + Emoji.SAD.get();
+        if(didWin){
+            resultSound = MediaPlayer.create(this, R.raw.victory);
+        }else{
+            resultSound = MediaPlayer.create(this, R.raw.defeat_sound);
+        }
+        resultSound.start();
         this.showLargeToast(toastMsg);
     }
 
@@ -176,7 +184,9 @@ public class FlipCoinActivity extends AppCompatActivity {
                 mPlayer.start();
 
                 this.randomlyChooseSide();
+
             } else {
+                resultSound.stop();
                 finish();
             }
         });
