@@ -18,6 +18,11 @@ import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
 import cmpt276.phosphorus.childapp.model.CoinFlipResult;
 
+// ==============================================================================================
+//
+// Shows the sorted by date history of all coin flip resaults
+//
+// ==============================================================================================
 public class CoinFlipHistoryActivity extends AppCompatActivity {
 
     public static Intent makeIntent(Context context) {

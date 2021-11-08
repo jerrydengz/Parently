@@ -10,8 +10,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-import cmpt276.phosphorus.childapp.utils.CoinSide;
-
+// ==============================================================================================
+//
+// Manager to keep track of all children data
+//
+// ==============================================================================================
 public class ChildManager {
 
     private static ChildManager instance;
