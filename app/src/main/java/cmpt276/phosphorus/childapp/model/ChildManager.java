@@ -19,13 +19,20 @@ import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
+
+import java.time.Month;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-
+// ==============================================================================================
+//
+// Manager to keep track of all children data
+//
+// ==============================================================================================
 public class ChildManager {
 
     private static ChildManager instance;
@@ -55,12 +62,27 @@ public class ChildManager {
         saveToFile();
     }
 
+    public Child getChild(@NotNull CoinFlipResult targetCoinFlip) {
+        return this.allChildren.stream()
+                .filter(child -> child.getCoinFlipResults().stream().anyMatch(targetCoinFlip::equals))
+                .findFirst()
+                .orElse(null);
+    }
+
     public void addChildren(@NotNull Child... children) {
         Arrays.asList(children).forEach(this::addChild); // Add children already checks for null
     }
 
     public Child getChildByUUID(@NotNull UUID uuid) {
         return this.allChildren.stream().filter(child -> child.getUUID().equals(uuid)).findFirst().orElse(null);
+    }
+
+    public Child getChildByPos(@NotNull int position) {
+        return this.allChildren.get(position);
+    }
+
+    public int getChildPosition(@NotNull Child child) {
+        return this.allChildren.indexOf(child);
     }
 
     public List<Child> getAllChildren() {
@@ -76,8 +98,17 @@ public class ChildManager {
         return this.allChildren.remove(child);
     }
 
-    public Child getLastCoinChooserChild() {
-        return this.lastCoinChooserChild;
+    public Child getNextCoinFlipper() {
+        if(this.allChildren.isEmpty()) return null;
+
+        if (this.lastCoinChooserChild == null)
+            return this.getChildByPos(0);
+
+        int nextPosition = this.getChildPosition(this.lastCoinChooserChild) + 1;
+        if (nextPosition >= this.allChildren.size())
+            nextPosition = 0;
+
+        return this.getChildByPos(nextPosition);
     }
 
     public void setLastCoinChooserChild(Child lastCoinChooserChild) {
@@ -124,4 +155,9 @@ public class ChildManager {
                     }
                 }).create();
     }
+
+    private boolean isEmpty(){
+        return this.allChildren.isEmpty();
+    }
+
 }
