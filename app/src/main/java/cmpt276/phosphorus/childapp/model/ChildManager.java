@@ -33,21 +33,18 @@ import java.util.UUID;
 public class ChildManager {
 
     private static ChildManager instance;
-    private final File file;
+    private File file;
     private List<Child> allChildren;
     private Child lastCoinChooserChild;
 
-    private ChildManager(Context context) {
+    private ChildManager() {
         this.allChildren = new ArrayList<>();
         this.lastCoinChooserChild = null;
-        File dir = context.getFilesDir();
-        this.file = new File(dir, "child.json");//use this to create new directory that can be written to
-        this.getFromFile();
     }
 
-    public static ChildManager getInstance(Context context) {
+    public static ChildManager getInstance() {
         if (instance == null) {
-            instance = new ChildManager(context);
+            instance = new ChildManager();
         }
         return instance;
     }
@@ -115,6 +112,12 @@ public class ChildManager {
 
     private boolean isEmpty() {
         return this.allChildren.isEmpty();
+    }
+
+    public void loadData(Context context){
+        File dir = context.getFilesDir();
+        this.file = new File(dir, "child.json");//use this to create new directory that can be written to
+        this.getFromFile();
     }
 
     //https://docs.oracle.com/javase/7/docs/api/java/io/FileWriter.html

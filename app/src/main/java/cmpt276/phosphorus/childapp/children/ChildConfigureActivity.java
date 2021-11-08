@@ -45,7 +45,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_child_configure);
-        this.childManager = ChildManager.getInstance(this);
+        this.childManager = ChildManager.getInstance();
 
         this.extractIntent(); // Gotta get intent info before we change the title
         int titleId = this.isEditingChild() ? R.string.child_configure_edit_title : R.string.child_configure_create_title;

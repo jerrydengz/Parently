@@ -28,7 +28,7 @@ public class CoinFlipResultAdapter extends ArrayAdapter<CoinFlipResult> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         CoinFlipResult coinFlipResult = getItem(position);
-        Child child = ChildManager.getInstance(this.getContext()).getChild(coinFlipResult);
+        Child child = ChildManager.getInstance().getChild(coinFlipResult);
 
         // Ref https://android--code.blogspot.com/2015/08/android-listview-text-size.html
         View view = super.getView(position, convertView, parent);

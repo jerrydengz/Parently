@@ -60,10 +60,10 @@ public class FlipCoinActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         this.extractIntentData();
-        this.child = ChildManager.getInstance(this).getNextCoinFlipper();
+        this.child = ChildManager.getInstance().getNextCoinFlipper();
         // We set the last child here b/c the person may have exited the past pages and haven't
         // properly flipped a coin
-        ChildManager.getInstance(this).setLastCoinChooserChild(this.child);
+        ChildManager.getInstance().setLastCoinChooserChild(this.child);
         this.coinSide = this.DEFAULT_SIDE;
 
         this.updateCoinDisplay();
@@ -141,7 +141,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         CoinFlipResult coinFlipResult = new CoinFlipResult(this.winningSide, this.coinSide);
         if (this.child != null) {
             this.child.addCoinFlipResult(coinFlipResult);
-            ChildManager.getInstance(this).setLastCoinChooserChild(this.child);
+            ChildManager.getInstance().setLastCoinChooserChild(this.child);
         }
 
         String toastMsg = coinFlipResult.getDidWin() ? "You won!" + Emoji.HAPPY.get() : "You lost " + Emoji.SAD.get();

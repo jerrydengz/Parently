@@ -48,7 +48,7 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
     }
 
     private List<CoinFlipResult> sortedResultsByTimes() {
-        List<CoinFlipResult> all = ChildManager.getInstance(this).getAllChildren()
+        List<CoinFlipResult> all = ChildManager.getInstance().getAllChildren()
                 .stream()
                 .map(Child::getCoinFlipResults)
                 .flatMap(List::stream)

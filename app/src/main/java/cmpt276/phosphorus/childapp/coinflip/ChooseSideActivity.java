@@ -56,7 +56,7 @@ public class ChooseSideActivity extends AppCompatActivity {
     }
 
     private void displayChildName() {
-        Child nextChild = ChildManager.getInstance(this).getNextCoinFlipper();
+        Child nextChild = ChildManager.getInstance().getNextCoinFlipper();
         if (nextChild == null) // If there aren't any children created yet
             return;
 
