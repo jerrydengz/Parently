@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Objects;
 import java.util.UUID;
 
 import cmpt276.phosphorus.childapp.R;
@@ -50,7 +51,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
         this.extractIntent(); // Gotta get intent info before we change the title
         int titleId = this.isEditingChild() ? R.string.child_configure_edit_title : R.string.child_configure_create_title;
         this.setTitle(getString(titleId));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         this.loadValues();
         this.createSaveBtn();

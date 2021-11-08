@@ -13,9 +13,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.List;
+import java.util.Objects;
 
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.model.Child;
@@ -36,7 +40,7 @@ public class ChildrenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_children);
 
         this.setTitle(getString(R.string.child_activity_title));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         childManager = ChildManager.getInstance();
         this.createConfigureChildBtn();

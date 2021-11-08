@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/lavender2"
     tools:context=".coinflip.FlipCoinActivity"
     tools:layout_editor_absoluteX="-1dp"
     tools:layout_editor_absoluteY="0dp">
@@ -15,7 +16,7 @@
         android:layout_marginBottom="261dp"
         android:text=""
         android:textColor="@color/black"
-        android:textSize="45dp"
+        android:textSize="45sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,11 +31,11 @@
         android:layout_height="257dp"
         android:layout_marginTop="84dp"
         android:layout_marginBottom="295dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnHistory"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/coin_head" />
+        app:srcCompat="@drawable/coin_head"
+        tools:ignore="ContentDescription" />
 
     <Button
         android:id="@+id/btnFlip"
@@ -42,7 +43,7 @@
         android:layout_height="114dp"
         android:layout_marginBottom="116dp"
         android:text="@string/flip_coin_flip_button"
-        android:textSize="40dp"
+        android:textSize="40sp"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
