@@ -6,8 +6,10 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -145,6 +147,12 @@ public class FlipCoinActivity extends AppCompatActivity {
         }
 
         String toastMsg = coinFlipResult.getDidWin() ? "You won!" + Emoji.HAPPY.get() : "You lost " + Emoji.SAD.get();
+        if(coinFlipResult.getDidWin()){
+            //victory sound
+        }else{
+            MediaPlayer defeat = MediaPlayer.create(this, R.raw.defeat_sound);
+            defeat.start();
+        }
         this.showLargeToast(toastMsg);
     }
 
@@ -171,6 +179,7 @@ public class FlipCoinActivity extends AppCompatActivity {
             if (!this.hasFlipped) {
                 this.hasFlipped = true; // Makes it so next time we press the btn we go back
                 this.randomlyChooseSide();
+
             } else {
                 finish();
             }
