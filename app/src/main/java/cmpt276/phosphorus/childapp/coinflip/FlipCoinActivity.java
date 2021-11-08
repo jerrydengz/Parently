@@ -6,6 +6,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
@@ -170,6 +171,10 @@ public class FlipCoinActivity extends AppCompatActivity {
         button.setOnClickListener(view -> {
             if (!this.hasFlipped) {
                 this.hasFlipped = true; // Makes it so next time we press the btn we go back
+
+                MediaPlayer mPlayer = MediaPlayer.create(this, R.raw.coin_flip);
+                mPlayer.start();
+
                 this.randomlyChooseSide();
             } else {
                 finish();
