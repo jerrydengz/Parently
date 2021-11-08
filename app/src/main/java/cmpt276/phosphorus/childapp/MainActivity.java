@@ -1,12 +1,28 @@
 package cmpt276.phosphorus.childapp;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+
+import java.io.IOException;
+import java.time.LocalDateTime;
+
 import cmpt276.phosphorus.childapp.coinflip.ChooseChildActivity;
+import cmpt276.phosphorus.childapp.model.Child;
+import cmpt276.phosphorus.childapp.model.ChildManager;
+import cmpt276.phosphorus.childapp.model.CoinFlipResult;
+import cmpt276.phosphorus.childapp.utils.CoinSide;
+
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
         this.createChildrenBtn();
         this.createFlipCoinBtn();
         this.createTimeoutBtn();
+
+        ChildManager childManager = ChildManager.getInstance(this);
+        childManager.getFromFile();
     }
 
     private void createChildrenBtn() {

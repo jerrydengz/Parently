@@ -37,12 +37,12 @@ public class ChooseChildActivity extends AppCompatActivity {
     // todo gotta worry about duplicates
     private void updateChildrenList() {
         ListView listView = findViewById(R.id.listChildren);
-        ChildManager childManager = ChildManager.getInstance();
+        ChildManager childManager = ChildManager.getInstance(this);
 
         List<Child> children = childManager.getAllChildren();
         List<String> childrenNames = children.stream().map(child -> {
             String childName = child.getName();
-            boolean didPickLast = child.equals(ChildManager.getInstance().getLastCoinChooserChild());
+            boolean didPickLast = child.equals(ChildManager.getInstance(this).getLastCoinChooserChild());
             return didPickLast ? (childName + " - " + Emoji.STAR.get()) : childName;
         }).collect(Collectors.toList());
 
@@ -60,7 +60,7 @@ public class ChooseChildActivity extends AppCompatActivity {
 
         listView.setOnItemClickListener((adapterView, view, position, l) -> {
             Child selectedChild = children.get(position);
-            if (selectedChild.equals(ChildManager.getInstance().getLastCoinChooserChild())) {
+            if (selectedChild.equals(ChildManager.getInstance(this).getLastCoinChooserChild())) {
                 return; // todo Do we want to enforce them not choosing them again?
             }
 

@@ -18,7 +18,7 @@ public class CoinFlipResult {
     private final LocalDateTime time;
     private final CoinSide pickedSide;
     private final CoinSide flipResult;
-    private final DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy MM dd HH:mm:ss");
+    //private final DateTimeFormatter format = new DateTimeFormatter.ofPattern("yyyy MM dd HH:mm:ss");
 
     // Normal way to create results
     public CoinFlipResult(@NotNull CoinSide pickedSide, @NotNull CoinSide flipResult) {
@@ -38,7 +38,7 @@ public class CoinFlipResult {
 
     // Gets date/time in format YYYY/MM/DD HH:mm:ss
     public String getFormattedTime() {
-        return time.format(format);
+        return time.format(DateTimeFormatter.ofPattern("yyyy MM dd HH:mm:ss"));
     }
 
     public CoinSide getPickedSide() {

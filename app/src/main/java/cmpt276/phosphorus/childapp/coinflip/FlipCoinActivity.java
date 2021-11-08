@@ -50,7 +50,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         this.extractIntentData();
         // We set the last child here b/c the person may have exited the past pages and haven't
         // properly flipped a coin
-        ChildManager.getInstance().setLastCoinChooserChild(this.child);
+        ChildManager.getInstance(this).setLastCoinChooserChild(this.child);
         this.coinSide = this.DEFAULT_SIDE;
 
         this.updateCoinDisplay();
@@ -63,7 +63,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         UUID intentUUID = UUID.fromString(intent.getStringExtra(CoinFlipIntent.CHILD_UUID));
 
         this.winningSide = CoinSide.valueOf(intent.getStringExtra(CoinFlipIntent.CHOSEN_COIN_SIDE));
-        this.child = ChildManager.getInstance().getChildByUUID(intentUUID);
+        this.child = ChildManager.getInstance(this).getChildByUUID(intentUUID);
     }
 
     private void flipCoinState() {
