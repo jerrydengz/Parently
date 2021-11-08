@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -147,9 +146,10 @@ public class FlipCoinActivity extends AppCompatActivity {
             ChildManager.getInstance().setLastCoinChooserChild(this.child);
         }
 
-        String toastMsg = coinFlipResult.getDidWin() ? "You won!" + Emoji.HAPPY.get() : "You lost " + Emoji.SAD.get();
-        if(coinFlipResult.getDidWin()){
-            resultSound = MediaPlayer.create(this, R.raw.trumpets);
+        Boolean didWin = coinFlipResult.getDidWin();
+        String toastMsg = didWin ? "You won!" + Emoji.HAPPY.get() : "You lost " + Emoji.SAD.get();
+        if(didWin){
+            resultSound = MediaPlayer.create(this, R.raw.victory);
         }else{
             resultSound = MediaPlayer.create(this, R.raw.defeat_sound);
         }
