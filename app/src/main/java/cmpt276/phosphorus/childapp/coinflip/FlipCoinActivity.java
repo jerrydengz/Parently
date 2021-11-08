@@ -147,16 +147,13 @@ public class FlipCoinActivity extends AppCompatActivity {
             childManager.saveToFile();
             childManager.setLastCoinChooserChild(this.child);
         }
+        boolean didWin = coinFlipResult.getDidWin();
 
-        Boolean didWin = coinFlipResult.getDidWin();
         String toastMsg = didWin ? "You won!" + Emoji.HAPPY.get() : "You lost " + Emoji.SAD.get();
-        if (didWin) {
-            resultSound = MediaPlayer.create(this, R.raw.victory);
-        } else {
-            resultSound = MediaPlayer.create(this, R.raw.defeat_sound);
-        }
-        resultSound.start();
         this.showLargeToast(toastMsg);
+
+        resultSound = MediaPlayer.create(this, (didWin ? R.raw.victory : R.raw.defeat));
+        resultSound.start();
     }
 
     private void updateCoinDisplay() {
