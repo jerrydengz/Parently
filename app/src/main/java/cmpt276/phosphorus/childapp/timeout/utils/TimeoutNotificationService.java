@@ -126,6 +126,7 @@ public class TimeoutNotificationService extends Service {
         }
 
         Intent endIntent = new Intent(this, TimeoutActivity.class);
+        endIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         editor.putLong(TimeoutPrefConst.END_TIME, endTime);
         cdTimer = new CountDownTimer(timeLeft, COUNT_DOWN_INTERVAL) {

@@ -1,7 +1,5 @@
 package cmpt276.phosphorus.childapp.timeout;
 
-package cmpt276.phosphorus.childapp;
-
 import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.content.Context;
