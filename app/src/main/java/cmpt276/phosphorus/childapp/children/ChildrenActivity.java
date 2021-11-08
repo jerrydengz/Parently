@@ -2,15 +2,24 @@ package cmpt276.phosphorus.childapp.children;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.List;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Objects;
 
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.model.Child;
@@ -25,17 +34,13 @@ public class ChildrenActivity extends AppCompatActivity {
 
     private ChildManager childManager;
 
-    public static Intent makeIntent(Context context) {
-        return new Intent(context, ChildrenActivity.class);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_children);
 
         this.setTitle(getString(R.string.child_activity_title));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         this.childManager = ChildManager.getInstance();
         this.createConfigureChildBtn();
@@ -57,18 +62,14 @@ public class ChildrenActivity extends AppCompatActivity {
     }
 
     private void createConfigureChildBtn() {
-        Button button = findViewById(R.id.configureChildrenBtn);
-        button.setOnClickListener(view -> startActivity(
+        FloatingActionButton fabConfigure = findViewById(R.id.configure_child_fab);
+        fabConfigure.setOnClickListener(view -> startActivity(
                 ChildConfigureActivity.makeIntentNewChild(this)
         ));
     }
 
     private void populateChildListView() {
-        List<Child> childProfileList = childManager.getAllChildren();
-        ArrayAdapter<Child> listAdapter = new ArrayAdapter<>(
-                this,
-                R.layout.child_profile,
-                childProfileList);
+        ArrayAdapter<Child> listAdapter = new ChildListAdapter();
 
         ListView listView = findViewById(R.id.listViewChildren);
         listView.setAdapter(listAdapter);
@@ -83,6 +84,43 @@ public class ChildrenActivity extends AppCompatActivity {
             Intent intent = ChildConfigureActivity.makeIntent(this, selectedChild);
             startActivity(intent);
         });
+    }
+
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, ChildrenActivity.class);
+    }
+
+    // https://www.youtube.com/watch?v=WRANgDgM2Zg
+    private class ChildListAdapter extends ArrayAdapter<Child>{
+
+        public ChildListAdapter() {
+            super(ChildrenActivity.this, R.layout.child_profile, childManager.getAllChildren());
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+            View childView = convertView;
+
+            if (childView == null) {
+                childView = getLayoutInflater().inflate(R.layout.child_profile, parent, false);
+            }
+
+            Child childProfile = childManager.getAllChildren().get(position);
+
+            // Set the image
+            ImageView childIcon = childView.findViewById(R.id.childProfileIcon);
+            childIcon.setImageResource(R.drawable.child_profile_img);
+
+            // Set the name
+            TextView childName = childView.findViewById(R.id.child_profile_name);
+            childName.setText(childProfile.getName());
+            childName.setTypeface(null, Typeface.BOLD);
+
+            return childView;
+        }
+
     }
 
 }

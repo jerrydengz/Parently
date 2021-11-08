@@ -13,6 +13,11 @@
     <color name="pastel_red">#DBB1BC</color>
     <color name="purple_c1">#757CC0</color>
     <color name="purple_c2">#545BA5</color>
-    <color name="brown_c1">#CD9C78</color>
+    <color name="green_c1">#55CCB7</color>
+    <color name="green_jade">#00A86B</color>
+    <color name="chalk_red">#EB7191</color>
+    <color name="chalk_red_var">#E9527A</color>
+    <color name="lavender">#b6ccfe</color>
+    <color name="lavender_darker">#abc3ff</color>
 
 </resources>
