@@ -71,4 +71,10 @@ public class CoinFlipResultAdapter extends ArrayAdapter<CoinFlipResult> {
         return view;
     }
 
+    // Stops the tapping affect when selecting an element
+    @Override
+    public boolean isEnabled(int position) {
+        return false;
+    }
+
 }
