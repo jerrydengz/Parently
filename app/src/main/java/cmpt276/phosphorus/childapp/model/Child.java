@@ -1,8 +1,13 @@
 package cmpt276.phosphorus.childapp.model;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -71,8 +76,8 @@ public class Child {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {return true;}
-        if (o == null || getClass() != o.getClass()) return false;
+        if(this == o){return true;}
+        if(o == null || getClass() != o.getClass()){return false;}
         Child child = (Child) o;
         return Objects.equals(this.uuid, child.getUUID()) && Objects.equals(this.name, child.getName());
     }
@@ -86,5 +91,4 @@ public class Child {
                 ", coinFlipResults=" + this.coinFlipResults +
                 '}';
     }
-
 }
