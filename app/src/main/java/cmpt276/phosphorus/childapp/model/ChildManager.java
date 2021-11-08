@@ -11,7 +11,6 @@ import com.google.gson.stream.JsonWriter;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.time.LocalDateTime;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -19,8 +18,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.Type;
-
-
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -35,17 +33,16 @@ import java.util.UUID;
 public class ChildManager {
 
     private static ChildManager instance;
-
+    private final File file;
     private List<Child> allChildren;
     private Child lastCoinChooserChild;
-    private final File file;
 
     private ChildManager(Context context) {
         this.allChildren = new ArrayList<>();
         this.lastCoinChooserChild = null;
         File dir = context.getFilesDir();
-        file = new File(dir, "child.json");//use this to create new directory that can be written to
-        getFromFile();
+        this.file = new File(dir, "child.json");//use this to create new directory that can be written to
+        this.getFromFile();
     }
 
     public static ChildManager getInstance(Context context) {
@@ -56,7 +53,6 @@ public class ChildManager {
     }
 
     public void addChild(@NotNull Child child) {
-        if(this.allChildren == null){this.allChildren = new ArrayList<>();}
         this.allChildren.add(Objects.requireNonNull(child));
         saveToFile();
     }
@@ -95,11 +91,13 @@ public class ChildManager {
     }
 
     public boolean removeChild(Child child) {
-        return this.allChildren.remove(child);
+        boolean isRemoved = this.allChildren.remove(child); // We make sure we do this before saving cause it might err
+        this.saveToFile();
+        return isRemoved;
     }
 
     public Child getNextCoinFlipper() {
-        if(this.allChildren.isEmpty()) return null;
+        if (this.allChildren.isEmpty()) return null;
 
         if (this.lastCoinChooserChild == null)
             return this.getChildByPos(0);
@@ -115,27 +113,37 @@ public class ChildManager {
         this.lastCoinChooserChild = lastCoinChooserChild;
     }
 
+    private boolean isEmpty() {
+        return this.allChildren.isEmpty();
+    }
+
     //https://docs.oracle.com/javase/7/docs/api/java/io/FileWriter.html
     //saves children to file
-    private void saveToFile(){
+    private void saveToFile() {
         Gson gson = getGson();
-        try{
+        try {
             Writer writer = new FileWriter(file);//writes to designated file
             gson.toJson(this.allChildren, writer);//writes this.allChildren to the file
             writer.close();
-        }catch(IOException ignored){}
+        } catch (IOException ignored) {
+        }
     }
 
     //https://attacomsian.com/blog/gson-write-json-file
-    private void getFromFile(){
+    private void getFromFile() {
         Gson gson = getGson();
-        try{
+        try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));//reads from designated file
-            Type childType = new TypeToken<List<Child>>(){}.getType();//gson uses this to parse the Child type
+            Type childType = new TypeToken<List<Child>>() {
+            }.getType();//gson uses this to parse the Child type
             this.allChildren = gson.fromJson(bufferedReader, childType);//loads contents as allChildren
-            if(this.allChildren == null){this.allChildren = new ArrayList<>();}//if file is empty
+            if (this.allChildren == null) {
+                this.allChildren = new ArrayList<>();
+            }//if file is empty
             bufferedReader.close();
-        }catch(IOException e){this.allChildren = new ArrayList<>();}
+        } catch (IOException e) {
+            this.allChildren = new ArrayList<>();
+        }
     }
 
     //got from https://stackoverflow.com/questions/39192945/serialize-java-8-localdate-as-yyyy-mm-dd-with-gson
@@ -154,10 +162,6 @@ public class ChildManager {
                         return LocalDateTime.parse(jsonReader.nextString());
                     }
                 }).create();
-    }
-
-    private boolean isEmpty(){
-        return this.allChildren.isEmpty();
     }
 
 }
