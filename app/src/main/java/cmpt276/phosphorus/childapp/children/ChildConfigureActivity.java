@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -65,10 +66,10 @@ public class ChildConfigureActivity extends AppCompatActivity {
     }
 
     // https://youtu.be/y6StJRn-Y-A
-    private void showDialogAlert(String title, String dec) {
+    private void showDialogAlert(@StringRes int title, @StringRes int dec) {
         AlertDialog.Builder dialogWarning = new AlertDialog.Builder(this);
-        dialogWarning.setTitle(title);
-        dialogWarning.setMessage(dec);
+        dialogWarning.setTitle(getResources().getString(title));
+        dialogWarning.setMessage(getResources().getString(dec));
         dialogWarning.setPositiveButton(getResources().getString(R.string.dialog_confirm), null);
         dialogWarning.show();
     }
@@ -82,12 +83,17 @@ public class ChildConfigureActivity extends AppCompatActivity {
 
             // let user to continue to edit and change, till valid entry is entered, or exit
             if (cleanedName.isEmpty()) {
-                this.showDialogAlert(getResources().getString(R.string.dialog_title_invalid_name), getResources().getString(R.string.dialog_msg_invalid_name));
+                this.showDialogAlert(R.string.dialog_title_invalid_name, R.string.dialog_msg_invalid_name);
+                return;
+            }
+
+            if (cleanedName.length() >= 15) {
+                this.showDialogAlert(R.string.dialog_title_name_too_large, R.string.dialog_msg_name_too_large);
                 return;
             }
 
             if (isDuplicateChildName(cleanedName) && !(isEditingChild() && cleanedName.equals(child.getName()))) {
-                this.showDialogAlert(getResources().getString(R.string.dialog_title_dupe_name), getResources().getString(R.string.dialog_msg_dupe_name));
+                this.showDialogAlert(R.string.dialog_title_dupe_name, R.string.dialog_msg_dupe_name);
                 return;
             }
 

@@ -44,6 +44,8 @@
     <string name="dialog_msg_dupe_name">Please enter a unique child name</string>
     <string name="dialog_title_invalid_name">Invalid Name</string>
     <string name="dialog_msg_invalid_name">Please enter a non-empty name</string>
+    <string name="dialog_title_name_too_large">Too many characters</string>
+    <string name="dialog_msg_name_too_large">Please use a shorter name!</string>
     <string name="dialog_title_delete">Delete Child</string>
     <string name="dialog_msg_delete">Are you sure you want to delete this child? 👀👮⚠🚨</string>
     <string name="add_child_title"><b>New Child</b></string>
