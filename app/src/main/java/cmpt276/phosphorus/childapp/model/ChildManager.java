@@ -73,7 +73,12 @@ public class ChildManager {
     }
 
     public boolean removeChild(Child child) {
-        return this.allChildren.remove(child);
+        boolean isRemoved = this.allChildren.remove(child);
+        if(isRemoved && child == this.lastCoinChooserChild){
+            this.lastCoinChooserChild = this.getNextCoinFlipper();
+        }
+
+        return isRemoved;
     }
 
     public Child getNextCoinFlipper() {
