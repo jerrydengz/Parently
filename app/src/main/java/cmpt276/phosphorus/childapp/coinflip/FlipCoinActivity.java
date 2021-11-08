@@ -39,7 +39,6 @@ import cmpt276.phosphorus.childapp.utils.Emoji;
 public class FlipCoinActivity extends AppCompatActivity {
 
     private static final String CHOSEN_COIN_SIDE = "CHOSEN_COIN_SIDE";
-    private final CoinSide DEFAULT_SIDE = CoinSide.HEAD;
 
     private boolean hasFlipped = false;
     private Child child;
@@ -47,9 +46,9 @@ public class FlipCoinActivity extends AppCompatActivity {
     private CoinSide coinSide;
     private MediaPlayer resultSound;
 
-    public static Intent makeIntent(Context context, CoinSide coinSide) {
+    public static Intent makeIntent(Context context, CoinSide winningSide) {
         Intent intent = new Intent(context, FlipCoinActivity.class);
-        intent.putExtra(CHOSEN_COIN_SIDE, coinSide.name());
+        intent.putExtra(CHOSEN_COIN_SIDE, winningSide.name());
         return intent;
     }
 
@@ -62,11 +61,12 @@ public class FlipCoinActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         this.extractIntentData();
-        this.child = ChildManager.getInstance().getNextCoinFlipper();
+        this.coinSide = this.winningSide; // Set's the inital coin side to the one the person picked
+
         // We set the last child here b/c the person may have exited the past pages and haven't
         // properly flipped a coin
+        this.child = ChildManager.getInstance().getNextCoinFlipper();
         ChildManager.getInstance().setLastCoinChooserChild(this.child);
-        this.coinSide = this.DEFAULT_SIDE;
 
         this.updateCoinDisplay();
         this.createFlipBtn();
