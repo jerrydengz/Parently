@@ -5,7 +5,6 @@
     android:id="@+id/timeoutLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/lavender"
     tools:context=".timeout.TimeoutActivity">
 
     <TextView
@@ -62,7 +61,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radio_group_time_options"
-        tools:visibility="visible"
-        tools:ignore="Autofill" />
+        tools:ignore="Autofill"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

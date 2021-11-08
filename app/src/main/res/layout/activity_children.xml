@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/lavender"
+    android:background="@drawable/lavender_min_1"
     tools:context=".children.ChildrenActivity">
 
 <!--https://stackoverflow.com/questions/4984313/how-to-set-space-between-listview-items-in-android-->
@@ -26,20 +26,12 @@
 
     <ListView
         android:id="@+id/listViewChildren"
-        android:layout_width="358dp"
-        android:layout_height="528dp"
+        android:layout_width="400sp"
+        android:layout_height="match_parent"
         android:divider="@android:color/transparent"
         android:dividerHeight="10.0sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.88" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -44,5 +44,7 @@
     <string name="dialog_title_delete">Delete Child</string>
     <string name="dialog_msg_delete">Are you sure you want to delete this child? 👀👮⚠🚨</string>
     <string name="add_child_title"><b>New Child</b></string>
+    <string name="flip_choice_label">"Coin Choice: "</string>
+    <string name="flip_result_label">"Coin Result: "</string>
 
 </resources>

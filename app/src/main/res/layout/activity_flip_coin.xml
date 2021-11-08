@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/lavender2"
+    android:background="@drawable/lavender2_min_1"
     tools:context=".coinflip.FlipCoinActivity"
     tools:layout_editor_absoluteX="-1dp"
     tools:layout_editor_absoluteY="0dp">
@@ -13,7 +13,7 @@
         android:id="@+id/textCurrentSide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="261dp"
+        android:layout_marginBottom="208dp"
         android:text=""
         android:textColor="@color/black"
         android:textSize="45sp"
@@ -23,14 +23,13 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgCoin"
-        app:layout_constraintVertical_bias="0.42" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
         android:id="@+id/imgCoin"
         android:layout_width="265dp"
         android:layout_height="257dp"
-        android:layout_marginTop="84dp"
-        android:layout_marginBottom="295dp"
+        android:layout_marginTop="60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -41,7 +40,7 @@
         android:id="@+id/btnFlip"
         android:layout_width="284dp"
         android:layout_height="114dp"
-        android:layout_marginBottom="116dp"
+        android:layout_marginBottom="68dp"
         android:text="@string/flip_coin_flip_button"
         android:textSize="40sp"
         android:textStyle="italic"

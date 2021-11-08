@@ -4,28 +4,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/lavender"
+    android:background="@drawable/lavender_min_1"
     tools:context=".coinflip.ChooseSideActivity">
 
     <TextView
         android:id="@+id/textSideChooseTitle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="100sp"
         android:layout_marginTop="16dp"
         android:gravity="center"
         android:text=""
         android:textColor="@color/black"
-        android:textSize="36sp"
+        android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/textHead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:text="@string/flip_coin_flip_head_title"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/imgBtnHeads"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/imgBtnHeads"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:minWidth="175sp"
+        android:minHeight="175sp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/coin_head"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+
+    <TextView
         android:id="@+id/textTails"
-        android:layout_width="113dp"
-        android:layout_height="34dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/flip_coin_flip_tails_title"
         android:textColor="@color/black"
@@ -40,49 +68,17 @@
         android:id="@+id/imgBtnTails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
         android:background="@null"
-        android:minWidth="200sp"
-        android:minHeight="200sp"
+        android:minWidth="175sp"
+        android:minHeight="175sp"
         android:scaleType="fitCenter"
         android:src="@drawable/coin_tails"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline3"
-        app:layout_constraintVertical_bias="0.794"
+        app:layout_constraintVertical_bias="0.485"
         tools:ignore="ContentDescription,ImageContrastCheck,SpeakableTextPresentCheck" />
-
-    <ImageButton
-        android:id="@+id/imgBtnHeads"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:background="@null"
-        android:minWidth="200sp"
-        android:minHeight="200sp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/coin_head"
-        app:layout_constraintBottom_toTopOf="@+id/guideline3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textSideChooseTitle"
-        app:layout_constraintVertical_bias="1.0"
-        tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
-
-    <TextView
-        android:id="@+id/textHead"
-        android:layout_width="113dp"
-        android:layout_height="34dp"
-        android:gravity="center"
-        android:text="@string/flip_coin_flip_head_title"
-        android:textColor="@color/black"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/imgBtnHeads"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textSideChooseTitle" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnHistory"
@@ -97,13 +93,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/chart_icon"
         app:tint="@color/white"
-        tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+        tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.53" />
+        app:layout_constraintGuide_percent="0.54" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
