@@ -37,7 +37,7 @@ public class ChildrenActivity extends AppCompatActivity {
         this.setTitle(getString(R.string.child_activity_title));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        childManager = ChildManager.getInstance();
+        this.childManager = ChildManager.getInstance();
         this.createConfigureChildBtn();
         this.populateChildListView();
         this.createOnClickCallBack();
