@@ -159,6 +159,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         resultSound.start();
 
         if (didWin) {
+            // Ref https://github.com/DanielMartinus/Konfetti
             KonfettiView konfettiView = findViewById(R.id.viewKonfetti);
             konfettiView.build()
                     .addColors(Color.BLUE, Color.WHITE, Color.CYAN)
