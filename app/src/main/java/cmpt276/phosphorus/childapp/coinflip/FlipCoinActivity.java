@@ -179,6 +179,10 @@ public class FlipCoinActivity extends AppCompatActivity {
         button.setOnClickListener(view -> {
             if (!this.hasFlipped) {
                 this.hasFlipped = true; // Makes it so next time we press the btn we go back
+
+                MediaPlayer mPlayer = MediaPlayer.create(this, R.raw.coin_flip);
+                mPlayer.start();
+
                 this.randomlyChooseSide();
 
             } else {
