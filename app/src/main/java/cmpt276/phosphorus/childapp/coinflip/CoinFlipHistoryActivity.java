@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import cmpt276.phosphorus.childapp.R;
@@ -35,7 +36,7 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_coin_flip_history);
 
         this.setTitle(getString(R.string.flip_coin_history_action_title));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         this.makeList();
     }

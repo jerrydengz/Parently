@@ -61,6 +61,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radio_group_time_options"
+        tools:ignore="Autofill"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
