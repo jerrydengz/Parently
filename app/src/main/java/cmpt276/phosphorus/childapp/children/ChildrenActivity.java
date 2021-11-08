@@ -16,9 +16,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.Objects;
 
 import cmpt276.phosphorus.childapp.R;
@@ -62,8 +63,8 @@ public class ChildrenActivity extends AppCompatActivity {
     }
 
     private void createConfigureChildBtn() {
-        Button button = findViewById(R.id.configureChildrenBtn);
-        button.setOnClickListener(view -> startActivity(
+        FloatingActionButton fabConfigure = findViewById(R.id.configure_child_fab);
+        fabConfigure.setOnClickListener(view -> startActivity(
                 ChildConfigureActivity.makeIntentNewChild(this)
         ));
     }

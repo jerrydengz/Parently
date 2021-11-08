@@ -2,6 +2,7 @@ package cmpt276.phosphorus.childapp.children;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -79,7 +80,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
         Button button = findViewById(R.id.btnSave);
 
         button.setOnClickListener(view -> {
-            String cleanedName = childNameEditText.getText().toString().trim(); // Removes spaces/whtie space
+            String cleanedName = childNameEditText.getText().toString().trim(); // Removes spaces/white space
 
             // let user to continue to edit and change, till valid entry is entered, or exit
             if (cleanedName.isEmpty()) {
@@ -133,12 +134,14 @@ public class ChildConfigureActivity extends AppCompatActivity {
         boolean isEditing = this.isEditingChild();
 
         if (isEditing) {
-            // Update's the text input with the childs name
+            // Update's the text input with the child's name
             EditText childNameEditText = findViewById(R.id.name_edit_text);
             childNameEditText.setText(this.child.getName());
         }
 
         childTitleText.setText(isEditing ? this.child.getName() : getString(R.string.add_child_title));
+        childTitleText.setTypeface(null, Typeface.BOLD);
+        childTitleText.setTextColor(getResources().getColor(R.color.black, null));
         deleteBtn.setVisibility(isEditing ? View.VISIBLE : View.INVISIBLE);
     }
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/lavendar"
+    android:background="@drawable/lavender"
     tools:context=".coinflip.ChooseSideActivity">
 
     <TextView
@@ -96,6 +96,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/chart_icon"
+        app:tint="@color/white"
         tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
 
     <androidx.constraintlayout.widget.Guideline
