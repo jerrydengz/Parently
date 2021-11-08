@@ -1,4 +1,4 @@
-package cmpt276.phosphorus.childapp.utils;
+package cmpt276.phosphorus.childapp.model;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.StringRes;
@@ -8,10 +8,16 @@ import org.json.JSONObject;
 
 import cmpt276.phosphorus.childapp.R;
 
+// ==============================================================================================
+//
+// Enum to store the two possible sides of a coin, as well as keeping track of the image ID &
+// title ID
+//
+// ==============================================================================================
 public enum CoinSide {
 
     HEAD(R.drawable.coin_head, R.string.flip_coin_flip_head_title),
-    TAILS(R.drawable.coin_tail, R.string.flip_coin_flip_tails_title);
+    TAILS(R.drawable.coin_tails, R.string.flip_coin_flip_tails_title);
 
     private @DrawableRes final int imgId;
     private @StringRes final int titleId;
