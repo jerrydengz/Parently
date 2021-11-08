@@ -16,6 +16,11 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+// ==============================================================================================
+//
+// Child object to keep track of children
+//
+// ==============================================================================================
 public class Child {
 
     private final UUID uuid;
@@ -85,19 +90,5 @@ public class Child {
                 ", name='" + this.name + '\'' +
                 ", coinFlipResults=" + this.coinFlipResults +
                 '}';
-    }
-
-    protected JSONObject getJSONChild() throws JSONException{
-        JSONObject inner = new JSONObject();
-        JSONObject outer = new JSONObject();
-        JSONArray flips = new JSONArray();
-        inner.put("UUID", this.uuid);
-        inner.put("name", this.name);
-        for(CoinFlipResult i : this.coinFlipResults){
-            flips.put(i.toJSON());
-        }
-        inner.put("coinFlipResults", flips);
-        outer.put("child", inner);
-        return outer;
     }
 }

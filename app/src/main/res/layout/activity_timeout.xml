@@ -2,19 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/timeoutLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TimeoutActivity">
-
-    <Button
-        android:id="@+id/btnBackTimeout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="27dp"
-        android:layout_marginTop="35dp"
-        android:text="@string/back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    tools:context=".timeout.TimeoutActivity">
 
     <TextView
         android:id="@+id/tvCountDown"
@@ -43,10 +34,10 @@
         android:layout_height="wrap_content"
         android:text="@string/reset"
         android:visibility="invisible"
-        tools:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/btnStartAndPause"
         app:layout_constraintStart_toStartOf="@+id/btnStartAndPause"
-        app:layout_constraintTop_toBottomOf="@+id/btnStartAndPause" />
+        app:layout_constraintTop_toBottomOf="@+id/btnStartAndPause"
+        tools:visibility="visible" />
 
     <RadioGroup
         android:id="@+id/radio_group_time_options"
@@ -64,9 +55,9 @@
         android:ems="10"
         android:hint="@string/custom_minutes"
         android:inputType="number"
+        android:maxLength="3"
         android:minHeight="48dp"
         android:visibility="invisible"
-        android:maxLength="3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radio_group_time_options"

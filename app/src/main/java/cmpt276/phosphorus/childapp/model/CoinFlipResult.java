@@ -3,22 +3,21 @@ package cmpt276.phosphorus.childapp.model;
 import androidx.annotation.NonNull;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-import cmpt276.phosphorus.childapp.utils.CoinSide;
-
+// ==============================================================================================
+//
 // Stored the result of a coin flip
+//
+// ==============================================================================================
 public class CoinFlipResult {
 
     private final LocalDateTime time;
     private final CoinSide pickedSide;
     private final CoinSide flipResult;
-    //private final DateTimeFormatter format = new DateTimeFormatter.ofPattern("yyyy MM dd HH:mm:ss");
 
     // Normal way to create results
     public CoinFlipResult(@NotNull CoinSide pickedSide, @NotNull CoinSide flipResult) {
@@ -38,7 +37,8 @@ public class CoinFlipResult {
 
     // Gets date/time in format YYYY/MM/DD HH:mm:ss
     public String getFormattedTime() {
-        return time.format(DateTimeFormatter.ofPattern("yyyy MM dd HH:mm:ss"));
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("MMMM dd HH:mm a");
+        return time.format(format);
     }
 
     public CoinSide getPickedSide() {
@@ -63,14 +63,4 @@ public class CoinFlipResult {
                 '}';
     }
 
-
-    protected JSONObject toJSON() throws JSONException{
-        JSONObject inner = new JSONObject();
-        JSONObject outer = new JSONObject();
-        inner.put("time", this.time);
-        inner.put("pickedSide", this.pickedSide.getJSON());
-        inner.put("flipResult", this.flipResult.getJSON());
-        outer.put("CoinFlipResult", inner);
-        return outer;
-    }
 }

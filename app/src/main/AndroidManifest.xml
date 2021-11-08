@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cmpt276.phosphorus.childapp">
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,37 +12,42 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ChildApp">
-
         <activity
-            android:screenOrientation="portrait"
+            android:name=".coinflip.CoinFlipHistoryActivity"
+            android:exported="true" />
+        <activity
             android:name=".coinflip.FlipCoinActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
-            android:screenOrientation="portrait"
             android:name=".coinflip.ChooseSideActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
-            android:screenOrientation="portrait"
-            android:name=".coinflip.ChooseChildActivity"
-            android:exported="true" />
+            android:launchMode="singleTop"
+            android:name=".timeout.TimeoutActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
-            android:screenOrientation="portrait"
-            android:name=".TimeoutActivity"
-            android:exported="true" />
+            android:name=".children.ChildrenActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
-            android:screenOrientation="portrait"
-            android:name=".ChildrenActivity"
-            android:exported="true" />
+            android:name=".children.ChildConfigureActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
-            android:screenOrientation="portrait"
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".timeout.utils.TimeoutNotificationService" />
     </application>
 
 </manifest>

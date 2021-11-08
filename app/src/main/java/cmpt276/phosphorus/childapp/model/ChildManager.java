@@ -11,6 +11,7 @@ import com.google.gson.stream.JsonWriter;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.time.LocalDateTime;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -18,9 +19,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.Type;
-import java.time.LocalDateTime;
 
-import java.time.Month;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,6 +67,7 @@ public class ChildManager {
                 .findFirst()
                 .orElse(null);
     }
+
 
     public void addChildren(@NotNull Child... children) {
         Arrays.asList(children).forEach(this::addChild); // Add children already checks for null
@@ -140,7 +140,7 @@ public class ChildManager {
 
     //got from https://stackoverflow.com/questions/39192945/serialize-java-8-localdate-as-yyyy-mm-dd-with-gson
     //gets a Gson object capable of interacting with a LocalDateTime object
-    private Gson getGson(){
+    private Gson getGson() {
         return new GsonBuilder().registerTypeAdapter(LocalDateTime.class,
                 new TypeAdapter<LocalDateTime>() {
                     @Override
