@@ -14,33 +14,33 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ChildApp">
         <activity
-            android:name=".ChildrenConfigureActivity"
+            android:name=".coinflip.CoinFlipHistoryActivity"
             android:exported="true" />
         <activity
-            android:screenOrientation="portrait"
             android:name=".coinflip.FlipCoinActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
-            android:screenOrientation="portrait"
             android:name=".coinflip.ChooseSideActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
-            android:screenOrientation="portrait"
-            android:name=".coinflip.ChooseChildActivity"
-            android:exported="true" />
-        <activity
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
-            android:name=".TimeoutActivity"
-            android:exported="true" />
+            android:name=".timeout.TimeoutActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
-            android:screenOrientation="portrait"
-            android:name=".ChildrenActivity"
-            android:exported="true" />
+            android:name=".children.ChildrenActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
-            android:screenOrientation="portrait"
+            android:name=".children.ChildConfigureActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,7 +48,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".TimeoutNotificationService" />
+        <service android:name=".timeout.utils.TimeoutNotificationService" />
     </application>
 
 </manifest>

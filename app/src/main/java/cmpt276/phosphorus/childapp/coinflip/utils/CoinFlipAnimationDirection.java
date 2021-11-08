@@ -4,6 +4,11 @@ import androidx.annotation.AnimatorRes;
 
 import cmpt276.phosphorus.childapp.R;
 
+// ==============================================================================================
+//
+// Keeps track of the animation directions
+//
+// ==============================================================================================
 public enum CoinFlipAnimationDirection {
 
     FORWARD(R.animator.flip_forward),

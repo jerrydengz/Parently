@@ -1,10 +1,11 @@
-package cmpt276.phosphorus.childapp;
+package cmpt276.phosphorus.childapp.timeout.utils;
 
-/**
- * Represents a class containing string constants
- * for SharedPreferences
- */
-
+// ==============================================================================================
+//
+// Represents a class containing string constants
+// for SharedPreferences
+//
+// ==============================================================================================
 public class TimeoutPrefConst {
 
     public static final String PREFERENCE_PREF = "PREFERENCE_PREF";

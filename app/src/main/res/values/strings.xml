@@ -11,10 +11,16 @@
     <string name="custom">Custom</string>
     <string name="time_selected">"%1$d minutes</string>
     <string name="custom_minutes">Custom Minutes</string>
-    <string name="flip_coin_choose_child_title">Choose a Child</string>
+    <string name="timeout_title">Timer</string>
+
+
+    <string name="flip_coin_history_action_title">History</string>
+    <string name="flip_coin_choose_action_title">Choose a side</string>
+    <string name="flip_coin_flip_action_title">Flip!</string>
     <string name="flip_coin_flip_button">Flip</string>
     <string name="flip_coin_flip_head_title">Heads</string>
     <string name="flip_coin_flip_tails_title">Tails</string>
+
     <string name="title_activity_children_configure">ChildrenConfigureActivity</string>
     <string name="add_child_btn_text">New Child</string>
     <string name="back_btn_text">Back</string>
@@ -22,9 +28,24 @@
     <string name="name_edit_txt">Name</string>
     <string name="child_name_txt"><b>Child Name</b></string>
     <string name="timeout_remaining">Time Remaining</string>
+    <string name="child_activity_title">Children</string>
+    <string name="child_configure_edit_title">Editing</string>
+    <string name="child_configure_create_title">Creating</string>
     <string name="timeout_finished">Timeout Finished!</string>
     <string name="stop_timeout">Stop Timeout</string>
     <string name="alarm_icon">Alarm Warning Icon</string>
     <string name="timer_notification_service_channel">Timer Notification Service Channel</string>
     <string name="timeout_notification_channel_desc">Timer is running notification</string>
+    <string name="delete_btn_txt">Delete</string>
+    <string name="dialog_confirm">OK</string>
+    <string name="dialog_positive">YES</string>
+    <string name="dialog_negative">NO</string>
+    <string name="dialog_title_dupe_name">Duplicate Child Name Found</string>
+    <string name="dialog_msg_dupe_name">Please enter a unique child name</string>
+    <string name="dialog_title_invalid_name">Invalid Name</string>
+    <string name="dialog_msg_invalid_name">Please enter a non-empty name</string>
+    <string name="dialog_title_delete">Delete Child</string>
+    <string name="dialog_msg_delete">Are you sure you want to delete this child? 👀👮⚠🚨</string>
+    <string name="add_child_title"><b>New Child</b></string>
+
 </resources>

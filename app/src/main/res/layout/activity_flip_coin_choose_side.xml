@@ -6,29 +6,84 @@
     android:layout_height="match_parent"
     tools:context=".coinflip.ChooseSideActivity">
 
-    <ImageButton
-        android:id="@+id/imgBtnHeads"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="3dp"
-        android:background="@null"
-        android:src="@drawable/coin_head"
-        app:layout_constraintBottom_toTopOf="@+id/imgBtnTails"
+
+    <TextView
+        android:id="@+id/textSideChooseTitle"
+        android:layout_width="411dp"
+        android:layout_height="73dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="50dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textHead"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintVertical_bias="0.666" />
+
+    <TextView
+        android:id="@+id/textTails"
+        android:layout_width="113dp"
+        android:layout_height="34dp"
+        android:gravity="center"
+        android:text="@string/flip_coin_flip_tails_title"
+        android:textColor="@color/black"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/imgBtnTails"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
         android:id="@+id/imgBtnTails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="227dp"
+        android:layout_height="203dp"
+        android:layout_marginBottom="140dp"
         android:background="@null"
-        android:src="@drawable/coin_tail"
+        android:scaleType="fitCenter"
+        android:src="@drawable/coin_tails"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgBtnHeads"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/imgBtnHeads"
+        android:layout_width="227dp"
+        android:layout_height="203dp"
+        android:layout_marginBottom="44dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/coin_head"
+        app:layout_constraintBottom_toTopOf="@+id/textTails"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textHead"
+        android:layout_width="113dp"
+        android:layout_height="34dp"
+        android:gravity="center"
+        android:text="@string/flip_coin_flip_head_title"
+        android:textColor="@color/black"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/imgBtnHeads"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:scaleType="center"
+        app:fabCustomSize="65dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/chart_icon" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

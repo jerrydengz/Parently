@@ -1,8 +1,8 @@
-package cmpt276.phosphorus.childapp;
+package cmpt276.phosphorus.childapp.timeout.utils;
 
-import static cmpt276.phosphorus.childapp.TimeoutActivity.COUNT_DOWN_INTERVAL;
-import static cmpt276.phosphorus.childapp.TimeoutActivity.NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS;
-import static cmpt276.phosphorus.childapp.TimeoutActivity.timeLeftFormatter;
+import static cmpt276.phosphorus.childapp.timeout.TimeoutActivity.COUNT_DOWN_INTERVAL;
+import static cmpt276.phosphorus.childapp.timeout.TimeoutActivity.NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS;
+import static cmpt276.phosphorus.childapp.timeout.TimeoutActivity.timeLeftFormatter;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -19,11 +19,19 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import cmpt276.phosphorus.childapp.R;
+import cmpt276.phosphorus.childapp.timeout.TimeoutActivity;
+
     /* Code assistance from
         https://developer.android.com/training/notify-user/build-notification
         https://www.youtube.com/watch?v=FbpD5RZtbCc
     */
 
+// ==============================================================================================
+//
+// Manages the timeout notifications when leaving the app
+//
+// ==============================================================================================
 public class TimeoutNotificationService extends Service {
     public static final String CHANNEL_ID = "TimerNotificationServiceChannel";
 
