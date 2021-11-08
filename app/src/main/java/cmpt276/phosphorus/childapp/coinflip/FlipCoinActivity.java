@@ -154,7 +154,7 @@ public class FlipCoinActivity extends AppCompatActivity {
 
         TextView currentSide = findViewById(R.id.textCurrentSide);
         currentSide.setText(getString(this.coinSide.getTitleId()));
-
+    }
 
     private void extractIntentData() {
         Intent intent = getIntent();
