@@ -28,13 +28,11 @@ public class ChildListAdapter extends ArrayAdapter<Child> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
         View childView = convertView;
 
         if (childView == null) {
-            // Ref https://stackoverflow.com/questions/8662494/android-baseadapter-and-getlayoutinflater-on-separate-class-file
-            LayoutInflater li = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            childView = li.inflate(R.layout.child_profile, parent, false);
+            // https://stackoverflow.com/questions/7803771/call-to-getlayoutinflater-in-places-not-in-activity/18942760#18942760
+            childView = LayoutInflater.from(getContext()).inflate(R.layout.child_profile, parent, false);
         }
 
         Child childProfile = getItem(position);

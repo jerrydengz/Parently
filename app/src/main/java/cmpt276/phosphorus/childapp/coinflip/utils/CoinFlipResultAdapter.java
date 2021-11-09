@@ -33,9 +33,8 @@ public class CoinFlipResultAdapter extends ArrayAdapter<CoinFlipResult> {
 
         View view = convertView;
 
-        // Custom ListView
         if (view == null) {
-//            https://stackoverflow.com/questions/7803771/call-to-getlayoutinflater-in-places-not-in-activity/18942760#18942760
+            // https://stackoverflow.com/questions/7803771/call-to-getlayoutinflater-in-places-not-in-activity/18942760#18942760
             view = LayoutInflater.from(getContext()).inflate(R.layout.coin_flip_history_item, parent, false);
         }
 
