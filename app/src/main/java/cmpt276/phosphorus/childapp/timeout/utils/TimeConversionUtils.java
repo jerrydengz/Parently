@@ -3,6 +3,7 @@ package cmpt276.phosphorus.childapp.timeout.utils;
 import java.util.Locale;
 
 public class TimeConversionUtils {
+
     // Interval in milliseconds the timer updates its countdown
     public static final int COUNT_DOWN_INTERVAL = 1000;
     public static final long NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS = 60000L;
