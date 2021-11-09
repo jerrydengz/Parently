@@ -9,4 +9,4 @@ Resource Ref
 - Victory sound: https://www.youtube.com/watch?v=lcJH8JtgZoE
 - Defeat sound: https://www.youtube.com/watch?v=8Xt1kUK71lc
 - Timeout activity timer bg: https://wallpaperaccess.com/minimal-phone
-- TODO jerry files
+- App Icon: https://www.pngfind.com/download/hwbwiwi_child-icon-png-children-protection-png-transparent-png/
