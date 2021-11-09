@@ -1,8 +1,6 @@
 package cmpt276.phosphorus.childapp.coinflip.utils;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +34,7 @@ public class CoinFlipResultAdapter extends ArrayAdapter<CoinFlipResult> {
         View view = convertView;
 
         // Custom ListView
-        if(view == null){
+        if (view == null) {
 //            https://stackoverflow.com/questions/7803771/call-to-getlayoutinflater-in-places-not-in-activity/18942760#18942760
             view = LayoutInflater.from(getContext()).inflate(R.layout.coin_flip_history_item, parent, false);
         }
