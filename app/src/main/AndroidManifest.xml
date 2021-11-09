@@ -44,10 +44,6 @@
             android:exported="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".ChildrenConfigureActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
