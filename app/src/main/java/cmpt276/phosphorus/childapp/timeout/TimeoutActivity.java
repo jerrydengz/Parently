@@ -28,6 +28,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.timeout.utils.TimeoutNotificationService;
@@ -87,7 +88,7 @@ public class TimeoutActivity extends AppCompatActivity {
         customTimeInput = findViewById(R.id.inputCustomNumber);
 
         this.setTitle(getString(R.string.timeout_title));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         this.setUpStartAndPauseBtn();
         this.setUpResetBtn();
@@ -173,7 +174,7 @@ public class TimeoutActivity extends AppCompatActivity {
             btnStartAndPause.setVisibility(View.INVISIBLE);
         }
 
-        int background = isTimerRunning ? R.drawable.relaxing_background : 0;
+        int background = isTimerRunning ? R.drawable.relaxing_background : R.drawable.lavender_min_1;
         ConstraintLayout constraintLayout = findViewById(R.id.timeoutLayout);
         constraintLayout.setBackgroundResource(background);
     }

@@ -6,6 +6,8 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
@@ -28,7 +30,9 @@ import cmpt276.phosphorus.childapp.model.ChildManager;
 import cmpt276.phosphorus.childapp.model.CoinFlipResult;
 import cmpt276.phosphorus.childapp.model.CoinSide;
 import cmpt276.phosphorus.childapp.utils.Emoji;
-
+import nl.dionsegijn.konfetti.KonfettiView;
+import nl.dionsegijn.konfetti.models.Shape;
+import nl.dionsegijn.konfetti.models.Size;
 
 // ==============================================================================================
 //
@@ -38,16 +42,16 @@ import cmpt276.phosphorus.childapp.utils.Emoji;
 public class FlipCoinActivity extends AppCompatActivity {
 
     private static final String CHOSEN_COIN_SIDE = "CHOSEN_COIN_SIDE";
-    private final CoinSide DEFAULT_SIDE = CoinSide.HEAD;
 
     private boolean hasFlipped = false;
     private Child child;
     private CoinSide winningSide;
     private CoinSide coinSide;
+    private MediaPlayer resultSound;
 
-    public static Intent makeIntent(Context context, CoinSide coinSide) {
+    public static Intent makeIntent(Context context, CoinSide winningSide) {
         Intent intent = new Intent(context, FlipCoinActivity.class);
-        intent.putExtra(CHOSEN_COIN_SIDE, coinSide.name());
+        intent.putExtra(CHOSEN_COIN_SIDE, winningSide.name());
         return intent;
     }
 
@@ -60,11 +64,12 @@ public class FlipCoinActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         this.extractIntentData();
-        this.child = ChildManager.getInstance().getNextCoinFlipper();
+        this.coinSide = this.winningSide; // Set's the inital coin side to the one the person picked
+
         // We set the last child here b/c the person may have exited the past pages and haven't
         // properly flipped a coin
+        this.child = ChildManager.getInstance().getNextCoinFlipper();
         ChildManager.getInstance().setLastCoinChooserChild(this.child);
-        this.coinSide = this.DEFAULT_SIDE;
 
         this.updateCoinDisplay();
         this.createFlipBtn();
@@ -140,12 +145,34 @@ public class FlipCoinActivity extends AppCompatActivity {
         // Means there aren't any avaliable children (i.e. empty)
         CoinFlipResult coinFlipResult = new CoinFlipResult(this.winningSide, this.coinSide);
         if (this.child != null) {
+            ChildManager childManager = ChildManager.getInstance();
             this.child.addCoinFlipResult(coinFlipResult);
-            ChildManager.getInstance().setLastCoinChooserChild(this.child);
+            childManager.saveToFile();
+            childManager.setLastCoinChooserChild(this.child);
+        }
+        boolean didWin = coinFlipResult.getDidWin();
+
+        String toastMsg = didWin ? "You won!" + Emoji.HAPPY.get() : "You lost " + Emoji.SAD.get();
+        this.showLargeToast(toastMsg);
+
+        resultSound = MediaPlayer.create(this, (didWin ? R.raw.victory : R.raw.defeat));
+        resultSound.start();
+
+        if (didWin) {
+            // Ref https://github.com/DanielMartinus/Konfetti
+            KonfettiView konfettiView = findViewById(R.id.viewKonfetti);
+            konfettiView.build()
+                    .addColors(Color.BLUE, Color.WHITE, Color.CYAN)
+                    .setDirection(0.0, 359.0)
+                    .setSpeed(1f, 5f)
+                    .setFadeOutEnabled(true)
+                    .setTimeToLive(2000L)
+                    .addShapes(Shape.Square.INSTANCE, Shape.Circle.INSTANCE)
+                    .addSizes(new Size(12, 5))
+                    .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
+                    .streamFor(300, 5000L);
         }
 
-        String toastMsg = coinFlipResult.getDidWin() ? "You won!" + Emoji.HAPPY.get() : "You lost " + Emoji.SAD.get();
-        this.showLargeToast(toastMsg);
     }
 
     private void updateCoinDisplay() {
@@ -158,7 +185,7 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     private void extractIntentData() {
         Intent intent = getIntent();
-        this.winningSide = CoinSide.valueOf(intent.getStringExtra(this.CHOSEN_COIN_SIDE));
+        this.winningSide = CoinSide.valueOf(intent.getStringExtra(CHOSEN_COIN_SIDE));
     }
 
     private void flipCoinState() {
@@ -170,8 +197,14 @@ public class FlipCoinActivity extends AppCompatActivity {
         button.setOnClickListener(view -> {
             if (!this.hasFlipped) {
                 this.hasFlipped = true; // Makes it so next time we press the btn we go back
+
+                MediaPlayer mPlayer = MediaPlayer.create(this, R.raw.coin_flip);
+                mPlayer.start();
+
                 this.randomlyChooseSide();
+
             } else {
+                resultSound.stop();
                 finish();
             }
         });
