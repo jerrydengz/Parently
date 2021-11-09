@@ -1,4 +1,7 @@
 * Make sure animations are enabled on your testing device, coin flip will not properly work w/o them
+* Make sure you properly sync your gradle for our custom imports. If either GSON or konfetti error, refresh.
+  We've found just commenting out a "implementation ...", and then un-commenting it to trigger a sync works
+
 
 Resource Ref
 - Coin sides: https://en.wikipedia.org/wiki/Quarter_(Canadian_coin)
