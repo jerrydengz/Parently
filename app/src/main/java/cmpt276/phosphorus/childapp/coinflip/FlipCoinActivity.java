@@ -66,10 +66,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         this.extractIntentData();
         this.coinSide = this.winningSide; // Set's the inital coin side to the one the person picked
 
-        // We set the last child here b/c the person may have exited the past pages and haven't
-        // properly flipped a coin
         this.child = ChildManager.getInstance().getNextCoinFlipper();
-        ChildManager.getInstance().setLastCoinChooserChild(this.child);
 
         this.updateCoinDisplay();
         this.createFlipBtn();
@@ -197,6 +194,9 @@ public class FlipCoinActivity extends AppCompatActivity {
         button.setOnClickListener(view -> {
             if (!this.hasFlipped) {
                 this.hasFlipped = true; // Makes it so next time we press the btn we go back
+
+                // Only chooses the next child to flip after the btn is pressed
+                ChildManager.getInstance().setLastCoinChooserChild(this.child);
 
                 MediaPlayer mPlayer = MediaPlayer.create(this, R.raw.coin_flip);
                 mPlayer.start();
