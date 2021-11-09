@@ -152,8 +152,8 @@ public class FlipCoinActivity extends AppCompatActivity {
         String toastMsg = didWin ? "You won!" + Emoji.HAPPY.get() : "You lost " + Emoji.SAD.get();
         this.showLargeToast(toastMsg);
 
-        resultSound = MediaPlayer.create(this, (didWin ? R.raw.victory : R.raw.defeat));
-        resultSound.start();
+        this.resultSound = MediaPlayer.create(this, (didWin ? R.raw.victory : R.raw.defeat));
+        this.resultSound.start();
 
         if (didWin) {
             // Ref https://github.com/DanielMartinus/Konfetti
@@ -204,7 +204,7 @@ public class FlipCoinActivity extends AppCompatActivity {
                 this.randomlyChooseSide();
 
             } else {
-                resultSound.stop();
+                this.resultSound.stop();
                 finish();
             }
         });
