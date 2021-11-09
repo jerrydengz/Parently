@@ -1,5 +1,7 @@
 package cmpt276.phosphorus.childapp.timeout;
 
+import static cmpt276.phosphorus.childapp.timeout.utils.TimeConversionUtils.*;
+
 import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -27,7 +29,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
-import java.util.Locale;
 import java.util.Objects;
 
 import cmpt276.phosphorus.childapp.R;
@@ -44,9 +45,6 @@ import cmpt276.phosphorus.childapp.timeout.utils.TimeoutPrefConst;
 // ==============================================================================================
 public class TimeoutActivity extends AppCompatActivity {
 
-    // Interval in milliseconds the timer updates its countdown
-    public static final int COUNT_DOWN_INTERVAL = 1000;
-    public static final long NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS = 60000L;
     // Time is in milliseconds, 1000ms = 1s
     private long startTime = 60000;
     private long timeLeft;
@@ -66,14 +64,6 @@ public class TimeoutActivity extends AppCompatActivity {
     private CountDownTimer cdTimer;
     private EditText customTimeInput;
     private boolean isTimerRunning;
-
-    public static String timeLeftFormatter(long timeLeft) {
-        int minutes = (int) ((timeLeft / 1000) / 60);
-        int seconds = (int) ((timeLeft / 1000) % 60);
-
-        return String.format(Locale.getDefault(),
-                "%02d:%02d", minutes, seconds);
-    }
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, TimeoutActivity.class);

@@ -1,8 +1,8 @@
 package cmpt276.phosphorus.childapp.timeout.utils;
 
-import static cmpt276.phosphorus.childapp.timeout.TimeoutActivity.COUNT_DOWN_INTERVAL;
-import static cmpt276.phosphorus.childapp.timeout.TimeoutActivity.NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS;
-import static cmpt276.phosphorus.childapp.timeout.TimeoutActivity.timeLeftFormatter;
+
+import static cmpt276.phosphorus.childapp.timeout.utils.TimeConversionUtils.*;
+import static cmpt276.phosphorus.childapp.timeout.utils.TimeConversionUtils.timeLeftFormatter;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
