@@ -161,7 +161,9 @@ public class TimeoutActivity extends AppCompatActivity {
     }
 
     private void setVisibilities() {
-        int currentView = isTimerRunning ? View.INVISIBLE : View.VISIBLE;
+        int currentView = isTimerRunning ?
+                View.INVISIBLE :
+                View.VISIBLE;
         btnReset.setVisibility(currentView);
         timeGroup.setVisibility(currentView);
         customTimeInput.setVisibility(currentView);
@@ -174,7 +176,16 @@ public class TimeoutActivity extends AppCompatActivity {
             btnStartAndPause.setVisibility(View.INVISIBLE);
         }
 
-        int background = isTimerRunning ? R.drawable.relaxing_background : R.drawable.lavender_min_1;
+        TextView cdText = findViewById(R.id.tvCountDown);
+        int cdTextColour =  isTimerRunning?
+                R.color.white :
+                R.color.black;
+        cdText.setTextColor(ContextCompat.getColor(this, cdTextColour));
+
+        int background =
+                isTimerRunning ?
+                R.drawable.relaxing_background :
+                R.drawable.lavender_min_1;
         ConstraintLayout constraintLayout = findViewById(R.id.timeoutLayout);
         constraintLayout.setBackgroundResource(background);
     }

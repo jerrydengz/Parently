@@ -16,13 +16,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.245" />
 
     <Button
         android:id="@+id/btnStartAndPause"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:text="@string/start"
         app:layout_constraintEnd_toEndOf="@+id/tvCountDown"
         app:layout_constraintStart_toStartOf="@+id/tvCountDown"
@@ -43,16 +44,18 @@
         android:id="@+id/radio_group_time_options"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/btnReset" />
 
     <EditText
         android:id="@+id/inputCustomNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:gravity="center"
         android:hint="@string/custom_minutes"
         android:inputType="number"
         android:maxLength="3"
