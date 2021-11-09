@@ -137,7 +137,6 @@ public class FlipCoinActivity extends AppCompatActivity {
         });
     }
 
-    // todo activity change/particles/back button?
     private void sideLanded() {
         // Means there aren't any avaliable children (i.e. empty)
         CoinFlipResult coinFlipResult = new CoinFlipResult(this.winningSide, this.coinSide);
