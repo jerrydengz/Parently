@@ -1,0 +1,4 @@
+Jack Clarke   - jic3      - Scrum Master
+Matt Friesen  - maf7      - Repo Manager
+Jerry Deng    - zrd1      - Product Owner
+Mark Dionglay - mdiongala - Team Member
