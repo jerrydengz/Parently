@@ -32,6 +32,8 @@ import java.util.UUID;
 // ==============================================================================================
 public class ChildManager {
 
+    private final String SAVING_DATA_FILE_NAME = "child.json";
+
     private static ChildManager instance;
     private File file;
     private List<Child> allChildren;
@@ -116,7 +118,7 @@ public class ChildManager {
 
     public void loadData(Context context){
         File dir = context.getFilesDir();
-        this.file = new File(dir, "child.json");//use this to create new directory that can be written to
+        this.file = new File(dir, this.SAVING_DATA_FILE_NAME);//use this to create new directory that can be written to
         this.getFromFile();
     }
 
