@@ -105,7 +105,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         (new Handler()).postDelayed(() -> {
             this.sideLanded();
             button.setVisibility(View.VISIBLE);
-            button.setText("Ok");
+            button.setText(getString(R.string.flip_coin_finish_button_text));
         }, afterAllAnimations + 50); // Extra 50ms just in case
     }
 
@@ -149,7 +149,9 @@ public class FlipCoinActivity extends AppCompatActivity {
         }
         boolean didWin = coinFlipResult.getDidWin();
 
-        String toastMsg = didWin ? "You won!" + Emoji.HAPPY.get() : "You lost " + Emoji.SAD.get();
+        String toastMsg = getString((didWin ? R.string.flip_coin_win_toast : R.string.flip_coin_lose_toast))
+                .replace(":happy:", Emoji.HAPPY.get())
+                .replace(":sad:", Emoji.SAD.get());
         this.showLargeToast(toastMsg);
 
         this.resultSound = MediaPlayer.create(this, (didWin ? R.raw.victory : R.raw.defeat));
