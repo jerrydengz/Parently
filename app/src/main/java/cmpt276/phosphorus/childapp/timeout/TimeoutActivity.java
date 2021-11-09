@@ -52,12 +52,6 @@ public class TimeoutActivity extends AppCompatActivity {
     private long timeLeft;
     private long endTime;
 
-    // For Alertdialog Vibration
-    public static final int VIBRATION_LENGTH = 1000;
-    public static final int NO_VIBRATION = 500;
-    public static final int VIBRATION_AMPLITUDE = 150;
-    public static final int NO_AMPLITUDE = 0;
-
     private TextView tvCountDown;
     private RadioGroup timeGroup;
     private Button btnStartAndPause;
@@ -317,6 +311,12 @@ public class TimeoutActivity extends AppCompatActivity {
     }
 
     private void showTimeoutAlertDialog() {
+        // For Alertdialog Vibration
+        final int VIBRATION_LENGTH = 1000;
+        final int NO_VIBRATION = 500;
+        final int VIBRATION_AMPLITUDE = 150;
+        final int NO_AMPLITUDE = 0;
+
         View view = LayoutInflater.from(this)
                 .inflate(R.layout.timeout_finished_notification_layout, null);
 
