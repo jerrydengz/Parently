@@ -6,7 +6,7 @@
         <entry key="..\:/AndroidStudioProjects/ParentProject/app/src/main/res/drawable/timer_icon.xml" value="0.3828125" />
         <entry key="..\:/AndroidStudioProjects/ParentProject/app/src/main/res/drawable/timer_icon_filled.xml" value="0.3828125" />
         <entry key="..\:/AndroidStudioProjects/ParentProject/app/src/main/res/layout/activity_flip_coin_choose_side.xml" value="0.20520833333333333" />
-        <entry key="..\:/AndroidStudioProjects/ParentProject/app/src/main/res/layout/activity_timeout.xml" value="0.259375" />
+        <entry key="..\:/AndroidStudioProjects/ParentProject/app/src/main/res/layout/activity_timeout.xml" value="0.33" />
         <entry key="..\:/AndroidStudioProjects/ParentProject/app/src/main/res/layout/child_profile.xml" value="0.259375" />
         <entry key="..\:/AndroidStudioProjects/ParentProject/app/src/main/res/layout/timeout_finished_notification_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Jack/AndroidStudioProjects/ChildApp/app/src/main/res/layout/activity_children.xml" value="0.2957427536231884" />
@@ -21,14 +21,6 @@
         <entry key="..\:/Users/Jack/Desktop/ParentApp34/app/src/main/res/layout/child_profile.xml" value="0.21302083333333333" />
         <entry key="..\:/Users/jerry/Documents/SFU/Fall 2021/CMPT 276/cmpt276-code/ParentApp-itr1/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/jerry/Documents/SFU/Fall 2021/CMPT 276/cmpt276-code/ParentApp-itr1/app/src/main/res/layout/activity_timeout.xml" value="0.24320652173913043" />
-        <entry key="..\:/Users/mattf/AndroidStudioProjects/ParentApp-master/app/src/main/res/drawable-xhdpi/children_icon.xml" value="0.14635416666666667" />
-        <entry key="..\:/Users/mattf/AndroidStudioProjects/ParentApp-master/app/src/main/res/drawable-xhdpi/coin_flip_icon.xml" value="0.14635416666666667" />
-        <entry key="..\:/Users/mattf/AndroidStudioProjects/ParentApp-master/app/src/main/res/drawable-xhdpi/ic_launcher_background.xml" value="0.14635416666666667" />
-        <entry key="..\:/Users/mattf/AndroidStudioProjects/ParentApp-master/app/src/main/res/drawable-xhdpi/timer_icon.xml" value="0.14635416666666667" />
-        <entry key="..\:/Users/mattf/AndroidStudioProjects/ParentApp-master/app/src/main/res/drawable-xhdpi/timer_icon_filled.xml" value="0.14635416666666667" />
-        <entry key="..\:/Users/mattf/AndroidStudioProjects/ParentApp-master/app/src/main/res/drawable-xxhdpi/ic_launcher_background.xml" value="0.14635416666666667" />
-        <entry key="..\:/Users/mattf/AndroidStudioProjects/ParentApp-master/app/src/main/res/drawable-xxxhdpi/ic_launcher_foreground.xml" value="0.14635416666666667" />
-        <entry key="..\:/Users/mattf/AndroidStudioProjects/ParentApp-master/app/src/main/res/drawable/coin_flip_icon.xml" value="0.14635416666666667" />
       </map>
     </option>
   </component>
