@@ -35,7 +35,7 @@ public class CoinFlipResult {
         return this.time;
     }
 
-    // Gets date/time in format YYYY/MM/DD HH:mm:ss
+    // Gets date/time in format MMMM dd HH:mm a (ex: July 14 1:35 PM)
     public String getFormattedTime() {
         DateTimeFormatter format = DateTimeFormatter.ofPattern("MMMM dd HH:mm a");
         return time.format(format);
