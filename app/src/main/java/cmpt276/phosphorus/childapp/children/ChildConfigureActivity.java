@@ -20,6 +20,7 @@ import java.util.UUID;
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
+import cmpt276.phosphorus.childapp.utils.Intents;
 
 // ==============================================================================================
 //
@@ -28,8 +29,6 @@ import cmpt276.phosphorus.childapp.model.ChildManager;
 //
 // ==============================================================================================
 public class ChildConfigureActivity extends AppCompatActivity {
-
-    private static final String CHILD_UUID_TAG = "ChildUUIDTag";
 
     private ChildManager childManager;
     private Child child;
@@ -40,7 +39,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
 
     public static Intent makeIntent(Context context, Child childObj) {
         Intent intent = new Intent(context, ChildConfigureActivity.class);
-        intent.putExtra(CHILD_UUID_TAG, (childObj != null ? childObj.getUUID().toString() : null));
+        intent.putExtra(Intents.CHILD_UUID_TAG, (childObj != null ? childObj.getUUID().toString() : null));
         return intent;
     }
 
@@ -129,7 +128,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
 
     private void extractIntent() {
         Intent packageInfo = getIntent();
-        String intentChildUUID = packageInfo.getStringExtra(CHILD_UUID_TAG);
+        String intentChildUUID = packageInfo.getStringExtra(Intents.CHILD_UUID_TAG);
         if (intentChildUUID != null) {
             this.child = this.childManager.getChildByUUID(UUID.fromString(intentChildUUID));
         }

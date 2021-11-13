@@ -112,7 +112,7 @@ public class ChildManager {
         this.lastCoinChooserChild = lastCoinChooserChild;
     }
 
-    private boolean isEmpty() {
+    public boolean isEmpty() {
         return this.allChildren.isEmpty();
     }
 

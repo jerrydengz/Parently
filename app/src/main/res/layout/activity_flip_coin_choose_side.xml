@@ -102,4 +102,14 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.54" />
 
+    <Button
+        android:id="@+id/btnChooseChild"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Choose"
+        app:layout_constraintBottom_toTopOf="@+id/textHead"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,6 +22,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Random;
+import java.util.UUID;
 
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.coinflip.utils.CoinFlipAnimationDirection;
@@ -30,6 +31,7 @@ import cmpt276.phosphorus.childapp.model.ChildManager;
 import cmpt276.phosphorus.childapp.model.CoinFlipResult;
 import cmpt276.phosphorus.childapp.model.CoinSide;
 import cmpt276.phosphorus.childapp.utils.Emoji;
+import cmpt276.phosphorus.childapp.utils.Intents;
 import nl.dionsegijn.konfetti.KonfettiView;
 import nl.dionsegijn.konfetti.models.Shape;
 import nl.dionsegijn.konfetti.models.Size;
@@ -49,9 +51,10 @@ public class FlipCoinActivity extends AppCompatActivity {
     private CoinSide coinSide;
     private MediaPlayer resultSound;
 
-    public static Intent makeIntent(Context context, CoinSide winningSide) {
+    public static Intent makeIntent(Context context, Child child, CoinSide winningSide) {
         Intent intent = new Intent(context, FlipCoinActivity.class);
         intent.putExtra(CHOSEN_COIN_SIDE, winningSide.name());
+        intent.putExtra(Intents.CHILD_UUID_TAG, (child != null ? child.getUUID().toString() : null));
         return intent;
     }
 
@@ -65,8 +68,6 @@ public class FlipCoinActivity extends AppCompatActivity {
 
         this.extractIntentData();
         this.coinSide = this.winningSide; // Set's the inital coin side to the one the person picked
-
-        this.child = ChildManager.getInstance().getNextCoinFlipper();
 
         this.updateCoinDisplay();
         this.createFlipBtn();
@@ -184,6 +185,10 @@ public class FlipCoinActivity extends AppCompatActivity {
     private void extractIntentData() {
         Intent intent = getIntent();
         this.winningSide = CoinSide.valueOf(intent.getStringExtra(CHOSEN_COIN_SIDE));
+        String intentChildUUID = intent.getStringExtra(Intents.CHILD_UUID_TAG);
+        if (intentChildUUID != null) {
+            this.child = ChildManager.getInstance().getChildByUUID(UUID.fromString(intentChildUUID));
+        }
     }
 
     private void flipCoinState() {
