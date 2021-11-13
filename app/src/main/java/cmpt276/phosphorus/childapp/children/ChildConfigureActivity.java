@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import java.io.IOException;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -30,10 +31,11 @@ import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
 
-    /* Code assistance regarding Camera from
+    /* Code assistance regarding Camera & Gallery from
         https://developer.android.com/training/basics/intents/result#separate
         https://developer.android.com/training/camera/photobasics#TaskPhotoView
         https://www.youtube.com/watch?v=qO3FFuBrT2E
+        https://www.youtube.com/watch?v=HxlAktedIhM
     */
 
 // ==============================================================================================
@@ -51,8 +53,9 @@ public class ChildConfigureActivity extends AppCompatActivity {
 
     private static final boolean PERMISSION_ACCEPTED = true;
     private static final boolean PERMISSION_DENIED = false;
+    public static final int PERMISSION_REQUEST_CODE = 100;
 
-    ActivityResultLauncher<Intent> activityLauncher = registerForActivityResult(
+    ActivityResultLauncher<Intent> cameraLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == RESULT_OK &&
@@ -62,6 +65,25 @@ public class ChildConfigureActivity extends AppCompatActivity {
                     Bitmap bitmap = (Bitmap) bundle.get("data");
                     ImageView childPortrait = findViewById(R.id.imgChildPicture);
                     childPortrait.setImageBitmap(bitmap);
+                }
+            }
+    );
+
+    ActivityResultLauncher<Intent> galleryLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK &&
+                        result.getData() != null) {
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(
+                                getContentResolver(), result.getData().getData()
+                        );
+                        // todo: save this bitmap, crop image?
+                        ImageView childPortrait = findViewById(R.id.imgChildPicture);
+                        childPortrait.setImageBitmap(bitmap);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
     );
@@ -91,6 +113,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
         this.createSaveBtn();
         this.createDeleteBtn();
         this.createCameraBtn();
+        this.createGalleryBtn();
     }
 
     // If user select the top left back button
@@ -167,8 +190,20 @@ public class ChildConfigureActivity extends AppCompatActivity {
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if (cameraPermission) {
                 if (cameraIntent.resolveActivity(getPackageManager()) != null) {
-                    activityLauncher.launch(cameraIntent);
+                    cameraLauncher.launch(cameraIntent);
                 }
+            }
+        });
+    }
+
+    private void createGalleryBtn() {
+        Button button = findViewById(R.id.btnUseGallery);
+        button.setOnClickListener(v -> {
+            boolean galleryPermission = setUpUseGalleryPermissions();
+            Intent galleryIntent = new Intent(Intent.ACTION_PICK);
+            galleryIntent.setType("image/*");
+            if (galleryPermission) {
+                galleryLauncher.launch(galleryIntent);
             }
         });
     }
@@ -216,7 +251,22 @@ public class ChildConfigureActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[] {
                         Manifest.permission.CAMERA
                     },
-                    100);
+                    PERMISSION_REQUEST_CODE);
+        } else {
+            // Permission was already granted
+            return PERMISSION_ACCEPTED;
+        }
+        return PERMISSION_DENIED;
+    }
+
+    private boolean setUpUseGalleryPermissions() {
+        if (ContextCompat.checkSelfPermission(
+                this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[] {
+                            Manifest.permission.READ_EXTERNAL_STORAGE
+                    },
+                    PERMISSION_REQUEST_CODE);
         } else {
             // Permission was already granted
             return PERMISSION_ACCEPTED;
