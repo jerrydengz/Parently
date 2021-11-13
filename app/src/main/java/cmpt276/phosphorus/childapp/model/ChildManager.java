@@ -24,6 +24,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 // ==============================================================================================
 //
@@ -35,7 +37,7 @@ public class ChildManager {
     private static ChildManager instance;
     private final String SAVING_DATA_FILE_NAME = "child.json";
     private File file;
-    private List<Child> allChildren;
+    private ArrayList<Child> allChildren;
     private Child lastCoinChooserChild;
 
     private ChildManager() {
@@ -63,6 +65,22 @@ public class ChildManager {
 
     public void addChildren(@NotNull Child... children) {
         Arrays.asList(children).forEach(this::addChild); // Add children already checks for null
+    }
+
+    public ArrayList<Child> getLastPickedOrderedChildren() {
+        Child nextChild = this.getNextCoinFlipper();
+        int indexOfNext = this.allChildren.indexOf(nextChild);
+
+        // getNextCoinFlipper pretty much just goes to the next index each time called of the last picked player,
+        // so we can continue getting the next index (or all at once) until they're all added
+        ArrayList<Child> resault = new ArrayList<>();
+
+        // Puts the first child at the top of the list, adds the rest until end of list
+        resault.addAll(this.getChildrenInIndexRange(indexOfNext, this.allChildren.size()));
+        // Adds any ones selected before to the end of the list
+        resault.addAll(this.getChildrenInIndexRange(0, indexOfNext));
+
+        return resault;
     }
 
     public Child getChildByUUID(String uuidStr) {
@@ -172,6 +190,10 @@ public class ChildManager {
                         return LocalDateTime.parse(jsonReader.nextString());
                     }
                 }).create();
+    }
+
+    private List<Child> getChildrenInIndexRange(int start, int end) {
+        return IntStream.range(start, end).mapToObj(i -> this.allChildren.get(i)).collect(Collectors.toList());
     }
 
 }

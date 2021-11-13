@@ -10,6 +10,8 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.children.utils.ChildListAdapter;
 import cmpt276.phosphorus.childapp.model.Child;
@@ -55,14 +57,14 @@ public class ChooseChildForCoinFlip extends AppCompatActivity {
     }
 
     private void setupList() {
-        ChildManager childManager = ChildManager.getInstance();
-        ArrayAdapter<Child> listAdapter = new ChildListAdapter(this, childManager.getAllChildren());
+        ArrayList<Child> orderedChildren = ChildManager.getInstance().getLastPickedOrderedChildren();
+        ArrayAdapter<Child> listAdapter = new ChildListAdapter(this, orderedChildren);
 
         ListView listView = findViewById(R.id.listViewChooseChild);
         listView.setAdapter(listAdapter);
 
         listView.setOnItemClickListener((adapter, view, position, arg) -> {
-            Child selectedChild = childManager.getAllChildren().get(position);
+            Child selectedChild = orderedChildren.get(position);
 
             startActivity(ChooseSideActivity.makeIntent(this, selectedChild));
             finish();
