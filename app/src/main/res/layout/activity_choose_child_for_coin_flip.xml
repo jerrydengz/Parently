@@ -18,4 +18,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/btnChooseNoNoneChild"
+        android:layout_width="155dp"
+        android:layout_height="49dp"
+        android:layout_marginBottom="64dp"
+        android:textSize="20dp"
+        android:textStyle="italic"
+        android:text="@string/flip_coin_choose_child_none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

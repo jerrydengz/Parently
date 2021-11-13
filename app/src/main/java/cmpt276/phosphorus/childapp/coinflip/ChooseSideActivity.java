@@ -33,7 +33,7 @@ import cmpt276.phosphorus.childapp.utils.Intents;
 public class ChooseSideActivity extends AppCompatActivity {
 
     public static Intent makeIntent(Context context) {
-        return new Intent(context, ChooseSideActivity.class);
+        return ChooseSideActivity.makeIntent(context, ChildManager.getInstance().getNextCoinFlipper());
     }
 
     public static Intent makeIntent(Context context, Child child) {
@@ -53,8 +53,6 @@ public class ChooseSideActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         this.extractIntent();
-        if (this.child == null) // If the child is still null even after getting intent, just use next child
-            this.child = ChildManager.getInstance().getNextCoinFlipper();
 
         this.btnChooseChild();
         this.displayChildName();

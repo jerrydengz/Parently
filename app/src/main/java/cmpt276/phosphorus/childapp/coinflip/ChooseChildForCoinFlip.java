@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,6 +34,7 @@ public class ChooseChildForCoinFlip extends AppCompatActivity {
         this.setTitle(getString(R.string.flip_coin_choose_child_title));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        this.noneBtn();
         this.setupList();
     }
 
@@ -42,6 +44,14 @@ public class ChooseChildForCoinFlip extends AppCompatActivity {
         ChooseSideActivity.makeIntent(this);
         finish();
         return super.onOptionsItemSelected(item);
+    }
+
+    private void noneBtn() {
+        Button btn = findViewById(R.id.btnChooseNoNoneChild);
+        btn.setOnClickListener(view -> {
+            startActivity(ChooseSideActivity.makeIntent(this, null));
+            finish();
+        });
     }
 
     private void setupList() {

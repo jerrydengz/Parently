@@ -24,6 +24,7 @@
     <string name="flip_coin_finish_button_text">OK</string>
     <string name="flip_coin_win_toast">You won! :happy:</string>
     <string name="flip_coin_lose_toast">You lost :sad:</string>
+    <string name="flip_coin_choose_child_none">NONE</string>
 
     <string name="title_activity_children_configure">ChildrenConfigureActivity</string>
     <string name="add_child_btn_text">New Child</string>
