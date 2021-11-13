@@ -40,6 +40,10 @@ public class ChildListAdapter extends ArrayAdapter<Child> {
         // Set the image
         ImageView childIcon = childView.findViewById(R.id.childProfileIcon);
         childIcon.setImageResource(R.drawable.child_profile_img);
+        /*
+        todo: once the bitmap is saved into json?
+        childIcon.setImageBitmap(childProfile.getChildPortrait());
+        */
 
         // Set the name
         TextView childName = childView.findViewById(R.id.child_profile_name);

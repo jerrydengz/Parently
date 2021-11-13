@@ -1,5 +1,7 @@
 package cmpt276.phosphorus.childapp.children;
 
+import static cmpt276.phosphorus.childapp.children.utils.BitmapOperations.*;
+
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -54,6 +56,10 @@ public class ChildConfigureActivity extends AppCompatActivity {
     private static final boolean PERMISSION_ACCEPTED = true;
     private static final boolean PERMISSION_DENIED = false;
     public static final int PERMISSION_REQUEST_CODE = 100;
+    public static final String INTENT_TYPE_FOR_GALLERY = "image/*";
+
+    private Bitmap bitmapPortrait;
+    private ImageView childPortrait;
 
     ActivityResultLauncher<Intent> cameraLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -61,10 +67,10 @@ public class ChildConfigureActivity extends AppCompatActivity {
                 if (result.getResultCode() == RESULT_OK &&
                         result.getData() != null) {
                     Bundle bundle = result.getData().getExtras();
-                    // todo: save this bitmap, crop image?
-                    Bitmap bitmap = (Bitmap) bundle.get("data");
-                    ImageView childPortrait = findViewById(R.id.imgChildPicture);
-                    childPortrait.setImageBitmap(bitmap);
+                    // todo: refactor this to save this bitmap, crop image?
+                    Bitmap originalBitmap = (Bitmap) bundle.get("data");
+                    bitmapPortrait = scaleBitmap(originalBitmap);
+                    childPortrait.setImageBitmap(bitmapPortrait);
                 }
             }
     );
@@ -75,12 +81,11 @@ public class ChildConfigureActivity extends AppCompatActivity {
                 if (result.getResultCode() == RESULT_OK &&
                         result.getData() != null) {
                     try {
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(
-                                getContentResolver(), result.getData().getData()
-                        );
-                        // todo: save this bitmap, crop image?
-                        ImageView childPortrait = findViewById(R.id.imgChildPicture);
-                        childPortrait.setImageBitmap(bitmap);
+                        Bitmap originalBitmap = MediaStore.Images.Media.getBitmap(
+                                getContentResolver(), result.getData().getData());
+                        // todo: refactor this to save this bitmap, crop image?
+                        bitmapPortrait = scaleBitmap(originalBitmap);
+                        childPortrait.setImageBitmap(bitmapPortrait);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -158,6 +163,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
             if (isEditingChild()) {
                 this.child.setName(cleanedName);
             } else {
+                // todo: refactor this and model to include bitmap in initialization?
                 this.childManager.addChild(new Child(cleanedName));
             }
 
@@ -201,7 +207,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
         button.setOnClickListener(v -> {
             boolean galleryPermission = setUpUseGalleryPermissions();
             Intent galleryIntent = new Intent(Intent.ACTION_PICK);
-            galleryIntent.setType("image/*");
+            galleryIntent.setType(INTENT_TYPE_FOR_GALLERY);
             if (galleryPermission) {
                 galleryLauncher.launch(galleryIntent);
             }
@@ -219,6 +225,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
     private void loadValues() {
         TextView childTitleText = findViewById(R.id.configure_child_title);
         Button deleteBtn = findViewById(R.id.btnDelete);
+        childPortrait = findViewById(R.id.imgChildPicture);
 
         boolean isEditing = this.isEditingChild();
 
@@ -261,8 +268,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
 
     private boolean setUpUseGalleryPermissions() {
         if (ContextCompat.checkSelfPermission(
-                this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
+                this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[] {
                             Manifest.permission.READ_EXTERNAL_STORAGE
                     },

@@ -22,6 +22,10 @@ public class Child {
     private final List<CoinFlipResult> coinFlipResults;
     private String name;
 
+    /*
+    private Bitmap childPortrait;   For when saving bitmap to json?
+    */
+
     // Normal way to create children
     public Child(@NotNull String name) {
         this(UUID.randomUUID(), new ArrayList<>(), name);
