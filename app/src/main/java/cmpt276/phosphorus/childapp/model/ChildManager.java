@@ -194,7 +194,7 @@ public class ChildManager {
     }
 
     private List<Child> getChildrenInIndexRange(int start, int end) {
-        return IntStream.range(start, end).mapToObj(i -> this.allChildren.get(i)).collect(Collectors.toList());
+        return IntStream.range(start, end).mapToObj(this::getChildByPos).collect(Collectors.toList());
     }
 
     private Child getLastPickedChild() {
