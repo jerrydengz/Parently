@@ -54,7 +54,6 @@ public class ChooseSideActivity extends AppCompatActivity {
 
         this.extractIntent();
 
-        this.btnChooseChild();
         this.displayChildName();
         this.btnChooseHead();
         this.btnChooseTails();
@@ -74,20 +73,6 @@ public class ChooseSideActivity extends AppCompatActivity {
         this.child = ChildManager.getInstance().getChildByUUID(intentChildUUID);
     }
 
-    private void btnChooseChild() {
-        Button btn = findViewById(R.id.btnChooseChild);
-
-        if (ChildManager.getInstance().isEmpty()) {
-            btn.setVisibility(View.INVISIBLE);
-            return;
-        }
-
-        btn.setOnClickListener(view -> {
-            startActivity(ChooseChildForCoinFlip.makeIntent(this));
-            finish();
-        });
-    }
-
     private void btnHistory() {
         FloatingActionButton button = findViewById(R.id.btnHistory);
         button.setOnClickListener(view -> startActivity(CoinFlipHistoryActivity.makeIntent(this)));
@@ -100,6 +85,11 @@ public class ChooseSideActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.textSideChooseTitle);
         textView.setPaintFlags(textView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         textView.setText(this.child.getName());
+
+        textView.setOnClickListener(view -> {
+            startActivity(ChooseChildForCoinFlip.makeIntent(this));
+            finish();
+        });
     }
 
     private void btnChooseHead() {

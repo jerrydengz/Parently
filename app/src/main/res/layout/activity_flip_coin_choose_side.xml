@@ -14,7 +14,7 @@
         android:layout_marginTop="16dp"
         android:gravity="center"
         android:text=""
-        android:textColor="@color/black"
+        android:textColor="@color/sky_blue"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -101,17 +101,5 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.54" />
-
-    <Button
-        android:id="@+id/btnChooseChild"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="Choose"
-        app:layout_constraintBottom_toTopOf="@+id/textHead"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textSideChooseTitle"
-        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
