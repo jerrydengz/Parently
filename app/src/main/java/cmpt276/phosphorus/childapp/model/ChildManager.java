@@ -32,9 +32,8 @@ import java.util.UUID;
 // ==============================================================================================
 public class ChildManager {
 
-    private final String SAVING_DATA_FILE_NAME = "child.json";
-
     private static ChildManager instance;
+    private final String SAVING_DATA_FILE_NAME = "child.json";
     private File file;
     private List<Child> allChildren;
     private Child lastCoinChooserChild;
@@ -66,6 +65,12 @@ public class ChildManager {
         Arrays.asList(children).forEach(this::addChild); // Add children already checks for null
     }
 
+    public Child getChildByUUID(String uuidStr) {
+        if (uuidStr == null) return null;
+        UUID targetChildUUID = UUID.fromString(uuidStr);
+        return this.getChildByUUID(targetChildUUID);
+    }
+
     public Child getChildByUUID(@NotNull UUID uuid) {
         return this.allChildren.stream().filter(child -> child.getUUID().equals(uuid)).findFirst().orElse(null);
     }
@@ -89,7 +94,7 @@ public class ChildManager {
 
     public boolean removeChild(Child child) {
         boolean isRemoved = this.allChildren.remove(child); // We make sure we do this before saving cause it might err
-        if(isRemoved && child == this.lastCoinChooserChild){
+        if (isRemoved && child == this.lastCoinChooserChild) {
             this.lastCoinChooserChild = this.getNextCoinFlipper();
         }
         return isRemoved;
@@ -116,7 +121,7 @@ public class ChildManager {
         return this.allChildren.isEmpty();
     }
 
-    public void loadData(Context context){
+    public void loadData(Context context) {
         File dir = context.getFilesDir();
         this.file = new File(dir, this.SAVING_DATA_FILE_NAME);//use this to create new directory that can be written to
         this.getFromFile();

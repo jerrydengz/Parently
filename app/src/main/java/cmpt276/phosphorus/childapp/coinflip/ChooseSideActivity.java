@@ -73,9 +73,7 @@ public class ChooseSideActivity extends AppCompatActivity {
     private void extractIntent() {
         Intent packageInfo = getIntent();
         String intentChildUUID = packageInfo.getStringExtra(Intents.CHILD_UUID_TAG);
-        if (intentChildUUID != null) {
-            this.child = ChildManager.getInstance().getChildByUUID(UUID.fromString(intentChildUUID));
-        }
+        this.child = ChildManager.getInstance().getChildByUUID(intentChildUUID);
     }
 
     private void btnChooseChild() {

@@ -22,7 +22,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Random;
-import java.util.UUID;
 
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.coinflip.utils.CoinFlipAnimationDirection;
@@ -184,11 +183,10 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     private void extractIntentData() {
         Intent intent = getIntent();
-        this.winningSide = CoinSide.valueOf(intent.getStringExtra(CHOSEN_COIN_SIDE));
         String intentChildUUID = intent.getStringExtra(Intents.CHILD_UUID_TAG);
-        if (intentChildUUID != null) {
-            this.child = ChildManager.getInstance().getChildByUUID(UUID.fromString(intentChildUUID));
-        }
+
+        this.winningSide = CoinSide.valueOf(intent.getStringExtra(CHOSEN_COIN_SIDE));
+        this.child = ChildManager.getInstance().getChildByUUID(intentChildUUID);
     }
 
     private void flipCoinState() {

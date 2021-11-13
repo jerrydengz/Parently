@@ -15,7 +15,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Objects;
-import java.util.UUID;
 
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.model.Child;
@@ -129,9 +128,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
     private void extractIntent() {
         Intent packageInfo = getIntent();
         String intentChildUUID = packageInfo.getStringExtra(Intents.CHILD_UUID_TAG);
-        if (intentChildUUID != null) {
-            this.child = this.childManager.getChildByUUID(UUID.fromString(intentChildUUID));
-        }
+        this.child = this.childManager.getChildByUUID(intentChildUUID);
     }
 
     private void loadValues() {
