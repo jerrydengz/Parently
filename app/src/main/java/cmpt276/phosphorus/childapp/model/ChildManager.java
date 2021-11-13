@@ -35,14 +35,12 @@ import java.util.stream.IntStream;
 public class ChildManager {
 
     private static ChildManager instance;
-    private final String SAVING_DATA_FILE_NAME = "child.json";
+
     private File file;
     private ArrayList<Child> allChildren;
-    private Child lastCoinChooserChild;
 
     private ChildManager() {
         this.allChildren = new ArrayList<>();
-        this.lastCoinChooserChild = null;
     }
 
     public static ChildManager getInstance() {
@@ -112,27 +110,28 @@ public class ChildManager {
 
     public boolean removeChild(Child child) {
         boolean isRemoved = this.allChildren.remove(child); // We make sure we do this before saving cause it might err
-        if (isRemoved && child == this.lastCoinChooserChild) {
-            this.lastCoinChooserChild = this.getNextCoinFlipper();
+        if (isRemoved && child.isLastPicked()) {
+            this.getNextCoinFlipper().setLastPicked(true);
         }
         return isRemoved;
+    }
+
+    public void clearAllLastPicked() {
+        this.allChildren.forEach(child -> child.setLastPicked(false));
     }
 
     public Child getNextCoinFlipper() {
         if (this.allChildren.isEmpty()) return null;
 
-        if (this.lastCoinChooserChild == null)
+        Child lastPicked = this.getLastPickedChild();
+        if (lastPicked == null) // Haven't picked a child yet
             return this.getChildByPos(0);
 
-        int nextPosition = this.getChildPosition(this.lastCoinChooserChild) + 1;
+        int nextPosition = this.getChildPosition(lastPicked) + 1;
         if (nextPosition >= this.allChildren.size())
             nextPosition = 0;
 
         return this.getChildByPos(nextPosition);
-    }
-
-    public void setLastCoinChooserChild(Child lastCoinChooserChild) {
-        this.lastCoinChooserChild = lastCoinChooserChild;
     }
 
     public boolean isEmpty() {
@@ -140,8 +139,10 @@ public class ChildManager {
     }
 
     public void loadData(Context context) {
+        final String SAVING_DATA_FILE_NAME = "child.json";
+
         File dir = context.getFilesDir();
-        this.file = new File(dir, this.SAVING_DATA_FILE_NAME);//use this to create new directory that can be written to
+        this.file = new File(dir, SAVING_DATA_FILE_NAME);//use this to create new directory that can be written to
         this.getFromFile();
     }
 
@@ -194,6 +195,10 @@ public class ChildManager {
 
     private List<Child> getChildrenInIndexRange(int start, int end) {
         return IntStream.range(start, end).mapToObj(i -> this.allChildren.get(i)).collect(Collectors.toList());
+    }
+
+    private Child getLastPickedChild() {
+        return this.allChildren.stream().filter(Child::isLastPicked).findFirst().orElse(null);
     }
 
 }

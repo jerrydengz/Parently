@@ -143,9 +143,12 @@ public class FlipCoinActivity extends AppCompatActivity {
         if (this.child != null) {
             ChildManager childManager = ChildManager.getInstance();
             this.child.addCoinFlipResult(coinFlipResult);
+
+            childManager.clearAllLastPicked(); // Just in case
+            this.child.setLastPicked(true);
             childManager.saveToFile();
-            childManager.setLastCoinChooserChild(this.child);
         }
+
         boolean didWin = coinFlipResult.getDidWin();
 
         String toastMsg = getString((didWin ? R.string.flip_coin_win_toast : R.string.flip_coin_lose_toast))
@@ -198,9 +201,6 @@ public class FlipCoinActivity extends AppCompatActivity {
         button.setOnClickListener(view -> {
             if (!this.hasFlipped) {
                 this.hasFlipped = true; // Makes it so next time we press the btn we go back
-
-                // Only chooses the next child to flip after the btn is pressed
-                ChildManager.getInstance().setLastCoinChooserChild(this.child);
 
                 MediaPlayer mPlayer = MediaPlayer.create(this, R.raw.coin_flip);
                 mPlayer.start();
