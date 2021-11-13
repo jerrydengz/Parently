@@ -1,18 +1,27 @@
 package cmpt276.phosphorus.childapp.children;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -20,6 +29,12 @@ import java.util.UUID;
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
+
+    /* Code assistance regarding Camera from
+        https://developer.android.com/training/basics/intents/result#separate
+        https://developer.android.com/training/camera/photobasics#TaskPhotoView
+        https://www.youtube.com/watch?v=qO3FFuBrT2E
+    */
 
 // ==============================================================================================
 //
@@ -33,6 +48,23 @@ public class ChildConfigureActivity extends AppCompatActivity {
 
     private ChildManager childManager;
     private Child child;
+
+    private static final boolean PERMISSION_ACCEPTED = true;
+    private static final boolean PERMISSION_DENIED = false;
+
+    ActivityResultLauncher<Intent> activityLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK &&
+                        result.getData() != null) {
+                    Bundle bundle = result.getData().getExtras();
+                    // todo: save this bitmap, crop image?
+                    Bitmap bitmap = (Bitmap) bundle.get("data");
+                    ImageView childPortrait = findViewById(R.id.imgChildPicture);
+                    childPortrait.setImageBitmap(bitmap);
+                }
+            }
+    );
 
     public static Intent makeIntentNewChild(Context context) {
         return makeIntent(context, null);
@@ -58,6 +90,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
         this.loadValues();
         this.createSaveBtn();
         this.createDeleteBtn();
+        this.createCameraBtn();
     }
 
     // If user select the top left back button
@@ -127,6 +160,19 @@ public class ChildConfigureActivity extends AppCompatActivity {
         });
     }
 
+    private void createCameraBtn() {
+        Button button = findViewById(R.id.btnUseCamera);
+        button.setOnClickListener(v -> {
+            boolean cameraPermission = setUpUseCameraPermissions();
+            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (cameraPermission) {
+                if (cameraIntent.resolveActivity(getPackageManager()) != null) {
+                    activityLauncher.launch(cameraIntent);
+                }
+            }
+        });
+    }
+
     private void extractIntent() {
         Intent packageInfo = getIntent();
         String intentChildUUID = packageInfo.getStringExtra(CHILD_UUID_TAG);
@@ -164,4 +210,17 @@ public class ChildConfigureActivity extends AppCompatActivity {
         return this.child != null;
     }
 
+    private boolean setUpUseCameraPermissions() {
+        if (ContextCompat.checkSelfPermission(
+                this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[] {
+                        Manifest.permission.CAMERA
+                    },
+                    100);
+        } else {
+            // Permission was already granted
+            return PERMISSION_ACCEPTED;
+        }
+        return PERMISSION_DENIED;
+    }
 }
