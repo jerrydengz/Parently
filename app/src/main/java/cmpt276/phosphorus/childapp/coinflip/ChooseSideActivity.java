@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -12,10 +15,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.UUID;
+
 import cmpt276.phosphorus.childapp.R;
+import cmpt276.phosphorus.childapp.children.ChildConfigureActivity;
 import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
 import cmpt276.phosphorus.childapp.model.CoinSide;
+import cmpt276.phosphorus.childapp.utils.Intents;
 
 // ==============================================================================================
 //
@@ -25,8 +32,16 @@ import cmpt276.phosphorus.childapp.model.CoinSide;
 // ==============================================================================================
 public class ChooseSideActivity extends AppCompatActivity {
 
+    private Child child;
+
     public static Intent makeIntent(Context context) {
-        return new Intent(context, ChooseSideActivity.class);
+        return ChooseSideActivity.makeIntent(context, ChildManager.getInstance().getNextCoinFlipper());
+    }
+
+    public static Intent makeIntent(Context context, Child child) {
+        Intent intent = new Intent(context, ChooseSideActivity.class);
+        intent.putExtra(Intents.CHILD_UUID_TAG, (child != null ? child.getUUID().toString() : null));
+        return intent;
     }
 
     @Override
@@ -36,6 +51,8 @@ public class ChooseSideActivity extends AppCompatActivity {
 
         this.setTitle(getString(R.string.flip_coin_choose_action_title));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        this.extractIntent();
 
         this.displayChildName();
         this.btnChooseHead();
@@ -50,25 +67,36 @@ public class ChooseSideActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void extractIntent() {
+        Intent packageInfo = getIntent();
+        String intentChildUUID = packageInfo.getStringExtra(Intents.CHILD_UUID_TAG);
+        this.child = ChildManager.getInstance().getChildByUUID(intentChildUUID);
+    }
+
     private void btnHistory() {
         FloatingActionButton button = findViewById(R.id.btnHistory);
         button.setOnClickListener(view -> startActivity(CoinFlipHistoryActivity.makeIntent(this)));
     }
 
     private void displayChildName() {
-        Child nextChild = ChildManager.getInstance().getNextCoinFlipper();
-        if (nextChild == null) // If there aren't any children created yet
+        if (this.child == null) {  // If there aren't any children created yet for example
             return;
+        }
 
         TextView textView = findViewById(R.id.textSideChooseTitle);
         textView.setPaintFlags(textView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        textView.setText(nextChild.getName());
+        textView.setText(this.child.getName());
+
+        textView.setOnClickListener(view -> {
+            startActivity(ChooseChildForCoinFlip.makeIntent(this));
+            finish();
+        });
     }
 
     private void btnChooseHead() {
         ImageButton imgBtn = findViewById(R.id.imgBtnHeads);
         imgBtn.setOnClickListener(view -> {
-            startActivity(FlipCoinActivity.makeIntent(this, CoinSide.HEAD));
+            startActivity(FlipCoinActivity.makeIntent(this, this.child, CoinSide.HEAD));
             finish(); // We don't want users coming back here
         });
     }
@@ -76,7 +104,7 @@ public class ChooseSideActivity extends AppCompatActivity {
     private void btnChooseTails() {
         ImageButton imgBtn = findViewById(R.id.imgBtnTails);
         imgBtn.setOnClickListener(view -> {
-            startActivity(FlipCoinActivity.makeIntent(this, CoinSide.TAILS));
+            startActivity(FlipCoinActivity.makeIntent(this, this.child, CoinSide.TAILS));
             finish(); // We don't want users coming back here
         });
     }
