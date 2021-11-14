@@ -13,6 +13,11 @@ import java.util.Objects;
 
 import cmpt276.phosphorus.childapp.R;
 
+// ==============================================================================================
+//
+// Display information about the application
+//
+// ==============================================================================================
 public class HelpActivity extends AppCompatActivity {
 
     @Override
