@@ -14,9 +14,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ChildApp">
+
+<!--        <activity-->
+<!--            android:name=".coinflip.ChooseChildForCoinFlip"-->
+<!--            android:exported="true"-->
+<!--            android:screenOrientation="portrait"-->
+<!--            tools:ignore="LockedOrientationActivity" />-->
         <activity
             android:name=".help.HelpActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".coinflip.CoinFlipHistoryActivity"
             android:exported="true"
