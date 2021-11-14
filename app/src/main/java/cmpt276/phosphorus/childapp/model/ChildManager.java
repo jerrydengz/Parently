@@ -71,14 +71,14 @@ public class ChildManager {
 
         // getNextCoinFlipper pretty much just goes to the next index each time called of the last picked player,
         // so we can continue getting the next index (or all at once) until they're all added
-        ArrayList<Child> resault = new ArrayList<>();
+        ArrayList<Child> result = new ArrayList<>();
 
         // Puts the first child at the top of the list, adds the rest until end of list
-        resault.addAll(this.getChildrenInIndexRange(indexOfNext, this.allChildren.size()));
+        result.addAll(this.getChildrenInIndexRange(indexOfNext, this.allChildren.size()));
         // Adds any ones selected before to the end of the list
-        resault.addAll(this.getChildrenInIndexRange(0, indexOfNext));
+        result.addAll(this.getChildrenInIndexRange(0, indexOfNext));
 
-        return resault;
+        return result;
     }
 
     public Child getChildByUUID(String uuidStr) {

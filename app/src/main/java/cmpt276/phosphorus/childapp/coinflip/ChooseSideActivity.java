@@ -32,6 +32,8 @@ import cmpt276.phosphorus.childapp.utils.Intents;
 // ==============================================================================================
 public class ChooseSideActivity extends AppCompatActivity {
 
+    private Child child;
+
     public static Intent makeIntent(Context context) {
         return ChooseSideActivity.makeIntent(context, ChildManager.getInstance().getNextCoinFlipper());
     }
@@ -41,8 +43,6 @@ public class ChooseSideActivity extends AppCompatActivity {
         intent.putExtra(Intents.CHILD_UUID_TAG, (child != null ? child.getUUID().toString() : null));
         return intent;
     }
-
-    private Child child;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +79,9 @@ public class ChooseSideActivity extends AppCompatActivity {
     }
 
     private void displayChildName() {
-        if (this.child == null) // If there aren't any children created yet for example
+        if (this.child == null) {  // If there aren't any children created yet for example
             return;
+        }
 
         TextView textView = findViewById(R.id.textSideChooseTitle);
         textView.setPaintFlags(textView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
