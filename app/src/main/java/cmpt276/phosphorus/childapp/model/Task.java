@@ -8,7 +8,6 @@ public class Task {
     private String name;
     private final List<UUID> children;
     private final int FIRST_INDEX = 0;
-    private String currentChildName;
 
     public Task(String name, List<UUID> children, Child currentChild){
         this.name = name;
@@ -19,7 +18,6 @@ public class Task {
                 this.children.add(iter);
             }
         }
-        this.currentChildName = currentChild.getName();
     }
 
     protected String getName() {
@@ -49,13 +47,5 @@ public class Task {
 
     protected UUID getChild(int pos){
         return this.children.get(pos);
-    }
-
-    public String getChildName(){
-        return this.currentChildName;
-    }
-
-    protected void changeChildName(String newName){
-        this.currentChildName = newName;
     }
 }

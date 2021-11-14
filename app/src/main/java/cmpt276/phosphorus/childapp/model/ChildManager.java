@@ -38,12 +38,10 @@ public class ChildManager {
     private File file;
     private List<Child> allChildren;
     private Child lastCoinChooserChild;
-    private List<Task> tasks;
 
     private ChildManager() {
         this.allChildren = new ArrayList<>();
         this.lastCoinChooserChild = null;
-        this.tasks = new ArrayList<>();
     }
 
     public static ChildManager getInstance() {
@@ -93,7 +91,6 @@ public class ChildManager {
         boolean isRemoved = this.allChildren.remove(child); // We make sure we do this before saving cause it might err
         if(isRemoved && child == this.lastCoinChooserChild){
             this.lastCoinChooserChild = this.getNextCoinFlipper();
-            unassignTasks(child);
         }
         return isRemoved;
     }
@@ -171,40 +168,5 @@ public class ChildManager {
                     }
                 }).create();
     }
-
-    public void makeTask(String name, Child initKid){
-        if(!doesTaskExist(name)) {
-            List<UUID> childrenUUIDs = new ArrayList<>();
-            for (Child iter : this.allChildren) {
-                childrenUUIDs.add(iter.getUUID());
-            }
-            this.tasks.add(new Task(name, childrenUUIDs, initKid));
-        }
-    }
-
-    public Child getTaskChildByPos(int pos){
-        return getChildByUUID(this.tasks.get(pos).getCurrentChild());
-    }
-
-    public Task getTaskByName(String taskName){
-        return this.tasks.stream().filter(task -> task.getName().equals(taskName)).findFirst().orElse(null);
-    }
-
-    //Use this to see if there is another task with the same name
-    //Maybe print error message if there is?
-    public boolean doesTaskExist(String taskName){
-        Task detector = getTaskByName(taskName);
-        return detector != null;
-    }
-
-    public void unassignTasks(Child child){
-        for(int i = 0; i < this.tasks.size(); i++){
-            if(this.tasks.get(i).getCurrentChild() == child.getUUID()){
-                this.tasks.get(i).changeChildName(getChildByUUID(this.tasks.get(i).getChild(1)).getName());
-            }
-            tasks.get(i).removeChild(child.getUUID());
-        }
-    }
-
 
 }
