@@ -21,6 +21,7 @@ public class Child {
     private final UUID uuid;
     private final List<CoinFlipResult> coinFlipResults;
     private String name;
+    private boolean lastPicked;
 
     /*
     private String childPortraitPath
@@ -29,14 +30,15 @@ public class Child {
 
     // Normal way to create children
     public Child(@NotNull String name) {
-        this(UUID.randomUUID(), new ArrayList<>(), name);
+        this(UUID.randomUUID(), new ArrayList<>(), name, false);
     }
 
     // We might want this for saving/loading the children, not sure yet. Will leave for now
-    public Child(@NotNull UUID uuid, @NotNull List<CoinFlipResult> coinFlipResults, @NotNull String name) {
+    public Child(@NotNull UUID uuid, @NotNull List<CoinFlipResult> coinFlipResults, @NotNull String name, boolean lastPicked) {
         this.uuid = Objects.requireNonNull(uuid, "Children UUID cannot be null");
         this.coinFlipResults = Objects.requireNonNull(coinFlipResults, "Children flips results cannot be null");
         this.setName(name); // setName already makes sure name isn't null || empty
+        this.lastPicked = lastPicked;
     }
 
     public int getTotalLosses() {
@@ -57,6 +59,10 @@ public class Child {
         return this.name;
     }
 
+    public boolean isLastPicked() {
+        return this.lastPicked;
+    }
+
     public void setName(@NotNull String name) {
         if (name.isEmpty()) {
             throw new IllegalArgumentException("Name cannot be null or empty");
@@ -72,6 +78,10 @@ public class Child {
 
     public void addCoinFlipResult(@NotNull CoinFlipResult coinFlipResult) {
         this.coinFlipResults.add(Objects.requireNonNull(coinFlipResult, "Cannot add a null coin result"));
+    }
+
+    public void setLastPicked(boolean lastPicked) {
+        this.lastPicked = lastPicked;
     }
 
     @Override
