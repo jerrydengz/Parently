@@ -30,6 +30,7 @@ import cmpt276.phosphorus.childapp.model.ChildManager;
 import cmpt276.phosphorus.childapp.model.CoinFlipResult;
 import cmpt276.phosphorus.childapp.model.CoinSide;
 import cmpt276.phosphorus.childapp.utils.Emoji;
+import cmpt276.phosphorus.childapp.utils.Intents;
 import nl.dionsegijn.konfetti.KonfettiView;
 import nl.dionsegijn.konfetti.models.Shape;
 import nl.dionsegijn.konfetti.models.Size;
@@ -49,9 +50,10 @@ public class FlipCoinActivity extends AppCompatActivity {
     private CoinSide coinSide;
     private MediaPlayer resultSound;
 
-    public static Intent makeIntent(Context context, CoinSide winningSide) {
+    public static Intent makeIntent(Context context, Child child, CoinSide winningSide) {
         Intent intent = new Intent(context, FlipCoinActivity.class);
         intent.putExtra(CHOSEN_COIN_SIDE, winningSide.name());
+        intent.putExtra(Intents.CHILD_UUID_TAG, (child != null ? child.getUUID().toString() : null));
         return intent;
     }
 
@@ -65,8 +67,6 @@ public class FlipCoinActivity extends AppCompatActivity {
 
         this.extractIntentData();
         this.coinSide = this.winningSide; // Set's the inital coin side to the one the person picked
-
-        this.child = ChildManager.getInstance().getNextCoinFlipper();
 
         this.updateCoinDisplay();
         this.createFlipBtn();
@@ -143,9 +143,12 @@ public class FlipCoinActivity extends AppCompatActivity {
         if (this.child != null) {
             ChildManager childManager = ChildManager.getInstance();
             this.child.addCoinFlipResult(coinFlipResult);
+
+            childManager.clearAllLastPicked(); // Just in case
+            this.child.setLastPicked(true);
             childManager.saveToFile();
-            childManager.setLastCoinChooserChild(this.child);
         }
+
         boolean didWin = coinFlipResult.getDidWin();
 
         String toastMsg = getString((didWin ? R.string.flip_coin_win_toast : R.string.flip_coin_lose_toast))
@@ -183,7 +186,10 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     private void extractIntentData() {
         Intent intent = getIntent();
+        String intentChildUUID = intent.getStringExtra(Intents.CHILD_UUID_TAG);
+
         this.winningSide = CoinSide.valueOf(intent.getStringExtra(CHOSEN_COIN_SIDE));
+        this.child = ChildManager.getInstance().getChildByUUID(intentChildUUID);
     }
 
     private void flipCoinState() {
@@ -195,9 +201,6 @@ public class FlipCoinActivity extends AppCompatActivity {
         button.setOnClickListener(view -> {
             if (!this.hasFlipped) {
                 this.hasFlipped = true; // Makes it so next time we press the btn we go back
-
-                // Only chooses the next child to flip after the btn is pressed
-                ChildManager.getInstance().setLastCoinChooserChild(this.child);
 
                 MediaPlayer mPlayer = MediaPlayer.create(this, R.raw.coin_flip);
                 mPlayer.start();

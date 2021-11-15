@@ -1,9 +1,20 @@
+Cautions:
+=========
 * Make sure animations are enabled on your testing device, coin flip will not properly work w/o them
 * Make sure you properly sync your gradle for our custom imports. If either GSON or konfetti error, refresh.
   We've found just commenting out a "implementation ...", and then un-commenting it to trigger a sync works
 
+Style Guide Reference:
+======================
+- based off Twitter's style guide + modifications based on the Team's preference
+- https://github.com/twitter-archive/commons/blob/master/src/java/com/twitter/common/styleguide.md
 
-Resource Ref
+Style Guide Modification:
+=========================
+
+
+Resource Ref:
+=============
 - Coin sides: https://en.wikipedia.org/wiki/Quarter_(Canadian_coin)
 - Coin Flip sound: https://www.youtube.com/watch?v=Hy7DORHmiKY
 - Victory sound: https://www.youtube.com/watch?v=lcJH8JtgZoE

@@ -16,6 +16,7 @@
 
     <string name="flip_coin_history_action_title">History</string>
     <string name="flip_coin_choose_action_title">Choose a side</string>
+    <string name="flip_coin_choose_child_title">Choose a child</string>
     <string name="flip_coin_flip_action_title">Flip!</string>
     <string name="flip_coin_flip_button">Flip</string>
     <string name="flip_coin_flip_head_title">Heads</string>
@@ -23,6 +24,7 @@
     <string name="flip_coin_finish_button_text">OK</string>
     <string name="flip_coin_win_toast">You won! :happy:</string>
     <string name="flip_coin_lose_toast">You lost :sad:</string>
+    <string name="flip_coin_choose_child_none">NONE</string>
 
     <string name="title_activity_children_configure">ChildrenConfigureActivity</string>
     <string name="add_child_btn_text">New Child</string>
