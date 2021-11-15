@@ -23,7 +23,8 @@ public class Child {
     private String name;
 
     /*
-    private Bitmap childPortrait;   For when saving bitmap to json?
+    private String childPortraitPath
+        For when saving picture to json? // see: String currentPhotoPath; in ChildConfigureActivity
     */
 
     // Normal way to create children

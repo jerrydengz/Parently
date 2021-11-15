@@ -1,14 +1,13 @@
 package cmpt276.phosphorus.childapp.children;
 
-import static cmpt276.phosphorus.childapp.children.utils.BitmapOperations.*;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,8 +23,15 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -58,40 +64,32 @@ public class ChildConfigureActivity extends AppCompatActivity {
     public static final int PERMISSION_REQUEST_CODE = 100;
     public static final String INTENT_TYPE_FOR_GALLERY = "image/*";
 
-    private Bitmap bitmapPortrait;
+    public static final int BINARY_BYTE_SIZE = 1024;
+    public static final int BYTE_OFFSET_INTEGER = 0;
+
     private ImageView childPortrait;
+    private Uri photoURI;
+    private String currentPhotoPath; // Way to retrieve photo from storage
 
-    ActivityResultLauncher<Intent> cameraLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
+    ActivityResultLauncher<Uri> cameraLauncher = registerForActivityResult(
+            new ActivityResultContracts.TakePicture(),
             result -> {
-                if (result.getResultCode() == RESULT_OK &&
-                        result.getData() != null) {
-                    Bundle bundle = result.getData().getExtras();
-                    // todo: refactor this to save this bitmap, crop image?
-                    Bitmap originalBitmap = (Bitmap) bundle.get("data");
-                    bitmapPortrait = scaleBitmap(originalBitmap);
-                    childPortrait.setImageBitmap(bitmapPortrait);
+                if (!result) {
+                    return;
                 }
-            }
-    );
+                childPortrait.setImageURI(photoURI);
+            });
 
-    ActivityResultLauncher<Intent> galleryLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == RESULT_OK &&
-                        result.getData() != null) {
-                    try {
-                        Bitmap originalBitmap = MediaStore.Images.Media.getBitmap(
-                                getContentResolver(), result.getData().getData());
-                        // todo: refactor this to save this bitmap, crop image?
-                        bitmapPortrait = scaleBitmap(originalBitmap);
-                        childPortrait.setImageBitmap(bitmapPortrait);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+    ActivityResultLauncher<String> galleryLauncher = registerForActivityResult(
+            new ActivityResultContracts.GetContent(),
+            uri -> {
+                if (uri == null) {
+                    return;
                 }
-            }
-    );
+                saveImageFromGallery(uri);
+                photoURI = uri;
+                childPortrait.setImageURI(photoURI);
+            });
 
     public static Intent makeIntentNewChild(Context context) {
         return makeIntent(context, null);
@@ -163,7 +161,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
             if (isEditingChild()) {
                 this.child.setName(cleanedName);
             } else {
-                // todo: refactor this and model to include bitmap in initialization?
+                // todo: refactor this and model to include pic in initialization? (need to implement way to save pic data though)
                 this.childManager.addChild(new Child(cleanedName));
             }
 
@@ -193,11 +191,8 @@ public class ChildConfigureActivity extends AppCompatActivity {
         Button button = findViewById(R.id.btnUseCamera);
         button.setOnClickListener(v -> {
             boolean cameraPermission = setUpUseCameraPermissions();
-            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if (cameraPermission) {
-                if (cameraIntent.resolveActivity(getPackageManager()) != null) {
-                    cameraLauncher.launch(cameraIntent);
-                }
+                dispatchTakePictureIntent();
             }
         });
     }
@@ -206,10 +201,8 @@ public class ChildConfigureActivity extends AppCompatActivity {
         Button button = findViewById(R.id.btnUseGallery);
         button.setOnClickListener(v -> {
             boolean galleryPermission = setUpUseGalleryPermissions();
-            Intent galleryIntent = new Intent(Intent.ACTION_PICK);
-            galleryIntent.setType(INTENT_TYPE_FOR_GALLERY);
             if (galleryPermission) {
-                galleryLauncher.launch(galleryIntent);
+                galleryLauncher.launch(INTENT_TYPE_FOR_GALLERY);
             }
         });
     }
@@ -278,5 +271,64 @@ public class ChildConfigureActivity extends AppCompatActivity {
             return PERMISSION_ACCEPTED;
         }
         return PERMISSION_DENIED;
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                photoURI = FileProvider.getUriForFile(this,
+                        this.getPackageName() + ".provider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                cameraLauncher.launch(photoURI);
+            }
+        }
+    }
+
+    // https://stackoverflow.com/questions/45520599/creating-file-from-uri/45520771#45520771
+    private void saveImageFromGallery(Uri uri) {
+        // Takes image uri from gallery and copies it to app's internal storage
+        File photoFile;
+        try {
+            photoFile = createImageFile();
+            InputStream inputStream = getContentResolver().openInputStream(uri);
+            OutputStream outputStream = new FileOutputStream(photoFile);
+            byte[] buf = new byte[BINARY_BYTE_SIZE];
+            int len;
+            while ((len = inputStream.read(buf)) > BYTE_OFFSET_INTEGER){
+                outputStream.write(buf, BYTE_OFFSET_INTEGER, len);
+            }
+            outputStream.close();
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        // todo: refactor file name to be the child's uuid? prob unnecessary
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
     }
 }
