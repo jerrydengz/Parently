@@ -20,15 +20,15 @@ public class Task {
         }
     }
 
-    protected String getName() {
+    public String getName() {
         return this.name;
     }
 
-    protected void changeName(String newName){
+    public void changeName(String newName){
         this.name = newName;
     }
 
-    protected void setNextChild(UUID nextChild){
+    public void setNextChild(UUID nextChild){
         this.children.remove(nextChild);
         this.children.add(this.FIRST_INDEX, nextChild);
     }
@@ -43,6 +43,12 @@ public class Task {
 
     protected void removeChild(UUID child){
         this.children.remove(child);
+    }
+
+    public void addChild(UUID child){
+        if(!this.children.contains(child)){
+            this.children.add(child);
+        }
     }
 
     protected UUID getChild(int pos){
