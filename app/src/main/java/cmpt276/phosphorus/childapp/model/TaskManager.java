@@ -8,8 +8,18 @@ import java.util.UUID;
 public class TaskManager {
     private List<Task> allTasks; //not final for when saving is implemented
 
-    public TaskManager(){
+    private static TaskManager instance;
+
+    private TaskManager(){
+
         this.allTasks = new ArrayList<>();
+    }
+
+    public static TaskManager getInstance(){
+        if(instance == null){
+            instance = new TaskManager();
+        }
+        return instance;
     }
 
     public boolean addTask(String taskName, List<UUID> children, Child currentChild){
