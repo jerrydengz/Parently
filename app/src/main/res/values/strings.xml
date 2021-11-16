@@ -58,6 +58,7 @@
     <string name="flip_result_label">"Coin Result: "</string>
 
     <string name="help_button">Help</string>
+    <string name="spacer_textview">\n</string>
     <string name="help_activity_title">About Practical Parent</string>
     <string name="about_authors_title"><b><u>About the Practical Parent App</u></b></string>
     <string name="about_authors_description">
