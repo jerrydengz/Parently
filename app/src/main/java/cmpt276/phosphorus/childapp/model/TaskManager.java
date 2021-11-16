@@ -12,8 +12,13 @@ public class TaskManager {
         this.allTasks = new ArrayList<>();
     }
 
-    public void addTask(String taskName, List<UUID> children, Child currentChild){
-        this.allTasks.add(new Task(taskName, children, currentChild));
+    public boolean addTask(String taskName, List<UUID> children, Child currentChild){
+        Task test = getTaskByName(taskName);
+        if(test == null) {
+            this.allTasks.add(new Task(taskName, children, currentChild));
+            return true;
+        }
+        return false;
     }
 
     public void deleteTask(Task task){
@@ -22,6 +27,15 @@ public class TaskManager {
 
     public void cycleChildren(Task task){
         this.allTasks.get(this.allTasks.indexOf(task)).cycleChildren();
+    }
+
+    public Task getTaskByName(String taskName){
+        for(Task task : this.allTasks){
+            if(task.getName().equals(taskName)){
+                return task;
+            }
+        }
+        return null;
     }
     
     public List<Task> getAllTasks(){

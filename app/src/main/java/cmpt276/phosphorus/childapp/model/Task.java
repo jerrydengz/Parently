@@ -5,9 +5,10 @@ import java.util.List;
 import java.util.UUID;
 
 public class Task {
+    private final int FIRST_INDEX = 0;
+
     private String name;
     private final List<UUID> children;
-    private final int FIRST_INDEX = 0;
 
     public Task(String name, List<UUID> children, Child currentChild){
         this.name = name;
@@ -24,24 +25,26 @@ public class Task {
         return this.name;
     }
 
-    public void changeName(String newName){
+    public void setName(String newName){
         this.name = newName;
     }
 
     public void setNextChild(UUID nextChild){
-        this.children.remove(nextChild);
+        removeChild(nextChild);
         this.children.add(this.FIRST_INDEX, nextChild);
     }
 
-    protected UUID getCurrentChild(){
-        return this.children.get(this.FIRST_INDEX);
+    public UUID getCurrentChild(){
+        return getChild(this.FIRST_INDEX);
     }
 
-    protected void cycleChildren(){
+    public void cycleChildren(){
+
         this.children.add(this.children.remove(this.FIRST_INDEX));
     }
 
-    protected void removeChild(UUID child){
+    public void removeChild(UUID child){
+
         this.children.remove(child);
     }
 
@@ -51,7 +54,8 @@ public class Task {
         }
     }
 
-    protected UUID getChild(int pos){
+    public UUID getChild(int pos){
+
         return this.children.get(pos);
     }
 }
