@@ -23,6 +23,11 @@ public class Child {
     private String name;
     private boolean lastPicked;
 
+    /*
+    private String childPortraitPath
+        For when saving picture to json? // see: String currentPhotoPath; in ChildConfigureActivity
+    */
+
     // Normal way to create children
     public Child(@NotNull String name) {
         this(UUID.randomUUID(), new ArrayList<>(), name, false);

@@ -56,5 +56,7 @@
     <string name="add_child_title"><b>New Child</b></string>
     <string name="flip_choice_label">"Coin Choice: "</string>
     <string name="flip_result_label">"Coin Result: "</string>
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
 
 </resources>
