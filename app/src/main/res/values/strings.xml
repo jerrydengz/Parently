@@ -59,4 +59,29 @@
     <string name="gallery">Gallery</string>
     <string name="camera">Camera</string>
 
+    <string name="help_button">Help</string>
+    <string name="spacer_textview">\n</string>
+    <string name="help_activity_title">About Practical Parent</string>
+    <string name="about_authors_title"><b><u>About the Practical Parent App</u></b></string>
+    <string name="about_authors_description">
+        \nThe \"Practical Parent\" app is developed by Team Phosphorus for CMPT 276: Intro to Software Engineering.
+        \n\nThe developers of \"Practical Parent\" are:
+        \n • Jack Clarke
+        \n • Matt Friesen
+        \n • Jerry Deng Zhu
+        \n • Mark Dionglay
+    </string>
+    <string name="copyright_info_title"><b><u>\nCopyright Resources Used</u></b></string>
+    <string name="copyright_info_description">
+        \nThe following are links to image and sound resources used in the application.\n
+    </string>
+    <string name="coin_img_link"> • <a href="https://en.wikipedia.org/wiki/Quarter_(Canadian_coin)">Link to coin images used</a></string>
+    <string name="timer_relax_bg_link"> • <a href="https://wallpaperaccess.com/minimal-phone">Link to screensaver image in Timeout</a></string>
+    <string name="app_icon_link"> • <a href="https://www.pngfind.com/download/hwbwiwi_child-icon-png-children-protection-png-transparent-png/">Link to application icon image</a></string>
+    <string name="menu_icon_link"> • <a href="https://www.pinterest.ca/pin/318066792439069784/">Link to image in the main menu</a></string>
+    <string name="app_bg_link"> • <a href="https://www.manku.dev/">App background images courtesy of Tanish Manku</a></string>
+    <string name="coin_sound_link"> • <a href="https://www.youtube.com/watch?v=Hy7DORHmiKY">Link to coin flipping sound</a></string>
+    <string name="victory_sound_link"> • <a href="https://www.youtube.com/watch?v=lcJH8JtgZoE">Link to coin flip victory sound</a></string>
+    <string name="defeat_sound_link"> • <a href="https://www.youtube.com/watch?v=8Xt1kUK71lc">Link to coin flip defeat sound</a></string>
+
 </resources>
