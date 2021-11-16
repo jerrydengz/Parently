@@ -12,6 +12,19 @@
     <!--https://stackoverflow.com/questions/56954471/button-drawable-icon-not-showing/56954619-->
     <!--https://material.io/components/buttons/android#using-buttons-->
 
+    <ImageView
+        android:id="@+id/family_menu_img"
+        android:layout_width="228dp"
+        android:layout_height="225dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.437"
+        app:srcCompat="@drawable/family_image_vector_min_1"
+        tools:ignore="ContentDescription" />
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -23,51 +36,52 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.848">
+        app:layout_constraintVertical_bias="0.858">
 
         <Button
             android:id="@+id/btnChildren"
             android:layout_width="250sp"
-            android:layout_height="75sp"
+            android:layout_height="65sp"
             android:text="@string/children_button"
             app:icon="@drawable/children_icon"
             tools:ignore="TextContrastCheck" />
 
         <Space
             android:layout_width="0dp"
-            android:layout_height="40sp" />
+            android:layout_height="20sp" />
 
         <Button
             android:id="@+id/btnFlipCoin"
             android:layout_width="250sp"
-            android:layout_height="75sp"
+            android:layout_height="65sp"
             android:text="@string/flip_coin_button"
             app:icon="@drawable/coin_flip_icon"
             tools:ignore="TextContrastCheck" />
 
         <Space
             android:layout_width="0dp"
-            android:layout_height="40sp" />
+            android:layout_height="20sp" />
 
         <Button
             android:id="@+id/btnTimeout"
             android:layout_width="250sp"
-            android:layout_height="75sp"
+            android:layout_height="65sp"
             android:text="@string/timeout_button"
             app:icon="@drawable/timer_icon_filled"
             tools:ignore="TextContrastCheck" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="20sp" />
+
+        <Button
+            android:id="@+id/btnHelp"
+            android:layout_width="250sp"
+            android:layout_height="65sp"
+            android:text="@string/help_button"
+            app:icon="@drawable/help_icon"
+            tools:ignore="TextContrastCheck" />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/family_menu_img"
-        android:layout_width="250sp"
-        android:layout_height="250sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.41"
-        app:srcCompat="@drawable/family_image_vector_min_1"
-        tools:ignore="ContentDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

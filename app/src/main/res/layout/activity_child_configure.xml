@@ -24,9 +24,17 @@
             android:layout_height="60sp"
             android:text="@string/save_btn_text" />
 
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="40sp" />
+        <Button
+            android:id="@+id/btnUseCamera"
+            android:layout_width="match_parent"
+            android:layout_height="60sp"
+            android:text="@string/camera" />
+
+        <Button
+            android:id="@+id/btnUseGallery"
+            android:layout_width="match_parent"
+            android:layout_height="60sp"
+            android:text="@string/gallery" />
 
         <Button
             android:id="@+id/btnDelete"
@@ -63,6 +71,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.083" />
+
+    <ImageView
+        android:id="@+id/imgChildPicture"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/name_edit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/configure_child_title"
+        app:srcCompat="@drawable/child_profile_img" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

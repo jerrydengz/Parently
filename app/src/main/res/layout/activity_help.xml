@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:autoLink="web"
+    android:background="@drawable/lavender_min_1"
+    tools:context=".help.HelpActivity">
+
+    <ScrollView
+        android:layout_width="400sp"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/spacer_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/spacer_textview"
+                tools:ignore="SpeakableTextPresentCheck,TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/about_authors_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/about_authors_title"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/about_authors_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/about_authors_description"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/copyright_info_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/copyright_info_title"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/copyright_info_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/copyright_info_description"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/coin_img_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/coin_img_link"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/timer_relax_bg_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/timer_relax_bg_link"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/app_icon_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_icon_link"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/menu_icon_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/menu_icon_link"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/app_bg_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_bg_link"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/coin_sound_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/coin_sound_link"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/victory_sound_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/victory_sound_link"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/defeat_sound_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/defeat_sound_link"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                tools:ignore="TextContrastCheck" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
