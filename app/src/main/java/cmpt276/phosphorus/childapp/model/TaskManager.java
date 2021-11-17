@@ -36,7 +36,7 @@ public class TaskManager {
     }
 
     public void cycleChildren(Task task){
-        this.allTasks.get(this.allTasks.indexOf(task)).cycleChildren();
+        task.cycleChildren();
     }
 
     public Task getTaskByName(String taskName){
