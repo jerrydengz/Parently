@@ -12,24 +12,27 @@ import java.util.Objects;
 
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.help.HelpActivity;
+import cmpt276.phosphorus.childapp.model.TaskManager;
 
 public class TaskActivity extends AppCompatActivity {
 
+    private TaskManager taskManager;
+
     /*
      TODO ( whoever is going to do this :^) )
-     2. Create complex list item
-        i. task name
-        ii. child name of who's turn it is
-     3. Create a Custom AlertDialog displaying task info
-        i. a dialog button option to cancel
-        ii. a dialog button option to edit -> goes to ConfigureTaskActivity.java (possibly implement delete button in here)
-        iii. text to display:
-             - task name
-             - current turn for child's name
-             - picture of child
-        iv. button to indicate "finished"
-     5. implement adding task in ConfigureTaskActivity.java
-     6. create list adapter (inner/sub class) for tasks
+         2. Create complex list item
+            i. task name
+            ii. child name of who's turn it is
+         3. Create a Custom AlertDialog displaying task info
+            i. a dialog button option to cancel
+            ii. a dialog button option to edit -> goes to ConfigureTaskActivity.java (possibly implement delete button in here)
+            iii. text to display:
+                 - task name
+                 - current turn for child's name
+                 - picture of child
+            iv. button to indicate "finished"
+         5. implement adding task in ConfigureTaskActivity.java
+         6. create list adapter (inner/sub class) for tasks
      */
 
     @Override
@@ -39,6 +42,8 @@ public class TaskActivity extends AppCompatActivity {
 
         this.setTitle(getString(R.string.task_activity_title));
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
+        taskManager = TaskManager.getInstance();
 
         this.createConfigureTaskBtn();
         this.setUpTaskDialog();
@@ -52,7 +57,7 @@ public class TaskActivity extends AppCompatActivity {
     }
 
     public static Intent makeIntent(Context context) {
-        return new Intent(context, HelpActivity.class);
+        return new Intent(context, TaskActivity.class);
     }
 
     private void createConfigureTaskBtn() {
