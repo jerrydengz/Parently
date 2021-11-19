@@ -36,11 +36,11 @@ public class TaskManager {
         return instance;
     }
 
-    public boolean addTask(String taskName, List<UUID> children, UUID currentChild){
-        Task test = getTaskByName(taskName);
-        if(test == null) {
-            this.allTasks.add(new Task(taskName, children, currentChild));
-            saveToFile();
+    public boolean addTask(Task task){
+        Task test = this.getTaskByName(task);
+        if(test == null) { // if we don't already have it
+            this.allTasks.add(task);
+//            saveToFile(); todo
             return true;
         }
         return false;
@@ -53,6 +53,10 @@ public class TaskManager {
 
     public void cycleChildren(Task task){
         task.cycleChildren();
+    }
+
+    public Task getTaskByName(Task task){
+        return this.getTaskByName(task.getName());
     }
 
     public Task getTaskByName(String taskName){

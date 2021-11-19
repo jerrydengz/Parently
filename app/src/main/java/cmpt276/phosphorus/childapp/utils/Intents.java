@@ -4,5 +4,6 @@ package cmpt276.phosphorus.childapp.utils;
 public class Intents {
 
     public static final String CHILD_UUID_TAG = "ChildUUIDTag";
+    public static final String TASK_NAME_TAG = "TASK_NAME_TAG";
 
 }

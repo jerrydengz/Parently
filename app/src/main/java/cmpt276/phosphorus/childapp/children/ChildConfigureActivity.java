@@ -37,6 +37,7 @@ import java.util.Objects;
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
+import cmpt276.phosphorus.childapp.model.TaskManager;
 import cmpt276.phosphorus.childapp.utils.Intents;
 
     /* Code assistance regarding Camera & Gallery from
@@ -160,7 +161,10 @@ public class ChildConfigureActivity extends AppCompatActivity {
                 this.child.setName(cleanedName);
             } else {
                 // todo: refactor this and model to include pic in initialization? (need to implement way to save pic data though)
-                this.childManager.addChild(new Child(cleanedName));
+                Child child = this.childManager.addChild(new Child(cleanedName));
+                TaskManager.getInstance()
+                        .getAllTasks()
+                        .forEach(task -> task.addChild(child));
             }
 
             this.childManager.saveToFile();

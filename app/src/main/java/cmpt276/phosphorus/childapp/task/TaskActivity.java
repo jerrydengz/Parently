@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Objects;
 
@@ -47,6 +50,8 @@ public class TaskActivity extends AppCompatActivity {
 
         this.createConfigureTaskBtn();
         this.setUpTaskDialog();
+
+        Log.d("asd", taskManager.getAllTasks().toString());
     }
 
     // If user select the top left back button
@@ -61,7 +66,7 @@ public class TaskActivity extends AppCompatActivity {
     }
 
     private void createConfigureTaskBtn() {
-        Button button = findViewById(R.id.add_task_fab);
+        FloatingActionButton button = findViewById(R.id.add_task_fab);
 
         // NOTE: preliminary, model after methods in ChildActivity.java to configure children
         button.setOnClickListener(view -> startActivity(ConfigureTaskActivity.makeIntent(this)));
