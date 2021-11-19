@@ -36,7 +36,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.858">
+        app:layout_constraintVertical_bias="0.932">
 
         <Button
             android:id="@+id/btnChildren"
@@ -48,7 +48,8 @@
 
         <Space
             android:layout_width="0dp"
-            android:layout_height="20sp" />
+            android:layout_height="10sp"
+            tools:ignore="SmallSp" />
 
         <Button
             android:id="@+id/btnFlipCoin"
@@ -60,7 +61,8 @@
 
         <Space
             android:layout_width="0dp"
-            android:layout_height="20sp" />
+            android:layout_height="10sp"
+            tools:ignore="SmallSp" />
 
         <Button
             android:id="@+id/btnTimeout"
@@ -72,7 +74,21 @@
 
         <Space
             android:layout_width="0dp"
-            android:layout_height="20sp" />
+            android:layout_height="10sp"
+            tools:ignore="SmallSp" />
+
+        <Button
+            android:id="@+id/btnTask"
+            android:layout_width="250sp"
+            android:layout_height="65sp"
+            android:text="@string/tasks_button_name"
+            app:icon="@drawable/task_icon"
+            tools:ignore="TextContrastCheck" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="10sp"
+            tools:ignore="SmallSp" />
 
         <Button
             android:id="@+id/btnHelp"

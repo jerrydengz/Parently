@@ -10,6 +10,7 @@ import cmpt276.phosphorus.childapp.children.ChildrenActivity;
 import cmpt276.phosphorus.childapp.coinflip.ChooseSideActivity;
 import cmpt276.phosphorus.childapp.help.HelpActivity;
 import cmpt276.phosphorus.childapp.model.ChildManager;
+import cmpt276.phosphorus.childapp.task.TaskActivity;
 import cmpt276.phosphorus.childapp.timeout.TimeoutActivity;
 
 // ==============================================================================================
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         this.createChildrenBtn();
         this.createFlipCoinBtn();
         this.createTimeoutBtn();
+        this.createTaskBtn();
         this.createHelpBtn();
     }
 
@@ -48,6 +50,11 @@ public class MainActivity extends AppCompatActivity {
     private void createTimeoutBtn() {
         Button button = findViewById(R.id.btnTimeout);
         button.setOnClickListener(view -> startActivity(TimeoutActivity.makeIntent(this)));
+    }
+
+    private void createTaskBtn() {
+        Button button = findViewById(R.id.btnTask);
+        button.setOnClickListener(view -> startActivity(TaskActivity.makeIntent(this)));
     }
 
     private void createHelpBtn() {
