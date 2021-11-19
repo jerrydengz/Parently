@@ -83,5 +83,7 @@
     <string name="coin_sound_link"> • <a href="https://www.youtube.com/watch?v=Hy7DORHmiKY">Link to coin flipping sound</a></string>
     <string name="victory_sound_link"> • <a href="https://www.youtube.com/watch?v=lcJH8JtgZoE">Link to coin flip victory sound</a></string>
     <string name="defeat_sound_link"> • <a href="https://www.youtube.com/watch?v=8Xt1kUK71lc">Link to coin flip defeat sound</a></string>
+    <string name="tasks_button_name">tasks to do</string>
+    <string name="task_activity_title">Who\'s Turn Is It?</string>
 
 </resources>
