@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createTaskBtn() {
-        Button button = findViewById(R.id.tag_accessibility_clickable_spans);
+        Button button = findViewById(R.id.btnTask);
         button.setOnClickListener(view -> startActivity(TaskActivity.makeIntent(this)));
     }
 
