@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -46,6 +47,8 @@ public class TaskActivity extends AppCompatActivity {
         this.createConfigureTaskBtn();
         this.setUpTaskDialog();
         this.populateTaskListView();
+
+        Log.d("asd", taskManager.getAllTasks().toString());
     }
 
     // If user select the top left back button
