@@ -85,5 +85,6 @@
     <string name="defeat_sound_link"> • <a href="https://www.youtube.com/watch?v=8Xt1kUK71lc">Link to coin flip defeat sound</a></string>
     <string name="tasks_button_name">tasks to do</string>
     <string name="task_activity_title">Who\'s Turn Is It?</string>
+    <string name="configure_task_activity_title">Configure Task</string>
 
 </resources>
