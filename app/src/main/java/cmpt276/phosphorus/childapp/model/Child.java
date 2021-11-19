@@ -22,11 +22,7 @@ public class Child {
     private final List<CoinFlipResult> coinFlipResults;
     private String name;
     private boolean lastPicked;
-
-    /*
-    private String childPortraitPath
-        For when saving picture to json? // see: String currentPhotoPath; in ChildConfigureActivity
-    */
+    private String childPortraitPath;
 
     // Normal way to create children
     public Child(@NotNull String name) {
@@ -59,6 +55,10 @@ public class Child {
         return this.name;
     }
 
+    public String getChildPortraitPath() {
+        return childPortraitPath;
+    }
+
     public boolean isLastPicked() {
         return this.lastPicked;
     }
@@ -69,6 +69,10 @@ public class Child {
         }
 
         this.name = name;
+    }
+
+    public void setChildPortraitPath(String childPortraitPath) {
+        this.childPortraitPath = childPortraitPath;
     }
 
     // Returns sorted coin results from Oldest -> Newest

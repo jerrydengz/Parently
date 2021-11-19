@@ -25,6 +25,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
+import com.bumptech.glide.Glide;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -158,9 +160,11 @@ public class ChildConfigureActivity extends AppCompatActivity {
 
             if (isEditingChild()) {
                 this.child.setName(cleanedName);
+                this.child.setChildPortraitPath(currentPhotoPath);
             } else {
-                // todo: refactor this and model to include pic in initialization? (need to implement way to save pic data though)
-                this.childManager.addChild(new Child(cleanedName));
+                Child newChild = new Child(cleanedName);
+                newChild.setChildPortraitPath(currentPhotoPath);
+                this.childManager.addChild(newChild);
             }
 
             this.childManager.saveToFile();
@@ -222,6 +226,11 @@ public class ChildConfigureActivity extends AppCompatActivity {
             // Update's the text input with the child's name
             EditText childNameEditText = findViewById(R.id.name_edit_text);
             childNameEditText.setText(this.child.getName());
+
+            // Dependency from https://github.com/bumptech/glide
+            if(this.child.getChildPortraitPath() != null) {
+                Glide.with(this).load(this.child.getChildPortraitPath()).into(childPortrait);
+            }
         }
 
         childTitleText.setText(isEditing ? this.child.getName() : getString(R.string.add_child_title));
