@@ -74,6 +74,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
     private ImageView childPortrait;
     private Uri photoURI;
     private String currentPhotoPath; // Way to retrieve photo from storage
+    private File storageDir;
 
     ActivityResultLauncher<Uri> cameraLauncher = registerForActivityResult(
             new ActivityResultContracts.TakePicture(),
@@ -190,6 +191,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
             dialogWarning.setPositiveButton(getResources().getString(R.string.dialog_positive), (dialogInterface, i) -> {
                 this.childManager.removeChild(this.child);
                 DataManager.getInstance(this).saveData(DataType.CHILDREN);
+                deleteImageFile(currentPhotoPath);
                 finish();
             });
             dialogWarning.setNegativeButton(getResources().getString(R.string.dialog_negative), null);
@@ -228,6 +230,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
         Button deleteBtn = findViewById(R.id.btnDelete);
         childPortrait = findViewById(R.id.imgChildPicture);
         childUUID = UUID.randomUUID();
+        storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
 
         boolean isEditing = this.isEditingChild();
 
@@ -336,11 +339,22 @@ public class ChildConfigureActivity extends AppCompatActivity {
     private File createImageFile() throws IOException {
         // Create an image file name
         String imageFileName = childUUID.toString() + ".jpg";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = new File(storageDir, imageFileName);
 
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
         return image;
+    }
+
+    //https://stackoverflow.com/questions/24659704/how-do-i-delete-files-programmatically-on-android
+    private void deleteImageFile(String path) {
+        File fileToDelete = new File(path);
+        if (fileToDelete.exists()) {
+            if (fileToDelete.delete()) {
+                System.out.println("File Deleted: " + path);
+            } else {
+                System.out.println("File not Deleted: " + path);
+            }
+        }
     }
 }
