@@ -15,19 +15,20 @@
         android:layout_marginBottom="24sp"
         android:clickable="true"
         android:scaleType="center"
-        app:fabCustomSize="65dp"
+        app:fabCustomSize="65sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/add_icon"
         app:tint="@color/white"
-        tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+        tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
 
     <ListView
-        android:id="@+id/list_view_task"
+        android:id="@+id/taskListView"
         android:layout_width="400sp"
         android:layout_height="match_parent"
         android:divider="@android:color/transparent"
         android:dividerHeight="10.0sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
