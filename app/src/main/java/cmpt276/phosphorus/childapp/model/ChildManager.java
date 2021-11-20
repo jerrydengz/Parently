@@ -50,8 +50,9 @@ public class ChildManager {
         return instance;
     }
 
-    public void addChild(@NotNull Child child) {
+    public Child addChild(@NotNull Child child) {
         this.allChildren.add(Objects.requireNonNull(child));
+        return child;
     }
 
     public Child getChild(@NotNull CoinFlipResult targetCoinFlip) {

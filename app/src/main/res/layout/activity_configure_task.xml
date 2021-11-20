@@ -6,4 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".task.ConfigureTaskActivity">
 
+    <Button
+        android:id="@+id/btnConfirmTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="83dp"
+        android:text="Create"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputEditTaskName" />
+
+    <EditText
+        android:id="@+id/inputEditTaskName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="283dp"
+        android:ems="10"
+        android:hint="@string/task_input_helper"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
