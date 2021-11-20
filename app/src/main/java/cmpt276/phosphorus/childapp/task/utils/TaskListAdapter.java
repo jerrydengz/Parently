@@ -45,9 +45,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
 
         // Set the name of the child assigned to the task
         TextView childTurnName = taskView.findViewById(R.id.current_turn_child_name);
-        String result = currentTask.isEmptyChildList() ? "No children" : ChildManager.getInstance()
-                .getChildByUUID(currentTask.getCurrentChild())
-                .getName();
+        String result = currentTask.isEmptyChildList() ? "No children" : ChildManager.getInstance().getChildByUUID(currentTask.getCurrentChild()).getName();
         childTurnName.setText(taskView.getResources().getString(R.string.current_turn_display) + result);
         childTurnName.setTextColor(taskView.getResources().getColor(R.color.black, null));
 
