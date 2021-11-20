@@ -16,29 +16,31 @@ import java.io.Writer;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 //Keeps track of all tasks
 public class TaskManager {
+    private static TaskManager instance;
     private List<Task> allTasks; //not final for when saving is implemented
     private File savedata;
 
-    private static TaskManager instance;
-
-    private TaskManager(){
+    private TaskManager() {
         this.allTasks = new ArrayList<>();
     }
 
-    public static TaskManager getInstance(){
-        if(instance == null){
+    public static TaskManager getInstance() {
+        if (instance == null) {
             instance = new TaskManager();
         }
         return instance;
     }
 
-    public boolean addTask(Task task){
+    public void setTasks(List<Task> tasks) {
+        this.allTasks = tasks;
+    }
+
+    public boolean addTask(Task task) {
         Task test = this.getTaskByName(task);
-        if(test == null) { // if we don't already have it
+        if (test == null) { // if we don't already have it
             this.allTasks.add(task);
 //            saveToFile(); todo
             return true;
@@ -46,37 +48,37 @@ public class TaskManager {
         return false;
     }
 
-    public void deleteTask(Task task){
+    public void deleteTask(Task task) {
         this.allTasks.remove(task);
         saveToFile();
     }
 
-    public void cycleChildren(Task task){
+    public void cycleChildren(Task task) {
         task.cycleChildren();
     }
 
-    public Task getTaskByName(Task task){
+    public Task getTaskByName(Task task) {
         return this.getTaskByName(task.getName());
     }
 
-    public Task getTaskByName(String taskName){
-        for(Task task : this.allTasks){
-            if(task.getName().equals(taskName)){
+    public Task getTaskByName(String taskName) {
+        for (Task task : this.allTasks) {
+            if (task.getName().equals(taskName)) {
                 return task;
             }
         }
         return null;
     }
-    
-    public List<Task> getAllTasks(){
+
+    public List<Task> getAllTasks() {
         return this.allTasks;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return this.allTasks.isEmpty();
     }
 
-    private void saveToFile(){
+    private void saveToFile() {
         Gson gson = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
                 .create();
@@ -84,10 +86,11 @@ public class TaskManager {
             Writer writer = new FileWriter(savedata);
             gson.toJson(this.allTasks, writer);
             writer.close();
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+        }
     }
 
-    public void loadFromFile(Context context){
+    public void loadFromFile(Context context) {
         final String FILE_NAME = "tasks.json";
 
         File dir = context.getFilesDir();
@@ -95,13 +98,14 @@ public class TaskManager {
         this.getFromFile();
     }
 
-    private void getFromFile(){
+    private void getFromFile() {
         Gson gson = new Gson();
         try {
             BufferedReader buff = new BufferedReader(new FileReader(savedata));
-            Type taskType = new TypeToken<List<Task>>(){}.getType();
+            Type taskType = new TypeToken<List<Task>>() {
+            }.getType();
             this.allTasks = gson.fromJson(buff, taskType);
-            if(this.allTasks == null){
+            if (this.allTasks == null) {
                 this.allTasks = new ArrayList<>();
             }
         } catch (FileNotFoundException e) {
