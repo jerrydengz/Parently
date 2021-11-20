@@ -3,7 +3,6 @@ package cmpt276.phosphorus.childapp.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
 public enum DataType {
     CHILDREN(Child.class) {
         @Override
