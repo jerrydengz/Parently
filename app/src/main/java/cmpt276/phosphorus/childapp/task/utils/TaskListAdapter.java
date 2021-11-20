@@ -30,29 +30,26 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View taskView = convertView;
-        Task task = TaskManager.getInstance()
-                               .getAllTasks()
-                               .get(position);
-        UUID child = task.getCurrentChild();
 
-        if(taskView == null){
+        if (taskView == null) {
             taskView = LayoutInflater.from(getContext()).inflate(R.layout.task_item, parent, false);
         }
 
+        Task currentTask = getItem(position);
+        
         // Set the name of the task
         TextView taskName = taskView.findViewById(R.id.task_name);
-        taskName.setText(task.getName());
+        taskName.setText(currentTask.getName());
         taskName.setTextColor(taskView.getResources().getColor(R.color.black, null));
         taskName.setTypeface(null, Typeface.BOLD);
 
         // Set the name of the child assigned to the task
         TextView childTurnName = taskView.findViewById(R.id.current_turn_child_name);
-        childTurnName.setText(taskView.getResources().getString(R.string.current_turn_display)
-                + ChildManager.getInstance()
-                              .getChildByUUID(child)
-                              .getName());
+        String result = currentTask.isEmptyChildList() ? "No children" : ChildManager.getInstance()
+                .getChildByUUID(currentTask.getCurrentChild())
+                .getName();
+        childTurnName.setText(taskView.getResources().getString(R.string.current_turn_display) + result);
         childTurnName.setTextColor(taskView.getResources().getColor(R.color.black, null));
-
 
         return taskView;
     }

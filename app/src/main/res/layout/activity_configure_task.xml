@@ -4,27 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".task.ConfigureTaskActivity">
+    tools:context=".task.ConfigureTaskActivity"
+    android:background="@drawable/lavender2_min_1">
 
-    <Button
-        android:id="@+id/btnConfirmTask"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/task_title"
+        android:layout_width="375sp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="83dp"
-        android:text="Create"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputEditTaskName" />
-
-    <EditText
-        android:id="@+id/inputEditTaskName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="283dp"
-        android:ems="10"
-        android:hint="@string/task_input_helper"
-        android:inputType="textPersonName"
+        android:layout_marginTop="28dp"
+        android:text="@string/task_title"
+        android:textAlignment="center"
+        android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/inputEditTaskName"
+        android:layout_width="329dp"
+        android:layout_height="78dp"
+        android:layout_marginBottom="248dp"
+        android:ems="10"
+        android:hint="@string/name_edit_txt"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:layout_width="244dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputEditTaskName"
+        app:layout_constraintVertical_bias="0.191">
+
+                <Button
+                    android:id="@+id/btnConfirmTask"
+                    android:layout_width="match_parent"
+                    android:layout_height="60sp"
+                    android:text="@string/save_btn_text"
+                    app:icon="@drawable/save_icon" />
+
+                <Button
+                    android:id="@+id/btnDeleteTask"
+                    android:layout_width="match_parent"
+                    android:layout_height="60sp"
+                    android:minHeight="48dp"
+                    app:icon="@drawable/delete_icon"
+                    android:text="@string/delete_btn_txt" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

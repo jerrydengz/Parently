@@ -44,8 +44,9 @@ public class ConfigureTaskActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         this.extractIntent();
-        if (this.task == null) // If we're creating a task
+        if (!isEditingTask()) { // If we're creating a task
             this.task = new Task("", ChildManager.getInstance().getAllChildren());
+        }
 
         this.updateDisplay();
         this.btnConfirm();
@@ -73,9 +74,9 @@ public class ConfigureTaskActivity extends AppCompatActivity {
         confirmBtn.setOnClickListener(view -> {
             EditText childNameEditText = findViewById(R.id.inputEditTaskName);
             this.task.setName(childNameEditText.getText().toString());
-            boolean isSucecssful = TaskManager.getInstance().addTask(this.task);
+            boolean isSuccessful = TaskManager.getInstance().addTask(this.task);
 
-            if (!isSucecssful) {
+            if (!isSuccessful) {
                 this.showDialogAlert(R.string.task_alert_duplicate_title, R.string.task_alert_duplicate_dec);
                 return;
             }
@@ -86,12 +87,15 @@ public class ConfigureTaskActivity extends AppCompatActivity {
     }
 
     // https://youtu.be/y6StJRn-Y-A
-
     private void showDialogAlert(@StringRes int title, @StringRes int dec) {
         AlertDialog.Builder dialogWarning = new AlertDialog.Builder(this);
         dialogWarning.setTitle(getResources().getString(title));
         dialogWarning.setMessage(getResources().getString(dec));
         dialogWarning.setPositiveButton(getResources().getString(R.string.dialog_confirm), null);
         dialogWarning.show();
+    }
+
+    private boolean isEditingTask() {
+        return this.task != null;
     }
 }
