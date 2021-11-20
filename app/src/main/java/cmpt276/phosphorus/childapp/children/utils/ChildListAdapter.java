@@ -41,11 +41,12 @@ public class ChildListAdapter extends ArrayAdapter<Child> {
 
         // Set the image
         ImageView childPortrait = childView.findViewById(R.id.childProfileIcon);
-        childPortrait.setImageResource(R.drawable.child_profile_img);
 
         // https://github.com/bumptech/glide
         if(childProfile.getChildPortraitPath() != null){
             Glide.with(this.getContext()).load(childProfile.getChildPortraitPath()).into(childPortrait);
+        }else{
+            childPortrait.setImageResource(R.drawable.child_profile_img);
         }
 
         // Set the name
