@@ -32,9 +32,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Objects;
+import java.util.UUID;
 
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.model.Child;
@@ -66,6 +65,8 @@ public class ChildConfigureActivity extends AppCompatActivity {
 
     public static final int BINARY_BYTE_SIZE = 1024;
     public static final int BYTE_OFFSET_INTEGER = 0;
+
+    private UUID childUUID;
 
     private ImageView childPortrait;
     private Uri photoURI;
@@ -164,6 +165,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
             } else {
                 Child newChild = new Child(cleanedName);
                 newChild.setChildPortraitPath(currentPhotoPath);
+                newChild.setUuid(childUUID);
                 this.childManager.addChild(newChild);
             }
 
@@ -219,6 +221,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
         TextView childTitleText = findViewById(R.id.configure_child_title);
         Button deleteBtn = findViewById(R.id.btnDelete);
         childPortrait = findViewById(R.id.imgChildPicture);
+        childUUID = UUID.randomUUID();
 
         boolean isEditing = this.isEditingChild();
 
@@ -226,6 +229,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
             // Update's the text input with the child's name
             EditText childNameEditText = findViewById(R.id.name_edit_text);
             childNameEditText.setText(this.child.getName());
+            childUUID = this.child.getUUID();
 
             // Dependency from https://github.com/bumptech/glide
             if(this.child.getChildPortraitPath() != null) {
@@ -322,15 +326,9 @@ public class ChildConfigureActivity extends AppCompatActivity {
 
     private File createImageFile() throws IOException {
         // Create an image file name
-        // todo: refactor file name to be the child's uuid? prob unnecessary
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
+        String imageFileName = childUUID.toString() + ".jpg";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
+        File image = new File(storageDir, imageFileName);
 
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();

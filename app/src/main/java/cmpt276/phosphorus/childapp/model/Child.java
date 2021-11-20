@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 // ==============================================================================================
 public class Child {
 
-    private final UUID uuid;
+    private UUID uuid;
     private final List<CoinFlipResult> coinFlipResults;
     private String name;
     private boolean lastPicked;
@@ -61,6 +61,10 @@ public class Child {
 
     public boolean isLastPicked() {
         return this.lastPicked;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public void setName(@NotNull String name) {
