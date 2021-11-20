@@ -38,6 +38,9 @@ import java.util.UUID;
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
+import cmpt276.phosphorus.childapp.model.DataManager;
+import cmpt276.phosphorus.childapp.model.DataType;
+import cmpt276.phosphorus.childapp.model.TaskManager;
 import cmpt276.phosphorus.childapp.utils.Intents;
 
     /* Code assistance regarding Camera & Gallery from
@@ -167,9 +170,12 @@ public class ChildConfigureActivity extends AppCompatActivity {
                 newChild.setChildPortraitPath(currentPhotoPath);
                 newChild.setUuid(childUUID);
                 this.childManager.addChild(newChild);
+                TaskManager.getInstance()
+                        .getAllTasks()
+                        .forEach(task -> task.addChild(newChild));
             }
 
-            this.childManager.saveToFile();
+            DataManager.getInstance(this).saveData(DataType.CHILDREN);
             finish();
         });
     }
@@ -183,7 +189,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
             dialogWarning.setMessage(getResources().getString(R.string.dialog_msg_delete));
             dialogWarning.setPositiveButton(getResources().getString(R.string.dialog_positive), (dialogInterface, i) -> {
                 this.childManager.removeChild(this.child);
-                this.childManager.saveToFile();
+                DataManager.getInstance(this).saveData(DataType.CHILDREN);
                 finish();
             });
             dialogWarning.setNegativeButton(getResources().getString(R.string.dialog_negative), null);

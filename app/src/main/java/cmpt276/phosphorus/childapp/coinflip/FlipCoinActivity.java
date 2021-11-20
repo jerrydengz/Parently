@@ -29,6 +29,8 @@ import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
 import cmpt276.phosphorus.childapp.model.CoinFlipResult;
 import cmpt276.phosphorus.childapp.model.CoinSide;
+import cmpt276.phosphorus.childapp.model.DataManager;
+import cmpt276.phosphorus.childapp.model.DataType;
 import cmpt276.phosphorus.childapp.utils.Emoji;
 import cmpt276.phosphorus.childapp.utils.Intents;
 import nl.dionsegijn.konfetti.KonfettiView;
@@ -146,7 +148,7 @@ public class FlipCoinActivity extends AppCompatActivity {
 
             childManager.clearAllLastPicked(); // Just in case
             this.child.setLastPicked(true);
-            childManager.saveToFile();
+            DataManager.getInstance(this).saveData(DataType.CHILDREN);
         }
 
         boolean didWin = coinFlipResult.getDidWin();
