@@ -72,9 +72,11 @@ public class ChildConfigureActivity extends AppCompatActivity {
     private UUID childUUID;
 
     private ImageView childPortrait;
+    private File storageDir;
     private Uri photoURI;
     private String currentPhotoPath; // Way to retrieve photo from storage
-    private File storageDir;
+    private String tempPhotoPath;
+    private boolean toSaveTempFile;
 
     ActivityResultLauncher<Uri> cameraLauncher = registerForActivityResult(
             new ActivityResultContracts.TakePicture(),
@@ -131,6 +133,17 @@ public class ChildConfigureActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // Handling the case if user uploads an image file but ends up not wanting to save it
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (!toSaveTempFile) {
+            if(tempPhotoPath != null) {
+                deleteImageFile(tempPhotoPath);
+            }
+        }
+    }
+
     // https://youtu.be/y6StJRn-Y-A
     private void showDialogAlert(@StringRes int title, @StringRes int dec) {
         AlertDialog.Builder dialogWarning = new AlertDialog.Builder(this);
@@ -164,9 +177,11 @@ public class ChildConfigureActivity extends AppCompatActivity {
             }
 
             if (isEditingChild()) {
+                setThePhotoPath();
                 this.child.setName(cleanedName);
                 this.child.setChildPortraitPath(currentPhotoPath);
             } else {
+                setThePhotoPath();
                 Child newChild = new Child(cleanedName);
                 newChild.setChildPortraitPath(currentPhotoPath);
                 newChild.setUuid(childUUID);
@@ -179,6 +194,16 @@ public class ChildConfigureActivity extends AppCompatActivity {
             DataManager.getInstance(this).saveData(DataType.CHILDREN);
             finish();
         });
+    }
+
+    private void setThePhotoPath() {
+        if (tempPhotoPath != null) {
+            if (isEditingChild()) {
+                deleteImageFile(currentPhotoPath);
+            }
+            toSaveTempFile = true;
+            currentPhotoPath = tempPhotoPath;
+        }
     }
 
     private void createDeleteBtn() {
@@ -342,7 +367,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
         File image = new File(storageDir, imageFileName);
 
         // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath();
+        tempPhotoPath = image.getAbsolutePath();
         return image;
     }
 
