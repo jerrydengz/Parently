@@ -2,7 +2,6 @@ package cmpt276.phosphorus.childapp.model;
 
 import com.google.gson.annotations.Expose;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -10,13 +9,15 @@ import java.util.stream.Collectors;
 public class Task {
     private final int FIRST_INDEX = 0;
     @Expose
-    private String name;
-    @Expose
     private final List<UUID> children;
+    @Expose
+    private String name;
 
     public Task(String name, List<Child> children) {
         this.name = name;
-        this.children = children.stream().map(Child::getUUID).collect(Collectors.toList());
+        this.children = children.stream()
+                .map(Child::getUUID)
+                .collect(Collectors.toList());
     }
 
     public String getName() {

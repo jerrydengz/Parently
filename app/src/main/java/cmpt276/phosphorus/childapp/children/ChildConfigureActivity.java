@@ -162,7 +162,9 @@ public class ChildConfigureActivity extends AppCompatActivity {
             } else {
                 // todo: refactor this and model to include pic in initialization? (need to implement way to save pic data though)
                 Child child = this.childManager.addChild(new Child(cleanedName));
-                TaskManager.getInstance().getAllTasks().forEach(task -> task.addChild(child));
+                TaskManager.getInstance()
+                        .getAllTasks()
+                        .forEach(task -> task.addChild(child));
             }
 
             this.childManager.saveToFile();
