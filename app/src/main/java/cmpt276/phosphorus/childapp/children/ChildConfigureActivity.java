@@ -235,11 +235,14 @@ public class ChildConfigureActivity extends AppCompatActivity {
             // Update's the text input with the child's name
             EditText childNameEditText = findViewById(R.id.name_edit_text);
             childNameEditText.setText(this.child.getName());
+            currentPhotoPath = this.child.getChildPortraitPath();
             childUUID = this.child.getUUID();
 
             // Dependency from https://github.com/bumptech/glide
             if(this.child.getChildPortraitPath() != null) {
-                Glide.with(this).load(this.child.getChildPortraitPath()).into(childPortrait);
+                Glide.with(this)
+                        .load(this.child.getChildPortraitPath())
+                        .into(childPortrait);
             }
         }
 
