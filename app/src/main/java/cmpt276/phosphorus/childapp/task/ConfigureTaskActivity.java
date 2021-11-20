@@ -23,6 +23,8 @@ import cmpt276.phosphorus.childapp.utils.Intents;
 
 public class ConfigureTaskActivity extends AppCompatActivity {
 
+    private boolean isEditing;
+    private String initalName;
     private Task task;
 
     public static Intent makeIntent(Context context, Task editTask) {
@@ -44,8 +46,6 @@ public class ConfigureTaskActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         this.extractIntent();
-        if (this.task == null) // If we're creating a task
-            this.task = new Task("", ChildManager.getInstance().getAllChildren());
 
         this.updateDisplay();
         this.btnConfirm();
@@ -60,7 +60,10 @@ public class ConfigureTaskActivity extends AppCompatActivity {
     private void extractIntent() {
         Intent packageInfo = getIntent();
         String intentTaskName = packageInfo.getStringExtra(Intents.TASK_NAME_TAG);
-        this.task = TaskManager.getInstance().getTaskByName(intentTaskName);
+        Task editedTask = TaskManager.getInstance().getTaskByName(intentTaskName);
+        this.isEditing = (editedTask != null);
+        this.initalName = intentTaskName;
+        this.task = this.isEditing ? editedTask : new Task("", ChildManager.getInstance().getAllChildren());
     }
 
     private void updateDisplay() {
@@ -70,14 +73,24 @@ public class ConfigureTaskActivity extends AppCompatActivity {
 
     private void btnConfirm() {
         Button confirmBtn = findViewById(R.id.btnConfirmTask);
+        EditText childNameEditText = findViewById(R.id.inputEditTaskName);
         confirmBtn.setOnClickListener(view -> {
-            EditText childNameEditText = findViewById(R.id.inputEditTaskName);
-            this.task.setName(childNameEditText.getText().toString());
-            boolean isSucecssful = TaskManager.getInstance().addTask(this.task);
+            String newName = childNameEditText.getText().toString().trim();
 
-            if (!isSucecssful) {
+            if (TaskManager.getInstance().containsName(newName) && (!this.initalName.equals(newName))) {
                 this.showDialogAlert(R.string.task_alert_duplicate_title, R.string.task_alert_duplicate_dec);
                 return;
+            }
+
+            final int MAX_CHAR_LENGTH = 15; // todo 15?
+            if (newName.length() >= MAX_CHAR_LENGTH) {
+                this.showDialogAlert(R.string.dialog_title_name_too_large, R.string.dialog_msg_name_too_large);
+                return;
+            }
+
+            this.task.setName(newName);
+            if (!this.isEditing) {
+                TaskManager.getInstance().addTask(this.task);
             }
 
             DataManager.getInstance(this).saveData(DataType.TASKS);
@@ -85,13 +98,11 @@ public class ConfigureTaskActivity extends AppCompatActivity {
         });
     }
 
-    // https://youtu.be/y6StJRn-Y-A
-
     private void showDialogAlert(@StringRes int title, @StringRes int dec) {
         AlertDialog.Builder dialogWarning = new AlertDialog.Builder(this);
-        dialogWarning.setTitle(getResources().getString(title));
-        dialogWarning.setMessage(getResources().getString(dec));
-        dialogWarning.setPositiveButton(getResources().getString(R.string.dialog_confirm), null);
+        dialogWarning.setTitle(title);
+        dialogWarning.setMessage(dec);
+        dialogWarning.setPositiveButton(R.string.dialog_confirm, null);
         dialogWarning.show();
     }
 }

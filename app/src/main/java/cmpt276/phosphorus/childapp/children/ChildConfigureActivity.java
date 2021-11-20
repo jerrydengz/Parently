@@ -149,7 +149,8 @@ public class ChildConfigureActivity extends AppCompatActivity {
                 return;
             }
 
-            if (cleanedName.length() >= 15) {
+            final int MAX_CHAR_LENGTH = 15;
+            if (cleanedName.length() >= MAX_CHAR_LENGTH) {
                 this.showDialogAlert(R.string.dialog_title_name_too_large, R.string.dialog_msg_name_too_large);
                 return;
             }

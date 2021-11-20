@@ -13,6 +13,10 @@ public class Task {
     @Expose
     private String name;
 
+    public Task(Task task) {
+        this(task.getName(), task.getChildren());
+    }
+
     public Task(String name, List<Child> children) {
         this.name = name;
         this.children = children.stream()
@@ -54,6 +58,12 @@ public class Task {
 
     public UUID getChild(int pos) {
         return this.children.get(pos);
+    }
+
+    public List<Child> getChildren(){
+        return this.children.stream()
+                .map(uuid -> ChildManager.getInstance().getChildByUUID(uuid))
+                .collect(Collectors.toList());
     }
 
     @Override

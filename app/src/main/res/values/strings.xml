@@ -16,6 +16,9 @@
     <string name="task_alert_duplicate_title">A task already has that name!</string>
     <string name="task_alert_duplicate_dec">Please choose something else</string>
     <string name="task_input_helper">Name</string>
+    <string name="task_info_title">%name%</string>
+    <string name="task_info_edit">Edit</string>
+    <string name="task_info_close">Close</string>
 
 
     <string name="flip_coin_history_action_title">History</string>

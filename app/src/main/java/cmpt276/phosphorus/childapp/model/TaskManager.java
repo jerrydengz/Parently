@@ -29,13 +29,12 @@ public class TaskManager {
         this.allTasks = tasks;
     }
 
-    public boolean addTask(Task task) {
-        Task test = this.getTaskByName(task);
-        if (test == null) { // if we don't already have it
-            this.allTasks.add(task);
-            return true;
-        }
-        return false;
+    public void addTask(Task task) {
+        this.allTasks.add(task);
+    }
+
+    public boolean containsName(String name) {
+        return this.getTaskByName(name) != null;
     }
 
     public void deleteTask(Task task) {

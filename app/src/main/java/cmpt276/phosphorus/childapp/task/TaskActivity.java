@@ -1,7 +1,5 @@
 package cmpt276.phosphorus.childapp.task;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,11 +8,15 @@ import android.view.MenuItem;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Objects;
 
 import cmpt276.phosphorus.childapp.R;
+import cmpt276.phosphorus.childapp.model.Task;
 import cmpt276.phosphorus.childapp.model.TaskManager;
 import cmpt276.phosphorus.childapp.task.utils.TaskListAdapter;
 
@@ -34,6 +36,10 @@ public class TaskActivity extends AppCompatActivity {
          5. implement adding task in ConfigureTaskActivity.java
      */
 
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, TaskActivity.class);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +51,6 @@ public class TaskActivity extends AppCompatActivity {
         taskManager = TaskManager.getInstance();
 
         this.createConfigureTaskBtn();
-        this.setUpTaskDialog();
         this.populateTaskListView();
 
         Log.d("asd", taskManager.getAllTasks().toString());
@@ -64,10 +69,6 @@ public class TaskActivity extends AppCompatActivity {
         this.populateTaskListView();
     }
 
-    public static Intent makeIntent(Context context) {
-        return new Intent(context, TaskActivity.class);
-    }
-
     private void createConfigureTaskBtn() {
         FloatingActionButton button = findViewById(R.id.add_task_fab);
 
@@ -77,12 +78,25 @@ public class TaskActivity extends AppCompatActivity {
 
     // TODO
     // https://stackoverflow.com/questions/13341560/how-to-create-a-custom-dialog-box-in-android
-    private void setUpTaskDialog() {
+    private void displayTaskDialog(Task selected) {
+        AlertDialog.Builder taskDialog = new AlertDialog.Builder(this);
+        String dialogTitle = getResources().getString(R.string.task_info_title).replace("%name%", selected.getName());
+        taskDialog.setTitle(dialogTitle);
+//        taskDialog.setMessage(getResources().getString(dec));
+        taskDialog.setPositiveButton(R.string.task_info_close, null);
+        taskDialog.setNeutralButton(R.string.task_info_edit, (dialogInterface, i) -> {
+            startActivity(ConfigureTaskActivity.makeIntent(this, selected));
+        });
+        taskDialog.show();
     }
 
     private void populateTaskListView() {
-        ListAdapter listAdapter = new TaskListAdapter(this, taskManager.getAllTasks());
         ListView listView = findViewById(R.id.taskListView);
+        ListAdapter listAdapter = new TaskListAdapter(this, taskManager.getAllTasks());
+        listView.setOnItemClickListener((adapter, view, position, arg) -> {
+            Task selectedTask = TaskManager.getInstance().getAllTasks().get(position);
+            displayTaskDialog(selectedTask);
+        });
         listView.setAdapter(listAdapter);
     }
 
