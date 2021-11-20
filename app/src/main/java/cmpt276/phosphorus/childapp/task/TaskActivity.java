@@ -7,25 +7,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Objects;
 
 import cmpt276.phosphorus.childapp.R;
-import cmpt276.phosphorus.childapp.help.HelpActivity;
 import cmpt276.phosphorus.childapp.model.TaskManager;
+import cmpt276.phosphorus.childapp.task.utils.TaskListAdapter;
 
 public class TaskActivity extends AppCompatActivity {
-
     private TaskManager taskManager;
 
     /*
      TODO ( whoever is going to do this :^) )
-         2. Create complex list item
-            i. task name
-            ii. child name of who's turn it is
          3. Create a Custom AlertDialog displaying task info
             i. a dialog button option to cancel
             ii. a dialog button option to edit -> goes to ConfigureTaskActivity.java (possibly implement delete button in here)
@@ -35,7 +32,6 @@ public class TaskActivity extends AppCompatActivity {
                  - picture of child
             iv. button to indicate "finished"
          5. implement adding task in ConfigureTaskActivity.java
-         6. create list adapter (inner/sub class) for tasks
      */
 
     @Override
@@ -50,6 +46,7 @@ public class TaskActivity extends AppCompatActivity {
 
         this.createConfigureTaskBtn();
         this.setUpTaskDialog();
+        this.populateTaskListView();
 
         Log.d("asd", taskManager.getAllTasks().toString());
     }
@@ -59,6 +56,12 @@ public class TaskActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         finish();
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.populateTaskListView();
     }
 
     public static Intent makeIntent(Context context) {
@@ -77,5 +80,10 @@ public class TaskActivity extends AppCompatActivity {
     private void setUpTaskDialog() {
     }
 
+    private void populateTaskListView() {
+        ListAdapter listAdapter = new TaskListAdapter(this, taskManager.getAllTasks());
+        ListView listView = findViewById(R.id.taskListView);
+        listView.setAdapter(listAdapter);
+    }
 
 }
