@@ -1,7 +1,7 @@
 package cmpt276.phosphorus.childapp.model;
 
 import android.content.Context;
-import android.provider.ContactsContract;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,42 +19,54 @@ import java.io.Writer;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DataManager {
-    private File file;
 
-    public DataManager(String fileName, Context context){
+    private static DataManager instance;
+    private final Map<DataType, File> files;
+
+    public DataManager(Context context) {
+        this.files = new HashMap<>();
         File dir = context.getFilesDir();
-        this.file = new File(dir, fileName);
+        for (DataType type : DataType.values()) {
+            this.files.put(type, new File(dir, type.getFileName()));
+        }
     }
 
-    public <T> void saveData(List<T> lst){
-        Gson gson = getGson();
+    public static DataManager getInstance(Context context) {
+        if (instance == null) {
+            instance = new DataManager(context);
+        }
+        return instance;
+    }
+
+    public void saveData(DataType dataType) {
         try {
-            Writer writer = new FileWriter(file);//writes to designated file
-            gson.toJson(lst, writer);//writes this.allChildren to the file
+            File targetFile = this.files.get(dataType);
+            Writer writer = new FileWriter(targetFile);
+            this.getGson().toJson(dataType.getDataToSave(), writer);
             writer.close();
         } catch (IOException ignored) {
         }
     }
 
-    public <T> List<T> loadData(){
-        Gson gson = getGson();
+    public <T> void loadData(DataType dataType) {
         List<T> result;
         try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));//reads from designated file
-            Type childType = new TypeToken<List<Child>>() {
-            }.getType();//gson uses this to parse the Child type
-            result = gson.fromJson(bufferedReader, childType);//loads contents as allChildren
-            if (result == null) {
-                result = new ArrayList<>();
-            }//if file is empty
+            File targetFile = this.files.get(dataType);
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(targetFile));
+            // Ref https://stackoverflow.com/questions/20773850/gson-typetoken-with-dynamic-arraylist-item-type
+            Type type = TypeToken.getParameterized(ArrayList.class, dataType.getTypeClass()).getType();
+            List<T> newResult = this.getGson().fromJson(bufferedReader, type);
+            result = (newResult == null) ? new ArrayList<>() : newResult;
             bufferedReader.close();
         } catch (IOException e) {
             result = new ArrayList<>();
         }
-        return result;
+        dataType.load(result);
     }
 
     //got from https://stackoverflow.com/questions/39192945/serialize-java-8-localdate-as-yyyy-mm-dd-with-gson
