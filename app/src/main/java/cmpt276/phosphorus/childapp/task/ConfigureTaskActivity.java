@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -44,12 +45,17 @@ public class ConfigureTaskActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         this.extractIntent();
-        if (!isEditingTask()) { // If we're creating a task
-            this.task = new Task("", ChildManager.getInstance().getAllChildren());
-        }
+        this.btnSaveTask();
+        this.createDeleteBtn();
 
-        this.updateDisplay();
-        this.btnConfirm();
+        Button deleteBtn = findViewById(R.id.btnDeleteTask);
+        if (!isEditingTask()) { // If we're creating a task
+            deleteBtn.setVisibility(View.INVISIBLE);
+            this.task = new Task("", ChildManager.getInstance().getAllChildren());
+        }else{
+            deleteBtn.setVisibility(View.VISIBLE);
+            this.updateDisplay();
+        }
     }
 
     @Override
@@ -69,9 +75,9 @@ public class ConfigureTaskActivity extends AppCompatActivity {
         childNameEditText.setText(this.task.getName());
     }
 
-    private void btnConfirm() {
-        Button confirmBtn = findViewById(R.id.btnConfirmTask);
-        confirmBtn.setOnClickListener(view -> {
+    private void btnSaveTask() {
+        Button saveBtn = findViewById(R.id.btnSaveTask);
+        saveBtn.setOnClickListener(view -> {
             EditText childNameEditText = findViewById(R.id.inputEditTaskName);
             this.task.setName(childNameEditText.getText().toString());
             boolean isSuccessful = TaskManager.getInstance().addTask(this.task);
@@ -83,6 +89,24 @@ public class ConfigureTaskActivity extends AppCompatActivity {
 
             DataManager.getInstance(this).saveData(DataType.TASKS);
             finish();
+        });
+    }
+
+    private void createDeleteBtn() {
+        Button button = findViewById(R.id.btnDeleteTask);
+        button.setOnClickListener(view -> {
+            // https://youtu.be/y6StJRn-Y-A
+            AlertDialog.Builder dialogWarning = new AlertDialog.Builder(this);
+            dialogWarning.setTitle(R.string.task_delete_title);
+            dialogWarning.setMessage(R.string.task_delete_msg);
+            dialogWarning.setPositiveButton(getResources().getString(R.string.dialog_positive), (dialogInterface, i) -> {
+
+                TaskManager.getInstance().deleteTask(this.task);
+                DataManager.getInstance(this).saveData(DataType.TASKS);
+                finish();
+            });
+            dialogWarning.setNegativeButton(getResources().getString(R.string.dialog_negative), null);
+            dialogWarning.show();
         });
     }
 
@@ -98,4 +122,6 @@ public class ConfigureTaskActivity extends AppCompatActivity {
     private boolean isEditingTask() {
         return this.task != null;
     }
+
+
 }

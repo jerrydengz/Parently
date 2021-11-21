@@ -1,6 +1,7 @@
 package cmpt276.phosphorus.childapp.children;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -252,9 +253,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
         childPortrait = findViewById(R.id.imgChildPicture);
         storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
 
-        boolean isEditing = this.isEditingChild();
-
-        if (isEditing) {
+        if (isEditingChild()) {
             // Update's the text input with the child's name
             EditText childNameEditText = findViewById(R.id.name_edit_text);
             childNameEditText.setText(this.child.getName());
@@ -268,10 +267,10 @@ public class ChildConfigureActivity extends AppCompatActivity {
             }
         }
 
-        childTitleText.setText(isEditing ? this.child.getName() : getString(R.string.add_child_title));
+        childTitleText.setText(isEditingChild() ? this.child.getName() : getString(R.string.add_child_title));
         childTitleText.setTypeface(null, Typeface.BOLD);
         childTitleText.setTextColor(getResources().getColor(R.color.black, null));
-        deleteBtn.setVisibility(isEditing ? View.VISIBLE : View.INVISIBLE);
+        deleteBtn.setVisibility(isEditingChild() ? View.VISIBLE : View.INVISIBLE);
     }
 
     private boolean isDuplicateChildName(String childName) {
@@ -325,6 +324,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
         return PERMISSION_DENIED;
     }
 
+    @SuppressLint("QueryPermissionsNeeded")
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
