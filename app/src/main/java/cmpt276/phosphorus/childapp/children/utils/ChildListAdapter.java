@@ -49,7 +49,7 @@ public class ChildListAdapter extends ArrayAdapter<Child> {
                  .getChildPortraitPath())
                  .into(childPortrait);
         }else{
-            childPortrait.setImageResource(R.drawable.child_profile_img);
+            childPortrait.setImageResource(R.drawable.child_portrait_default);
         }
 
         // Set the name
