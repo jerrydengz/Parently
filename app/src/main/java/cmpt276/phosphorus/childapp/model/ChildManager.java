@@ -97,7 +97,7 @@ public class ChildManager {
 
     public boolean removeChild(Child child) {
         boolean isRemoved = this.allChildren.remove(child); // We make sure we do this before saving cause it might err
-        if (isRemoved && child.isLastPicked()) {
+        if (isRemoved && child.isLastPicked() && !this.isEmpty()) {
             this.getNextCoinFlipper().setLastPicked(true);
         }
         return isRemoved;

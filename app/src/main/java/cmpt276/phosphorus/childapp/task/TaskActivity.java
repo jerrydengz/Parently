@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -31,7 +30,6 @@ public class TaskActivity extends AppCompatActivity {
                  - current turn for child's name
                  - picture of child
             iv. button to indicate "finished"
-         5. implement adding task in ConfigureTaskActivity.java
      */
 
     @Override
@@ -44,11 +42,9 @@ public class TaskActivity extends AppCompatActivity {
 
         taskManager = TaskManager.getInstance();
 
-        this.createConfigureTaskBtn();
-        this.setUpTaskDialog();
         this.populateTaskListView();
-
-        Log.d("asd", taskManager.getAllTasks().toString());
+        this.setUpTaskDialog();
+        this.createConfigureTaskBtn();
     }
 
     // If user select the top left back button
@@ -70,8 +66,6 @@ public class TaskActivity extends AppCompatActivity {
 
     private void createConfigureTaskBtn() {
         FloatingActionButton button = findViewById(R.id.add_task_fab);
-
-        // NOTE: preliminary, model after methods in ChildActivity.java to configure children
         button.setOnClickListener(view -> startActivity(ConfigureTaskActivity.makeIntent(this)));
     }
 
