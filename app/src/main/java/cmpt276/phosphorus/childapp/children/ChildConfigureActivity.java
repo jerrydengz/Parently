@@ -138,10 +138,8 @@ public class ChildConfigureActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (!toSaveTempFile) {
-            if(tempPhotoPath != null) {
+        if (!toSaveTempFile && tempPhotoPath != null) {
                 deleteImageFile(tempPhotoPath);
-            }
         }
     }
 
@@ -401,6 +399,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
     private void deleteImageFile(String path) {
         File fileToDelete = new File(path);
         if (fileToDelete.exists()) {
+            // Just note on clean up that this is a boolean
             if (fileToDelete.delete()) {
                 System.out.println("File Deleted: " + path);
             } else {
