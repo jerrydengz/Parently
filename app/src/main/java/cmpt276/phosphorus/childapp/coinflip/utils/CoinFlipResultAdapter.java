@@ -1,12 +1,15 @@
 package cmpt276.phosphorus.childapp.coinflip.utils;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -48,6 +51,18 @@ public class CoinFlipResultAdapter extends ArrayAdapter<CoinFlipResult> {
         // set name
         TextView name = view.findViewById(R.id.name_flip_history);
         name.setText(child.getName());
+
+        // set child image
+        ImageView childPortrait = view.findViewById(R.id.child_portrait_flip_history);
+
+        // https://github.com/bumptech/glide
+        if(child.getChildPortraitPath() != null){
+            Glide.with(this.getContext())
+                 .load(child.getChildPortraitPath())
+                 .into(childPortrait);
+        }else{
+            childPortrait.setImageResource(R.drawable.child_profile_img);
+        }
 
         // set date
         TextView dateTime = view.findViewById(R.id.flip_date_time);

@@ -6,99 +6,107 @@
     android:layout_height="match_parent"
     android:background="@drawable/list_view_background">
 
-    <Space
-        android:id="@+id/space"
-        android:layout_width="15sp"
-        android:layout_height="20sp"
-        android:layout_marginStart="32sp"
-        app:layout_constraintStart_toStartOf="parent"
+    <ImageView
+        android:id="@+id/coin_flip_result_icon"
+        android:layout_width="81dp"
+        android:layout_height="87dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="16dp"
+        android:minWidth="70sp"
+        android:minHeight="70sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SmallSp" />
+        app:srcCompat="@drawable/ic_baseline_check_circle_24"
+        tools:ignore="ContentDescription,ImageContrastCheck" />
 
     <Space
         android:id="@+id/space2"
         android:layout_width="20sp"
         android:layout_height="20sp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="348dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/coin_flip_result_icon"
         tools:ignore="SmallSp" />
 
     <Space
-        android:id="@+id/space3"
-        android:layout_width="20sp"
+        android:id="@+id/space"
+        android:layout_width="16dp"
         android:layout_height="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.271"
+        android:layout_marginStart="160dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/flip_date_time"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SmallSp" />
-
-    <ImageView
-        android:id="@+id/coin_flip_result_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minWidth="70sp"
-        android:minHeight="70sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.045"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/space"
-        app:srcCompat="@drawable/ic_baseline_check_circle_24"
-        tools:ignore="ContentDescription,ImageContrastCheck" />
 
     <TextView
         android:id="@+id/name_flip_history"
-        android:layout_width="293dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
         android:text="@string/child_name_txt"
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/coin_flip_result_icon"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.112"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/space"
         tools:ignore="TextContrastCheck" />
 
-    <TextView
-        android:id="@+id/coin_flip_choice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/child_portrait_flip_history"
+        android:layout_width="76dp"
+        android:layout_height="74dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        android:text=""
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/coin_flip_result_icon"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name_flip_history"
-        tools:ignore="TextContrastCheck" />
+        app:srcCompat="@drawable/child_profile_img"
+        tools:ignore="ContentDescription" />
 
-    <TextView
-        android:id="@+id/flip_date_time"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        android:text=""
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/coin_flip_result_icon"
-        app:layout_constraintTop_toBottomOf="@+id/flip_result"
-        tools:ignore="TextContrastCheck" />
+        android:layout_marginTop="4dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="5.0sp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/coin_flip_result_icon"
+        app:layout_constraintHorizontal_bias="0.411"
+        app:layout_constraintStart_toEndOf="@+id/child_portrait_flip_history"
+        app:layout_constraintTop_toBottomOf="@+id/name_flip_history">
 
-    <TextView
-        android:id="@+id/flip_result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        android:text=""
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/coin_flip_choice"
-        app:layout_constraintTop_toBottomOf="@+id/name_flip_history"
-        tools:ignore="TextContrastCheck" />
+        <TextView
+            android:id="@+id/coin_flip_choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            tools:ignore="TextContrastCheck"
+            tools:layout_editor_absoluteX="106dp"
+            tools:layout_editor_absoluteY="51dp" />
+
+        <TextView
+            android:id="@+id/flip_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text=""
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/coin_flip_choice"
+            tools:ignore="TextContrastCheck"
+            tools:layout_editor_absoluteX="106dp" />
+
+        <TextView
+            android:id="@+id/flip_date_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text=""
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/flip_result"
+            tools:ignore="TextContrastCheck"
+            tools:layout_editor_absoluteX="106dp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
