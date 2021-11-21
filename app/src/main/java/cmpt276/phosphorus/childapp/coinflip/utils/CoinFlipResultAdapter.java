@@ -57,7 +57,9 @@ public class CoinFlipResultAdapter extends ArrayAdapter<CoinFlipResult> {
 
         // https://github.com/bumptech/glide
         if(child.getChildPortraitPath() != null){
-            Glide.with(this.getContext()).load(child.getChildPortraitPath()).into(childPortrait);
+            Glide.with(this.getContext())
+                 .load(child.getChildPortraitPath())
+                 .into(childPortrait);
         }else{
             childPortrait.setImageResource(R.drawable.child_profile_img);
         }

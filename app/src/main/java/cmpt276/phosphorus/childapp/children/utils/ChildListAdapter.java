@@ -44,7 +44,10 @@ public class ChildListAdapter extends ArrayAdapter<Child> {
 
         // https://github.com/bumptech/glide
         if(childProfile.getChildPortraitPath() != null){
-            Glide.with(this.getContext()).load(childProfile.getChildPortraitPath()).into(childPortrait);
+            Glide.with(this.getContext())
+                 .load(childProfile
+                 .getChildPortraitPath())
+                 .into(childPortrait);
         }else{
             childPortrait.setImageResource(R.drawable.child_profile_img);
         }
