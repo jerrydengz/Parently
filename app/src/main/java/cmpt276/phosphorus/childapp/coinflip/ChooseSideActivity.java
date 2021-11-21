@@ -101,10 +101,8 @@ public class ChooseSideActivity extends AppCompatActivity {
         if(this.child == null){
             childPortrait.setVisibility(View.GONE);
             return;
-        }
-
-        // https://github.com/bumptech/glide
-        if(this.child.getChildPortraitPath() != null){
+        } else if(this.child.getChildPortraitPath() != null){
+            // https://github.com/bumptech/glide
             Glide.with(this)
                  .load(child.getChildPortraitPath())
                  .into(childPortrait);
