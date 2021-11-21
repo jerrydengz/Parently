@@ -37,6 +37,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import cmpt276.phosphorus.childapp.R;
+import cmpt276.phosphorus.childapp.children.utils.PermissionsEnumHelper;
 import cmpt276.phosphorus.childapp.model.Child;
 import cmpt276.phosphorus.childapp.model.ChildManager;
 import cmpt276.phosphorus.childapp.model.DataManager;
@@ -224,7 +225,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
     private void createCameraBtn() {
         Button button = findViewById(R.id.btnUseCamera);
         button.setOnClickListener(v -> {
-            boolean cameraPermission = setUpUseCameraPermissions();
+            boolean cameraPermission = setUpAPermission(PermissionsEnumHelper.CAMERA);
             if (cameraPermission) {
                 dispatchTakePictureIntent();
             }
@@ -234,7 +235,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
     private void createGalleryBtn() {
         Button button = findViewById(R.id.btnUseGallery);
         button.setOnClickListener(v -> {
-            boolean galleryPermission = setUpUseGalleryPermissions();
+            boolean galleryPermission = setUpAPermission(PermissionsEnumHelper.READ_EXTERNAL_STORAGE);
             if (galleryPermission) {
                 galleryLauncher.launch(INTENT_TYPE_FOR_GALLERY);
             }
@@ -286,64 +287,42 @@ public class ChildConfigureActivity extends AppCompatActivity {
         return this.child != null;
     }
 
-    private boolean setUpUseCameraPermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            if ((ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) !=
-                    PackageManager.PERMISSION_GRANTED) ||
-                    (ContextCompat.checkSelfPermission(this, Manifest.permission.MANAGE_EXTERNAL_STORAGE) !=
-                            PackageManager.PERMISSION_GRANTED)) {
-                ActivityCompat.requestPermissions(this, new String[] {
-                                Manifest.permission.CAMERA, Manifest.permission.MANAGE_EXTERNAL_STORAGE
-                        },
-                        PERMISSION_REQUEST_CODE);
-            } else {
-                // Permission was already granted
-                return PERMISSION_ACCEPTED;
-            }
+    private boolean setUpAPermission(PermissionsEnumHelper permissionType) {
+        String type;
+        if (permissionType == PermissionsEnumHelper.CAMERA) {
+            type = Manifest.permission.CAMERA;
         } else {
-            if ((ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) !=
-                    PackageManager.PERMISSION_GRANTED) ||
-                    (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
-                            PackageManager.PERMISSION_GRANTED)) {
-                ActivityCompat.requestPermissions(this, new String[]{
-                                Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE
-                        },
-                        PERMISSION_REQUEST_CODE);
-            } else {
-                // Permission was already granted
-                return PERMISSION_ACCEPTED;
-            }
+            type = Manifest.permission.READ_EXTERNAL_STORAGE;
         }
-        return PERMISSION_DENIED;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            return requestAPermission(PermissionsEnumHelper.MANAGE_EXTERNAL_STORAGE, type);
+        } else {
+            return requestAPermission(PermissionsEnumHelper.WRITE_EXTERNAL_STORAGE, type);
+        }
     }
 
-    private boolean setUpUseGalleryPermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            if ((ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
-                    PackageManager.PERMISSION_GRANTED) ||
-                    (ContextCompat.checkSelfPermission(this, Manifest.permission.MANAGE_EXTERNAL_STORAGE) !=
-                            PackageManager.PERMISSION_GRANTED)) {
-                ActivityCompat.requestPermissions(this, new String[]{
-                                Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.MANAGE_EXTERNAL_STORAGE
-                        },
-                        PERMISSION_REQUEST_CODE);
-            } else {
-                // Permission was already granted
-                return PERMISSION_ACCEPTED;
-            }
+    private boolean requestAPermission(PermissionsEnumHelper storageType, String permissionType) {
+        String storage;
+        if (storageType == PermissionsEnumHelper.MANAGE_EXTERNAL_STORAGE) {
+            /*
+            Note that we have already checked for proper Build.VERSION.SDK_INT in setUpAPermission,
+            so just ignore this warning as it's already been accounted for and would be redundant
+             */
+            storage = Manifest.permission.MANAGE_EXTERNAL_STORAGE;
         } else {
-            if ((ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
-                    PackageManager.PERMISSION_GRANTED) ||
-                    (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
-                            PackageManager.PERMISSION_GRANTED)) {
-                ActivityCompat.requestPermissions(this, new String[] {
-                                Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
-                        },
-                        PERMISSION_REQUEST_CODE);
-            } else {
-                // Permission was already granted
-                return PERMISSION_ACCEPTED;
-            }
+            storage = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+        }
+        if ((ContextCompat.checkSelfPermission(this, permissionType) !=
+                PackageManager.PERMISSION_GRANTED) ||
+                (ContextCompat.checkSelfPermission(this, storage) !=
+                        PackageManager.PERMISSION_GRANTED)) {
+            ActivityCompat.requestPermissions(this, new String[] {
+                            permissionType, storage
+                    },
+                    PERMISSION_REQUEST_CODE);
+        } else {
+            // Permission was already granted
+            return PERMISSION_ACCEPTED;
         }
         return PERMISSION_DENIED;
     }
