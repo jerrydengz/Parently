@@ -1,7 +1,6 @@
 package cmpt276.phosphorus.childapp.coinflip.utils;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +60,7 @@ public class CoinFlipResultAdapter extends ArrayAdapter<CoinFlipResult> {
                  .load(child.getChildPortraitPath())
                  .into(childPortrait);
         }else{
-            childPortrait.setImageResource(R.drawable.child_profile_img);
+            childPortrait.setImageResource(R.drawable.child_portrait_default);
         }
 
         // set date
