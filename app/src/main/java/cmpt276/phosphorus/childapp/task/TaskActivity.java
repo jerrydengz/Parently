@@ -4,9 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,8 +18,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Objects;
+import java.util.UUID;
 
 import cmpt276.phosphorus.childapp.R;
+import cmpt276.phosphorus.childapp.model.ChildManager;
+import cmpt276.phosphorus.childapp.model.DataManager;
+import cmpt276.phosphorus.childapp.model.DataType;
 import cmpt276.phosphorus.childapp.model.Task;
 import cmpt276.phosphorus.childapp.model.TaskManager;
 import cmpt276.phosphorus.childapp.task.utils.TaskListAdapter;
@@ -35,6 +43,7 @@ public class TaskActivity extends AppCompatActivity {
             iv. button to indicate "finished"
          5. implement adding task in ConfigureTaskActivity.java
      */
+    private AlertDialog alertDialog;
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, TaskActivity.class);
@@ -80,14 +89,38 @@ public class TaskActivity extends AppCompatActivity {
     // https://stackoverflow.com/questions/13341560/how-to-create-a-custom-dialog-box-in-android
     private void displayTaskDialog(Task selected) {
         AlertDialog.Builder taskDialog = new AlertDialog.Builder(this);
-        String dialogTitle = getResources().getString(R.string.task_info_title).replace("%name%", selected.getName());
-        taskDialog.setTitle(dialogTitle);
-//        taskDialog.setMessage(getResources().getString(dec));
-        taskDialog.setPositiveButton(R.string.task_info_close, null);
-        taskDialog.setNeutralButton(R.string.task_info_edit, (dialogInterface, i) -> {
-            startActivity(ConfigureTaskActivity.makeIntent(this, selected));
+        LayoutInflater inflater = this.getLayoutInflater();
+
+        View dialogView = inflater.inflate(R.layout.task_dialog, null);
+        taskDialog.setView(dialogView);
+
+        Button btnNextChild = dialogView.findViewById(R.id.btnNextChild);
+        btnNextChild.setOnClickListener(view -> {
+            selected.cycleChildren();
+            DataManager.getInstance(this).saveData(DataType.TASKS);
+            this.populateTaskListView();
+            this.alertDialog.dismiss();
         });
-        taskDialog.show();
+
+        Button btnTaskEdit = dialogView.findViewById(R.id.btnTaskEdit);
+        btnTaskEdit.setOnClickListener(view -> startActivity(ConfigureTaskActivity.makeIntent(this, selected)));
+
+        Button btnTaskExit = dialogView.findViewById(R.id.btnTaskExit);
+        btnTaskExit.setOnClickListener(view -> this.alertDialog.dismiss());
+
+        String dialogTitle = getResources().getString(R.string.task_info_title).replace("%name%", selected.getName());
+        TextView title = dialogView.findViewById(R.id.textTaskDialougeName);
+        title.setText(dialogTitle);
+
+        // todo
+//        String currentChild = getResources().getString(R.string.task_info_title).replace("%name%", selected.getName());
+        TextView textCurrentTurn = dialogView.findViewById(R.id.textCurrentTurn);
+        UUID currChild = selected.getCurrentChild();
+        String textString = (currChild == null) ? "Not Available" : ChildManager.getInstance().getChildByUUID(currChild).getName();
+        textCurrentTurn.setText("Current Turn: " + textString);
+
+        this.alertDialog = taskDialog.create();
+        this.alertDialog.show();
     }
 
     private void populateTaskListView() {

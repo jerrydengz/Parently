@@ -19,7 +19,7 @@
     <string name="task_info_title">%name%</string>
     <string name="task_info_edit">Edit</string>
     <string name="task_info_close">Close</string>
-
+    <string name="task_info_finish">Finish</string>
 
     <string name="flip_coin_history_action_title">History</string>
     <string name="flip_coin_choose_action_title">Choose a side</string>

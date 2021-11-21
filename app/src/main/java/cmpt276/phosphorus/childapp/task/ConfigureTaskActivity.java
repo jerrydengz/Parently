@@ -82,7 +82,12 @@ public class ConfigureTaskActivity extends AppCompatActivity {
                 return;
             }
 
-            final int MAX_CHAR_LENGTH = 15; // todo 15?
+            if (newName.isEmpty()) {
+                this.showDialogAlert(R.string.dialog_title_invalid_name, R.string.dialog_msg_invalid_name);
+                return;
+            }
+
+            final int MAX_CHAR_LENGTH = 88;
             if (newName.length() >= MAX_CHAR_LENGTH) {
                 this.showDialogAlert(R.string.dialog_title_name_too_large, R.string.dialog_msg_name_too_large);
                 return;
