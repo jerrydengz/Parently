@@ -87,7 +87,7 @@ public class ChooseSideActivity extends AppCompatActivity {
         }
 
         textView.setText(this.child.getName());
-        textView.setTypeface(null, Typeface.BOLD_ITALIC);
+        textView.setTypeface(null, Typeface.BOLD);
 
         textView.setOnClickListener(view -> {
             startActivity(ChooseChildForCoinFlip.makeIntent(this));
