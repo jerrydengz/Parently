@@ -82,10 +82,8 @@ public class ChooseSideActivity extends AppCompatActivity {
     private void displayChildName() {
         TextView textView = findViewById(R.id.textSideChooseTitle);
         if (this.child == null) {  // If there aren't any children created yet for example
-            textView.setVisibility(View.GONE);
+            textView.setVisibility(View.INVISIBLE);
             return;
-        }else{
-            textView.setVisibility(View.VISIBLE);
         }
 
         textView.setText(this.child.getName());
@@ -103,8 +101,6 @@ public class ChooseSideActivity extends AppCompatActivity {
         if(this.child == null){
             childPortrait.setVisibility(View.GONE);
             return;
-        }else{
-            childPortrait.setVisibility(View.VISIBLE);
         }
 
         // https://github.com/bumptech/glide
@@ -115,6 +111,11 @@ public class ChooseSideActivity extends AppCompatActivity {
         }else{
             childPortrait.setImageResource(R.drawable.child_portrait_default);
         }
+
+        childPortrait.setOnClickListener(view -> {
+            startActivity(ChooseChildForCoinFlip.makeIntent(this));
+            finish();
+        });
     }
 
     private void btnChooseHead() {
