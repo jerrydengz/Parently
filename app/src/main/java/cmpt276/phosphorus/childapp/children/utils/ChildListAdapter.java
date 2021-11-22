@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.bumptech.glide.Glide;
+
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -38,8 +40,17 @@ public class ChildListAdapter extends ArrayAdapter<Child> {
         Child childProfile = getItem(position);
 
         // Set the image
-        ImageView childIcon = childView.findViewById(R.id.childProfileIcon);
-        childIcon.setImageResource(R.drawable.child_profile_img);
+        ImageView childPortrait = childView.findViewById(R.id.childProfileIcon);
+
+        // https://github.com/bumptech/glide
+        if(childProfile.getChildPortraitPath() != null){
+            Glide.with(this.getContext())
+                 .load(childProfile
+                 .getChildPortraitPath())
+                 .into(childPortrait);
+        }else{
+            childPortrait.setImageResource(R.drawable.child_portrait_default);
+        }
 
         // Set the name
         TextView childName = childView.findViewById(R.id.child_profile_name);

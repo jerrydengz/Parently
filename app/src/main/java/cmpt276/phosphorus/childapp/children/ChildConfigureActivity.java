@@ -1,11 +1,13 @@
 package cmpt276.phosphorus.childapp.children;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -41,6 +43,7 @@ import cmpt276.phosphorus.childapp.model.child.ChildManager;
 import cmpt276.phosphorus.childapp.model.data.DataManager;
 import cmpt276.phosphorus.childapp.model.data.DataType;
 import cmpt276.phosphorus.childapp.model.task.TaskManager;
+import cmpt276.phosphorus.childapp.children.utils.PermissionsEnumHelper;
 import cmpt276.phosphorus.childapp.utils.Intents;
 
     /* Code assistance regarding Camera & Gallery from
@@ -68,12 +71,14 @@ public class ChildConfigureActivity extends AppCompatActivity {
 
     public static final int BINARY_BYTE_SIZE = 1024;
     public static final int BYTE_OFFSET_INTEGER = 0;
-
-    private UUID childUUID;
+    public static final String FILE_SUFFIX = ".jpg";
 
     private ImageView childPortrait;
+    private File storageDir;
     private Uri photoURI;
     private String currentPhotoPath; // Way to retrieve photo from storage
+    private String tempPhotoPath;
+    private boolean toSaveTempFile;
 
     ActivityResultLauncher<Uri> cameraLauncher = registerForActivityResult(
             new ActivityResultContracts.TakePicture(),
@@ -130,6 +135,15 @@ public class ChildConfigureActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // Handling the case if user uploads an image file but ends up not wanting to save it
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (!toSaveTempFile && tempPhotoPath != null) {
+                deleteImageFile(tempPhotoPath);
+        }
+    }
+
     // https://youtu.be/y6StJRn-Y-A
     private void showDialogAlert(@StringRes int title, @StringRes int dec) {
         AlertDialog.Builder dialogWarning = new AlertDialog.Builder(this);
@@ -164,12 +178,16 @@ public class ChildConfigureActivity extends AppCompatActivity {
             }
 
             if (isEditingChild()) {
+                if(tempPhotoPath != null && currentPhotoPath != null) {
+                    deleteImageFile(currentPhotoPath);
+                }
+                setThePhotoPath();
                 this.child.setName(cleanedName);
                 this.child.setChildPortraitPath(currentPhotoPath);
             } else {
+                setThePhotoPath();
                 Child newChild = new Child(cleanedName);
                 newChild.setChildPortraitPath(currentPhotoPath);
-                newChild.setUuid(childUUID);
                 this.childManager.addChild(newChild);
                 TaskManager.getInstance()
                         .getAllTasks()
@@ -193,6 +211,9 @@ public class ChildConfigureActivity extends AppCompatActivity {
                 this.childManager.removeChild(this.child);
 
                 DataManager.getInstance(this).saveData(DataType.CHILDREN);
+                if(currentPhotoPath != null) {
+                    deleteImageFile(currentPhotoPath);
+                }
                 finish();
             });
             dialogWarning.setNegativeButton(getResources().getString(R.string.dialog_negative), null);
@@ -203,7 +224,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
     private void createCameraBtn() {
         Button button = findViewById(R.id.btnUseCamera);
         button.setOnClickListener(v -> {
-            boolean cameraPermission = setUpUseCameraPermissions();
+            boolean cameraPermission = setUpAPermission(PermissionsEnumHelper.CAMERA);
             if (cameraPermission) {
                 dispatchTakePictureIntent();
             }
@@ -213,7 +234,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
     private void createGalleryBtn() {
         Button button = findViewById(R.id.btnUseGallery);
         button.setOnClickListener(v -> {
-            boolean galleryPermission = setUpUseGalleryPermissions();
+            boolean galleryPermission = setUpAPermission(PermissionsEnumHelper.READ_EXTERNAL_STORAGE);
             if (galleryPermission) {
                 galleryLauncher.launch(INTENT_TYPE_FOR_GALLERY);
             }
@@ -230,16 +251,13 @@ public class ChildConfigureActivity extends AppCompatActivity {
         TextView childTitleText = findViewById(R.id.configure_child_title);
         Button deleteBtn = findViewById(R.id.btnDelete);
         childPortrait = findViewById(R.id.imgChildPicture);
-        childUUID = UUID.randomUUID();
+        storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
 
-        boolean isEditing = this.isEditingChild();
-
-        if (isEditing) {
+        if (isEditingChild()) {
             // Update's the text input with the child's name
             EditText childNameEditText = findViewById(R.id.name_edit_text);
             childNameEditText.setText(this.child.getName());
             currentPhotoPath = this.child.getChildPortraitPath();
-            childUUID = this.child.getUUID();
 
             // Dependency from https://github.com/bumptech/glide
             if(this.child.getChildPortraitPath() != null) {
@@ -249,10 +267,10 @@ public class ChildConfigureActivity extends AppCompatActivity {
             }
         }
 
-        childTitleText.setText(isEditing ? this.child.getName() : getString(R.string.add_child_title));
+        childTitleText.setText(isEditingChild() ? this.child.getName() : getString(R.string.add_child_title));
         childTitleText.setTypeface(null, Typeface.BOLD);
         childTitleText.setTextColor(getResources().getColor(R.color.black, null));
-        deleteBtn.setVisibility(isEditing ? View.VISIBLE : View.INVISIBLE);
+        deleteBtn.setVisibility(isEditingChild() ? View.VISIBLE : View.INVISIBLE);
     }
 
     private boolean isDuplicateChildName(String childName) {
@@ -266,11 +284,37 @@ public class ChildConfigureActivity extends AppCompatActivity {
         return this.child != null;
     }
 
-    private boolean setUpUseCameraPermissions() {
-        if (ContextCompat.checkSelfPermission(
-                this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+    private boolean setUpAPermission(PermissionsEnumHelper permissionType) {
+        String type;
+        if (permissionType == PermissionsEnumHelper.CAMERA) {
+            type = Manifest.permission.CAMERA;
+        } else {
+            type = Manifest.permission.READ_EXTERNAL_STORAGE;
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            return requestAPermission(PermissionsEnumHelper.MANAGE_EXTERNAL_STORAGE, type);
+        } else {
+            return requestAPermission(PermissionsEnumHelper.WRITE_EXTERNAL_STORAGE, type);
+        }
+    }
+
+    private boolean requestAPermission(PermissionsEnumHelper storageType, String permissionType) {
+        String storage;
+        if (storageType == PermissionsEnumHelper.MANAGE_EXTERNAL_STORAGE) {
+            /*
+            Note that we have already checked for proper Build.VERSION.SDK_INT in setUpAPermission,
+            so just ignore this warning as it's already been accounted for and would be redundant
+             */
+            storage = Manifest.permission.MANAGE_EXTERNAL_STORAGE;
+        } else {
+            storage = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+        }
+        if ((ContextCompat.checkSelfPermission(this, permissionType) !=
+                PackageManager.PERMISSION_GRANTED) ||
+                (ContextCompat.checkSelfPermission(this, storage) !=
+                        PackageManager.PERMISSION_GRANTED)) {
             ActivityCompat.requestPermissions(this, new String[] {
-                        Manifest.permission.CAMERA
+                            permissionType, storage
                     },
                     PERMISSION_REQUEST_CODE);
         } else {
@@ -280,20 +324,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
         return PERMISSION_DENIED;
     }
 
-    private boolean setUpUseGalleryPermissions() {
-        if (ContextCompat.checkSelfPermission(
-                this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[] {
-                            Manifest.permission.READ_EXTERNAL_STORAGE
-                    },
-                    PERMISSION_REQUEST_CODE);
-        } else {
-            // Permission was already granted
-            return PERMISSION_ACCEPTED;
-        }
-        return PERMISSION_DENIED;
-    }
-
+    @SuppressLint("QueryPermissionsNeeded")
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
@@ -338,12 +369,42 @@ public class ChildConfigureActivity extends AppCompatActivity {
 
     private File createImageFile() throws IOException {
         // Create an image file name
-        String imageFileName = childUUID.toString() + ".jpg";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
+        /*
+            Originally: String imageFileName = childUUID.toString() + ".jpg";
+            Possible fix for overwriting/changing a child's image
+            is to just make every file name different, tbh file being child's uuid name doesn't matter
+            (the files still get deleted properly dw).
+            Remove this comment on final clean up of iteration 2
+         */
+        String suffix = UUID.randomUUID().toString();
+        String imageFileName = suffix + FILE_SUFFIX;
+
         File image = new File(storageDir, imageFileName);
 
         // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath();
+        // tempPhotoPath not set as current in case of changing picture
+        tempPhotoPath = image.getAbsolutePath();
         return image;
+    }
+
+    private void setThePhotoPath() {
+        if (tempPhotoPath != null) {
+            toSaveTempFile = true;
+            currentPhotoPath = tempPhotoPath;
+        }
+    }
+
+    //https://stackoverflow.com/questions/24659704/how-do-i-delete-files-programmatically-on-android
+    private void deleteImageFile(String path) {
+        File fileToDelete = new File(path);
+        if (fileToDelete.exists()) {
+            // Just note on clean up that this is a boolean
+            if (fileToDelete.delete()) {
+                System.out.println("File Deleted: " + path);
+            } else {
+                System.out.println("File not Deleted: " + path);
+            }
+        }
     }
 }

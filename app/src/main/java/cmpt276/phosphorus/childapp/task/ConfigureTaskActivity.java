@@ -117,6 +117,24 @@ public class ConfigureTaskActivity extends AppCompatActivity {
         });
     }
 
+    private void createDeleteBtn() {
+        Button button = findViewById(R.id.btnDeleteTask);
+        button.setOnClickListener(view -> {
+            // https://youtu.be/y6StJRn-Y-A
+            AlertDialog.Builder dialogWarning = new AlertDialog.Builder(this);
+            dialogWarning.setTitle(R.string.task_delete_title);
+            dialogWarning.setMessage(R.string.task_delete_msg);
+            dialogWarning.setPositiveButton(getResources().getString(R.string.dialog_positive), (dialogInterface, i) -> {
+
+                TaskManager.getInstance().deleteTask(this.task);
+                DataManager.getInstance(this).saveData(DataType.TASKS);
+                finish();
+            });
+            dialogWarning.setNegativeButton(getResources().getString(R.string.dialog_negative), null);
+            dialogWarning.show();
+        });
+    }
+
     private void btnDelete() {
         Button btnDeleteTask = findViewById(R.id.btnDeleteTask);
         if (!this.isEditing) { // Is creating
