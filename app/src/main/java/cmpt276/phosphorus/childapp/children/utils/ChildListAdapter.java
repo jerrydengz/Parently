@@ -43,12 +43,12 @@ public class ChildListAdapter extends ArrayAdapter<Child> {
         ImageView childPortrait = childView.findViewById(R.id.childProfileIcon);
 
         // https://github.com/bumptech/glide
-        if(childProfile.getChildPortraitPath() != null){
+        if (childProfile.getChildPortraitPath() != null) {
             Glide.with(this.getContext())
-                 .load(childProfile
-                 .getChildPortraitPath())
-                 .into(childPortrait);
-        }else{
+                    .load(childProfile
+                            .getChildPortraitPath())
+                    .into(childPortrait);
+        } else {
             childPortrait.setImageResource(R.drawable.child_portrait_default);
         }
 
