@@ -98,7 +98,7 @@
     <string name="task_activity_title">Who\'s Turn Is It?</string>
     <string name="configure_task_activity_title">Configure Task</string>
     <string name="task_name_placeholder">Task Name</string>
-    <string name="current_turn_display">"Current Turn: "</string>
+    <string name="current_turn_display">"Current Turn: %name%"</string>
     <string name="task_title">New Task</string>
     <string name="task_delete_title">Delete Task</string>
     <string name="task_delete_msg">Are you sure you want to delete this task?</string>
