@@ -3,27 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="1200px"
+    android:layout_height="1250px"
+    app:layout_constraintHeight_default="spread"
     tools:layout_editor_absoluteX="42dp"
     tools:layout_editor_absoluteY="1dp"
     android:background="@color/lavender_darker"
 >
 
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/text1"-->
-    <!--        android:layout_width="fill_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:textColor="#FFF" />-->
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/text2"-->
-    <!--        android:layout_width="fill_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:textColor="#FFF"/>-->
-
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imgTaskChildIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -53,17 +41,17 @@
         android:id="@+id/textCurrentTurn"
         android:layout_width="800px"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="24dp"
         android:gravity="center"
         android:text=""
         android:textColor="@color/black"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imgTaskChildIcon" />
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="244dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -74,25 +62,34 @@
         app:layout_constraintTop_toBottomOf="@+id/textCurrentTurn">
 
         <Button
-            android:id="@+id/btnSave"
+            android:id="@+id/btnTaskComplete"
             android:layout_width="match_parent"
             android:layout_height="60sp"
-            android:text="@string/save_btn_text"
-            />
+            android:text="@string/complete_btn_text" />
 
         <Button
-            android:id="@+id/btnSave"
+            android:id="@+id/btnTaskEdit"
             android:layout_width="match_parent"
             android:layout_height="60sp"
-            android:text="@string/save_btn_text" />
+            android:text="@string/edit_btn_text" />
 
         <Button
-            android:id="@+id/btnDelete"
+            android:id="@+id/btnTaskDelete"
             android:layout_width="match_parent"
             android:layout_height="60sp"
             android:minHeight="48dp"
             android:text="@string/delete_btn_txt" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/dummySpacingTextBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

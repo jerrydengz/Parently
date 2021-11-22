@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -61,8 +62,6 @@ public class TaskActivity extends AppCompatActivity {
 
         this.createConfigureTaskBtn();
         this.populateTaskListView();
-
-        Log.d("asd", taskManager.getAllTasks().toString());
     }
 
     // If user select the top left back button
@@ -85,7 +84,6 @@ public class TaskActivity extends AppCompatActivity {
         button.setOnClickListener(view -> startActivity(ConfigureTaskActivity.makeIntent(this)));
     }
 
-    // TODO
     // https://stackoverflow.com/questions/13341560/how-to-create-a-custom-dialog-box-in-android
     private void displayTaskDialog(Task selected) {
         AlertDialog.Builder taskDialog = new AlertDialog.Builder(this);
@@ -94,8 +92,15 @@ public class TaskActivity extends AppCompatActivity {
         View dialogView = inflater.inflate(R.layout.task_dialog, null);
         taskDialog.setView(dialogView);
 
-        Button btnNextChild = dialogView.findViewById(R.id.btnNextChild);
-        btnNextChild.setOnClickListener(view -> {
+        String dialogTitle = getResources().getString(R.string.task_info_title).replace("%name%", selected.getName());
+        TextView title = dialogView.findViewById(R.id.textTaskDialougeName);
+        title.setText(dialogTitle);
+
+        // todo set child icon
+        ImageView taskChildIcon = dialogView.findViewById(R.id.imgTaskChildIcon);
+
+        Button btnTaskComplete = dialogView.findViewById(R.id.btnTaskComplete);
+        btnTaskComplete.setOnClickListener(view -> {
             selected.cycleChildren();
             DataManager.getInstance(this).saveData(DataType.TASKS);
             this.populateTaskListView();
@@ -103,21 +108,26 @@ public class TaskActivity extends AppCompatActivity {
         });
 
         Button btnTaskEdit = dialogView.findViewById(R.id.btnTaskEdit);
-        btnTaskEdit.setOnClickListener(view -> startActivity(ConfigureTaskActivity.makeIntent(this, selected)));
+        btnTaskEdit.setOnClickListener(view -> {
+            this.alertDialog.dismiss();
+            startActivity(ConfigureTaskActivity.makeIntent(this, selected));
+        });
 
-        Button btnTaskExit = dialogView.findViewById(R.id.btnTaskExit);
-        btnTaskExit.setOnClickListener(view -> this.alertDialog.dismiss());
+        Button btnTaskDelete = dialogView.findViewById(R.id.btnTaskDelete);
+        btnTaskDelete.setOnClickListener(view -> {
+            // todo delete task
 
-        String dialogTitle = getResources().getString(R.string.task_info_title).replace("%name%", selected.getName());
-        TextView title = dialogView.findViewById(R.id.textTaskDialougeName);
-        title.setText(dialogTitle);
+            DataManager.getInstance(this).saveData(DataType.TASKS);
+            this.populateTaskListView();
+            this.alertDialog.dismiss();
+        });
 
-        // todo
-//        String currentChild = getResources().getString(R.string.task_info_title).replace("%name%", selected.getName());
+
         TextView textCurrentTurn = dialogView.findViewById(R.id.textCurrentTurn);
         UUID currChild = selected.getCurrentChild();
-        String textString = (currChild == null) ? "Not Available" : ChildManager.getInstance().getChildByUUID(currChild).getName();
-        textCurrentTurn.setText("Current Turn: " + textString);
+        String childName = (currChild == null) ? "Not Available" : ChildManager.getInstance().getChildByUUID(currChild).getName();
+        String currentChild = getResources().getString(R.string.task_info_current_child).replace("%name%", childName);
+        textCurrentTurn.setText(currentChild);
 
         this.alertDialog = taskDialog.create();
         this.alertDialog.show();
