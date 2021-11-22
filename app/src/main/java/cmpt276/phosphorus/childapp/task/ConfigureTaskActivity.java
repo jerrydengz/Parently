@@ -71,7 +71,7 @@ public class ConfigureTaskActivity extends AppCompatActivity {
         String intentTaskName = packageInfo.getStringExtra(Intents.TASK_NAME_TAG);
         Task editedTask = TaskManager.getInstance().getTaskByName(intentTaskName);
         this.isEditing = (editedTask != null);
-        this.initalName = intentTaskName;
+        this.initalName = this.isEditing ? editedTask.getName() : "";
         this.task = this.isEditing ? editedTask : new Task("", ChildManager.getInstance().getAllChildren());
     }
 
