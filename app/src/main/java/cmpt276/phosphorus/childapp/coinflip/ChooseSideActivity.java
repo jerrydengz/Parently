@@ -97,15 +97,15 @@ public class ChooseSideActivity extends AppCompatActivity {
     private void displayChildPortrait() {
         ImageView childPortrait = findViewById(R.id.child_portrait_coin_flip);
 
-        if(this.child == null){
+        if (this.child == null) {
             childPortrait.setVisibility(View.GONE);
             return;
-        } else if(this.child.getChildPortraitPath() != null){
+        } else if (this.child.getChildPortraitPath() != null) {
             // https://github.com/bumptech/glide
             Glide.with(this)
-                 .load(child.getChildPortraitPath())
-                 .into(childPortrait);
-        }else{
+                    .load(child.getChildPortraitPath())
+                    .into(childPortrait);
+        } else {
             childPortrait.setImageResource(R.drawable.child_portrait_default);
         }
 
