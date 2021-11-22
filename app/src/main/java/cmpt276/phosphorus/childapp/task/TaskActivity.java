@@ -30,6 +30,11 @@ import cmpt276.phosphorus.childapp.model.task.Task;
 import cmpt276.phosphorus.childapp.model.task.TaskManager;
 import cmpt276.phosphorus.childapp.task.utils.TaskListAdapter;
 
+//====================================
+//
+//Displays all tasks and allows user to add/delete/edit tasks
+//
+//====================================
 public class TaskActivity extends AppCompatActivity {
 
     private TaskManager taskManager;

@@ -2,6 +2,12 @@ package cmpt276.phosphorus.childapp.timeout.utils;
 
 import java.util.Locale;
 
+
+//=================================
+//
+//Converts time into a readable string of minutes and seconds
+//
+//=================================
 public class TimeConversionUtils {
 
     // Interval in milliseconds the timer updates its countdown

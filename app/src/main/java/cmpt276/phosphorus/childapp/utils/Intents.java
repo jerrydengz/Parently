@@ -1,6 +1,10 @@
 package cmpt276.phosphorus.childapp.utils;
 
-// todo move all in here?
+//========================
+//
+//Constant names for variables to be passed over
+//
+//========================
 public class Intents {
 
     public static final String CHILD_UUID_TAG = "ChildUUIDTag";
