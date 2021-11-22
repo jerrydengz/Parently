@@ -55,6 +55,13 @@ public class ChooseChildForCoinFlip extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(ChooseSideActivity.makeIntent(this, this.curChild));
+        finish();
+        super.onBackPressed();
+    }
+
     private void extractIntent() {
         Intent packageInfo = getIntent();
         String intentChildUUID = packageInfo.getStringExtra(Intents.CHILD_UUID_TAG);
