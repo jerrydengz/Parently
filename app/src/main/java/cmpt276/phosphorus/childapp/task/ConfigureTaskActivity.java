@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
@@ -48,7 +50,9 @@ public class ConfigureTaskActivity extends AppCompatActivity {
         this.extractIntent();
 
         this.updateDisplay();
+        this.updateTitle();
         this.btnConfirm();
+        this.btnDelete();
     }
 
     @Override
@@ -69,6 +73,11 @@ public class ConfigureTaskActivity extends AppCompatActivity {
     private void updateDisplay() {
         EditText childNameEditText = findViewById(R.id.inputEditTaskName);
         childNameEditText.setText(this.task.getName());
+    }
+
+    private void updateTitle() {
+        TextView taskTitle = findViewById(R.id.task_title);
+        taskTitle.setText(this.isEditing ? R.string.task_title_edit : R.string.task_title_new);
     }
 
     private void btnConfirm() {
@@ -100,6 +109,18 @@ public class ConfigureTaskActivity extends AppCompatActivity {
 
             DataManager.getInstance(this).saveData(DataType.TASKS);
             finish();
+        });
+    }
+
+    private void btnDelete() {
+        Button btnDeleteTask = findViewById(R.id.btnDeleteTask);
+        if (!this.isEditing) { // Is creating
+            btnDeleteTask.setVisibility(View.INVISIBLE);
+            return;
+        }
+
+        btnDeleteTask.setOnClickListener(view -> {
+            // todo task delete
         });
     }
 

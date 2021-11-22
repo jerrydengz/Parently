@@ -21,6 +21,8 @@
     <string name="task_info_close">Close</string>
     <string name="task_info_finish">Finish</string>
     <string name="task_info_current_child">Current Turn: %name%</string>
+    <string name="task_title_new">New Task</string>
+    <string name="task_title_edit">Editing Task</string>
 
     <string name="flip_coin_history_action_title">History</string>
     <string name="flip_coin_choose_action_title">Choose a side</string>
@@ -52,7 +54,8 @@
     <string name="alarm_icon">Alarm Warning Icon</string>
     <string name="timer_notification_service_channel">Timer Notification Service Channel</string>
     <string name="timeout_notification_channel_desc">Timer is running notification</string>
-    <string name="delete_btn_txt">Delete</string>
+    <string name="close_btn_txt">CLOSE</string>
+    <string name="delete_btn_txt">DELETE</string>
     <string name="dialog_confirm">OK</string>
     <string name="dialog_positive">YES</string>
     <string name="dialog_negative">NO</string>

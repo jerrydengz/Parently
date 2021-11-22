@@ -74,11 +74,11 @@
             android:text="@string/edit_btn_text" />
 
         <Button
-            android:id="@+id/btnTaskDelete"
+            android:id="@+id/btnTaskClose"
             android:layout_width="match_parent"
             android:layout_height="60sp"
             android:minHeight="48dp"
-            android:text="@string/delete_btn_txt" />
+            android:text="@string/close_btn_txt" />
     </LinearLayout>
 
     <TextView

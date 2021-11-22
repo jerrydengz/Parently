@@ -13,12 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.List;
-import java.util.UUID;
 
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.model.ChildManager;
 import cmpt276.phosphorus.childapp.model.Task;
-import cmpt276.phosphorus.childapp.model.TaskManager;
 
 public class TaskListAdapter extends ArrayAdapter<Task> {
     public TaskListAdapter(Context context, List<Task> tasks) {
@@ -36,7 +34,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         }
 
         Task currentTask = getItem(position);
-        
+
         // Set the name of the task
         TextView taskName = taskView.findViewById(R.id.task_name);
         taskName.setText(currentTask.getName());
@@ -47,8 +45,8 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         TextView childTurnName = taskView.findViewById(R.id.current_turn_child_name);
         String result = currentTask.isEmptyChildList() ? "No children" :
                 ChildManager.getInstance()
-                            .getChildByUUID(currentTask.getCurrentChild())
-                            .getName();
+                        .getChildByUUID(currentTask.getCurrentChild())
+                        .getName();
         childTurnName.setText(taskView.getResources().getString(R.string.current_turn_display) + result);
         childTurnName.setTextColor(taskView.getResources().getColor(R.color.black, null));
 

@@ -3,7 +3,6 @@ package cmpt276.phosphorus.childapp.task;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -100,12 +99,16 @@ public class TaskActivity extends AppCompatActivity {
         ImageView taskChildIcon = dialogView.findViewById(R.id.imgTaskChildIcon);
 
         Button btnTaskComplete = dialogView.findViewById(R.id.btnTaskComplete);
-        btnTaskComplete.setOnClickListener(view -> {
-            selected.cycleChildren();
-            DataManager.getInstance(this).saveData(DataType.TASKS);
-            this.populateTaskListView();
-            this.alertDialog.dismiss();
-        });
+        if (!selected.isEmptyChildList()) {
+            btnTaskComplete.setOnClickListener(view -> {
+                selected.cycleChildren();
+                DataManager.getInstance(this).saveData(DataType.TASKS);
+                this.populateTaskListView();
+                this.alertDialog.dismiss();
+            });
+        } else {
+            btnTaskComplete.setVisibility(View.INVISIBLE);
+        }
 
         Button btnTaskEdit = dialogView.findViewById(R.id.btnTaskEdit);
         btnTaskEdit.setOnClickListener(view -> {
@@ -113,15 +116,8 @@ public class TaskActivity extends AppCompatActivity {
             startActivity(ConfigureTaskActivity.makeIntent(this, selected));
         });
 
-        Button btnTaskDelete = dialogView.findViewById(R.id.btnTaskDelete);
-        btnTaskDelete.setOnClickListener(view -> {
-            // todo delete task
-
-            DataManager.getInstance(this).saveData(DataType.TASKS);
-            this.populateTaskListView();
-            this.alertDialog.dismiss();
-        });
-
+        Button btnTaskClose = dialogView.findViewById(R.id.btnTaskClose);
+        btnTaskClose.setOnClickListener(view -> this.alertDialog.dismiss());
 
         TextView textCurrentTurn = dialogView.findViewById(R.id.textCurrentTurn);
         UUID currChild = selected.getCurrentChild();

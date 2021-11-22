@@ -189,7 +189,6 @@ public class ChildConfigureActivity extends AppCompatActivity {
             dialogWarning.setTitle(getResources().getString(R.string.dialog_title_delete));
             dialogWarning.setMessage(getResources().getString(R.string.dialog_msg_delete));
             dialogWarning.setPositiveButton(getResources().getString(R.string.dialog_positive), (dialogInterface, i) -> {
-
                 TaskManager.getInstance().getAllTasks().forEach(task -> task.removeChild(child.getUUID()));
                 this.childManager.removeChild(this.child);
 

@@ -2,22 +2,16 @@ package cmpt276.phosphorus.childapp.model;
 
 import androidx.annotation.NonNull;
 
-import com.google.gson.annotations.Expose;
-
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class Task {
-    private final int FIRST_INDEX = 0;
-    @Expose
-    private final List<UUID> children;
-    @Expose
-    private String name;
 
-    public Task(Task task) {
-        this(task.getName(), task.getChildren());
-    }
+    private final int FIRST_INDEX = 0;
+
+    private final List<UUID> children;
+    private String name;
 
     public Task(String name, List<Child> children) {
         this.name = name;
@@ -40,6 +34,9 @@ public class Task {
     }
 
     public UUID getCurrentChild() {
+        if (this.isEmptyChildList())
+            return null;
+
         return getChild(this.FIRST_INDEX);
     }
 
@@ -62,10 +59,12 @@ public class Task {
         return this.children.get(pos);
     }
 
-    public boolean isEmptyChildList(){return children.isEmpty();}
+    public boolean isEmptyChildList() {
+        return children.isEmpty();
+    }
 
     @NonNull
-    public List<Child> getChildren(){
+    public List<Child> getChildren() {
         return this.children.stream()
                 .map(uuid -> ChildManager.getInstance().getChildByUUID(uuid))
                 .collect(Collectors.toList());
