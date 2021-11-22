@@ -309,14 +309,9 @@ public class ChildConfigureActivity extends AppCompatActivity {
         } else {
             storage = Manifest.permission.WRITE_EXTERNAL_STORAGE;
         }
-        if ((ContextCompat.checkSelfPermission(this, permissionType) !=
-                PackageManager.PERMISSION_GRANTED) ||
-                (ContextCompat.checkSelfPermission(this, storage) !=
-                        PackageManager.PERMISSION_GRANTED)) {
-            ActivityCompat.requestPermissions(this, new String[] {
-                            permissionType, storage
-                    },
-                    PERMISSION_REQUEST_CODE);
+        if ((ContextCompat.checkSelfPermission(this, permissionType) != PackageManager.PERMISSION_GRANTED) ||
+                (ContextCompat.checkSelfPermission(this, storage) != PackageManager.PERMISSION_GRANTED)) {
+            ActivityCompat.requestPermissions(this, new String[] {permissionType, storage}, PERMISSION_REQUEST_CODE);
         } else {
             // Permission was already granted
             return PERMISSION_ACCEPTED;

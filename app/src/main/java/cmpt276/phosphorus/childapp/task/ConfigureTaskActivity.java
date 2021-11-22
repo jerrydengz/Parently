@@ -56,8 +56,8 @@ public class ConfigureTaskActivity extends AppCompatActivity {
 
         this.updateDisplay();
         this.updateTitle();
-        this.btnConfirm();
-        this.btnDelete();
+        this.btnSave();
+        this.createDeleteBtn();
     }
 
     @Override
@@ -85,10 +85,10 @@ public class ConfigureTaskActivity extends AppCompatActivity {
         taskTitle.setText(this.isEditing ? R.string.task_title_edit : R.string.task_title_new);
     }
 
-    private void btnConfirm() {
-        Button confirmBtn = findViewById(R.id.btnConfirmTask);
+    private void btnSave() {
+        Button btnSaveTask = findViewById(R.id.btnSaveTask);
         EditText childNameEditText = findViewById(R.id.inputEditTaskName);
-        confirmBtn.setOnClickListener(view -> {
+        btnSaveTask.setOnClickListener(view -> {
             String newName = childNameEditText.getText().toString().trim();
 
             if (TaskManager.getInstance().containsName(newName) && (!this.initalName.equals(newName))) {
@@ -118,8 +118,13 @@ public class ConfigureTaskActivity extends AppCompatActivity {
     }
 
     private void createDeleteBtn() {
-        Button button = findViewById(R.id.btnDeleteTask);
-        button.setOnClickListener(view -> {
+        Button btnDeleteTask = findViewById(R.id.btnDeleteTask);
+        if (!this.isEditing) { // Is creating
+            btnDeleteTask.setVisibility(View.INVISIBLE);
+            return;
+        }
+
+        btnDeleteTask.setOnClickListener(view -> {
             // https://youtu.be/y6StJRn-Y-A
             AlertDialog.Builder dialogWarning = new AlertDialog.Builder(this);
             dialogWarning.setTitle(R.string.task_delete_title);
@@ -132,18 +137,6 @@ public class ConfigureTaskActivity extends AppCompatActivity {
             });
             dialogWarning.setNegativeButton(getResources().getString(R.string.dialog_negative), null);
             dialogWarning.show();
-        });
-    }
-
-    private void btnDelete() {
-        Button btnDeleteTask = findViewById(R.id.btnDeleteTask);
-        if (!this.isEditing) { // Is creating
-            btnDeleteTask.setVisibility(View.INVISIBLE);
-            return;
-        }
-
-        btnDeleteTask.setOnClickListener(view -> {
-            // todo task delete
         });
     }
 
