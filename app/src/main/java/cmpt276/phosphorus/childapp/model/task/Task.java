@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -29,6 +30,8 @@ public class Task {
         this.children = Objects.requireNonNull(children, "Task children cannot be null").stream()
                 .map(Child::getUUID)
                 .collect(Collectors.toList());
+        
+        Collections.shuffle(this.children);
     }
 
     public String getName() {
