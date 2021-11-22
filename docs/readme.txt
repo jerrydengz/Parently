@@ -9,9 +9,23 @@ Style Guide Reference:
 - based off Twitter's style guide + modifications based on the Team's preference
 - https://github.com/twitter-archive/commons/blob/master/src/java/com/twitter/common/styleguide.md
 
-Style Guide Modification:
+Style Guide Modification Off Twitter Style Guide:
 =========================
+1. Okay to use tabs for spacing. Android studio converts tabs to spaces, so it's interchangeable.
+2. For chained method calls, should separate them on new lines if there are 3 or more of them
 
+    :::java
+    // 3 or more chained method calls
+    object.method()
+          .method()
+          .method();
+
+    // 1 or 2 chained method calls
+    object.method().method();
+
+3. Ok to not end `try/catch` blocks with `finally`
+4. Add `this.` for class fields to make distinction between local variables and class fields
+5. Use camelCase for R.id tag's and snake_case for R.string tag's
 
 Resource Ref:
 =============
