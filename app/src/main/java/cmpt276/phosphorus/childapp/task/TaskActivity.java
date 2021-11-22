@@ -76,8 +76,6 @@ public class TaskActivity extends AppCompatActivity {
 
     // https://stackoverflow.com/questions/13341560/how-to-create-a-custom-dialog-box-in-android
     private void displayTaskDialog(Task selected) {
-        Child currChild = ChildManager.getInstance().getChildByUUID(selected.getCurrentChild());
-
         AlertDialog.Builder taskDialog = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
 
@@ -88,6 +86,7 @@ public class TaskActivity extends AppCompatActivity {
         TextView title = dialogView.findViewById(R.id.textTaskDialougeName);
         title.setText(dialogTitle);
 
+        Child currChild = ChildManager.getInstance().getChildByUUID(selected.getCurrentChild());
         ImageView taskChildIcon = dialogView.findViewById(R.id.imgTaskChildIcon);
         if(currChild != null) {
             if(currChild.getChildPortraitPath() != null){
