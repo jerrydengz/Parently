@@ -84,6 +84,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
             new ActivityResultContracts.TakePicture(),
             result -> {
                 if (!result) {
+                    tempPhotoPath = null;
                     return;
                 }
                 childPortrait.setImageURI(photoURI);
