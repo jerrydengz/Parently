@@ -19,7 +19,6 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Objects;
-import java.util.UUID;
 
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.model.child.Child;
