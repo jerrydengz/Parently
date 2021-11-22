@@ -99,5 +99,6 @@
     <string name="configure_task_activity_title">Configure Task</string>
     <string name="task_name_placeholder">Task Name</string>
     <string name="current_turn_display">"Current Turn: "</string>
+    <string name="task_title">New Task</string>
 
 </resources>

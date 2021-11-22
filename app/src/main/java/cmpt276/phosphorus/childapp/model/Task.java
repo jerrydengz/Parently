@@ -1,5 +1,7 @@
 package cmpt276.phosphorus.childapp.model;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 
 import java.util.List;
@@ -60,6 +62,9 @@ public class Task {
         return this.children.get(pos);
     }
 
+    public boolean isEmptyChildList(){return children.isEmpty();}
+
+    @NonNull
     public List<Child> getChildren(){
         return this.children.stream()
                 .map(uuid -> ChildManager.getInstance().getChildByUUID(uuid))
