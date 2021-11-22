@@ -23,6 +23,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// ==============================================================================================
+//
+// The manager for us to save the app's data
+//
+// ==============================================================================================
 public class DataManager {
 
     private static DataManager instance;

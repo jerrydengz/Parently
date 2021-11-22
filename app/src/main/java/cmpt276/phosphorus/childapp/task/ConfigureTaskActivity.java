@@ -23,6 +23,11 @@ import cmpt276.phosphorus.childapp.model.Task;
 import cmpt276.phosphorus.childapp.model.TaskManager;
 import cmpt276.phosphorus.childapp.utils.Intents;
 
+// ==============================================================================================
+//
+// The activity for people to create/edit their tasks
+//
+// ==============================================================================================
 public class ConfigureTaskActivity extends AppCompatActivity {
 
     private boolean isEditing;

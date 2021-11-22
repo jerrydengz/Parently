@@ -6,6 +6,11 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+// ==============================================================================================
+//
+// The task object
+//
+// ==============================================================================================
 public class Task {
 
     private final int FIRST_INDEX = 0;

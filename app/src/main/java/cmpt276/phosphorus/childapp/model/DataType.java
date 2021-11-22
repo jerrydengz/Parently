@@ -3,6 +3,12 @@ package cmpt276.phosphorus.childapp.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+// ==============================================================================================
+//
+// The two types of data types locations that we use
+//
+// ==============================================================================================
 public enum DataType {
     CHILDREN(Child.class) {
         @Override

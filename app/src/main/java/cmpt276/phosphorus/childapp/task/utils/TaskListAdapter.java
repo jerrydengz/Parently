@@ -18,6 +18,11 @@ import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.model.ChildManager;
 import cmpt276.phosphorus.childapp.model.Task;
 
+// ==============================================================================================
+//
+// The list adapter to display all the tasks
+//
+// ==============================================================================================
 public class TaskListAdapter extends ArrayAdapter<Task> {
     public TaskListAdapter(Context context, List<Task> tasks) {
         super(context, R.layout.task_item, tasks);
