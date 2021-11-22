@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
@@ -15,15 +16,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Objects;
 
 import cmpt276.phosphorus.childapp.R;
-import cmpt276.phosphorus.childapp.model.ChildManager;
-import cmpt276.phosphorus.childapp.model.DataManager;
-import cmpt276.phosphorus.childapp.model.DataType;
-import cmpt276.phosphorus.childapp.model.Task;
-import cmpt276.phosphorus.childapp.model.TaskManager;
+import cmpt276.phosphorus.childapp.model.child.ChildManager;
+import cmpt276.phosphorus.childapp.model.data.DataManager;
+import cmpt276.phosphorus.childapp.model.data.DataType;
+import cmpt276.phosphorus.childapp.model.task.Task;
+import cmpt276.phosphorus.childapp.model.task.TaskManager;
 import cmpt276.phosphorus.childapp.utils.Intents;
 
+// ==============================================================================================
+//
+// The activity for people to create/edit their tasks
+//
+// ==============================================================================================
 public class ConfigureTaskActivity extends AppCompatActivity {
 
+    private boolean isEditing;
+    private String initalName;
     private Task task;
 
     public static Intent makeIntent(Context context, Task editTask) {
@@ -45,17 +53,11 @@ public class ConfigureTaskActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         this.extractIntent();
-        this.btnSaveTask();
-        this.createDeleteBtn();
 
-        Button deleteBtn = findViewById(R.id.btnDeleteTask);
-        if (!isEditingTask()) { // If we're creating a task
-            deleteBtn.setVisibility(View.INVISIBLE);
-            this.task = new Task("", ChildManager.getInstance().getAllChildren());
-        }else{
-            deleteBtn.setVisibility(View.VISIBLE);
-            this.updateDisplay();
-        }
+        this.updateDisplay();
+        this.updateTitle();
+        this.btnSave();
+        this.createDeleteBtn();
     }
 
     @Override
@@ -67,7 +69,10 @@ public class ConfigureTaskActivity extends AppCompatActivity {
     private void extractIntent() {
         Intent packageInfo = getIntent();
         String intentTaskName = packageInfo.getStringExtra(Intents.TASK_NAME_TAG);
-        this.task = TaskManager.getInstance().getTaskByName(intentTaskName);
+        Task editedTask = TaskManager.getInstance().getTaskByName(intentTaskName);
+        this.isEditing = (editedTask != null);
+        this.initalName = this.isEditing ? editedTask.getName() : "";
+        this.task = this.isEditing ? editedTask : new Task("", ChildManager.getInstance().getAllChildren());
     }
 
     private void updateDisplay() {
@@ -75,16 +80,38 @@ public class ConfigureTaskActivity extends AppCompatActivity {
         childNameEditText.setText(this.task.getName());
     }
 
-    private void btnSaveTask() {
-        Button saveBtn = findViewById(R.id.btnSaveTask);
-        saveBtn.setOnClickListener(view -> {
-            EditText childNameEditText = findViewById(R.id.inputEditTaskName);
-            this.task.setName(childNameEditText.getText().toString());
-            boolean isSuccessful = TaskManager.getInstance().addTask(this.task);
+    private void updateTitle() {
+        TextView taskTitle = findViewById(R.id.task_title);
+        taskTitle.setText(this.isEditing ? R.string.task_title_edit : R.string.task_title_new);
+    }
 
-            if (!isSuccessful) {
+    private void btnSave() {
+        Button btnSaveTask = findViewById(R.id.btnSaveTask);
+        EditText childNameEditText = findViewById(R.id.inputEditTaskName);
+        btnSaveTask.setOnClickListener(view -> {
+            String newName = childNameEditText.getText()
+                    .toString()
+                    .trim();
+
+            if (TaskManager.getInstance().containsName(newName) && (!this.initalName.equals(newName))) {
                 this.showDialogAlert(R.string.task_alert_duplicate_title, R.string.task_alert_duplicate_dec);
                 return;
+            }
+
+            if (newName.isEmpty()) {
+                this.showDialogAlert(R.string.dialog_title_invalid_name, R.string.dialog_msg_invalid_name);
+                return;
+            }
+
+            final int MAX_CHAR_LENGTH = 88;
+            if (newName.length() >= MAX_CHAR_LENGTH) {
+                this.showDialogAlert(R.string.dialog_title_name_too_large, R.string.dialog_msg_name_too_large);
+                return;
+            }
+
+            this.task.setName(newName);
+            if (!this.isEditing) {
+                TaskManager.getInstance().addTask(this.task);
             }
 
             DataManager.getInstance(this).saveData(DataType.TASKS);
@@ -93,8 +120,13 @@ public class ConfigureTaskActivity extends AppCompatActivity {
     }
 
     private void createDeleteBtn() {
-        Button button = findViewById(R.id.btnDeleteTask);
-        button.setOnClickListener(view -> {
+        Button btnDeleteTask = findViewById(R.id.btnDeleteTask);
+        if (!this.isEditing) { // Is creating
+            btnDeleteTask.setVisibility(View.INVISIBLE);
+            return;
+        }
+
+        btnDeleteTask.setOnClickListener(view -> {
             // https://youtu.be/y6StJRn-Y-A
             AlertDialog.Builder dialogWarning = new AlertDialog.Builder(this);
             dialogWarning.setTitle(R.string.task_delete_title);
@@ -110,18 +142,11 @@ public class ConfigureTaskActivity extends AppCompatActivity {
         });
     }
 
-    // https://youtu.be/y6StJRn-Y-A
     private void showDialogAlert(@StringRes int title, @StringRes int dec) {
         AlertDialog.Builder dialogWarning = new AlertDialog.Builder(this);
-        dialogWarning.setTitle(getResources().getString(title));
-        dialogWarning.setMessage(getResources().getString(dec));
-        dialogWarning.setPositiveButton(getResources().getString(R.string.dialog_confirm), null);
+        dialogWarning.setTitle(title);
+        dialogWarning.setMessage(dec);
+        dialogWarning.setPositiveButton(R.string.dialog_confirm, null);
         dialogWarning.show();
     }
-
-    private boolean isEditingTask() {
-        return this.task != null;
-    }
-
-
 }

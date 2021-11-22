@@ -1,4 +1,4 @@
-package cmpt276.phosphorus.childapp.model;
+package cmpt276.phosphorus.childapp.model.child;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -9,6 +9,8 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import cmpt276.phosphorus.childapp.model.coin.CoinFlipResult;
 
 // ==============================================================================================
 //
@@ -21,15 +23,15 @@ public class ChildManager {
 
     private ArrayList<Child> allChildren;
 
-    private ChildManager() {
-        this.allChildren = new ArrayList<>();
-    }
-
     public static ChildManager getInstance() {
         if (instance == null) {
             instance = new ChildManager();
         }
         return instance;
+    }
+
+    private ChildManager() {
+        this.allChildren = new ArrayList<>();
     }
 
     public void setChildren(ArrayList<Child> children) {
@@ -74,7 +76,7 @@ public class ChildManager {
         return this.getChildByUUID(targetChildUUID);
     }
 
-    public Child getChildByUUID(@NotNull UUID uuid) {
+    public Child getChildByUUID(UUID uuid) {
         return this.allChildren.stream().filter(child -> child.getUUID().equals(uuid)).findFirst().orElse(null);
     }
 

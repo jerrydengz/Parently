@@ -1,4 +1,4 @@
-package cmpt276.phosphorus.childapp.model;
+package cmpt276.phosphorus.childapp.model.coin;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.StringRes;

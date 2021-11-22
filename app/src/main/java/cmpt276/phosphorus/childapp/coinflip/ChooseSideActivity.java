@@ -19,9 +19,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.Objects;
 
 import cmpt276.phosphorus.childapp.R;
-import cmpt276.phosphorus.childapp.model.Child;
-import cmpt276.phosphorus.childapp.model.ChildManager;
-import cmpt276.phosphorus.childapp.model.CoinSide;
+import cmpt276.phosphorus.childapp.model.child.Child;
+import cmpt276.phosphorus.childapp.model.child.ChildManager;
+import cmpt276.phosphorus.childapp.model.coin.CoinSide;
 import cmpt276.phosphorus.childapp.utils.Intents;
 
 // ==============================================================================================

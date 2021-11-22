@@ -16,7 +16,11 @@
     <string name="task_alert_duplicate_title">A task already has that name!</string>
     <string name="task_alert_duplicate_dec">Please choose something else</string>
     <string name="task_input_helper">Name</string>
-
+    <string name="task_info_title">%name%</string>
+    <string name="task_info_finish">Finish</string>
+    <string name="task_info_current_child">Current Turn: %name%</string>
+    <string name="task_title_new">New Task</string>
+    <string name="task_title_edit">Editing Task</string>
 
     <string name="flip_coin_history_action_title">History</string>
     <string name="flip_coin_choose_action_title">Choose a side</string>
@@ -34,6 +38,9 @@
     <string name="add_child_btn_text">New Child</string>
     <string name="back_btn_text">Back</string>
     <string name="save_btn_text">SAVE</string>
+    <string name="edit_btn_text">EDIT</string>
+    <string name="complete_btn_text">COMPLETE</string>
+    <string name="delete_btn_text">DELETE</string>
     <string name="name_edit_txt">Name</string>
     <string name="child_name_txt"><b>Child Name</b></string>
     <string name="timeout_remaining">Time Remaining</string>
@@ -45,7 +52,7 @@
     <string name="alarm_icon">Alarm Warning Icon</string>
     <string name="timer_notification_service_channel">Timer Notification Service Channel</string>
     <string name="timeout_notification_channel_desc">Timer is running notification</string>
-    <string name="delete_btn_txt">Delete</string>
+    <string name="close_btn_txt">CLOSE</string>
     <string name="dialog_confirm">OK</string>
     <string name="dialog_positive">YES</string>
     <string name="dialog_negative">NO</string>

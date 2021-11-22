@@ -57,7 +57,7 @@
                     android:layout_height="60sp"
                     android:minHeight="48dp"
                     app:icon="@drawable/delete_icon"
-                    android:text="@string/delete_btn_txt" />
+                    android:text="@string/delete_btn_text" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

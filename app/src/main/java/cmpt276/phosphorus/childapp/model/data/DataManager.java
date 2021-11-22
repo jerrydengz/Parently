@@ -1,7 +1,6 @@
-package cmpt276.phosphorus.childapp.model;
+package cmpt276.phosphorus.childapp.model.data;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -23,6 +22,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// ==============================================================================================
+//
+// The manager for us to save the app's data
+//
+// ==============================================================================================
 public class DataManager {
 
     private static DataManager instance;

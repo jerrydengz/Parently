@@ -1,4 +1,4 @@
-package cmpt276.phosphorus.childapp.model;
+package cmpt276.phosphorus.childapp.model.child;
 
 import androidx.annotation.NonNull;
 
@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import cmpt276.phosphorus.childapp.model.coin.CoinFlipResult;
 
 // ==============================================================================================
 //

@@ -25,12 +25,12 @@ import java.util.Random;
 
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.coinflip.utils.CoinFlipAnimationDirection;
-import cmpt276.phosphorus.childapp.model.Child;
-import cmpt276.phosphorus.childapp.model.ChildManager;
-import cmpt276.phosphorus.childapp.model.CoinFlipResult;
-import cmpt276.phosphorus.childapp.model.CoinSide;
-import cmpt276.phosphorus.childapp.model.DataManager;
-import cmpt276.phosphorus.childapp.model.DataType;
+import cmpt276.phosphorus.childapp.model.child.Child;
+import cmpt276.phosphorus.childapp.model.child.ChildManager;
+import cmpt276.phosphorus.childapp.model.coin.CoinFlipResult;
+import cmpt276.phosphorus.childapp.model.coin.CoinSide;
+import cmpt276.phosphorus.childapp.model.data.DataManager;
+import cmpt276.phosphorus.childapp.model.data.DataType;
 import cmpt276.phosphorus.childapp.utils.Emoji;
 import cmpt276.phosphorus.childapp.utils.Intents;
 import nl.dionsegijn.konfetti.KonfettiView;

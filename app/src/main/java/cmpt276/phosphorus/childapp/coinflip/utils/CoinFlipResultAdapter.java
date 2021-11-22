@@ -13,9 +13,9 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import cmpt276.phosphorus.childapp.R;
-import cmpt276.phosphorus.childapp.model.Child;
-import cmpt276.phosphorus.childapp.model.ChildManager;
-import cmpt276.phosphorus.childapp.model.CoinFlipResult;
+import cmpt276.phosphorus.childapp.model.child.Child;
+import cmpt276.phosphorus.childapp.model.child.ChildManager;
+import cmpt276.phosphorus.childapp.model.coin.CoinFlipResult;
 
 // ==============================================================================================
 //

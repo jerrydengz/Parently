@@ -38,12 +38,12 @@ import java.util.Objects;
 import java.util.UUID;
 
 import cmpt276.phosphorus.childapp.R;
+import cmpt276.phosphorus.childapp.model.child.Child;
+import cmpt276.phosphorus.childapp.model.child.ChildManager;
+import cmpt276.phosphorus.childapp.model.data.DataManager;
+import cmpt276.phosphorus.childapp.model.data.DataType;
+import cmpt276.phosphorus.childapp.model.task.TaskManager;
 import cmpt276.phosphorus.childapp.children.utils.PermissionsEnumHelper;
-import cmpt276.phosphorus.childapp.model.Child;
-import cmpt276.phosphorus.childapp.model.ChildManager;
-import cmpt276.phosphorus.childapp.model.DataManager;
-import cmpt276.phosphorus.childapp.model.DataType;
-import cmpt276.phosphorus.childapp.model.TaskManager;
 import cmpt276.phosphorus.childapp.utils.Intents;
 
     /* Code assistance regarding Camera & Gallery from
@@ -166,7 +166,8 @@ public class ChildConfigureActivity extends AppCompatActivity {
                 return;
             }
 
-            if (cleanedName.length() >= 15) {
+            final int MAX_CHAR_LENGTH = 15;
+            if (cleanedName.length() >= MAX_CHAR_LENGTH) {
                 this.showDialogAlert(R.string.dialog_title_name_too_large, R.string.dialog_msg_name_too_large);
                 return;
             }
@@ -206,8 +207,9 @@ public class ChildConfigureActivity extends AppCompatActivity {
             dialogWarning.setTitle(getResources().getString(R.string.dialog_title_delete));
             dialogWarning.setMessage(getResources().getString(R.string.dialog_msg_delete));
             dialogWarning.setPositiveButton(getResources().getString(R.string.dialog_positive), (dialogInterface, i) -> {
-
-                TaskManager.getInstance().getAllTasks().forEach(task -> task.removeChild(child.getUUID()));
+                TaskManager.getInstance()
+                        .getAllTasks()
+                        .forEach(task -> task.removeChild(child.getUUID()));
                 this.childManager.removeChild(this.child);
 
                 DataManager.getInstance(this).saveData(DataType.CHILDREN);
@@ -309,14 +311,9 @@ public class ChildConfigureActivity extends AppCompatActivity {
         } else {
             storage = Manifest.permission.WRITE_EXTERNAL_STORAGE;
         }
-        if ((ContextCompat.checkSelfPermission(this, permissionType) !=
-                PackageManager.PERMISSION_GRANTED) ||
-                (ContextCompat.checkSelfPermission(this, storage) !=
-                        PackageManager.PERMISSION_GRANTED)) {
-            ActivityCompat.requestPermissions(this, new String[] {
-                            permissionType, storage
-                    },
-                    PERMISSION_REQUEST_CODE);
+        if ((ContextCompat.checkSelfPermission(this, permissionType) != PackageManager.PERMISSION_GRANTED) ||
+                (ContextCompat.checkSelfPermission(this, storage) != PackageManager.PERMISSION_GRANTED)) {
+            ActivityCompat.requestPermissions(this, new String[] {permissionType, storage}, PERMISSION_REQUEST_CODE);
         } else {
             // Permission was already granted
             return PERMISSION_ACCEPTED;
