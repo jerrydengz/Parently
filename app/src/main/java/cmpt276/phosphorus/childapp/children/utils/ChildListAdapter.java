@@ -20,8 +20,13 @@ import java.util.List;
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.model.child.Child;
 
-// https://www.youtube.com/watch?v=WRANgDgM2Zg
+// ==============================================================================================
+//
+// ChildList adapter for showing the children
+//
+// ==============================================================================================
 public class ChildListAdapter extends ArrayAdapter<Child> {
+    // https://www.youtube.com/watch?v=WRANgDgM2Zg
 
     public ChildListAdapter(Context context, List<Child> children) {
         super(context, R.layout.child_profile, children);

@@ -26,8 +26,9 @@
 
     <ListView
         android:id="@+id/listViewChildren"
-        android:layout_width="400sp"
+        android:layout_width="375sp"
         android:layout_height="match_parent"
+        android:gravity="center_horizontal"
         android:divider="@android:color/transparent"
         android:dividerHeight="10.0sp"
         app:layout_constraintEnd_toEndOf="parent"

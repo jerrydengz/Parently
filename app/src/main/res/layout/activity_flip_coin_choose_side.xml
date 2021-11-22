@@ -24,7 +24,7 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -37,22 +37,22 @@
             android:id="@+id/textSideChooseTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5sp"
+            android:background="@color/purple_c1"
+            android:gravity="center"
             android:paddingLeft="10sp"
             android:paddingRight="10sp"
             android:paddingBottom="5sp"
-            android:layout_marginBottom="5sp"
-            android:gravity="center"
             android:text=""
             android:textColor="@color/white"
-            android:textSize="32sp"
-            android:background="@color/purple_c1"
-            />
+            android:textSize="32sp" />
 
         <ImageView
             android:id="@+id/child_portrait_coin_flip"
             android:layout_width="140sp"
             android:layout_height="140sp"
             android:layout_marginBottom="5sp"
+            android:scaleType="centerCrop"
             app:srcCompat="@drawable/child_portrait_default"
             tools:ignore="ContentDescription,ImageContrastCheck" />
 
