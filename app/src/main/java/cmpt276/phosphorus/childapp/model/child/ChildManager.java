@@ -76,7 +76,7 @@ public class ChildManager {
         return this.getChildByUUID(targetChildUUID);
     }
 
-    public Child getChildByUUID(@NotNull UUID uuid) {
+    public Child getChildByUUID(UUID uuid) {
         return this.allChildren.stream().filter(child -> child.getUUID().equals(uuid)).findFirst().orElse(null);
     }
 

@@ -15,12 +15,14 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Objects;
 import java.util.UUID;
 
 import cmpt276.phosphorus.childapp.R;
+import cmpt276.phosphorus.childapp.model.child.Child;
 import cmpt276.phosphorus.childapp.model.child.ChildManager;
 import cmpt276.phosphorus.childapp.model.data.DataManager;
 import cmpt276.phosphorus.childapp.model.data.DataType;
@@ -85,6 +87,8 @@ public class TaskActivity extends AppCompatActivity {
 
     // https://stackoverflow.com/questions/13341560/how-to-create-a-custom-dialog-box-in-android
     private void displayTaskDialog(Task selected) {
+        Child currChild = ChildManager.getInstance().getChildByUUID(selected.getCurrentChild());
+
         AlertDialog.Builder taskDialog = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
 
@@ -95,8 +99,14 @@ public class TaskActivity extends AppCompatActivity {
         TextView title = dialogView.findViewById(R.id.textTaskDialougeName);
         title.setText(dialogTitle);
 
-        // todo set child icon
         ImageView taskChildIcon = dialogView.findViewById(R.id.imgTaskChildIcon);
+        if(currChild != null) {
+            if(currChild.getChildPortraitPath() != null){
+                Glide.with(this)
+                        .load(currChild.getChildPortraitPath())
+                        .into(taskChildIcon);
+            }
+        }
 
         Button btnTaskComplete = dialogView.findViewById(R.id.btnTaskComplete);
         if (!selected.isEmptyChildList()) {
@@ -120,12 +130,9 @@ public class TaskActivity extends AppCompatActivity {
         btnTaskClose.setOnClickListener(view -> this.alertDialog.dismiss());
 
         TextView textCurrentTurn = dialogView.findViewById(R.id.textCurrentTurn);
-        UUID currChild = selected.getCurrentChild();
         String childName = (currChild == null)
                 ? "Not Available"
-                : ChildManager.getInstance()
-                    .getChildByUUID(currChild)
-                    .getName();
+                : currChild.getName();
 
         String currentChild = getResources().getString(R.string.task_info_current_child).replace("%name%", childName);
         textCurrentTurn.setText(currentChild);
