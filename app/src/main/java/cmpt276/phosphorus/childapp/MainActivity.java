@@ -11,8 +11,8 @@ import java.util.Arrays;
 import cmpt276.phosphorus.childapp.children.ChildrenActivity;
 import cmpt276.phosphorus.childapp.coinflip.ChooseSideActivity;
 import cmpt276.phosphorus.childapp.help.HelpActivity;
-import cmpt276.phosphorus.childapp.model.DataManager;
-import cmpt276.phosphorus.childapp.model.DataType;
+import cmpt276.phosphorus.childapp.model.data.DataManager;
+import cmpt276.phosphorus.childapp.model.data.DataType;
 import cmpt276.phosphorus.childapp.task.TaskActivity;
 import cmpt276.phosphorus.childapp.timeout.TimeoutActivity;
 

@@ -1,10 +1,16 @@
-package cmpt276.phosphorus.childapp.model;
+package cmpt276.phosphorus.childapp.model.task;
 
 import androidx.annotation.NonNull;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import cmpt276.phosphorus.childapp.model.child.Child;
+import cmpt276.phosphorus.childapp.model.child.ChildManager;
 
 // ==============================================================================================
 //
@@ -18,9 +24,9 @@ public class Task {
     private final List<UUID> children;
     private String name;
 
-    public Task(String name, List<Child> children) {
-        this.name = name;
-        this.children = children.stream()
+    public Task(@NotNull String name, @NotNull List<Child> children) {
+        this.name =  Objects.requireNonNull(name, "Task name cannot be null");
+        this.children = Objects.requireNonNull(children, "Task children cannot be null").stream()
                 .map(Child::getUUID)
                 .collect(Collectors.toList());
     }
@@ -33,7 +39,7 @@ public class Task {
         this.name = newName;
     }
 
-    public void setNextChild(UUID nextChild) {
+    public void setNextChild(@NotNull UUID nextChild) {
         removeChild(nextChild);
         this.children.add(this.FIRST_INDEX, nextChild);
     }
@@ -49,11 +55,11 @@ public class Task {
         this.children.add(this.children.remove(this.FIRST_INDEX));
     }
 
-    public void removeChild(UUID child) {
+    public void removeChild(@NotNull UUID child) {
         this.children.remove(child);
     }
 
-    public void addChild(Child child) {
+    public void addChild(@NotNull Child child) {
         UUID childUUID = child.getUUID();
         if (!this.children.contains(childUUID)) {
             this.children.add(childUUID);

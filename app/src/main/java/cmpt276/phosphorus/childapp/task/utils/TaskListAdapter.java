@@ -15,8 +15,8 @@ import androidx.annotation.Nullable;
 import java.util.List;
 
 import cmpt276.phosphorus.childapp.R;
-import cmpt276.phosphorus.childapp.model.ChildManager;
-import cmpt276.phosphorus.childapp.model.Task;
+import cmpt276.phosphorus.childapp.model.child.ChildManager;
+import cmpt276.phosphorus.childapp.model.task.Task;
 
 // ==============================================================================================
 //

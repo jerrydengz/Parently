@@ -1,8 +1,13 @@
-package cmpt276.phosphorus.childapp.model;
+package cmpt276.phosphorus.childapp.model.data;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import cmpt276.phosphorus.childapp.model.child.Child;
+import cmpt276.phosphorus.childapp.model.child.ChildManager;
+import cmpt276.phosphorus.childapp.model.task.Task;
+import cmpt276.phosphorus.childapp.model.task.TaskManager;
 
 // ==============================================================================================
 //

@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
 
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.coinflip.utils.CoinFlipResultAdapter;
-import cmpt276.phosphorus.childapp.model.Child;
-import cmpt276.phosphorus.childapp.model.ChildManager;
-import cmpt276.phosphorus.childapp.model.CoinFlipResult;
+import cmpt276.phosphorus.childapp.model.child.Child;
+import cmpt276.phosphorus.childapp.model.child.ChildManager;
+import cmpt276.phosphorus.childapp.model.coin.CoinFlipResult;
 
 // ==============================================================================================
 //

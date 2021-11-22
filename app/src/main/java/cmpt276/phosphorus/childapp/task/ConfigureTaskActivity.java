@@ -16,11 +16,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Objects;
 
 import cmpt276.phosphorus.childapp.R;
-import cmpt276.phosphorus.childapp.model.ChildManager;
-import cmpt276.phosphorus.childapp.model.DataManager;
-import cmpt276.phosphorus.childapp.model.DataType;
-import cmpt276.phosphorus.childapp.model.Task;
-import cmpt276.phosphorus.childapp.model.TaskManager;
+import cmpt276.phosphorus.childapp.model.child.ChildManager;
+import cmpt276.phosphorus.childapp.model.data.DataManager;
+import cmpt276.phosphorus.childapp.model.data.DataType;
+import cmpt276.phosphorus.childapp.model.task.Task;
+import cmpt276.phosphorus.childapp.model.task.TaskManager;
 import cmpt276.phosphorus.childapp.utils.Intents;
 
 // ==============================================================================================

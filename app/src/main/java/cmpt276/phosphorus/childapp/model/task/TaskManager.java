@@ -1,7 +1,10 @@
-package cmpt276.phosphorus.childapp.model;
+package cmpt276.phosphorus.childapp.model.task;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 // ==============================================================================================
 //
@@ -12,11 +15,7 @@ public class TaskManager {
 
     private static TaskManager instance;
 
-    private List<Task> allTasks; //not final for when saving is implemented
-
-    private TaskManager() {
-        this.allTasks = new ArrayList<>();
-    }
+    private List<Task> allTasks;
 
     public static TaskManager getInstance() {
         if (instance == null) {
@@ -25,15 +24,19 @@ public class TaskManager {
         return instance;
     }
 
-    public void setTasks(List<Task> tasks) {
-        this.allTasks = tasks;
+    private TaskManager() {
+        this.allTasks = new ArrayList<>();
     }
 
-    public void addTask(Task task) {
-        this.allTasks.add(task);
+    public void setTasks(@NotNull List<Task> tasks) {
+        this.allTasks = Objects.requireNonNull(tasks);
     }
 
-    public boolean containsName(String name) {
+    public void addTask(@NotNull Task task) {
+        this.allTasks.add(Objects.requireNonNull(task));
+    }
+
+    public boolean containsName(@NotNull String name) {
         return this.getTaskByName(name) != null;
     }
 
@@ -41,15 +44,11 @@ public class TaskManager {
         this.allTasks.remove(task);
     }
 
-    public void cycleChildren(Task task) {
-        task.cycleChildren();
+    public Task getTaskByName(@NotNull Task task) {
+        return this.getTaskByName(Objects.requireNonNull(task).getName());
     }
 
-    public Task getTaskByName(Task task) {
-        return this.getTaskByName(task.getName());
-    }
-
-    public Task getTaskByName(String taskName) {
+    public Task getTaskByName(@NotNull String taskName) {
         for (Task task : this.allTasks) {
             if (task.getName().equals(taskName)) {
                 return task;

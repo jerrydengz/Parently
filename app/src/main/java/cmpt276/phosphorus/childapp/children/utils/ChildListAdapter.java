@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 import cmpt276.phosphorus.childapp.R;
-import cmpt276.phosphorus.childapp.model.Child;
+import cmpt276.phosphorus.childapp.model.child.Child;
 
 // https://www.youtube.com/watch?v=WRANgDgM2Zg
 public class ChildListAdapter extends ArrayAdapter<Child> {
