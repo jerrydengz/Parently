@@ -2,7 +2,6 @@ package cmpt276.phosphorus.childapp.coinflip;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -90,7 +89,7 @@ public class ChooseSideActivity extends AppCompatActivity {
         textView.setTypeface(null, Typeface.BOLD);
 
         textView.setOnClickListener(view -> {
-            startActivity(ChooseChildForCoinFlip.makeIntent(this));
+            startActivity(ChooseChildForCoinFlip.makeIntent(this, this.child));
             finish();
         });
     }
@@ -111,7 +110,7 @@ public class ChooseSideActivity extends AppCompatActivity {
         }
 
         childPortrait.setOnClickListener(view -> {
-            startActivity(ChooseChildForCoinFlip.makeIntent(this));
+            startActivity(ChooseChildForCoinFlip.makeIntent(this, this.child));
             finish();
         });
     }

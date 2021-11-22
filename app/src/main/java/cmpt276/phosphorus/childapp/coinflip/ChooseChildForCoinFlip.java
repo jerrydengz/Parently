@@ -16,6 +16,7 @@ import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.children.utils.ChildListAdapter;
 import cmpt276.phosphorus.childapp.model.child.Child;
 import cmpt276.phosphorus.childapp.model.child.ChildManager;
+import cmpt276.phosphorus.childapp.utils.Intents;
 
 // ==============================================================================================
 //
@@ -24,9 +25,13 @@ import cmpt276.phosphorus.childapp.model.child.ChildManager;
 // ==============================================================================================
 public class ChooseChildForCoinFlip extends AppCompatActivity {
 
-    public static Intent makeIntent(Context context) {
-        return new Intent(context, ChooseChildForCoinFlip.class);
+    public static Intent makeIntent(Context context, Child curChild) {
+        Intent intent = new Intent(context, ChooseChildForCoinFlip.class);
+        intent.putExtra(Intents.CHILD_UUID_TAG, (curChild != null ? curChild.getUUID().toString() : null));
+        return intent;
     }
+
+    private Child curChild;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,8 @@ public class ChooseChildForCoinFlip extends AppCompatActivity {
         this.setTitle(getString(R.string.flip_coin_choose_child_title));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        this.extractIntent();
+
         this.noneBtn();
         this.setupList();
     }
@@ -43,9 +50,15 @@ public class ChooseChildForCoinFlip extends AppCompatActivity {
     // If user select the top left back button
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        ChooseSideActivity.makeIntent(this);
+        startActivity(ChooseSideActivity.makeIntent(this, this.curChild));
         finish();
         return super.onOptionsItemSelected(item);
+    }
+
+    private void extractIntent() {
+        Intent packageInfo = getIntent();
+        String intentChildUUID = packageInfo.getStringExtra(Intents.CHILD_UUID_TAG);
+        this.curChild = ChildManager.getInstance().getChildByUUID(intentChildUUID);
     }
 
     private void noneBtn() {
