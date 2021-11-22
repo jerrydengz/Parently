@@ -48,7 +48,7 @@
             android:textSize="32sp" />
 
         <ImageView
-            android:id="@+id/child_portrait_coin_flip"
+            android:id="@+id/childPortraitCoinFlip"
             android:layout_width="140sp"
             android:layout_height="140sp"
             android:layout_marginBottom="5sp"

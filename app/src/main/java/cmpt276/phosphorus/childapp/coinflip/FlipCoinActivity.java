@@ -155,8 +155,8 @@ public class FlipCoinActivity extends AppCompatActivity {
         boolean didWin = coinFlipResult.getDidWin();
 
         String toastMsg = getString((didWin ? R.string.flip_coin_win_toast : R.string.flip_coin_lose_toast))
-                .replace(":happy:", Emoji.HAPPY.get())
-                .replace(":sad:", Emoji.SAD.get());
+                .replace("%happy%", Emoji.HAPPY.get())
+                .replace("%sad%", Emoji.SAD.get());
         this.showLargeToast(toastMsg);
 
         this.resultSound = MediaPlayer.create(this, (didWin ? R.raw.victory : R.raw.defeat));

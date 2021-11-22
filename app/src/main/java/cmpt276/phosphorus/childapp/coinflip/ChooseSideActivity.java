@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -80,38 +79,39 @@ public class ChooseSideActivity extends AppCompatActivity {
 
     private void displayChildName() {
         TextView textView = findViewById(R.id.textSideChooseTitle);
-        if (this.child == null) {  // If there aren't any children created yet for example
-            textView.setVisibility(View.INVISIBLE);
-            return;
-        }
 
-        textView.setText(this.child.getName());
+        textView.setText(this.child == null ? getString(R.string.flip_coin_choose_child_none) : this.child.getName());
         textView.setTypeface(null, Typeface.BOLD);
 
         textView.setOnClickListener(view -> {
+            if (ChildManager.getInstance().isEmpty()) {
+                return;
+            }
+
             startActivity(ChooseChildForCoinFlip.makeIntent(this, this.child));
             finish();
         });
     }
 
     private void displayChildPortrait() {
-        ImageView childPortrait = findViewById(R.id.child_portrait_coin_flip);
+        ImageView childPortrait = findViewById(R.id.childPortraitCoinFlip);
 
-        if (this.child == null) {
-            childPortrait.setVisibility(View.GONE);
-            return;
-        }
-
-        if (this.child.getChildPortraitPath() != null) {
-            // https://github.com/bumptech/glide
-            Glide.with(this)
-                    .load(child.getChildPortraitPath())
-                    .into(childPortrait);
-        } else {
-            childPortrait.setImageResource(R.drawable.child_portrait_default);
+        if (this.child != null) {
+            if (this.child.getChildPortraitPath() != null) {
+                // https://github.com/bumptech/glide
+                Glide.with(this)
+                        .load(this.child.getChildPortraitPath())
+                        .into(childPortrait);
+            } else {
+                childPortrait.setImageResource(R.drawable.child_portrait_default);
+            }
         }
 
         childPortrait.setOnClickListener(view -> {
+            if (ChildManager.getInstance().isEmpty()) {
+                return;
+            }
+
             startActivity(ChooseChildForCoinFlip.makeIntent(this, this.child));
             finish();
         });
