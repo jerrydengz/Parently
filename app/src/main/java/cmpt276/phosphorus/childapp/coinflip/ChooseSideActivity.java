@@ -2,7 +2,6 @@ package cmpt276.phosphorus.childapp.coinflip;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -90,7 +89,7 @@ public class ChooseSideActivity extends AppCompatActivity {
         textView.setTypeface(null, Typeface.BOLD);
 
         textView.setOnClickListener(view -> {
-            startActivity(ChooseChildForCoinFlip.makeIntent(this));
+            startActivity(ChooseChildForCoinFlip.makeIntent(this, this.child));
             finish();
         });
     }
@@ -98,20 +97,20 @@ public class ChooseSideActivity extends AppCompatActivity {
     private void displayChildPortrait() {
         ImageView childPortrait = findViewById(R.id.child_portrait_coin_flip);
 
-        if(this.child == null){
+        if (this.child == null) {
             childPortrait.setVisibility(View.GONE);
             return;
-        } else if(this.child.getChildPortraitPath() != null){
+        } else if (this.child.getChildPortraitPath() != null) {
             // https://github.com/bumptech/glide
             Glide.with(this)
-                 .load(child.getChildPortraitPath())
-                 .into(childPortrait);
-        }else{
+                    .load(child.getChildPortraitPath())
+                    .into(childPortrait);
+        } else {
             childPortrait.setImageResource(R.drawable.child_portrait_default);
         }
 
         childPortrait.setOnClickListener(view -> {
-            startActivity(ChooseChildForCoinFlip.makeIntent(this));
+            startActivity(ChooseChildForCoinFlip.makeIntent(this, this.child));
             finish();
         });
     }
