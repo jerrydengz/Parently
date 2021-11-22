@@ -5,7 +5,7 @@ import java.util.Locale;
 
 //=================================
 //
-//Converts time into a readable string of minutes and seconds
+// Converts time into a readable string of minutes and seconds
 //
 //=================================
 public class TimeConversionUtils {

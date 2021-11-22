@@ -1,7 +1,8 @@
 package cmpt276.phosphorus.childapp.timeout.utils;
 
 
-import static cmpt276.phosphorus.childapp.timeout.utils.TimeConversionUtils.*;
+import static cmpt276.phosphorus.childapp.timeout.utils.TimeConversionUtils.COUNT_DOWN_INTERVAL;
+import static cmpt276.phosphorus.childapp.timeout.utils.TimeConversionUtils.NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS;
 import static cmpt276.phosphorus.childapp.timeout.utils.TimeConversionUtils.timeLeftFormatter;
 
 import android.app.NotificationChannel;
@@ -33,6 +34,7 @@ import cmpt276.phosphorus.childapp.timeout.TimeoutActivity;
 //
 // ==============================================================================================
 public class TimeoutNotificationService extends Service {
+
     public static final String CHANNEL_ID = "TimerNotificationServiceChannel";
 
     private boolean isTimerRunning;
@@ -55,10 +57,11 @@ public class TimeoutNotificationService extends Service {
     public void onDestroy() {
         super.onDestroy();
 
-        if(cdTimer != null) {
+        if (cdTimer != null) {
             cdTimer.cancel();
             isTimerRunning = false;
         }
+
         stopSelf();
     }
 
@@ -96,8 +99,8 @@ public class TimeoutNotificationService extends Service {
 
     private void createTimeoutNotification() {
         Intent notificationIntent = new Intent(this, TimeoutActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(
-                this, 0, notificationIntent, 0);
+        PendingIntent pendingIntent =
+                PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
         notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentText(getString(R.string.timeout_remaining))
@@ -111,16 +114,14 @@ public class TimeoutNotificationService extends Service {
     }
 
     private void startServiceTimer() {
-        SharedPreferences prefs = getSharedPreferences(
-                TimeoutPrefConst.PREFERENCE_PREF, MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(TimeoutPrefConst.PREFERENCE_PREF, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
-        long startTime = prefs.getLong(TimeoutPrefConst.START_TIME,
-                NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS);
+        long startTime = prefs.getLong(TimeoutPrefConst.START_TIME, NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS);
         long timeLeft = prefs.getLong(TimeoutPrefConst.TIME_LEFT, startTime);
 
         endTime = System.currentTimeMillis() + timeLeft;
-        if(isTimerRunning) {
+        if (isTimerRunning) {
             endTime = prefs.getLong(TimeoutPrefConst.END_TIME, 0);
             timeLeft = endTime - System.currentTimeMillis();
         }
@@ -139,10 +140,9 @@ public class TimeoutNotificationService extends Service {
                         endTime - System.currentTimeMillis());
                 editor.apply();
 
-                if(notification != null) {
+                if (notification != null) {
                     notification.setContentTitle(timeLeftFormatted);
-                    NotificationManager notificationManager = (NotificationManager)
-                            getSystemService(Context.NOTIFICATION_SERVICE);
+                    NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                     notificationManager.notify(1, notification.build());
                 }
             }

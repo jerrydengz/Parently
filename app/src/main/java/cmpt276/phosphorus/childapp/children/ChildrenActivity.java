@@ -78,8 +78,7 @@ public class ChildrenActivity extends AppCompatActivity {
         // switch to ChildConfigureActivity to edit selected child object
         listView.setOnItemClickListener((adapter, view, position, arg) -> {
             Child selectedChild = childManager.getAllChildren().get(position);
-            Intent intent = ChildConfigureActivity.makeIntent(this, selectedChild);
-            startActivity(intent);
+            startActivity(ChildConfigureActivity.makeIntent(this, selectedChild));
         });
     }
 

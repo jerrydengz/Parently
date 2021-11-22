@@ -1,13 +1,13 @@
 package cmpt276.phosphorus.childapp.help;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Objects;
 
@@ -19,6 +19,10 @@ import cmpt276.phosphorus.childapp.R;
 //
 // ==============================================================================================
 public class HelpActivity extends AppCompatActivity {
+
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, HelpActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,19 +42,15 @@ public class HelpActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static Intent makeIntent(Context context) {
-        return new Intent(context, HelpActivity.class);
-    }
-
     private void setLinkFunctionality() {
         // https://stackoverflow.com/questions/2734270/how-to-make-links-in-a-textview-clickable
-        TextView coinImgLink = findViewById(R.id.coin_img_link);
-        TextView timerImgLink = findViewById(R.id.timer_relax_bg_link);
-        TextView appIconLink = findViewById(R.id.app_icon_link);
-        TextView menuIconLink = findViewById(R.id.menu_icon_link);
-        TextView appBackgroundLink = findViewById(R.id.app_bg_link);
-        TextView victorySoundLink = findViewById(R.id.victory_sound_link);
-        TextView defeatSoundLink = findViewById(R.id.defeat_sound_link);
+        TextView coinImgLink = findViewById(R.id.coinImgLink);
+        TextView timerImgLink = findViewById(R.id.timerRelaxBgLink);
+        TextView appIconLink = findViewById(R.id.appIconLink);
+        TextView menuIconLink = findViewById(R.id.menuIconLink);
+        TextView appBackgroundLink = findViewById(R.id.appBgLink);
+        TextView victorySoundLink = findViewById(R.id.victorySoundLink);
+        TextView defeatSoundLink = findViewById(R.id.defeatSoundLink);
 
         // Sets the hyperlink functionality to be clickable
         coinImgLink.setMovementMethod(LinkMovementMethod.getInstance());

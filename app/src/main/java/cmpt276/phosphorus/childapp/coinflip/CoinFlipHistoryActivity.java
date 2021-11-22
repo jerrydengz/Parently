@@ -55,13 +55,15 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
 
-        return all.stream().sorted(Comparator.comparing(CoinFlipResult::getTime).reversed()).collect(Collectors.toList());
+        return all.stream()
+                .sorted(Comparator.comparing(CoinFlipResult::getTime).reversed())
+                .collect(Collectors.toList());
     }
 
     private void makeList() {
-        ListView listView = findViewById(R.id.listHistory);
+        ListView listHistory = findViewById(R.id.listHistory);
         CoinFlipResultAdapter adapter = new CoinFlipResultAdapter(this, this.sortedResultsByTimes());
-        listView.setAdapter(adapter);
+        listHistory.setAdapter(adapter);
     }
 
 }

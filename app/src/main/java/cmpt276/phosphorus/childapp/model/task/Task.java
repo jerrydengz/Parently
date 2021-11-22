@@ -42,9 +42,8 @@ public class Task {
         this.name = newName;
     }
 
-    public void setNextChild(@NotNull UUID nextChild) {
-        removeChild(nextChild);
-        this.children.add(this.FIRST_INDEX, nextChild);
+    public UUID getChild(int pos) {
+        return this.children.get(pos);
     }
 
     public UUID getCurrentChild() {
@@ -68,10 +67,6 @@ public class Task {
         if (!this.children.contains(childUUID)) {
             this.children.add(childUUID);
         }
-    }
-
-    public UUID getChild(int pos) {
-        return this.children.get(pos);
     }
 
     public boolean isEmptyChildList() {

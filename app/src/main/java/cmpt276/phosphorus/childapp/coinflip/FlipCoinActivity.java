@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Objects;
 import java.util.Random;
 
 import cmpt276.phosphorus.childapp.R;
@@ -65,7 +66,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         setContentView(R.layout.activity_flip_coin);
 
         this.setTitle(getString(R.string.flip_coin_flip_action_title));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         this.extractIntentData();
         this.coinSide = this.winningSide; // Set's the inital coin side to the one the person picked
@@ -82,8 +83,8 @@ public class FlipCoinActivity extends AppCompatActivity {
     }
 
     private void randomlyChooseSide() {
-        Button button = findViewById(R.id.btnFlip);
-        button.setVisibility(View.INVISIBLE);
+        Button btnFlip = findViewById(R.id.btnFlip);
+        btnFlip.setVisibility(View.INVISIBLE);
 
         final int MIN_FLIPS = 10;
         final int MAX_FLIPS = 15;
@@ -106,8 +107,8 @@ public class FlipCoinActivity extends AppCompatActivity {
         long afterAllAnimations = (getDelayBetween(totalRandomFlips) * 2L) * totalRandomFlips;
         (new Handler()).postDelayed(() -> {
             this.sideLanded();
-            button.setVisibility(View.VISIBLE);
-            button.setText(getString(R.string.flip_coin_finish_button_text));
+            btnFlip.setVisibility(View.VISIBLE);
+            btnFlip.setText(getString(R.string.flip_coin_finish_button_text));
         }, afterAllAnimations + 50); // Extra 50ms just in case
     }
 
@@ -143,11 +144,11 @@ public class FlipCoinActivity extends AppCompatActivity {
         // Means there aren't any avaliable children (i.e. empty)
         CoinFlipResult coinFlipResult = new CoinFlipResult(this.winningSide, this.coinSide);
         if (this.child != null) {
-            ChildManager childManager = ChildManager.getInstance();
             this.child.addCoinFlipResult(coinFlipResult);
 
-            childManager.clearAllLastPicked(); // Just in case
+            ChildManager.getInstance().clearAllLastPicked(); // Just in case
             this.child.setLastPicked(true);
+
             DataManager.getInstance(this).saveData(DataType.CHILDREN);
         }
 
@@ -199,8 +200,8 @@ public class FlipCoinActivity extends AppCompatActivity {
     }
 
     private void createFlipBtn() {
-        Button button = findViewById(R.id.btnFlip);
-        button.setOnClickListener(view -> {
+        Button btnFlip = findViewById(R.id.btnFlip);
+        btnFlip.setOnClickListener(view -> {
             if (!this.hasFlipped) {
                 this.hasFlipped = true; // Makes it so next time we press the btn we go back
 

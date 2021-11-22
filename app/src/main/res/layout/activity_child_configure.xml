@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_edit_text"
+        app:layout_constraintTop_toBottomOf="@+id/nameEditText"
         app:layout_constraintVertical_bias="0.356">
 
         <Button
@@ -53,7 +53,7 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/name_edit_text"
+        android:id="@+id/nameEditText"
         android:layout_width="329dp"
         android:layout_height="78dp"
         android:layout_marginBottom="276dp"
@@ -68,14 +68,14 @@
         tools:ignore="TextContrastCheck" />
 
     <TextView
-        android:id="@+id/configure_child_title"
+        android:id="@+id/configureChildTitle"
         android:layout_width="375sp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/child_name_txt"
         android:textAlignment="center"
         android:textSize="36sp"
-        app:layout_constraintBottom_toTopOf="@+id/name_edit_text"
+        app:layout_constraintBottom_toTopOf="@+id/nameEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -86,10 +86,10 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginTop="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/name_edit_text"
+        app:layout_constraintBottom_toTopOf="@+id/nameEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/configure_child_title"
+        app:layout_constraintTop_toBottomOf="@+id/configureChildTitle"
         app:srcCompat="@drawable/child_portrait_default"
         tools:ignore="ContentDescription,ImageContrastCheck" />
 

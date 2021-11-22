@@ -17,7 +17,7 @@
         tools:ignore="SmallSp" />
 
     <TextView
-        android:id="@+id/task_name"
+        android:id="@+id/taskName"
         android:layout_width="355sp"
         android:layout_height="wrap_content"
         android:text="@string/task_name_placeholder"
@@ -28,14 +28,14 @@
         tools:ignore="TextContrastCheck" />
 
     <TextView
-        android:id="@+id/current_turn_child_name"
+        android:id="@+id/currentTurnChildName"
         android:layout_width="355dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="@string/current_turn_display"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/task_name"
+        app:layout_constraintTop_toBottomOf="@+id/taskName"
         tools:ignore="TextContrastCheck" />
 
     <Space
@@ -43,7 +43,7 @@
         android:layout_height="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/current_turn_child_name"
+        app:layout_constraintTop_toBottomOf="@+id/currentTurnChildName"
         tools:ignore="SmallSp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,8 @@
 package cmpt276.phosphorus.childapp.timeout;
 
-import static cmpt276.phosphorus.childapp.timeout.utils.TimeConversionUtils.*;
+import static cmpt276.phosphorus.childapp.timeout.utils.TimeConversionUtils.COUNT_DOWN_INTERVAL;
+import static cmpt276.phosphorus.childapp.timeout.utils.TimeConversionUtils.NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS;
+import static cmpt276.phosphorus.childapp.timeout.utils.TimeConversionUtils.timeLeftFormatter;
 
 import android.app.AlertDialog;
 import android.app.NotificationManager;
@@ -145,9 +147,7 @@ public class TimeoutActivity extends AppCompatActivity {
     }
 
     private void setVisibilities() {
-        int currentView = isTimerRunning ?
-                View.INVISIBLE :
-                View.VISIBLE;
+        int currentView = isTimerRunning ? View.INVISIBLE : View.VISIBLE;
         btnReset.setVisibility(currentView);
         timeGroup.setVisibility(currentView);
         customTimeInput.setVisibility(currentView);
@@ -160,26 +160,20 @@ public class TimeoutActivity extends AppCompatActivity {
             btnStartAndPause.setVisibility(View.INVISIBLE);
         }
 
-        TextView cdText = findViewById(R.id.tvCountDown);
-        int cdTextColour =  isTimerRunning?
-                R.color.white :
-                R.color.black;
-        cdText.setTextColor(ContextCompat.getColor(this, cdTextColour));
+        TextView tvCountDown = findViewById(R.id.tvCountDown);
+        int cdTextColour = isTimerRunning ? R.color.white : R.color.black;
+        tvCountDown.setTextColor(ContextCompat.getColor(this, cdTextColour));
 
-        int background =
-                isTimerRunning ?
-                R.drawable.relaxing_background :
-                R.drawable.lavender_min_1;
+        int background = isTimerRunning ? R.drawable.relaxing_background : R.drawable.lavender_min_1;
         ConstraintLayout constraintLayout = findViewById(R.id.timeoutLayout);
         constraintLayout.setBackgroundResource(background);
     }
 
     private void createTimeOptions() {
-        timeGroup = findViewById(R.id.radio_group_time_options);
+        timeGroup = findViewById(R.id.radioGroupTimeOptions);
         int[] timeOptions = getResources().getIntArray(R.array.time_options);
 
-        SharedPreferences prefs = getSharedPreferences(
-                TimeoutPrefConst.PREFERENCE_PREF, MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(TimeoutPrefConst.PREFERENCE_PREF, MODE_PRIVATE);
 
         for (int options : timeOptions) {
             RadioButton button = new RadioButton(this);
@@ -195,8 +189,7 @@ public class TimeoutActivity extends AppCompatActivity {
             });
             timeGroup.addView((button));
 
-            if (options * NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS ==
-                    prefs.getLong(TimeoutPrefConst.START_TIME, startTime)) {
+            if (options * NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS == prefs.getLong(TimeoutPrefConst.START_TIME, startTime)) {
                 button.setChecked(true);
             }
         }
@@ -216,20 +209,22 @@ public class TimeoutActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 String customInput = customTimeInput.getText().toString();
                 timeGroup.clearCheck();
-                if (!customInput.isEmpty()) {
-                    long input = Long.parseLong(customInput);
-                    btnReset.setVisibility(View.INVISIBLE);
-                    if (input != 0) {
-                        startTime = input * NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS;
-                        timeLeft = startTime;
-                        updateCountDownText();
-                        btnStartAndPause.setVisibility(View.VISIBLE);
-                    } else {
-                        // Unique case so not using setVisibilities()
-                        timeLeft = 0;
-                        updateCountDownText();
-                        btnStartAndPause.setVisibility(View.INVISIBLE);
-                    }
+                if (customInput.isEmpty()) {
+                    return;
+                }
+
+                long input = Long.parseLong(customInput);
+                btnReset.setVisibility(View.INVISIBLE);
+                if (input != 0) {
+                    startTime = input * NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS;
+                    timeLeft = startTime;
+                    updateCountDownText();
+                    btnStartAndPause.setVisibility(View.VISIBLE);
+                } else {
+                    // Unique case so not using setVisibilities()
+                    timeLeft = 0;
+                    updateCountDownText();
+                    btnStartAndPause.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -246,8 +241,7 @@ public class TimeoutActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-        SharedPreferences prefs = getSharedPreferences(
-                TimeoutPrefConst.PREFERENCE_PREF, MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(TimeoutPrefConst.PREFERENCE_PREF, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
         editor.putLong(TimeoutPrefConst.START_TIME, startTime);
@@ -260,6 +254,7 @@ public class TimeoutActivity extends AppCompatActivity {
         if (isTimerRunning) {
             startTimeoutNotificationService();
         }
+
         if (cdTimer != null) {
             cdTimer.cancel();
         }
@@ -272,14 +267,11 @@ public class TimeoutActivity extends AppCompatActivity {
         stopTimeoutNotificationService();
         stopNotification(1);
 
-        SharedPreferences prefs = getSharedPreferences(
-                TimeoutPrefConst.PREFERENCE_PREF, MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(TimeoutPrefConst.PREFERENCE_PREF, MODE_PRIVATE);
 
-        startTime = prefs.getLong(TimeoutPrefConst.START_TIME,
-                NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS);
+        startTime = prefs.getLong(TimeoutPrefConst.START_TIME, NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS);
         timeLeft = prefs.getLong(TimeoutPrefConst.TIME_LEFT, startTime);
-        isTimerRunning = prefs.getBoolean(
-                TimeoutPrefConst.IS_TIMER_RUNNING, false);
+        isTimerRunning = prefs.getBoolean(TimeoutPrefConst.IS_TIMER_RUNNING, false);
 
         updateCountDownText();
         setVisibilities();
@@ -317,8 +309,7 @@ public class TimeoutActivity extends AppCompatActivity {
         alertDialog.setOnShowListener(dialog -> {
             // Code from https://stackoverflow.com/questions/27473245/how-to-play-ringtone-sound-in-android-with-infinite-loop/27473353
             Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-            MediaPlayer player = MediaPlayer.create(getApplicationContext(),
-                    notification);
+            MediaPlayer player = MediaPlayer.create(getApplicationContext(), notification);
             player.setLooping(true);
             player.start();
 
@@ -328,13 +319,14 @@ public class TimeoutActivity extends AppCompatActivity {
             int[] amplitudes = {VIBRATION_AMPLITUDE, NO_AMPLITUDE};
             vibrator.vibrate(VibrationEffect.createWaveform(timings, amplitudes, 0));
 
-            Button btn = view.findViewById(R.id.btnStopTimeout);
-            btn.setOnClickListener(v -> {
+            Button btnStopTimeout = view.findViewById(R.id.btnStopTimeout);
+            btnStopTimeout.setOnClickListener(v -> {
                 player.stop();
                 vibrator.cancel();
                 dialog.dismiss();
             });
         });
+
         alertDialog.setCancelable(false);
         alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.show();
@@ -351,8 +343,7 @@ public class TimeoutActivity extends AppCompatActivity {
     }
 
     public void stopNotification(int id) {
-        NotificationManager notificationManager = (NotificationManager)
-                getSystemService(NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.cancel(id);
     }
 }

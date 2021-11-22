@@ -20,7 +20,7 @@ import cmpt276.phosphorus.childapp.model.coin.CoinFlipResult;
 // ==============================================================================================
 public class Child {
 
-    private UUID uuid;
+    private final UUID uuid;
     private final List<CoinFlipResult> coinFlipResults;
     private String name;
     private boolean lastPicked;
@@ -39,16 +39,6 @@ public class Child {
         this.lastPicked = lastPicked;
     }
 
-    public int getTotalLosses() {
-        // Ex 10 flips:
-        // 10 flips - 7 wins = 3 losses
-        return this.coinFlipResults.size() - this.getTotalWins();
-    }
-
-    public int getTotalWins() {
-        return (int) this.coinFlipResults.stream().filter(CoinFlipResult::getDidWin).count();
-    }
-
     public UUID getUUID() {
         return this.uuid;
     }
@@ -63,10 +53,6 @@ public class Child {
 
     public boolean isLastPicked() {
         return this.lastPicked;
-    }
-
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
     }
 
     public void setName(@NotNull String name) {

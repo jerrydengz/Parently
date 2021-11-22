@@ -31,8 +31,6 @@ import cmpt276.phosphorus.childapp.utils.Intents;
 // ==============================================================================================
 public class ChooseSideActivity extends AppCompatActivity {
 
-    private Child child;
-
     public static Intent makeIntent(Context context) {
         return ChooseSideActivity.makeIntent(context, ChildManager.getInstance().getNextCoinFlipper());
     }
@@ -42,6 +40,8 @@ public class ChooseSideActivity extends AppCompatActivity {
         intent.putExtra(Intents.CHILD_UUID_TAG, (child != null ? child.getUUID().toString() : null));
         return intent;
     }
+
+    private Child child;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +100,9 @@ public class ChooseSideActivity extends AppCompatActivity {
         if (this.child == null) {
             childPortrait.setVisibility(View.GONE);
             return;
-        } else if (this.child.getChildPortraitPath() != null) {
+        }
+
+        if (this.child.getChildPortraitPath() != null) {
             // https://github.com/bumptech/glide
             Glide.with(this)
                     .load(child.getChildPortraitPath())
@@ -116,16 +118,16 @@ public class ChooseSideActivity extends AppCompatActivity {
     }
 
     private void btnChooseHead() {
-        ImageButton imgBtn = findViewById(R.id.imgBtnHeads);
-        imgBtn.setOnClickListener(view -> {
+        ImageButton imgBtnHeads = findViewById(R.id.imgBtnHeads);
+        imgBtnHeads.setOnClickListener(view -> {
             startActivity(FlipCoinActivity.makeIntent(this, this.child, CoinSide.HEAD));
             finish(); // We don't want users coming back here
         });
     }
 
     private void btnChooseTails() {
-        ImageButton imgBtn = findViewById(R.id.imgBtnTails);
-        imgBtn.setOnClickListener(view -> {
+        ImageButton imgBtnTails = findViewById(R.id.imgBtnTails);
+        imgBtnTails.setOnClickListener(view -> {
             startActivity(FlipCoinActivity.makeIntent(this, this.child, CoinSide.TAILS));
             finish(); // We don't want users coming back here
         });

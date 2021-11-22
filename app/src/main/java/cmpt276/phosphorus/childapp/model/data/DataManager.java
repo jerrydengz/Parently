@@ -18,6 +18,7 @@ import java.io.Writer;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,10 +35,9 @@ public class DataManager {
 
     public DataManager(Context context) {
         this.files = new HashMap<>();
+
         File dir = context.getFilesDir();
-        for (DataType type : DataType.values()) {
-            this.files.put(type, new File(dir, type.getFileName()));
-        }
+        Arrays.stream(DataType.values()).forEach(type -> this.files.put(type, new File(dir, type.getFileName())));
     }
 
     public static DataManager getInstance(Context context) {

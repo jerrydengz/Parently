@@ -3,7 +3,6 @@ package cmpt276.phosphorus.childapp.task;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -29,11 +28,11 @@ import cmpt276.phosphorus.childapp.model.task.Task;
 import cmpt276.phosphorus.childapp.model.task.TaskManager;
 import cmpt276.phosphorus.childapp.task.utils.TaskListAdapter;
 
-//====================================
+// ==============================================================================================
 //
-//Displays all tasks and allows user to add/delete/edit tasks
+// Displays all tasks and allows user to add/delete/edit tasks
 //
-//====================================
+// ==============================================================================================
 public class TaskActivity extends AppCompatActivity {
 
     private TaskManager taskManager;
@@ -52,7 +51,7 @@ public class TaskActivity extends AppCompatActivity {
         this.setTitle(getString(R.string.task_activity_title));
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        taskManager = TaskManager.getInstance();
+        this.taskManager = TaskManager.getInstance();
 
         this.createConfigureTaskBtn();
         this.populateTaskListView();
@@ -72,18 +71,15 @@ public class TaskActivity extends AppCompatActivity {
     }
 
     private void createConfigureTaskBtn() {
-        FloatingActionButton button = findViewById(R.id.add_task_fab);
-
-        // NOTE: preliminary, model after methods in ChildActivity.java to configure children
-        button.setOnClickListener(view -> startActivity(ConfigureTaskActivity.makeIntent(this)));
+        FloatingActionButton addTaskFab = findViewById(R.id.addTaskFab);
+        addTaskFab.setOnClickListener(view -> startActivity(ConfigureTaskActivity.makeIntent(this)));
     }
 
     // https://stackoverflow.com/questions/13341560/how-to-create-a-custom-dialog-box-in-android
     private void displayTaskDialog(Task selected) {
         AlertDialog.Builder taskDialog = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
 
-        View dialogView = inflater.inflate(R.layout.task_dialog, null);
+        View dialogView = this.getLayoutInflater().inflate(R.layout.task_dialog, null);
         taskDialog.setView(dialogView);
 
         String dialogTitle = getResources().getString(R.string.task_info_title).replace("%name%", selected.getName());
@@ -92,13 +88,13 @@ public class TaskActivity extends AppCompatActivity {
 
         Child currChild = ChildManager.getInstance().getChildByUUID(selected.getCurrentChild());
         ImageView taskChildIcon = dialogView.findViewById(R.id.imgTaskChildIcon);
-        if(currChild != null) {
-            if(currChild.getChildPortraitPath() != null){
+        if (currChild != null) {
+            if (currChild.getChildPortraitPath() != null) {
                 Glide.with(this)
                         .load(currChild.getChildPortraitPath())
                         .into(taskChildIcon);
             }
-        }else{
+        } else {
             taskChildIcon.setVisibility(View.GONE);
         }
 
@@ -125,7 +121,7 @@ public class TaskActivity extends AppCompatActivity {
 
         TextView textCurrentTurn = dialogView.findViewById(R.id.textCurrentTurn);
         String childName = (currChild == null)
-                ? "Not Available"
+                ? getString(R.string.child_not_available)
                 : currChild.getName();
 
         String currentChild = getResources().getString(R.string.task_info_current_child).replace("%name%", childName);

@@ -26,6 +26,7 @@ public enum DataType {
             ChildManager.getInstance().setChildren((ArrayList<Child>) data);
         }
     },
+
     TASKS(Task.class) {
         @Override
         List<?> getDataToSave() {
@@ -46,7 +47,7 @@ public enum DataType {
 
     abstract List<?> getDataToSave();
 
-    abstract <T> void load(List<T> data); // todo ?
+    abstract <T> void load(List<T> data);
 
     public Class getTypeClass() {
         return this.typeClass;

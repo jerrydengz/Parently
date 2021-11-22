@@ -30,8 +30,8 @@
     <string name="flip_coin_flip_head_title">Heads</string>
     <string name="flip_coin_flip_tails_title">Tails</string>
     <string name="flip_coin_finish_button_text">OK</string>
-    <string name="flip_coin_win_toast">You won! :happy:</string>
-    <string name="flip_coin_lose_toast">You lost :sad:</string>
+    <string name="flip_coin_win_toast">You won! 😁</string>
+    <string name="flip_coin_lose_toast">You lost ☹</string>
     <string name="flip_coin_choose_child_none">NONE</string>
 
     <string name="title_activity_children_configure">ChildrenConfigureActivity</string>
@@ -65,8 +65,8 @@
     <string name="dialog_title_delete">Delete Child</string>
     <string name="dialog_msg_delete">Are you sure you want to delete this child? 👀👮⚠🚨</string>
     <string name="add_child_title"><b>New Child</b></string>
-    <string name="flip_choice_label">"Coin Choice: "</string>
-    <string name="flip_result_label">"Coin Result: "</string>
+    <string name="flipChoiceLabel">"Coin Choice: "</string>
+    <string name="flipResultLabel">"Coin Result: "</string>
     <string name="gallery">Gallery</string>
     <string name="camera">Camera</string>
 
@@ -105,5 +105,6 @@
     <string name="empty_child_task">No children</string>
     <string name="activity_title_add_task">Add New Task</string>
     <string name="activity_title_edit_task">Edit Task</string>
+    <string name="child_not_available">Not Available</string>
 
 </resources>

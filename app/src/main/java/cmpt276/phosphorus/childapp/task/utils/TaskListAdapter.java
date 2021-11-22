@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import java.util.List;
 
 import cmpt276.phosphorus.childapp.R;
+import cmpt276.phosphorus.childapp.model.child.Child;
 import cmpt276.phosphorus.childapp.model.child.ChildManager;
 import cmpt276.phosphorus.childapp.model.task.Task;
 
@@ -24,6 +25,7 @@ import cmpt276.phosphorus.childapp.model.task.Task;
 //
 // ==============================================================================================
 public class TaskListAdapter extends ArrayAdapter<Task> {
+
     public TaskListAdapter(Context context, List<Task> tasks) {
         super(context, R.layout.task_item, tasks);
     }
@@ -40,18 +42,17 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
 
         Task currentTask = getItem(position);
 
-        // Set the name of the task
-        TextView taskName = taskView.findViewById(R.id.task_name);
+        TextView taskName = taskView.findViewById(R.id.taskName);
         taskName.setText(currentTask.getName());
         taskName.setTextColor(taskView.getResources().getColor(R.color.black, null));
         taskName.setTypeface(null, Typeface.BOLD);
 
         // Set the name of the child assigned to the task
-        TextView childTurnName = taskView.findViewById(R.id.current_turn_child_name);
-        String childName = currentTask.isEmptyChildList() ? taskView.getResources().getString(R.string.empty_child_task) :
-                ChildManager.getInstance()
-                        .getChildByUUID(currentTask.getCurrentChild())
-                        .getName();
+        TextView childTurnName = taskView.findViewById(R.id.currentTurnChildName);
+        Child child = ChildManager.getInstance().getChildByUUID(currentTask.getCurrentChild());
+        String childName = currentTask.isEmptyChildList() || (child == null)
+                ? taskView.getResources().getString(R.string.empty_child_task)
+                : child.getName();
         String dialogTitle = taskView.getResources().getString(R.string.current_turn_display).replace("%name%", childName);
 
         childTurnName.setText(dialogTitle);

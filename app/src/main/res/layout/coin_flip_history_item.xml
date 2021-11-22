@@ -7,7 +7,7 @@
     android:background="@drawable/list_view_background">
 
     <ImageView
-        android:id="@+id/coin_flip_result_icon"
+        android:id="@+id/coinFlipResultIcon"
         android:layout_width="81dp"
         android:layout_height="87dp"
         android:layout_marginTop="28dp"
@@ -25,7 +25,7 @@
         android:layout_height="20sp"
         android:layout_marginStart="348dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/coin_flip_result_icon"
+        app:layout_constraintTop_toBottomOf="@+id/coinFlipResultIcon"
         tools:ignore="SmallSp" />
 
     <Space
@@ -38,7 +38,7 @@
         tools:ignore="SmallSp" />
 
     <TextView
-        android:id="@+id/name_flip_history"
+        android:id="@+id/nameFlipHistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -52,14 +52,14 @@
         tools:ignore="TextContrastCheck" />
 
     <ImageView
-        android:id="@+id/child_portrait_flip_history"
+        android:id="@+id/childPortraitFlipHistory"
         android:layout_width="76dp"
         android:layout_height="74dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="4dp"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_flip_history"
+        app:layout_constraintTop_toBottomOf="@+id/nameFlipHistory"
         app:srcCompat="@drawable/child_portrait_default"
         tools:ignore="ContentDescription" />
 
@@ -70,13 +70,13 @@
         android:divider="@android:color/transparent"
         android:dividerHeight="5.0sp"
         android:orientation="vertical"
-        app:layout_constraintEnd_toStartOf="@+id/coin_flip_result_icon"
+        app:layout_constraintEnd_toStartOf="@+id/coinFlipResultIcon"
         app:layout_constraintHorizontal_bias="0.411"
-        app:layout_constraintStart_toEndOf="@+id/child_portrait_flip_history"
-        app:layout_constraintTop_toBottomOf="@+id/name_flip_history">
+        app:layout_constraintStart_toEndOf="@+id/childPortraitFlipHistory"
+        app:layout_constraintTop_toBottomOf="@+id/nameFlipHistory">
 
         <TextView
-            android:id="@+id/coin_flip_choice"
+            android:id="@+id/coinFlipChoice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
@@ -87,26 +87,26 @@
             tools:layout_editor_absoluteY="51dp" />
 
         <TextView
-            android:id="@+id/flip_result"
+            android:id="@+id/flipResult"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text=""
             android:textColor="@color/black"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/coin_flip_choice"
+            app:layout_constraintTop_toBottomOf="@+id/coinFlipChoice"
             tools:ignore="TextContrastCheck"
             tools:layout_editor_absoluteX="106dp" />
 
         <TextView
-            android:id="@+id/flip_date_time"
+            android:id="@+id/flipDateTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text=""
             android:textColor="@color/black"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/flip_result"
+            app:layout_constraintTop_toBottomOf="@+id/flipResult"
             tools:ignore="TextContrastCheck"
             tools:layout_editor_absoluteX="106dp" />
     </LinearLayout>

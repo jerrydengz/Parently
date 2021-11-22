@@ -11,6 +11,7 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.children.utils.ChildListAdapter;
@@ -31,7 +32,7 @@ public class ChooseChildForCoinFlip extends AppCompatActivity {
         return intent;
     }
 
-    private Child curChild;
+    private Child currentChild;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class ChooseChildForCoinFlip extends AppCompatActivity {
         setContentView(R.layout.activity_choose_child_for_coin_flip);
 
         this.setTitle(getString(R.string.flip_coin_choose_child_title));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         this.extractIntent();
 
@@ -50,14 +51,14 @@ public class ChooseChildForCoinFlip extends AppCompatActivity {
     // If user select the top left back button
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        startActivity(ChooseSideActivity.makeIntent(this, this.curChild));
+        startActivity(ChooseSideActivity.makeIntent(this, this.currentChild));
         finish();
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onBackPressed() {
-        startActivity(ChooseSideActivity.makeIntent(this, this.curChild));
+        startActivity(ChooseSideActivity.makeIntent(this, this.currentChild));
         finish();
         super.onBackPressed();
     }
@@ -65,12 +66,12 @@ public class ChooseChildForCoinFlip extends AppCompatActivity {
     private void extractIntent() {
         Intent packageInfo = getIntent();
         String intentChildUUID = packageInfo.getStringExtra(Intents.CHILD_UUID_TAG);
-        this.curChild = ChildManager.getInstance().getChildByUUID(intentChildUUID);
+        this.currentChild = ChildManager.getInstance().getChildByUUID(intentChildUUID);
     }
 
     private void noneBtn() {
-        Button btn = findViewById(R.id.btnChooseNoNoneChild);
-        btn.setOnClickListener(view -> {
+        Button btnChooseNoNoneChild = findViewById(R.id.btnChooseNoNoneChild);
+        btnChooseNoNoneChild.setOnClickListener(view -> {
             startActivity(ChooseSideActivity.makeIntent(this, null));
             finish();
         });

@@ -53,6 +53,7 @@ public class ConfigureTaskActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         this.extractIntent();
+        this.setTitle(this.isEditing ? R.string.activity_title_edit_task : R.string.activity_title_add_task);
 
         this.updateDisplay();
         this.updateTitle();
@@ -70,10 +71,10 @@ public class ConfigureTaskActivity extends AppCompatActivity {
         Intent packageInfo = getIntent();
         String intentTaskName = packageInfo.getStringExtra(Intents.TASK_NAME_TAG);
         Task editedTask = TaskManager.getInstance().getTaskByName(intentTaskName);
+
         this.isEditing = (editedTask != null);
         this.initialName = this.isEditing ? editedTask.getName() : "";
         this.task = this.isEditing ? editedTask : new Task("", ChildManager.getInstance().getAllChildren());
-        this.setTitle(isEditing ? R.string.activity_title_edit_task : R.string.activity_title_add_task);
     }
 
     private void updateDisplay() {
@@ -82,9 +83,8 @@ public class ConfigureTaskActivity extends AppCompatActivity {
     }
 
     private void updateTitle() {
-        TextView taskTitle = findViewById(R.id.task_title);
-        taskTitle.setText(this.isEditing ? this.task.getName()
-                : getResources().getString(R.string.task_title_new));
+        TextView taskTitle = findViewById(R.id.taskTitle);
+        taskTitle.setText(this.isEditing ? this.task.getName() : getResources().getString(R.string.task_title_new));
     }
 
     private void btnSave() {
@@ -133,13 +133,12 @@ public class ConfigureTaskActivity extends AppCompatActivity {
             AlertDialog.Builder dialogWarning = new AlertDialog.Builder(this);
             dialogWarning.setTitle(R.string.task_delete_title);
             dialogWarning.setMessage(R.string.task_delete_msg);
+            dialogWarning.setNegativeButton(getResources().getString(R.string.dialog_negative), null);
             dialogWarning.setPositiveButton(getResources().getString(R.string.dialog_positive), (dialogInterface, i) -> {
-
                 TaskManager.getInstance().deleteTask(this.task);
                 DataManager.getInstance(this).saveData(DataType.TASKS);
                 finish();
             });
-            dialogWarning.setNegativeButton(getResources().getString(R.string.dialog_negative), null);
             dialogWarning.show();
         });
     }

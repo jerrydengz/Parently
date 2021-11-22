@@ -67,7 +67,7 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/coin_img_link"
+                android:id="@+id/coinImgLink"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/coin_img_link"
@@ -77,7 +77,7 @@
                 tools:ignore="TextContrastCheck" />
 
             <TextView
-                android:id="@+id/timer_relax_bg_link"
+                android:id="@+id/timerRelaxBgLink"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/timer_relax_bg_link"
@@ -87,7 +87,7 @@
                 tools:ignore="TextContrastCheck" />
 
             <TextView
-                android:id="@+id/app_icon_link"
+                android:id="@+id/appIconLink"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/app_icon_link"
@@ -97,7 +97,7 @@
                 tools:ignore="TextContrastCheck" />
 
             <TextView
-                android:id="@+id/menu_icon_link"
+                android:id="@+id/menuIconLink"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/menu_icon_link"
@@ -107,7 +107,7 @@
                 tools:ignore="TextContrastCheck" />
 
             <TextView
-                android:id="@+id/app_bg_link"
+                android:id="@+id/appBgLink"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/app_bg_link"
@@ -127,7 +127,7 @@
                 tools:ignore="TextContrastCheck" />
 
             <TextView
-                android:id="@+id/victory_sound_link"
+                android:id="@+id/victorySoundLink"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/victory_sound_link"
@@ -137,7 +137,7 @@
                 tools:ignore="TextContrastCheck" />
 
             <TextView
-                android:id="@+id/defeat_sound_link"
+                android:id="@+id/defeatSoundLink"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/defeat_sound_link"

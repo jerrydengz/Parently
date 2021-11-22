@@ -44,10 +44,6 @@ public class TaskManager {
         this.allTasks.remove(task);
     }
 
-    public Task getTaskByName(@NotNull Task task) {
-        return this.getTaskByName(Objects.requireNonNull(task).getName());
-    }
-
     public Task getTaskByName(@NotNull String taskName) {
         for (Task task : this.allTasks) {
             if (task.getName().equals(taskName)) {
