@@ -31,7 +31,7 @@ import cmpt276.phosphorus.childapp.utils.Intents;
 public class ConfigureTaskActivity extends AppCompatActivity {
 
     private boolean isEditing;
-    private String initalName;
+    private String initialName;
     private Task task;
 
     public static Intent makeIntent(Context context, Task editTask) {
@@ -71,8 +71,9 @@ public class ConfigureTaskActivity extends AppCompatActivity {
         String intentTaskName = packageInfo.getStringExtra(Intents.TASK_NAME_TAG);
         Task editedTask = TaskManager.getInstance().getTaskByName(intentTaskName);
         this.isEditing = (editedTask != null);
-        this.initalName = this.isEditing ? editedTask.getName() : "";
+        this.initialName = this.isEditing ? editedTask.getName() : "";
         this.task = this.isEditing ? editedTask : new Task("", ChildManager.getInstance().getAllChildren());
+        this.setTitle(isEditing ? R.string.activity_title_edit_task : R.string.activity_title_add_task);
     }
 
     private void updateDisplay() {
@@ -82,7 +83,8 @@ public class ConfigureTaskActivity extends AppCompatActivity {
 
     private void updateTitle() {
         TextView taskTitle = findViewById(R.id.task_title);
-        taskTitle.setText(this.isEditing ? R.string.task_title_edit : R.string.task_title_new);
+        taskTitle.setText(this.isEditing ? this.task.getName()
+                : getResources().getString(R.string.task_title_new));
     }
 
     private void btnSave() {
@@ -93,7 +95,7 @@ public class ConfigureTaskActivity extends AppCompatActivity {
                     .toString()
                     .trim();
 
-            if (TaskManager.getInstance().containsName(newName) && (!this.initalName.equals(newName))) {
+            if (TaskManager.getInstance().containsName(newName) && (!this.initialName.equals(newName))) {
                 this.showDialogAlert(R.string.task_alert_duplicate_title, R.string.task_alert_duplicate_dec);
                 return;
             }

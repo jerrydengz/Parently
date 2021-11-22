@@ -94,6 +94,8 @@ public class TaskActivity extends AppCompatActivity {
                         .load(currChild.getChildPortraitPath())
                         .into(taskChildIcon);
             }
+        }else{
+            taskChildIcon.setVisibility(View.GONE);
         }
 
         Button btnTaskComplete = dialogView.findViewById(R.id.btnTaskComplete);
@@ -105,7 +107,7 @@ public class TaskActivity extends AppCompatActivity {
                 this.alertDialog.dismiss();
             });
         } else {
-            btnTaskComplete.setVisibility(View.INVISIBLE);
+            btnTaskComplete.setVisibility(View.GONE);
         }
 
         Button btnTaskEdit = dialogView.findViewById(R.id.btnTaskEdit);
