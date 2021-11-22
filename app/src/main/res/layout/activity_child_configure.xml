@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="60sp"
             android:minHeight="48dp"
-            android:text="@string/delete_btn_txt"
+            android:text="@string/delete_btn_text"
             app:icon="@drawable/delete_icon"
             tools:ignore="TextContrastCheck" />
     </LinearLayout>

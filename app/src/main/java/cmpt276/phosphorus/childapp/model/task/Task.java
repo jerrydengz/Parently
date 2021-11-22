@@ -45,8 +45,9 @@ public class Task {
     }
 
     public UUID getCurrentChild() {
-        if (this.isEmptyChildList())
+        if (this.isEmptyChildList()){
             return null;
+        }
 
         return getChild(this.FIRST_INDEX);
     }

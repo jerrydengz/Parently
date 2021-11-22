@@ -89,7 +89,9 @@ public class ConfigureTaskActivity extends AppCompatActivity {
         Button btnSaveTask = findViewById(R.id.btnSaveTask);
         EditText childNameEditText = findViewById(R.id.inputEditTaskName);
         btnSaveTask.setOnClickListener(view -> {
-            String newName = childNameEditText.getText().toString().trim();
+            String newName = childNameEditText.getText()
+                    .toString()
+                    .trim();
 
             if (TaskManager.getInstance().containsName(newName) && (!this.initalName.equals(newName))) {
                 this.showDialogAlert(R.string.task_alert_duplicate_title, R.string.task_alert_duplicate_dec);

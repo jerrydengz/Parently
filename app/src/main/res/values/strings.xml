@@ -17,8 +17,6 @@
     <string name="task_alert_duplicate_dec">Please choose something else</string>
     <string name="task_input_helper">Name</string>
     <string name="task_info_title">%name%</string>
-    <string name="task_info_edit">Edit</string>
-    <string name="task_info_close">Close</string>
     <string name="task_info_finish">Finish</string>
     <string name="task_info_current_child">Current Turn: %name%</string>
     <string name="task_title_new">New Task</string>
@@ -55,7 +53,6 @@
     <string name="timer_notification_service_channel">Timer Notification Service Channel</string>
     <string name="timeout_notification_channel_desc">Timer is running notification</string>
     <string name="close_btn_txt">CLOSE</string>
-    <string name="delete_btn_txt">DELETE</string>
     <string name="dialog_confirm">OK</string>
     <string name="dialog_positive">YES</string>
     <string name="dialog_negative">NO</string>

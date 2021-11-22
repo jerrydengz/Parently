@@ -121,7 +121,12 @@ public class TaskActivity extends AppCompatActivity {
 
         TextView textCurrentTurn = dialogView.findViewById(R.id.textCurrentTurn);
         UUID currChild = selected.getCurrentChild();
-        String childName = (currChild == null) ? "Not Available" : ChildManager.getInstance().getChildByUUID(currChild).getName();
+        String childName = (currChild == null)
+                ? "Not Available"
+                : ChildManager.getInstance()
+                    .getChildByUUID(currChild)
+                    .getName();
+
         String currentChild = getResources().getString(R.string.task_info_current_child).replace("%name%", childName);
         textCurrentTurn.setText(currentChild);
 
@@ -133,7 +138,10 @@ public class TaskActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.taskListView);
         ListAdapter listAdapter = new TaskListAdapter(this, taskManager.getAllTasks());
         listView.setOnItemClickListener((adapter, view, position, arg) -> {
-            Task selectedTask = TaskManager.getInstance().getAllTasks().get(position);
+            Task selectedTask = TaskManager.getInstance()
+                    .getAllTasks()
+                    .get(position);
+
             displayTaskDialog(selectedTask);
         });
         listView.setAdapter(listAdapter);
