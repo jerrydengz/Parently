@@ -31,20 +31,9 @@ import cmpt276.phosphorus.childapp.model.task.TaskManager;
 import cmpt276.phosphorus.childapp.task.utils.TaskListAdapter;
 
 public class TaskActivity extends AppCompatActivity {
+
     private TaskManager taskManager;
 
-    /*
-     TODO ( whoever is going to do this :^) )
-         3. Create a Custom AlertDialog displaying task info
-            i. a dialog button option to cancel
-            ii. a dialog button option to edit -> goes to ConfigureTaskActivity.java (possibly implement delete button in here)
-            iii. text to display:
-                 - task name
-                 - current turn for child's name
-                 - picture of child
-            iv. button to indicate "finished"
-         5. implement adding task in ConfigureTaskActivity.java
-     */
     private AlertDialog alertDialog;
 
     public static Intent makeIntent(Context context) {
