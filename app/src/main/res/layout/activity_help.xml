@@ -34,6 +34,7 @@
                 android:id="@+id/about_authors_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="@string/about_authors_title"
                 android:textColor="@color/black"
                 android:textSize="24sp" />
@@ -44,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/about_authors_description"
                 android:textColor="@color/black"
+                android:gravity="center"
                 android:textSize="14sp" />
 
             <TextView
@@ -52,6 +54,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/copyright_info_title"
                 android:textColor="@color/black"
+                android:gravity="center"
                 android:textSize="24sp" />
 
             <TextView
@@ -60,6 +63,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/copyright_info_description"
                 android:textColor="@color/black"
+                android:gravity="center"
                 android:textSize="14sp" />
 
             <TextView
@@ -69,6 +73,7 @@
                 android:text="@string/coin_img_link"
                 android:textColor="@color/black"
                 android:textSize="14sp"
+                android:gravity="center"
                 tools:ignore="TextContrastCheck" />
 
             <TextView
@@ -78,6 +83,7 @@
                 android:text="@string/timer_relax_bg_link"
                 android:textColor="@color/black"
                 android:textSize="14sp"
+                android:gravity="center"
                 tools:ignore="TextContrastCheck" />
 
             <TextView
@@ -87,6 +93,7 @@
                 android:text="@string/app_icon_link"
                 android:textColor="@color/black"
                 android:textSize="14sp"
+                android:gravity="center"
                 tools:ignore="TextContrastCheck" />
 
             <TextView
@@ -96,6 +103,7 @@
                 android:text="@string/menu_icon_link"
                 android:textColor="@color/black"
                 android:textSize="14sp"
+                android:gravity="center"
                 tools:ignore="TextContrastCheck" />
 
             <TextView
@@ -105,6 +113,7 @@
                 android:text="@string/app_bg_link"
                 android:textColor="@color/black"
                 android:textSize="14sp"
+                android:gravity="center"
                 tools:ignore="TextContrastCheck" />
 
             <TextView
@@ -114,6 +123,7 @@
                 android:text="@string/coin_sound_link"
                 android:textColor="@color/black"
                 android:textSize="14sp"
+                android:gravity="center"
                 tools:ignore="TextContrastCheck" />
 
             <TextView
@@ -123,6 +133,7 @@
                 android:text="@string/victory_sound_link"
                 android:textColor="@color/black"
                 android:textSize="14sp"
+                android:gravity="center"
                 tools:ignore="TextContrastCheck" />
 
             <TextView
@@ -132,6 +143,7 @@
                 android:text="@string/defeat_sound_link"
                 android:textColor="@color/black"
                 android:textSize="14sp"
+                android:gravity="center"
                 tools:ignore="TextContrastCheck" />
 
         </LinearLayout>
