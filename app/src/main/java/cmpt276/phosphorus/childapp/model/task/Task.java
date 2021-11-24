@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -24,6 +25,7 @@ public class Task {
 
     private final List<UUID> children;
     private String name;
+    private List<TaskHistory> history;
 
     public Task(@NotNull String name, @NotNull List<Child> children) {
         this.name =  Objects.requireNonNull(name, "Task name cannot be null");
@@ -32,6 +34,7 @@ public class Task {
                 .collect(Collectors.toList());
         
         Collections.shuffle(this.children);
+        history = new ArrayList<>();
     }
 
     public String getName() {
@@ -55,10 +58,13 @@ public class Task {
     }
 
     public void cycleChildren() {
-        this.children.add(this.children.remove(this.FIRST_INDEX));
+        UUID doneChild = this.children.remove(this.FIRST_INDEX);
+        this.history.add(new TaskHistory(doneChild));
+        this.children.add(doneChild);
     }
 
     public void removeChild(@NotNull UUID child) {
+        history.removeIf(hist -> hist.getChild() == child);
         this.children.remove(child);
     }
 
