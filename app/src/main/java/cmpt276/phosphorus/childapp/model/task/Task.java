@@ -86,6 +86,10 @@ public class Task {
                 .collect(Collectors.toList());
     }
 
+    public List<TaskHistory> getHistory() {
+        return this.history;
+    }
+
     @Override
     public String toString() {
         return "Task{" +
