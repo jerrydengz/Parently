@@ -19,6 +19,7 @@ import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +27,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -82,11 +84,51 @@ public class TimeoutActivity extends AppCompatActivity {
         this.setUpCustomInput();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_timeout, menu);
+        return true;
+    }
+
     // If user select the top left back button
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        finish();
-        return super.onOptionsItemSelected(item);
+        switch(item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+
+            case R.id.percent_25:
+                Toast.makeText(this, "25%", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.percent_50:
+                Toast.makeText(this, "50%", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.percent_75:
+                Toast.makeText(this, "75%", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.percent_100:
+                Toast.makeText(this, "100%", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.percent_200:
+                Toast.makeText(this, "200%", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.percent_300:
+                Toast.makeText(this, "300%", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.percent_400:
+                Toast.makeText(this, "400%", Toast.LENGTH_SHORT).show();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void setUpStartAndPauseBtn() {
