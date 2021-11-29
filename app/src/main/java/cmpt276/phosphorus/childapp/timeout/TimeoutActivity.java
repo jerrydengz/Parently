@@ -99,7 +99,6 @@ public class TimeoutActivity extends AppCompatActivity {
         btnStartAndPause = findViewById(R.id.btnStartAndPause);
         btnStartAndPause.setOnClickListener(v -> {
             if (!isTimerRunning) {
-
                 startTimer();
             } else {
                 pauseTimer();
