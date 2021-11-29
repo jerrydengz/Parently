@@ -9,7 +9,6 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -19,7 +18,6 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -252,7 +250,7 @@ public class TimeoutActivity extends AppCompatActivity {
         float curProgress = (float) (((double) timeLeft / (double) totalTime) * 100.0);
 
         final int SECOND_IN_MS = 1000;
-        if(timeLeft <= SECOND_IN_MS)
+        if (timeLeft <= SECOND_IN_MS)
             curProgress = 0;
 
         final long ANIMATION_DURATION = 500L;
