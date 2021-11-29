@@ -7,6 +7,24 @@
     android:layout_height="match_parent"
     tools:context=".timeout.TimeoutActivity">
 
+    <com.mikhaellopez.circularprogressbar.CircularProgressBar
+        android:id="@+id/timeoutCircularBtn"
+        android:layout_width="387dp"
+        android:layout_height="301dp"
+        app:cpb_background_progressbar_color="#b6bbd8"
+        app:cpb_background_progressbar_width="5dp"
+        app:cpb_progress_direction="to_right"
+        app:cpb_progressbar_color="#3f51b5"
+        app:cpb_progressbar_width="10dp"
+        app:cpb_background_progressbar_color_start="@color/white"
+        app:cpb_background_progressbar_color_end="@color/sky_blue"
+        app:cpb_background_progressbar_color_direction="top_to_bottom"
+        app:cpb_round_border="false"
+        app:layout_constraintBottom_toTopOf="@+id/tvCountDown"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tvCountDown"
         android:layout_width="wrap_content"
@@ -17,15 +35,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.245" />
+        app:layout_constraintVertical_bias="0.539" />
 
     <Button
         android:id="@+id/btnStartAndPause"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="28dp"
         android:text="@string/start"
         app:layout_constraintEnd_toEndOf="@+id/tvCountDown"
+        app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="@+id/tvCountDown"
         app:layout_constraintTop_toBottomOf="@+id/tvCountDown" />
 
@@ -33,9 +52,11 @@
         android:id="@+id/btnReset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="@string/reset"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/btnStartAndPause"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/btnStartAndPause"
         app:layout_constraintTop_toBottomOf="@+id/btnStartAndPause"
         tools:visibility="visible" />
