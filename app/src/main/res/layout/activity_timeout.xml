@@ -9,9 +9,9 @@
 
     <com.mikhaellopez.circularprogressbar.CircularProgressBar
         android:id="@+id/timeoutCircularBtn"
-        android:layout_width="387dp"
-        android:layout_height="301dp"
-        android:layout_marginTop="76dp"
+        android:layout_width="275dp"
+        android:layout_height="275dp"
+        android:layout_marginTop="35dp"
         app:cpb_background_progressbar_color="#b6bbd8"
         app:cpb_background_progressbar_color_direction="top_to_bottom"
         app:cpb_background_progressbar_color_end="@color/sky_blue"
@@ -53,7 +53,7 @@
         android:id="@+id/btnReset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:text="@string/reset"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,18 +67,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
         android:gravity="center_horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/inputCustomNumber"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnReset"
-        app:layout_constraintVertical_bias="0.928" />
+        app:layout_constraintTop_toBottomOf="@+id/btnReset" />
 
     <EditText
         android:id="@+id/inputCustomNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="172dp"
         android:ems="10"
         android:gravity="center"
         android:hint="@string/custom_minutes"
@@ -86,12 +84,10 @@
         android:maxLength="3"
         android:minHeight="48dp"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnReset"
-        app:layout_constraintVertical_bias="0.322"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupTimeOptions"
         tools:ignore="Autofill"
         tools:visibility="visible" />
 
