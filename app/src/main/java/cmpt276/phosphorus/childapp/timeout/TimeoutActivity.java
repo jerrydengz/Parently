@@ -90,45 +90,40 @@ public class TimeoutActivity extends AppCompatActivity {
         return true;
     }
 
+    //https://stackoverflow.com/questions/5440601/android-how-to-enable-disable-option-menu-item-on-button-click
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.timerSpeedRate).setEnabled(isTimerRunning);
+        return true;
+    }
+
     // If user select the top left back button
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-
-            case R.id.percent_25:
-                Toast.makeText(this, "25%", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.percent_50:
-                Toast.makeText(this, "50%", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.percent_75:
-                Toast.makeText(this, "75%", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.percent_100:
-                Toast.makeText(this, "100%", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.percent_200:
-                Toast.makeText(this, "200%", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.percent_300:
-                Toast.makeText(this, "300%", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.percent_400:
-                Toast.makeText(this, "400%", Toast.LENGTH_SHORT).show();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        // Refactored to if statements instead of switch cases to be compatible with API 30
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
         }
+
+        // todo (Mark): fill in and clean if statements in issue #85
+        if (item.getItemId() == R.id.percent_25) {
+            //Toast.makeText(this, "25%", Toast.LENGTH_SHORT).show();
+        } else if (item.getItemId() == R.id.percent_50) {
+            //Toast.makeText(this, "50%", Toast.LENGTH_SHORT).show();
+        } else if (item.getItemId() == R.id.percent_75) {
+            //Toast.makeText(this, "75%", Toast.LENGTH_SHORT).show();
+        } else if (item.getItemId() == R.id.percent_100) {
+            //Toast.makeText(this, "100%", Toast.LENGTH_SHORT).show();
+        } else if (item.getItemId() == R.id.percent_200) {
+            //Toast.makeText(this, "200%", Toast.LENGTH_SHORT).show();
+        } else if (item.getItemId() == R.id.percent_300) {
+            //Toast.makeText(this, "300%", Toast.LENGTH_SHORT).show();
+        } else if (item.getItemId() == R.id.percent_400) {
+            //Toast.makeText(this, "400%", Toast.LENGTH_SHORT).show();
+        }
+
+        return true;
     }
 
     private void setUpStartAndPauseBtn() {
@@ -189,6 +184,9 @@ public class TimeoutActivity extends AppCompatActivity {
     }
 
     private void setVisibilities() {
+        // Either enable or disable the speed button if timer is running
+        invalidateOptionsMenu();
+
         int currentView = isTimerRunning ? View.INVISIBLE : View.VISIBLE;
         btnReset.setVisibility(currentView);
         timeGroup.setVisibility(currentView);
