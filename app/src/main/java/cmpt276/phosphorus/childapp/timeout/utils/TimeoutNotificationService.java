@@ -40,6 +40,8 @@ public class TimeoutNotificationService extends Service {
     private boolean isTimerRunning;
     private CountDownTimer cdTimer;
     private long endTime;
+    private long timeLeft;
+    public static final int DEF_SPEED = 1;
 
     private NotificationCompat.Builder notification;
 
@@ -118,7 +120,8 @@ public class TimeoutNotificationService extends Service {
         SharedPreferences.Editor editor = prefs.edit();
 
         long startTime = prefs.getLong(TimeoutPrefConst.START_TIME, NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS);
-        long timeLeft = prefs.getLong(TimeoutPrefConst.TIME_LEFT, startTime);
+        float timerSpeed = prefs.getFloat(TimeoutPrefConst.TIMER_SPEED_RATE, DEF_SPEED);
+        timeLeft = prefs.getLong(TimeoutPrefConst.TIME_LEFT, startTime);
 
         endTime = System.currentTimeMillis() + timeLeft;
         if (isTimerRunning) {
@@ -130,14 +133,14 @@ public class TimeoutNotificationService extends Service {
         endIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         editor.putLong(TimeoutPrefConst.END_TIME, endTime);
-        cdTimer = new CountDownTimer(timeLeft, COUNT_DOWN_INTERVAL) {
+        cdTimer = new CountDownTimer((long) (timeLeft / timerSpeed), (long) (COUNT_DOWN_INTERVAL / timerSpeed)) {
             @Override
             public void onTick(long millisUntilFinished) {
-                String timeLeftFormatted = timeLeftFormatter(millisUntilFinished);
+                timeLeft = (long) (millisUntilFinished * timerSpeed);
+                String timeLeftFormatted = timeLeftFormatter(timeLeft);
 
                 // Continually update time left for inner timer
-                editor.putLong(TimeoutPrefConst.TIME_LEFT,
-                        endTime - System.currentTimeMillis());
+                editor.putLong(TimeoutPrefConst.TIME_LEFT, timeLeft);
                 editor.apply();
 
                 if (notification != null) {

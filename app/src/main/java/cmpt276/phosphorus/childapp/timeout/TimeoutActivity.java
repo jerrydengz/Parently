@@ -27,7 +27,6 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -358,7 +357,7 @@ public class TimeoutActivity extends AppCompatActivity {
 
         if (isTimerRunning) {
             endTime = prefs.getLong(TimeoutPrefConst.END_TIME, 0);
-            timeLeft = endTime - System.currentTimeMillis();
+            //timeLeft = endTime - System.currentTimeMillis();
 
             if (timeLeft < 0) {
                 timeLeft = 0;
