@@ -57,6 +57,9 @@ public class TimeoutActivity extends AppCompatActivity {
     private long endTime;
     private long totalTime = 60000;
 
+    private float newTimerSpeed = 1;
+    private final float defaultTimerSpeed = 1;
+
     private TextView tvCountDown;
     private RadioGroup timeGroup;
     private Button btnStartAndPause;
@@ -110,22 +113,31 @@ public class TimeoutActivity extends AppCompatActivity {
             return true;
         }
 
-        // todo (Mark): fill in and clean if statements in issue #85
         if (item.getItemId() == R.id.percent_25) {
             //Toast.makeText(this, "25%", Toast.LENGTH_SHORT).show();
+            newTimerSpeed = 0.25f;
         } else if (item.getItemId() == R.id.percent_50) {
             //Toast.makeText(this, "50%", Toast.LENGTH_SHORT).show();
+            newTimerSpeed = 0.50f;
         } else if (item.getItemId() == R.id.percent_75) {
             //Toast.makeText(this, "75%", Toast.LENGTH_SHORT).show();
+            newTimerSpeed = 0.75f;
         } else if (item.getItemId() == R.id.percent_100) {
             //Toast.makeText(this, "100%", Toast.LENGTH_SHORT).show();
+            newTimerSpeed = 1;
         } else if (item.getItemId() == R.id.percent_200) {
             //Toast.makeText(this, "200%", Toast.LENGTH_SHORT).show();
+            newTimerSpeed = 2;
         } else if (item.getItemId() == R.id.percent_300) {
             //Toast.makeText(this, "300%", Toast.LENGTH_SHORT).show();
+            newTimerSpeed = 3;
         } else if (item.getItemId() == R.id.percent_400) {
             //Toast.makeText(this, "400%", Toast.LENGTH_SHORT).show();
+            newTimerSpeed = 4;
         }
+        // Reset timer and start it with new speed rate
+        pauseTimer();
+        startTimer();
 
         return true;
     }
@@ -150,10 +162,10 @@ public class TimeoutActivity extends AppCompatActivity {
         // Helper variable for saving data regarding timer
         endTime = System.currentTimeMillis() + timeLeft;
 
-        cdTimer = new CountDownTimer(timeLeft, COUNT_DOWN_INTERVAL) {
+        cdTimer = new CountDownTimer((long) (timeLeft / newTimerSpeed), (long) (COUNT_DOWN_INTERVAL / newTimerSpeed)) {
             @Override
             public void onTick(long millisUntilFinished) {
-                timeLeft = millisUntilFinished;
+                timeLeft = (long) (millisUntilFinished * newTimerSpeed);
                 updateCountDownText();
                 updateProgressBar();
             }
@@ -183,6 +195,7 @@ public class TimeoutActivity extends AppCompatActivity {
 
     private void resetTimer() {
         timeLeft = startTime;
+        newTimerSpeed = defaultTimerSpeed;
         updateCountDownText();
         updateProgressBar();
         btnReset.setVisibility(View.INVISIBLE);
@@ -229,6 +242,7 @@ public class TimeoutActivity extends AppCompatActivity {
                 startTime = options * NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS;
                 timeLeft = startTime;
                 totalTime = startTime;
+                newTimerSpeed = defaultTimerSpeed;
                 updateCountDownText();
                 setVisibilities();
                 btnStartAndPause.setVisibility(View.VISIBLE);
@@ -267,6 +281,7 @@ public class TimeoutActivity extends AppCompatActivity {
                     startTime = input * NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS;
                     timeLeft = startTime;
                     totalTime = startTime;
+                    newTimerSpeed = defaultTimerSpeed;
                     updateCountDownText();
                     btnStartAndPause.setVisibility(View.VISIBLE);
                 } else {
@@ -280,7 +295,6 @@ public class TimeoutActivity extends AppCompatActivity {
     }
 
     // Turns milliseconds it is given to minutes and seconds for timer
-    // Account for hours (when user input > 59min)?
     private void updateCountDownText() {
         String timeLeftFormatted = timeLeftFormatter(timeLeft);
         tvCountDown.setText(timeLeftFormatted);
@@ -311,6 +325,7 @@ public class TimeoutActivity extends AppCompatActivity {
         editor.putLong(TimeoutPrefConst.TIME_LEFT, timeLeft);
         editor.putLong(TimeoutPrefConst.END_TIME, endTime);
         editor.putBoolean(TimeoutPrefConst.IS_TIMER_RUNNING, isTimerRunning);
+        editor.putFloat(TimeoutPrefConst.TIMER_SPEED_RATE, newTimerSpeed);
 
         editor.apply();
 
@@ -335,6 +350,7 @@ public class TimeoutActivity extends AppCompatActivity {
         startTime = prefs.getLong(TimeoutPrefConst.START_TIME, NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS);
         timeLeft = prefs.getLong(TimeoutPrefConst.TIME_LEFT, startTime);
         isTimerRunning = prefs.getBoolean(TimeoutPrefConst.IS_TIMER_RUNNING, false);
+        newTimerSpeed = prefs.getFloat(TimeoutPrefConst.TIMER_SPEED_RATE, defaultTimerSpeed);
 
         updateCountDownText();
         updateProgressBar();
