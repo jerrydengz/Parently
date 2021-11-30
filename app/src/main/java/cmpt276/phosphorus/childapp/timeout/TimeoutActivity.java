@@ -247,11 +247,13 @@ public class TimeoutActivity extends AppCompatActivity {
     }
 
     private void updateProgressBar() {
-        float curProgress = (float) (((double) timeLeft / (double) totalTime) * 100.0);
+        final double TO_PERCENT = 100.0;
+        float curProgress = (float) (((double) timeLeft / (double) totalTime) * TO_PERCENT);
 
         final int SECOND_IN_MS = 1000;
-        if (timeLeft <= SECOND_IN_MS)
+        if (timeLeft <= SECOND_IN_MS){
             curProgress = 0;
+        }
 
         final long ANIMATION_DURATION = 500L;
         CircularProgressBar circularProgressBar = findViewById(R.id.timeoutCircularBtn);
