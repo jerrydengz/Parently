@@ -31,6 +31,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
+import com.mikhaellopez.circularprogressbar.CircularProgressBar;
+
 import java.util.Objects;
 
 import cmpt276.phosphorus.childapp.R;
@@ -51,6 +53,7 @@ public class TimeoutActivity extends AppCompatActivity {
     private long startTime = 60000;
     private long timeLeft;
     private long endTime;
+    private long totalTime = 60000;
 
     private TextView tvCountDown;
     private RadioGroup timeGroup;
@@ -80,6 +83,7 @@ public class TimeoutActivity extends AppCompatActivity {
         this.setUpResetBtn();
         this.createTimeOptions();
         this.setUpCustomInput();
+        this.updateProgressBar(); // For if they come back and re-open while ticking
     }
 
     // If user select the top left back button
@@ -114,6 +118,7 @@ public class TimeoutActivity extends AppCompatActivity {
             public void onTick(long millisUntilFinished) {
                 timeLeft = millisUntilFinished;
                 updateCountDownText();
+                updateProgressBar();
             }
 
             @Override
@@ -123,6 +128,7 @@ public class TimeoutActivity extends AppCompatActivity {
                 btnStartAndPause.setVisibility(View.INVISIBLE);
                 setVisibilities();
                 showTimeoutAlertDialog();
+                updateProgressBar();
             }
         }.start();
 
@@ -141,6 +147,7 @@ public class TimeoutActivity extends AppCompatActivity {
     private void resetTimer() {
         timeLeft = startTime;
         updateCountDownText();
+        updateProgressBar();
         btnReset.setVisibility(View.INVISIBLE);
         btnStartAndPause.setVisibility(View.VISIBLE);
         btnStartAndPause.setText(getString(R.string.start));
@@ -181,6 +188,7 @@ public class TimeoutActivity extends AppCompatActivity {
             button.setOnClickListener(v -> {
                 startTime = options * NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS;
                 timeLeft = startTime;
+                totalTime = startTime;
                 updateCountDownText();
                 setVisibilities();
                 btnStartAndPause.setVisibility(View.VISIBLE);
@@ -218,6 +226,7 @@ public class TimeoutActivity extends AppCompatActivity {
                 if (input != 0) {
                     startTime = input * NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS;
                     timeLeft = startTime;
+                    totalTime = startTime;
                     updateCountDownText();
                     btnStartAndPause.setVisibility(View.VISIBLE);
                 } else {
@@ -235,6 +244,20 @@ public class TimeoutActivity extends AppCompatActivity {
     private void updateCountDownText() {
         String timeLeftFormatted = timeLeftFormatter(timeLeft);
         tvCountDown.setText(timeLeftFormatted);
+    }
+
+    private void updateProgressBar() {
+        final double TO_PERCENT = 100.0;
+        float curProgress = (float) (((double) timeLeft / (double) totalTime) * TO_PERCENT);
+
+        final int SECOND_IN_MS = 1000;
+        if (timeLeft <= SECOND_IN_MS){
+            curProgress = 0;
+        }
+
+        final long ANIMATION_DURATION = 500L;
+        CircularProgressBar circularProgressBar = findViewById(R.id.timeoutCircularBtn);
+        circularProgressBar.setProgressWithAnimation(curProgress, ANIMATION_DURATION);
     }
 
     @Override
@@ -274,6 +297,7 @@ public class TimeoutActivity extends AppCompatActivity {
         isTimerRunning = prefs.getBoolean(TimeoutPrefConst.IS_TIMER_RUNNING, false);
 
         updateCountDownText();
+        updateProgressBar();
         setVisibilities();
 
         if (isTimerRunning) {
