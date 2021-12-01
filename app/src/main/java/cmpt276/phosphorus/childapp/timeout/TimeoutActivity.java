@@ -335,6 +335,7 @@ public class TimeoutActivity extends AppCompatActivity {
         startTime = prefs.getLong(TimeoutPrefConst.START_TIME, NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS);
         timeLeft = prefs.getLong(TimeoutPrefConst.TIME_LEFT, startTime);
         isTimerRunning = prefs.getBoolean(TimeoutPrefConst.IS_TIMER_RUNNING, false);
+        totalTime = startTime;
 
         updateCountDownText();
         updateProgressBar();
