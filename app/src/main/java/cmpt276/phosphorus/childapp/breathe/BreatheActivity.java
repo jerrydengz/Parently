@@ -56,10 +56,8 @@ public class BreatheActivity extends AppCompatActivity {
                 case MotionEvent.ACTION_UP:
                     currentState.handleOnRelease();
                     break;
-                default:
-                    return false; // TODO - see what this would do
             }
-            return true;
+            return false;
         });
     }
 
