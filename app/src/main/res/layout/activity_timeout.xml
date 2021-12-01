@@ -7,53 +7,78 @@
     android:layout_height="match_parent"
     tools:context=".timeout.TimeoutActivity">
 
+    <com.mikhaellopez.circularprogressbar.CircularProgressBar
+        android:id="@+id/timeoutCircularBtn"
+        android:layout_width="387dp"
+        android:layout_height="301dp"
+        android:layout_marginTop="76dp"
+        app:cpb_background_progressbar_color="#b6bbd8"
+        app:cpb_background_progressbar_color_direction="top_to_bottom"
+        app:cpb_background_progressbar_color_end="@color/sky_blue"
+        app:cpb_background_progressbar_color_start="@color/white"
+        app:cpb_background_progressbar_width="5dp"
+        app:cpb_progress_direction="to_right"
+        app:cpb_progressbar_color="#3f51b5"
+        app:cpb_progressbar_width="10dp"
+        app:cpb_round_border="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tvCountDown"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/empty_timer"
         android:textSize="50sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.245" />
+        app:layout_constraintBottom_toBottomOf="@+id/timeoutCircularBtn"
+        app:layout_constraintEnd_toEndOf="@+id/timeoutCircularBtn"
+        app:layout_constraintStart_toStartOf="@+id/timeoutCircularBtn"
+        app:layout_constraintTop_toTopOf="@+id/timeoutCircularBtn"
+        app:layout_constraintVertical_bias="0.397" />
 
     <Button
         android:id="@+id/btnStartAndPause"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:text="@string/start"
-        app:layout_constraintEnd_toEndOf="@+id/tvCountDown"
-        app:layout_constraintStart_toStartOf="@+id/tvCountDown"
-        app:layout_constraintTop_toBottomOf="@+id/tvCountDown" />
+        app:layout_constraintBottom_toBottomOf="@+id/timeoutCircularBtn"
+        app:layout_constraintEnd_toEndOf="@+id/timeoutCircularBtn"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/timeoutCircularBtn"
+        app:layout_constraintTop_toBottomOf="@+id/tvCountDown"
+        app:layout_constraintVertical_bias="0.285" />
 
     <Button
         android:id="@+id/btnReset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="@string/reset"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/btnStartAndPause"
-        app:layout_constraintStart_toStartOf="@+id/btnStartAndPause"
-        app:layout_constraintTop_toBottomOf="@+id/btnStartAndPause"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeoutCircularBtn"
         tools:visibility="visible" />
 
     <RadioGroup
         android:id="@+id/radioGroupTimeOptions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/inputCustomNumber"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnReset" />
+        app:layout_constraintTop_toBottomOf="@+id/btnReset"
+        app:layout_constraintVertical_bias="0.928" />
 
     <EditText
         android:id="@+id/inputCustomNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="172dp"
         android:ems="10"
         android:gravity="center"
         android:hint="@string/custom_minutes"
@@ -61,9 +86,12 @@
         android:maxLength="3"
         android:minHeight="48dp"
         android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroupTimeOptions"
+        app:layout_constraintTop_toBottomOf="@+id/btnReset"
+        app:layout_constraintVertical_bias="0.322"
         tools:ignore="Autofill"
         tools:visibility="visible" />
 

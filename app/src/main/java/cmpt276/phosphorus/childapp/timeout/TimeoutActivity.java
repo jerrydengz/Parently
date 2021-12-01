@@ -19,6 +19,7 @@ import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -26,10 +27,13 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+
+import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import java.util.Objects;
 
@@ -51,6 +55,7 @@ public class TimeoutActivity extends AppCompatActivity {
     private long startTime = 60000;
     private long timeLeft;
     private long endTime;
+    private long totalTime = 60000;
 
     private TextView tvCountDown;
     private RadioGroup timeGroup;
@@ -80,13 +85,49 @@ public class TimeoutActivity extends AppCompatActivity {
         this.setUpResetBtn();
         this.createTimeOptions();
         this.setUpCustomInput();
+        this.updateProgressBar(); // For if they come back and re-open while ticking
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_timeout, menu);
+        return true;
+    }
+
+    //https://stackoverflow.com/questions/5440601/android-how-to-enable-disable-option-menu-item-on-button-click
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.timerSpeedRate).setEnabled(isTimerRunning);
+        return true;
     }
 
     // If user select the top left back button
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        finish();
-        return super.onOptionsItemSelected(item);
+        // Refactored to if statements instead of switch cases to be compatible with API 30
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+
+        // todo (Mark): fill in and clean if statements in issue #85
+        if (item.getItemId() == R.id.percent_25) {
+            //Toast.makeText(this, "25%", Toast.LENGTH_SHORT).show();
+        } else if (item.getItemId() == R.id.percent_50) {
+            //Toast.makeText(this, "50%", Toast.LENGTH_SHORT).show();
+        } else if (item.getItemId() == R.id.percent_75) {
+            //Toast.makeText(this, "75%", Toast.LENGTH_SHORT).show();
+        } else if (item.getItemId() == R.id.percent_100) {
+            //Toast.makeText(this, "100%", Toast.LENGTH_SHORT).show();
+        } else if (item.getItemId() == R.id.percent_200) {
+            //Toast.makeText(this, "200%", Toast.LENGTH_SHORT).show();
+        } else if (item.getItemId() == R.id.percent_300) {
+            //Toast.makeText(this, "300%", Toast.LENGTH_SHORT).show();
+        } else if (item.getItemId() == R.id.percent_400) {
+            //Toast.makeText(this, "400%", Toast.LENGTH_SHORT).show();
+        }
+
+        return true;
     }
 
     private void setUpStartAndPauseBtn() {
@@ -114,6 +155,7 @@ public class TimeoutActivity extends AppCompatActivity {
             public void onTick(long millisUntilFinished) {
                 timeLeft = millisUntilFinished;
                 updateCountDownText();
+                updateProgressBar();
             }
 
             @Override
@@ -123,6 +165,7 @@ public class TimeoutActivity extends AppCompatActivity {
                 btnStartAndPause.setVisibility(View.INVISIBLE);
                 setVisibilities();
                 showTimeoutAlertDialog();
+                updateProgressBar();
             }
         }.start();
 
@@ -141,12 +184,16 @@ public class TimeoutActivity extends AppCompatActivity {
     private void resetTimer() {
         timeLeft = startTime;
         updateCountDownText();
+        updateProgressBar();
         btnReset.setVisibility(View.INVISIBLE);
         btnStartAndPause.setVisibility(View.VISIBLE);
         btnStartAndPause.setText(getString(R.string.start));
     }
 
     private void setVisibilities() {
+        // Either enable or disable the speed button if timer is running
+        invalidateOptionsMenu();
+
         int currentView = isTimerRunning ? View.INVISIBLE : View.VISIBLE;
         btnReset.setVisibility(currentView);
         timeGroup.setVisibility(currentView);
@@ -181,6 +228,7 @@ public class TimeoutActivity extends AppCompatActivity {
             button.setOnClickListener(v -> {
                 startTime = options * NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS;
                 timeLeft = startTime;
+                totalTime = startTime;
                 updateCountDownText();
                 setVisibilities();
                 btnStartAndPause.setVisibility(View.VISIBLE);
@@ -218,6 +266,7 @@ public class TimeoutActivity extends AppCompatActivity {
                 if (input != 0) {
                     startTime = input * NUM_TO_MULTI_TO_CONVERT_MIN_TO_MILLISECONDS;
                     timeLeft = startTime;
+                    totalTime = startTime;
                     updateCountDownText();
                     btnStartAndPause.setVisibility(View.VISIBLE);
                 } else {
@@ -235,6 +284,20 @@ public class TimeoutActivity extends AppCompatActivity {
     private void updateCountDownText() {
         String timeLeftFormatted = timeLeftFormatter(timeLeft);
         tvCountDown.setText(timeLeftFormatted);
+    }
+
+    private void updateProgressBar() {
+        final double TO_PERCENT = 100.0;
+        float curProgress = (float) (((double) timeLeft / (double) totalTime) * TO_PERCENT);
+
+        final int SECOND_IN_MS = 1000;
+        if (timeLeft <= SECOND_IN_MS){
+            curProgress = 0;
+        }
+
+        final long ANIMATION_DURATION = 500L;
+        CircularProgressBar circularProgressBar = findViewById(R.id.timeoutCircularBtn);
+        circularProgressBar.setProgressWithAnimation(curProgress, ANIMATION_DURATION);
     }
 
     @Override
@@ -274,6 +337,7 @@ public class TimeoutActivity extends AppCompatActivity {
         isTimerRunning = prefs.getBoolean(TimeoutPrefConst.IS_TIMER_RUNNING, false);
 
         updateCountDownText();
+        updateProgressBar();
         setVisibilities();
 
         if (isTimerRunning) {
