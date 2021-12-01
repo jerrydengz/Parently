@@ -25,8 +25,8 @@ public class ExhaleState extends BreatheState {
         // TODO - update guide text
 
         // disable button to be touched
-        Button mainBreatheBtn = context.findViewById(R.id.btnBreatheState);
-        mainBreatheBtn.setClickable(false);
+        Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
+        btnBreatheState.setClickable(false);
 
         timeHandler.postDelayed(timerRunnable3, SECONDS_3);
         timeHandler.postDelayed(timerRunnable10, SECONDS_10);
@@ -37,33 +37,34 @@ public class ExhaleState extends BreatheState {
         super.handleOnTouch();
 
         if (context.getRemainingBreaths() > 0) {
-            context.setState(context.inhaleState);
+            context.setState(context.getInhaleState());
         }
     }
 
     @Override
     public void handleExit() {
         super.handleExit();
+        // https://stackoverflow.com/questions/5883635/how-to-remove-all-callbacks-from-a-handler
         timeHandler.removeCallbacks(null); // removes all queued Runnable
 
         // TODO - stop animation & sound
     }
 
     private void updateBreathesLeft() {
-        Button mainBreatheBtn = context.findViewById(R.id.btnBreatheState);
-        mainBreatheBtn.setClickable(true);
+        Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
+        btnBreatheState.setClickable(true);
 
         if (context.getRemainingBreaths() > 0) {
 
             // TODO - update guide text
-            mainBreatheBtn.setText(R.string.breathe_state_in);
+            btnBreatheState.setText(R.string.breathe_state_in);
 
             context.setRemainingBreaths(context.getRemainingBreaths() - 1);
         } else {
             // TODO - update guide text
 
-            mainBreatheBtn.setText(R.string.breathe_state_finished);
-            mainBreatheBtn.setOnClickListener(view -> context.finish());
+            btnBreatheState.setText(R.string.breathe_state_finished);
+            btnBreatheState.setOnClickListener(view -> context.finish());
         }
     }
 

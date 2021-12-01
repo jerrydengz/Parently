@@ -20,9 +20,9 @@ import cmpt276.phosphorus.childapp.breathe.utils.IdleState;
 import cmpt276.phosphorus.childapp.breathe.utils.InhaleState;
 
 public class BreatheActivity extends AppCompatActivity {
-    public final BreatheState inhaleState = new InhaleState(this);
-    public final BreatheState exhaleState = new ExhaleState(this);
-    public final BreatheState configureState = new ConfigureState(this);
+    private final BreatheState inhaleState = new InhaleState(this);
+    private final BreatheState exhaleState = new ExhaleState(this);
+    private final BreatheState configureState = new ConfigureState(this);
     private BreatheState currentState = new IdleState(this);
 
     private int totalBreaths;
@@ -45,11 +45,11 @@ public class BreatheActivity extends AppCompatActivity {
 
     @SuppressLint("ClickableViewAccessibility")
     private void setUpMainBreatheBtn() {
-        Button breatheBtn = findViewById(R.id.btnBreatheState);
+        Button btnBreatheState = findViewById(R.id.btnBreatheState);
 
         // https://stackoverflow.com/questions/49972106/android-button-ontouch-if-return-true-has-no-click-animation-effect-if-retu
         // https://stackoverflow.com/questions/11690504/how-to-use-view-ontouchlistener-instead-of-onclick
-        breatheBtn.setOnTouchListener((v, event) -> {
+        btnBreatheState.setOnTouchListener((v, event) -> {
             switch (event.getAction()){
                 case MotionEvent.ACTION_DOWN:
                     currentState.handleOnTouch();
@@ -76,5 +76,13 @@ public class BreatheActivity extends AppCompatActivity {
 
     public void setRemainingBreaths(int remainingBreaths) {
         this.remainingBreaths = remainingBreaths;
+    }
+
+    public BreatheState getInhaleState() {
+        return inhaleState;
+    }
+
+    public BreatheState getExhaleState() {
+        return exhaleState;
     }
 }

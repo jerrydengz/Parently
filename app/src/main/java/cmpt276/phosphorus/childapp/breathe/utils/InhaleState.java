@@ -25,8 +25,8 @@ public class InhaleState extends BreatheState{
         super.handleOnTouch();
 
         // set button text, TODO (later) - set guide text
-        Button mainBreatheBtn = context.findViewById(R.id.btnBreatheState);
-        mainBreatheBtn.setText(R.string.breathe_state_in);
+        Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
+        btnBreatheState.setText(R.string.breathe_state_in);
 
         // TODO (whoever is gonna deal with animations) - play sound/animation
         // NOTE: animation should keep playing till it hits max at 10secs
@@ -42,12 +42,11 @@ public class InhaleState extends BreatheState{
     public void handleOnRelease() {
         super.handleOnRelease();
         if(hasHeldThreeSecs || hasHeldTenSecs){
-            context.setState(context.exhaleState);
+            context.setState(context.getExhaleState());
         }else{
             // stop the timer
             hasHeldThreeSecs = false;
-            timerHandler.removeCallbacks(timerRunnable3);
-            timerHandler.removeCallbacks(timerRunnable10);
+            timerHandler.removeCallbacks(null);
 
             // TODO (whoever is gonna deal with animations) - stop & reset animation, stop sound
         }
@@ -56,14 +55,13 @@ public class InhaleState extends BreatheState{
     @Override
     public void handleExit() {
         super.handleExit();
-        timerHandler.removeCallbacks(timerRunnable3);
-        timerHandler.removeCallbacks(timerRunnable10);
+        timerHandler.removeCallbacks(null);
     }
 
     private void handleThreeSecsPassed(){
         hasHeldThreeSecs = true;
-        Button mainBreatheBtn = context.findViewById(R.id.btnBreatheState);
-        mainBreatheBtn.setText(R.string.breathe_state_out);
+        Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
+        btnBreatheState.setText(R.string.breathe_state_out);
     }
 
     private void handleTenSecsPassed(){
