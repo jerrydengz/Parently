@@ -136,15 +136,6 @@ public class TimeoutActivity extends AppCompatActivity {
         return true;
     }
 
-    private void showTimerSpeed() {
-        TextView tvTimerSpeed = findViewById(R.id.tvTimerSpeed);
-        int timerSpeed = (int) (newTimerSpeed * 100);
-        tvTimerSpeed.setText(getString(R.string.timer_speed, timerSpeed));
-
-        int visibility = isTimerRunning ? View.VISIBLE : View.INVISIBLE;
-        tvTimerSpeed.setVisibility(visibility);
-    }
-
     private void setUpStartAndPauseBtn() {
         btnStartAndPause = findViewById(R.id.btnStartAndPause);
         btnStartAndPause.setOnClickListener(v -> {
@@ -235,6 +226,15 @@ public class TimeoutActivity extends AppCompatActivity {
         int background = isTimerRunning ? R.drawable.relaxing_background : R.drawable.lavender_min_1;
         ConstraintLayout constraintLayout = findViewById(R.id.timeoutLayout);
         constraintLayout.setBackgroundResource(background);
+    }
+
+    private void showTimerSpeed() {
+        TextView tvTimerSpeed = findViewById(R.id.tvTimerSpeed);
+        int timerSpeed = (int) (newTimerSpeed * 100);
+        tvTimerSpeed.setText(getString(R.string.timer_speed, timerSpeed));
+
+        int visibility = isTimerRunning ? View.VISIBLE : View.INVISIBLE;
+        tvTimerSpeed.setVisibility(visibility);
     }
 
     private void createTimeOptions() {
