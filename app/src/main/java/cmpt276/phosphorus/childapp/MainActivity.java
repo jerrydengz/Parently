@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createBreatheBtn() {
-        Button button = findViewById(R.id.btnBreatheState);
+        Button button = findViewById(R.id.btnBreathe);
         button.setOnClickListener(view -> startActivity(BreatheActivity.makeIntent(this)));
     }
 
