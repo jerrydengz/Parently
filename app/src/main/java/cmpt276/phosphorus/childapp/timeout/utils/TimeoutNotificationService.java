@@ -39,7 +39,6 @@ public class TimeoutNotificationService extends Service {
 
     private boolean isTimerRunning;
     private CountDownTimer cdTimer;
-    private long endTime;
     private long timeLeft;
     public static final int DEF_SPEED = 1;
 
@@ -123,7 +122,7 @@ public class TimeoutNotificationService extends Service {
         float timerSpeed = prefs.getFloat(TimeoutPrefConst.TIMER_SPEED_RATE, DEF_SPEED);
         timeLeft = prefs.getLong(TimeoutPrefConst.TIME_LEFT, startTime);
 
-        endTime = System.currentTimeMillis() + timeLeft;
+        long endTime = System.currentTimeMillis() + timeLeft;
         if (isTimerRunning) {
             endTime = prefs.getLong(TimeoutPrefConst.END_TIME, 0);
             timeLeft = endTime - System.currentTimeMillis();

@@ -113,32 +113,36 @@ public class TimeoutActivity extends AppCompatActivity {
         }
 
         if (item.getItemId() == R.id.percent_25) {
-            //Toast.makeText(this, "25%", Toast.LENGTH_SHORT).show();
             newTimerSpeed = 0.25f;
         } else if (item.getItemId() == R.id.percent_50) {
-            //Toast.makeText(this, "50%", Toast.LENGTH_SHORT).show();
             newTimerSpeed = 0.50f;
         } else if (item.getItemId() == R.id.percent_75) {
-            //Toast.makeText(this, "75%", Toast.LENGTH_SHORT).show();
             newTimerSpeed = 0.75f;
         } else if (item.getItemId() == R.id.percent_100) {
-            //Toast.makeText(this, "100%", Toast.LENGTH_SHORT).show();
             newTimerSpeed = 1;
         } else if (item.getItemId() == R.id.percent_200) {
-            //Toast.makeText(this, "200%", Toast.LENGTH_SHORT).show();
             newTimerSpeed = 2;
         } else if (item.getItemId() == R.id.percent_300) {
-            //Toast.makeText(this, "300%", Toast.LENGTH_SHORT).show();
             newTimerSpeed = 3;
         } else if (item.getItemId() == R.id.percent_400) {
-            //Toast.makeText(this, "400%", Toast.LENGTH_SHORT).show();
             newTimerSpeed = 4;
         }
         // Reset timer and start it with new speed rate
         pauseTimer();
         startTimer();
 
+        showTimerSpeed();
+
         return true;
+    }
+
+    private void showTimerSpeed() {
+        TextView tvTimerSpeed = findViewById(R.id.tvTimerSpeed);
+        int timerSpeed = (int) (newTimerSpeed * 100);
+        tvTimerSpeed.setText(getString(R.string.timer_speed, timerSpeed));
+
+        int visibility = isTimerRunning ? View.VISIBLE : View.INVISIBLE;
+        tvTimerSpeed.setVisibility(visibility);
     }
 
     private void setUpStartAndPauseBtn() {
@@ -167,6 +171,10 @@ public class TimeoutActivity extends AppCompatActivity {
                 timeLeft = (long) (millisUntilFinished * newTimerSpeed);
                 updateCountDownText();
                 updateProgressBar();
+
+                // For bug where notification is still showing if in activity
+                stopTimeoutNotificationService();
+                stopNotification(1);
             }
 
             @Override
@@ -210,6 +218,7 @@ public class TimeoutActivity extends AppCompatActivity {
         btnReset.setVisibility(currentView);
         timeGroup.setVisibility(currentView);
         customTimeInput.setVisibility(currentView);
+        showTimerSpeed();
 
         if (timeLeft == startTime) {
             btnReset.setVisibility(View.INVISIBLE);

@@ -114,5 +114,6 @@
     <string name="percent_300">300%</string>
     <string name="percent_400">400%</string>
     <string name="speed_rate_of_the_timer">Speed Rate of the Timer</string>
+    <string name="timer_speed">Time @ %1$d%%</string>
 
 </resources>
