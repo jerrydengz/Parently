@@ -8,8 +8,8 @@ public abstract class BreatheState {
     protected boolean hasHeldThreeSecs = false;
     protected boolean hasHeldTenSecs = false;
 
-    protected final int SECONDS_3 = 3000;
-    protected final int SECONDS_10 = 10000;
+    protected final int THREE_SECONDS = 3000;
+    protected final int TEN_SECONDS = 10000;
 
     // Ensure BreatheState holds reference to BreatheActivity
     public BreatheState(BreatheActivity context) {

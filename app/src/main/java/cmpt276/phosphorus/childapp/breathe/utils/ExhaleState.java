@@ -7,9 +7,9 @@ import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.breathe.BreatheActivity;
 
 public class ExhaleState extends BreatheState {
-    private android.os.Handler timeHandler = new Handler();
-    private Runnable timerRunnable3 = this::updateBreathesLeft;
-    private Runnable timerRunnable10 = () -> {
+    private final android.os.Handler timeHandler = new Handler();
+    private final Runnable timerRunnableThreeSeconds = this::updateBreathesLeft;
+    private final Runnable timerRunnableTenSeconds = () -> {
         // TODO - stop animation and sound
     };
 
@@ -28,8 +28,8 @@ public class ExhaleState extends BreatheState {
         Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
         btnBreatheState.setClickable(false);
 
-        timeHandler.postDelayed(timerRunnable3, SECONDS_3);
-        timeHandler.postDelayed(timerRunnable10, SECONDS_10);
+        timeHandler.postDelayed(timerRunnableThreeSeconds, THREE_SECONDS);
+        timeHandler.postDelayed(timerRunnableTenSeconds, TEN_SECONDS);
     }
 
     @Override

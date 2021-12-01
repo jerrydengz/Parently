@@ -7,9 +7,9 @@ import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.breathe.BreatheActivity;
 
 public class InhaleState extends BreatheState{
-    private android.os.Handler timerHandler = new Handler();
-    private Runnable timerRunnable3 = this::handleThreeSecsPassed;
-    private Runnable timerRunnable10 = this::handleTenSecsPassed;
+    private final android.os.Handler timerHandler = new Handler();
+    private final Runnable timerRunnableThreeSeconds = this::handleThreeSecsPassed;
+    private final Runnable timerRunnableTenSeconds = this::handleTenSecsPassed;
 
     public InhaleState(BreatheActivity context) {
         super(context);
@@ -32,10 +32,10 @@ public class InhaleState extends BreatheState{
         // NOTE: animation should keep playing till it hits max at 10secs
 
         // set timer for 3 seconds
-        timerHandler.postDelayed(timerRunnable3,SECONDS_3);
+        timerHandler.postDelayed(timerRunnableThreeSeconds,THREE_SECONDS);
 
         // set timer for 10 seconds
-        timerHandler.postDelayed(timerRunnable10,SECONDS_10);
+        timerHandler.postDelayed(timerRunnableTenSeconds,TEN_SECONDS);
     }
 
     @Override
