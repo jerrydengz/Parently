@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import java.util.Arrays;
 
+import cmpt276.phosphorus.childapp.breathe.BreatheActivity;
 import cmpt276.phosphorus.childapp.children.ChildrenActivity;
 import cmpt276.phosphorus.childapp.coinflip.ChooseSideActivity;
 import cmpt276.phosphorus.childapp.help.HelpActivity;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         this.createFlipCoinBtn();
         this.createTimeoutBtn();
         this.createTaskBtn();
+        this.createBreatheBtn();
         this.createHelpBtn();
     }
 
@@ -59,6 +61,11 @@ public class MainActivity extends AppCompatActivity {
     private void createTaskBtn() {
         Button button = findViewById(R.id.btnTask);
         button.setOnClickListener(view -> startActivity(TaskActivity.makeIntent(this)));
+    }
+
+    private void createBreatheBtn() {
+        Button button = findViewById(R.id.btnBreathe);
+        button.setOnClickListener(view -> startActivity(BreatheActivity.makeIntent(this)));
     }
 
     private void createHelpBtn() {
