@@ -9,14 +9,7 @@ import cmpt276.phosphorus.childapp.breathe.BreatheActivity;
 public class InhaleState extends BreatheState{
     private android.os.Handler timerHandler = new Handler();
     private Runnable timerRunnable3 = this::handleThreeSecsPassed;
-
     private Runnable timerRunnable10 = this::handleTenSecsPassed;
-
-    private boolean hasHeldThreeSecs = false;
-    private boolean hasHeldTenSecs = false;
-
-    private final int SECONDS_3 = 3000;
-    private final int SECONDS_10 = 10000;
 
     public InhaleState(BreatheActivity context) {
         super(context);
@@ -32,8 +25,8 @@ public class InhaleState extends BreatheState{
         super.handleOnTouch();
 
         // set button text, TODO (later) - set guide text
-        Button inhaleBtn = context.findViewById(R.id.btnBreatheState);
-        inhaleBtn.setText(R.string.breathe_state_in);
+        Button mainBreatheBtn = context.findViewById(R.id.btnBreatheState);
+        mainBreatheBtn.setText(R.string.breathe_state_in);
 
         // TODO (whoever is gonna deal with animations) - play sound/animation
         // NOTE: animation should keep playing till it hits max at 10secs
@@ -69,8 +62,8 @@ public class InhaleState extends BreatheState{
 
     private void handleThreeSecsPassed(){
         hasHeldThreeSecs = true;
-        Button inhaleBtn = context.findViewById(R.id.btnBreatheState);
-        inhaleBtn.setText(R.string.breathe_state_out);
+        Button mainBreatheBtn = context.findViewById(R.id.btnBreatheState);
+        mainBreatheBtn.setText(R.string.breathe_state_out);
     }
 
     private void handleTenSecsPassed(){

@@ -119,5 +119,6 @@
     <string name="breathe_btn_text">Breathe</string>
     <string name="breathe_state_out">Out</string>
     <string name="breathe_state_in">In</string>
+    <string name="breathe_state_finished">Good job!</string>
 
 </resources>

@@ -47,6 +47,7 @@ public class BreatheActivity extends AppCompatActivity {
     private void setUpMainBreatheBtn() {
         Button breatheBtn = findViewById(R.id.btnBreatheState);
 
+        // https://stackoverflow.com/questions/49972106/android-button-ontouch-if-return-true-has-no-click-animation-effect-if-retu
         // https://stackoverflow.com/questions/11690504/how-to-use-view-ontouchlistener-instead-of-onclick
         breatheBtn.setOnTouchListener((v, event) -> {
             switch (event.getAction()){
@@ -63,5 +64,17 @@ public class BreatheActivity extends AppCompatActivity {
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, BreatheActivity.class);
+    }
+
+    public int getTotalBreaths() {
+        return totalBreaths;
+    }
+
+    public int getRemainingBreaths() {
+        return remainingBreaths;
+    }
+
+    public void setRemainingBreaths(int remainingBreaths) {
+        this.remainingBreaths = remainingBreaths;
     }
 }
