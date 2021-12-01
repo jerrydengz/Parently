@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.Button;
 
@@ -33,14 +34,19 @@ public class BreatheActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_breathe);
 
-        this.setUpMainBreatheBtn();
-        setState(inhaleState);
+        this.initalize();
     }
 
     public void setState(BreatheState newState) {
         currentState.handleExit();
         currentState = newState;
         currentState.handleEnter();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.initalize();
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -60,6 +66,11 @@ public class BreatheActivity extends AppCompatActivity {
             }
             return false;
         });
+    }
+
+    private void initalize(){
+        this.setUpMainBreatheBtn();
+        setState(inhaleState);
     }
 
     public static Intent makeIntent(Context context) {
