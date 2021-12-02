@@ -1,13 +1,10 @@
 package cmpt276.phosphorus.childapp.breathe;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.content.res.ResourcesCompat;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -39,9 +36,8 @@ public class BreatheActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_breathe);
 
-        this.setUpMainBreatheBtn();
         this.setUpNumBreathesBtn();
-        setState(inhaleState);
+        this.initialize();
     }
     // https://androidexample365.com/a-simple-android-library-to-implement-a-number-counter-with-increment/
     @SuppressLint("SetTextI18n")
@@ -61,6 +57,12 @@ public class BreatheActivity extends AppCompatActivity {
         currentState.handleExit();
         currentState = newState;
         currentState.handleEnter();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.initialize();
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -88,6 +90,11 @@ public class BreatheActivity extends AppCompatActivity {
 
             return false;
         });
+    }
+
+    private void initialize(){
+        this.setUpMainBreatheBtn();
+        setState(inhaleState);
     }
 
     public static Intent makeIntent(Context context) {

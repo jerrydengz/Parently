@@ -13,5 +13,6 @@ public class TimeoutPrefConst {
     public static final String TIME_LEFT = "TIME_LEFT";
     public static final String END_TIME = "END_TIME";
     public static final String IS_TIMER_RUNNING = "IS_TIMER_RUNNING";
+    public static final String TIMER_SPEED_RATE = "TIMER_SPEED_RATE";
 
 }
