@@ -120,5 +120,6 @@
     <string name="breathe_state_out">Out</string>
     <string name="breathe_state_in">In</string>
     <string name="breathe_state_finished">Good job!</string>
+    <string name="num_breathes_chosen_text">"Number of Breaths: "</string>
 
 </resources>

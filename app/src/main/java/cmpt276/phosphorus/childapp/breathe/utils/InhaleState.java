@@ -18,6 +18,8 @@ public class InhaleState extends BreatheState{
     @Override
     public void handleEnter() {
         super.handleEnter();
+        timerHandler.removeCallbacks(timerRunnableThreeSeconds);
+        timerHandler.removeCallbacks(timerRunnableTenSeconds);
     }
 
     @Override
@@ -28,7 +30,7 @@ public class InhaleState extends BreatheState{
         Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
         btnBreatheState.setText(R.string.breathe_state_in);
 
-        // TODO (whoever is gonna deal with animations) - play sound/animation
+        // TODO (whoever is gonna deal with animations) - play sound & animation
         // NOTE: animation should keep playing till it hits max at 10secs
 
         // set timer for 3 seconds
@@ -41,12 +43,12 @@ public class InhaleState extends BreatheState{
     @Override
     public void handleOnRelease() {
         super.handleOnRelease();
-        if(hasHeldThreeSecs || hasHeldTenSecs){
+        if(hasHeldThreeSecs){
             context.setState(context.getExhaleState());
         }else{
             // stop the timer
-            hasHeldThreeSecs = false;
-            timerHandler.removeCallbacks(null);
+            timerHandler.removeCallbacks(timerRunnableThreeSeconds);
+            timerHandler.removeCallbacks(timerRunnableTenSeconds);
 
             // TODO (whoever is gonna deal with animations) - stop & reset animation, stop sound
         }
@@ -55,7 +57,11 @@ public class InhaleState extends BreatheState{
     @Override
     public void handleExit() {
         super.handleExit();
-        timerHandler.removeCallbacks(null);
+        timerHandler.removeCallbacks(timerRunnableThreeSeconds);
+        timerHandler.removeCallbacks(timerRunnableTenSeconds);
+
+        hasHeldThreeSecs = false;
+        hasHeldTenSecs = false;
     }
 
     private void handleThreeSecsPassed(){
