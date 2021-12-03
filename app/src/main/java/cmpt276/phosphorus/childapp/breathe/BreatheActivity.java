@@ -78,7 +78,30 @@ public class BreatheActivity extends AppCompatActivity {
         super.onResume();
         this.initialize();
         toggleChooseBreathesOff(View.VISIBLE);
+        circle.setVisibility(View.GONE);
     }
+
+    /*
+
+    SUPER SCUFFED METHOD TO FIX BUG ON NAVIGATING AWAY FROM ACTIVITY TO RESET THE STATE
+    - BUG CAUSED FROM ANIMATION NOT FINISHING PROPERLY
+    - canceling animations won't work
+
+    - the below solution is to refresh the activity itself via destroy and recreate activity
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        // either this
+//        recreate();
+
+// or this
+//        finish();
+//        overridePendingTransition(0, 0);
+//        startActivity(getIntent());
+//        overridePendingTransition(0, 0);
+    }
+    */
 
     @SuppressLint("ClickableViewAccessibility")
     private void setUpMainBreatheBtn() {
@@ -91,6 +114,7 @@ public class BreatheActivity extends AppCompatActivity {
         // https://stackoverflow.com/questions/11690504/how-to-use-view-ontouchlistener-instead-of-onclick
         btnBreatheState.setOnTouchListener((v, event) -> {
             toggleChooseBreathesOff(View.GONE);
+            circle.setVisibility(View.VISIBLE);
 
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:

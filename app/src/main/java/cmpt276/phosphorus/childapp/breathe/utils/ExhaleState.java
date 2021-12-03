@@ -1,10 +1,7 @@
 package cmpt276.phosphorus.childapp.breathe.utils;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.os.Handler;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
@@ -60,6 +57,7 @@ public class ExhaleState extends BreatheState {
 
         // TODO - stop sound
         stopAnimation();
+        isTransitionToInhaleState = false;
     }
 
     private void updateBreathesLeft() {

@@ -1,6 +1,5 @@
 package cmpt276.phosphorus.childapp.breathe.utils;
 
-import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.os.Handler;
 import android.view.View;
@@ -32,7 +31,7 @@ public class InhaleState extends BreatheState {
     public void handleOnTouch() {
         super.handleOnTouch();
 
-        // set button text, TODO (later) - set guide text
+        // set button text, TODO (jack) - set guide text
         Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
         btnBreatheState.setText(R.string.breathe_state_in);
         btnBreatheState.setFocusable(true);
