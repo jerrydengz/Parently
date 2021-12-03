@@ -6,9 +6,13 @@ import android.animation.ObjectAnimator;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.breathe.BreatheActivity;
@@ -46,8 +50,7 @@ public class InhaleState extends BreatheState {
         // set timer for 10 seconds
         timerHandler.postDelayed(timerRunnableTenSeconds, TEN_SECONDS);
 
-        // TODO (whoever is gonna deal with animations) - play sound & animation
-        // NOTE: animation should keep playing till it hits max at 10secs
+        // TODO (whoever is gonna deal with animations) - play sound
         startExhaleAnimation();
 
     }
@@ -61,11 +64,8 @@ public class InhaleState extends BreatheState {
             // stop the timer
             timerHandler.removeCallbacks(timerRunnableThreeSeconds);
             timerHandler.removeCallbacks(timerRunnableTenSeconds);
-
-            // TODO (whoever is gonna deal with animations) - stop & reset animation, stop sound
             resetAnimation();
         }
-
     }
 
     @Override
@@ -76,6 +76,9 @@ public class InhaleState extends BreatheState {
 
         hasHeldThreeSecs = false;
         hasHeldTenSecs = false;
+
+        animation.cancel();
+        animation.end();
     }
 
     private void handleThreeSecsPassed() {
@@ -86,7 +89,8 @@ public class InhaleState extends BreatheState {
 
     private void handleTenSecsPassed() {
         hasHeldTenSecs = true;
-        // TODO (whoever is gonna deal with animations) - Stop animation, sound
+        // TODO (jack) - Stop sound & animation
+        animation.end();
     }
 
     private void startExhaleAnimation(){
@@ -94,11 +98,11 @@ public class InhaleState extends BreatheState {
         ObjectAnimator scaleUpX = ObjectAnimator.ofFloat(context.getCircleAnimation(), ViewGroup.SCALE_X, 8.5f);
         ObjectAnimator scaleUpY = ObjectAnimator.ofFloat(context.getCircleAnimation(), ViewGroup.SCALE_Y, 8.5f);
 
-        scaleUpX.setDuration(TEN_SECONDS*2);
-        scaleUpY.setDuration(TEN_SECONDS*2);
+        scaleUpX.setDuration(TEN_SECONDS*(long)2.5);
+        scaleUpY.setDuration(TEN_SECONDS*(long)2.5);
 
         animation.play(scaleUpX).with(scaleUpY);
-        animation.setInterpolator(new LinearInterpolator());
+        animation.setInterpolator(new LinearOutSlowInInterpolator());
 
         animation.start();
     }
@@ -106,12 +110,8 @@ public class InhaleState extends BreatheState {
     private void resetAnimation(){
     // https://stackoverflow.com/questions/45629326/trying-to-reset-values-from-property-animator-to-be-used-in-recycler-view/45700580#45700580
         animation.cancel();
-
         animation.reverse();
-
         animation.end();
 
     }
-
-
 }
