@@ -125,6 +125,11 @@ public class BreatheActivity extends AppCompatActivity {
                     currentState.handleOnTouch();
                     break;
                 case MotionEvent.ACTION_UP:
+                    // bug:
+                    // makes the first click after 3s of exhale to have ripple effect (good),
+                    // but still unable to have it trigger the animation (bad)
+                    // subsequent clicks/touch do trigger the animation
+                    v.performClick();
                     currentState.handleOnRelease();
                     break;
             }

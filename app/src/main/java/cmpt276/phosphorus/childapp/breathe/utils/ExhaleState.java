@@ -32,7 +32,7 @@ public class ExhaleState extends BreatheState {
 
         // disable button to be touched
         Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
-        btnBreatheState.setClickable(false);
+        btnBreatheState.setEnabled(false);
 
         timerHandler.postDelayed(timerRunnableThreeSeconds, THREE_SECONDS);
         timerHandler.postDelayed(timerRunnableTenSeconds, TEN_SECONDS);
@@ -62,7 +62,8 @@ public class ExhaleState extends BreatheState {
 
     private void updateBreathesLeft() {
         Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
-        btnBreatheState.setClickable(true);
+        btnBreatheState.setEnabled(true);
+
 
         context.setRemainingBreaths(context.getRemainingBreaths() - 1);
         // TODO - display updated remaining breathes
@@ -89,8 +90,9 @@ public class ExhaleState extends BreatheState {
         ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(context.getCircleAnimation(), ViewGroup.SCALE_X, 1f);
         ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(context.getCircleAnimation(), ViewGroup.SCALE_Y, 1f);
 
-        scaleDownX.setDuration(TEN_SECONDS*2);
-        scaleDownY.setDuration(TEN_SECONDS*2);
+        final int animationDuration = TEN_SECONDS*2;
+        scaleDownX.setDuration(animationDuration);
+        scaleDownY.setDuration(animationDuration);
 
         animation.play(scaleDownX).with(scaleDownY);
         animation.setInterpolator(new LinearInterpolator());

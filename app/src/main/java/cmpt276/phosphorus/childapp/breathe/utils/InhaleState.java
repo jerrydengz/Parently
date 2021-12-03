@@ -34,11 +34,6 @@ public class InhaleState extends BreatheState {
         // set button text, TODO (jack) - set guide text
         Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
         btnBreatheState.setText(R.string.breathe_state_in);
-        btnBreatheState.setFocusable(true);
-
-        btnBreatheState.setVisibility(View.INVISIBLE);
-        btnBreatheState.setVisibility(View.VISIBLE);
-
 
         // set timer for 3 seconds
         timerHandler.postDelayed(timerRunnableThreeSeconds, THREE_SECONDS);
@@ -93,8 +88,9 @@ public class InhaleState extends BreatheState {
         ObjectAnimator scaleUpX = ObjectAnimator.ofFloat(context.getCircleAnimation(), ViewGroup.SCALE_X, 8.5f);
         ObjectAnimator scaleUpY = ObjectAnimator.ofFloat(context.getCircleAnimation(), ViewGroup.SCALE_Y, 8.5f);
 
-        scaleUpX.setDuration(TEN_SECONDS*(long)2.5);
-        scaleUpY.setDuration(TEN_SECONDS*(long)2.5);
+        final long animationDuration = TEN_SECONDS*(long)2.5;
+        scaleUpX.setDuration(animationDuration);
+        scaleUpY.setDuration(animationDuration);
 
         animation.play(scaleUpX).with(scaleUpY);
         animation.setInterpolator(new LinearOutSlowInInterpolator());
