@@ -116,4 +116,6 @@
     <string name="speed_rate_of_the_timer">Speed Rate of the Timer</string>
 
     <string name="history"> History</string>
+    <string name="historyToggle">View History</string>
+    <string name="noChild">No History</string>
 </resources>

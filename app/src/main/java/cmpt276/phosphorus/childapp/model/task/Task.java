@@ -1,5 +1,7 @@
 package cmpt276.phosphorus.childapp.model.task;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import org.jetbrains.annotations.NotNull;
@@ -34,7 +36,7 @@ public class Task {
                 .collect(Collectors.toList());
         
         Collections.shuffle(this.children);
-        history = new ArrayList<>();
+        this.history = new ArrayList<>();
     }
 
     public String getName() {
@@ -59,7 +61,11 @@ public class Task {
 
     public void cycleChildren() {
         UUID doneChild = this.children.remove(this.FIRST_INDEX);
-        this.history.add(new TaskHistory(doneChild));
+        TaskHistory temp = new TaskHistory(doneChild);
+        if(this.history == null){
+            this.history = new ArrayList<>();
+        }
+        this.history.add(temp);
         this.children.add(doneChild);
     }
 
