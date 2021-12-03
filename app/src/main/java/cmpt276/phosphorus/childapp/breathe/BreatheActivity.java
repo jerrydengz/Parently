@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+
+import java.util.Objects;
 
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.breathe.utils.BreatheState;
@@ -40,7 +43,17 @@ public class BreatheActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_breathe);
 
+        this.setTitle(getString(R.string.activity_breathe_title));
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
         this.initialize();
+    }
+
+    // If user select the top left back button
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return super.onOptionsItemSelected(item);
     }
 
     private void initialize() {
@@ -76,32 +89,23 @@ public class BreatheActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+
         this.initialize();
         toggleChooseBreathesOff(View.VISIBLE);
         circle.setVisibility(View.GONE);
     }
 
-    /*
-
-    SUPER SCUFFED METHOD TO FIX BUG ON NAVIGATING AWAY FROM ACTIVITY TO RESET THE STATE
-    - BUG CAUSED FROM ANIMATION NOT FINISHING PROPERLY
-    - canceling animations won't work
-
-    - the below solution is to refresh the activity itself via destroy and recreate activity
-
     @Override
     protected void onRestart() {
         super.onRestart();
-        // either this
-//        recreate();
 
-// or this
-//        finish();
-//        overridePendingTransition(0, 0);
-//        startActivity(getIntent());
-//        overridePendingTransition(0, 0);
+        // copied from https://stackoverflow.com/questions/2486934/programmatically-relaunch-recreate-an-activity
+        // fixes bug when running animation during exhale state, and switching applications and back, will cause
+        // bug with the buttons and states when trying to reenter the state
+        startActivity(getIntent());
+        finish();
+        overridePendingTransition(0, 0);
     }
-    */
 
     @SuppressLint("ClickableViewAccessibility")
     private void setUpMainBreatheBtn() {
