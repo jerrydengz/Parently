@@ -1,16 +1,11 @@
 package cmpt276.phosphorus.childapp.breathe.utils;
 
-import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.os.CountDownTimer;
 import android.os.Handler;
+import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.LinearInterpolator;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 
@@ -21,8 +16,6 @@ public class InhaleState extends BreatheState {
     private final android.os.Handler timerHandler = new Handler();
     private final Runnable timerRunnableThreeSeconds = this::handleThreeSecsPassed;
     private final Runnable timerRunnableTenSeconds = this::handleTenSecsPassed;
-
-    private AnimatorSet animation = new AnimatorSet();
 
     public InhaleState(BreatheActivity context) {
         super(context);
@@ -42,6 +35,10 @@ public class InhaleState extends BreatheState {
         // set button text, TODO (later) - set guide text
         Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
         btnBreatheState.setText(R.string.breathe_state_in);
+        btnBreatheState.setFocusable(true);
+
+        btnBreatheState.setVisibility(View.INVISIBLE);
+        btnBreatheState.setVisibility(View.VISIBLE);
 
 
         // set timer for 3 seconds
@@ -50,9 +47,8 @@ public class InhaleState extends BreatheState {
         // set timer for 10 seconds
         timerHandler.postDelayed(timerRunnableTenSeconds, TEN_SECONDS);
 
-        // TODO (whoever is gonna deal with animations) - play sound
-        startExhaleAnimation();
-
+        // TODO (jack) - play sound
+        startInhaleAnimation();
     }
 
     @Override
@@ -89,11 +85,11 @@ public class InhaleState extends BreatheState {
 
     private void handleTenSecsPassed() {
         hasHeldTenSecs = true;
-        // TODO (jack) - Stop sound & animation
+        // TODO (jack) - Stop sound
         animation.end();
     }
 
-    private void startExhaleAnimation(){
+    private void startInhaleAnimation(){
         //https://stackoverflow.com/questions/33916287/android-scale-image-view-with-animation/33916973
         ObjectAnimator scaleUpX = ObjectAnimator.ofFloat(context.getCircleAnimation(), ViewGroup.SCALE_X, 8.5f);
         ObjectAnimator scaleUpY = ObjectAnimator.ofFloat(context.getCircleAnimation(), ViewGroup.SCALE_Y, 8.5f);
