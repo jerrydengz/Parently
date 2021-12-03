@@ -8,7 +8,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -26,6 +28,8 @@ public class BreatheActivity extends AppCompatActivity {
     private final BreatheState exhaleState = new ExhaleState(this);
     private final BreatheState configureState = new ConfigureState(this);
     private BreatheState currentState = new IdleState(this);
+
+    private ImageView circle;
 
     // TODO - save totalBreaths to sharedPrefs
     private int chosenBreathes;
@@ -81,10 +85,11 @@ public class BreatheActivity extends AppCompatActivity {
         Button btnBreatheState = findViewById(R.id.btnBreatheState);
         btnBreatheState.setText(getResources().getString(R.string.initial_state_btn_text));
 
+        circle = findViewById(R.id.circleBreatheAnimation);
+
         // https://stackoverflow.com/questions/49972106/android-button-ontouch-if-return-true-has-no-click-animation-effect-if-retu
         // https://stackoverflow.com/questions/11690504/how-to-use-view-ontouchlistener-instead-of-onclick
         btnBreatheState.setOnTouchListener((v, event) -> {
-
             toggleChooseBreathesOff(View.GONE);
 
             switch (event.getAction()) {
@@ -126,6 +131,8 @@ public class BreatheActivity extends AppCompatActivity {
     public BreatheState getExhaleState() {
         return exhaleState;
     }
+
+    public ImageView getCircleAnimation(){ return circle;}
 
     private void toggleChooseBreathesOff(int visibility){
         LinearLayout numBreathesConfigure = findViewById(R.id.numBreathesLinearLayout);
