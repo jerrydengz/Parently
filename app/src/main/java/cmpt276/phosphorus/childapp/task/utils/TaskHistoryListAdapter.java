@@ -7,10 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -50,6 +53,17 @@ public class TaskHistoryListAdapter extends ArrayAdapter<TaskHistory> {
 
         childTurnName.setText(dialogTitle);
         childTurnName.setTextColor(taskView.getResources().getColor(R.color.black, null));
+
+        ImageView icon = taskView.findViewById(R.id.childIconTaskHistory);
+        if(icon != null) {//problem here, icon is null for some reason?
+            if (currentTask.getChildIcon() != null) {
+                Glide.with(this.getContext())
+                        .load(currentTask.getChildIcon())
+                        .into(icon);
+            } else {
+                icon.setImageResource(R.drawable.child_portrait_default);
+            }
+        }
 
         return taskView;
     }

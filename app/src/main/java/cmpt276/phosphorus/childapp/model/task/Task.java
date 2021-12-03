@@ -1,7 +1,5 @@
 package cmpt276.phosphorus.childapp.model.task;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import org.jetbrains.annotations.NotNull;

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,12 +25,19 @@ public class TaskHistoryActivity extends AppCompatActivity {
         return new Intent(context, TaskHistoryActivity.class);
     }
 
+    // If user select the top left back button
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.task = TaskManager.getInstance().getViewHistory();
         setContentView(R.layout.activity_task_history);
-        this.setTitle(this.task.getName() + R.string.history);
+        this.setTitle(this.task.getName());
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         this.makeList();
     }
