@@ -23,7 +23,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ChildApp">
+        android:theme="@style/Theme.ChildApp"
+        tools:replace="android:icon,android:theme">
         <activity
             android:name=".breathe.BreatheActivity"
             android:exported="false"
