@@ -49,7 +49,7 @@ public class TaskHistoryListAdapter extends ArrayAdapter<TaskHistory> {
         // Set the name of the child assigned to the task
         TextView childTurnName = taskView.findViewById(R.id.currentTurnChildName);
         String dateTime = currentTask.getFormattedDate();
-        String dialogTitle = taskView.getResources().getString(R.string.current_turn_display).replace("%name%", dateTime);
+        String dialogTitle = taskView.getResources().getString(R.string.turn).replace("%date%", dateTime);
 
         childTurnName.setText(dialogTitle);
         childTurnName.setTextColor(taskView.getResources().getColor(R.color.black, null));
