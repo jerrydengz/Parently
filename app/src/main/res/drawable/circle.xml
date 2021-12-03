@@ -9,3 +9,4 @@
         android:width="40sp"
         android:height="40sp"/>
 </shape>
+<!--https://stackoverflow.com/questions/3185103/how-to-define-a-circle-shape-in-an-android-xml-drawable-file-->

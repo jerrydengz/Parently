@@ -90,6 +90,7 @@ public class InhaleState extends BreatheState {
     }
 
     private void startExhaleAnimation(){
+        //https://stackoverflow.com/questions/33916287/android-scale-image-view-with-animation/33916973
         ObjectAnimator scaleUpX = ObjectAnimator.ofFloat(context.getCircleAnimation(), ViewGroup.SCALE_X, 8.5f);
         ObjectAnimator scaleUpY = ObjectAnimator.ofFloat(context.getCircleAnimation(), ViewGroup.SCALE_Y, 8.5f);
 
@@ -102,8 +103,8 @@ public class InhaleState extends BreatheState {
         animation.start();
     }
 
-    // https://stackoverflow.com/questions/45629326/trying-to-reset-values-from-property-animator-to-be-used-in-recycler-view/45700580#45700580
     private void resetAnimation(){
+    // https://stackoverflow.com/questions/45629326/trying-to-reset-values-from-property-animator-to-be-used-in-recycler-view/45700580#45700580
         animation.cancel();
 
         animation.reverse();
