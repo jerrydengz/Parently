@@ -38,18 +38,9 @@ public class ExhaleState extends BreatheState {
         timerHandler.postDelayed(timerRunnableThreeSeconds, THREE_SECONDS);
         timerHandler.postDelayed(timerRunnableTenSeconds, TEN_SECONDS);
 
-        animation.cancel();
+        stopAnimation();
 
         startExhaleAnimation();
-    }
-
-    @Override
-    public void handleOnTouch() {
-        super.handleOnTouch();
-
-//        if(isTransitionToInhaleState){
-//            context.setState(context.getInhaleState());
-//        }
     }
 
     @Override
@@ -78,8 +69,7 @@ public class ExhaleState extends BreatheState {
 
             btnBreatheState.setText(R.string.breathe_state_finished);
             btnBreatheState.setOnClickListener(view -> {
-                animation.cancel();
-                animation.end();
+                stopAnimation();
                 context.finish();
             });
         }
@@ -102,6 +92,7 @@ public class ExhaleState extends BreatheState {
     }
 
     private void stopAnimation(){
+        animation.cancel();
         animation.end();
     }
 }

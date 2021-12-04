@@ -26,15 +26,14 @@ public class InhaleState extends BreatheState {
         timerHandler.removeCallbacks(timerRunnableThreeSeconds);
         timerHandler.removeCallbacks(timerRunnableTenSeconds);
 
-        animation.cancel();
-        animation.end();
+        stopAnimation();
     }
 
     @Override
     public void handleOnTouch() {
         super.handleOnTouch();
 
-        // set button text, TODO (jack) - set guide text
+        // TODO (jack) - set guide text
         Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
         btnBreatheState.setText(R.string.breathe_state_in);
 
@@ -71,8 +70,7 @@ public class InhaleState extends BreatheState {
         hasHeldThreeSecs = false;
         hasHeldTenSecs = false;
 
-        animation.cancel();
-        animation.end();
+        stopAnimation();
     }
 
     private void handleThreeSecsPassed() {
@@ -84,8 +82,7 @@ public class InhaleState extends BreatheState {
     private void handleTenSecsPassed() {
         hasHeldTenSecs = true;
         // TODO (jack) - Stop sound for inhale state
-        animation.cancel();
-        animation.end();
+        stopAnimation();
     }
 
     private void startInhaleAnimation(){
@@ -106,10 +103,15 @@ public class InhaleState extends BreatheState {
     }
 
     private void resetAnimation(){
-    // https://stackoverflow.com/questions/45629326/trying-to-reset-values-from-property-animator-to-be-used-in-recycler-view/45700580#45700580
+        // https://stackoverflow.com/questions/45629326/trying-to-reset-values-from-property-animator-to-be-used-in-recycler-view/45700580#45700580
         animation.cancel();
         animation.reverse();
         animation.end();
-
     }
+
+    private void stopAnimation(){
+        animation.cancel();
+        animation.end();
+    }
+
 }
