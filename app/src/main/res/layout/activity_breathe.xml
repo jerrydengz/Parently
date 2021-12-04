@@ -17,7 +17,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btnBreatheState"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guide_message">
+        app:layout_constraintTop_toBottomOf="@+id/guideMessage">
 
         <TextView
             android:id="@+id/numBreathesChosen"
@@ -51,7 +51,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/guide_message"
+        android:id="@+id/guideMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
@@ -73,7 +73,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guide_message"
+        app:layout_constraintTop_toBottomOf="@+id/guideMessage"
         app:srcCompat="@drawable/circle"
         tools:ignore="ContentDescription,ImageContrastCheck" />
 
