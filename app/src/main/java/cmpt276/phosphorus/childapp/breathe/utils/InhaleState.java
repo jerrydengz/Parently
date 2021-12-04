@@ -2,7 +2,6 @@ package cmpt276.phosphorus.childapp.breathe.utils;
 
 import android.animation.ObjectAnimator;
 import android.os.Handler;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
@@ -25,13 +24,15 @@ public class InhaleState extends BreatheState {
         super.handleEnter();
         timerHandler.removeCallbacks(timerRunnableThreeSeconds);
         timerHandler.removeCallbacks(timerRunnableTenSeconds);
+
+        stopAnimation();
     }
 
     @Override
     public void handleOnTouch() {
         super.handleOnTouch();
 
-        // set button text, TODO (jack) - set guide text
+        // TODO (jack) - set guide text
         Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
         btnBreatheState.setText(R.string.breathe_state_in);
 
@@ -41,7 +42,8 @@ public class InhaleState extends BreatheState {
         // set timer for 10 seconds
         timerHandler.postDelayed(timerRunnableTenSeconds, TEN_SECONDS);
 
-        // TODO (jack) - play sound
+        // TODO (jack) - 1. stop sound from exhale state (if playing)
+        // TODO (jack) - 2. play sound for inhale state
         startInhaleAnimation();
     }
 
@@ -67,8 +69,7 @@ public class InhaleState extends BreatheState {
         hasHeldThreeSecs = false;
         hasHeldTenSecs = false;
 
-        animation.cancel();
-        animation.end();
+        stopAnimation();
     }
 
     private void handleThreeSecsPassed() {
@@ -79,8 +80,8 @@ public class InhaleState extends BreatheState {
 
     private void handleTenSecsPassed() {
         hasHeldTenSecs = true;
-        // TODO (jack) - Stop sound
-        animation.end();
+        // TODO (jack) - Stop sound for inhale state
+        stopAnimation();
     }
 
     private void startInhaleAnimation(){
@@ -95,14 +96,21 @@ public class InhaleState extends BreatheState {
         animation.play(scaleUpX).with(scaleUpY);
         animation.setInterpolator(new LinearOutSlowInInterpolator());
 
+        context.getCircleAnimation().setColorFilter(context.getColor(R.color.chalk_red));
+
         animation.start();
     }
 
     private void resetAnimation(){
-    // https://stackoverflow.com/questions/45629326/trying-to-reset-values-from-property-animator-to-be-used-in-recycler-view/45700580#45700580
+        // https://stackoverflow.com/questions/45629326/trying-to-reset-values-from-property-animator-to-be-used-in-recycler-view/45700580#45700580
         animation.cancel();
         animation.reverse();
         animation.end();
-
     }
+
+    private void stopAnimation(){
+        animation.cancel();
+        animation.end();
+    }
+
 }

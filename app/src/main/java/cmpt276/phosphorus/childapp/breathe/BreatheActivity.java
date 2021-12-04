@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -125,17 +124,9 @@ public class BreatheActivity extends AppCompatActivity {
                     currentState.handleOnTouch();
                     break;
                 case MotionEvent.ACTION_UP:
-                    // bug:
-                    // makes the first click after 3s of exhale to have ripple effect (good),
-                    // but still unable to have it trigger the animation (bad)
-                    // subsequent clicks/touch do trigger the animation
-                    v.performClick();
                     currentState.handleOnRelease();
                     break;
             }
-
-            v.setVisibility(View.INVISIBLE);
-            v.setVisibility(View.VISIBLE);
 
             return false;
         });
@@ -145,6 +136,7 @@ public class BreatheActivity extends AppCompatActivity {
         return new Intent(context, BreatheActivity.class);
     }
 
+    // TODO - for later
     public int getChosenBreathes() {
         return chosenBreathes;
     }
