@@ -3,8 +3,9 @@ package cmpt276.phosphorus.childapp.breathe.utils;
 import android.animation.ObjectAnimator;
 import android.os.Handler;
 import android.view.ViewGroup;
-import android.view.animation.LinearInterpolator;
 import android.widget.Button;
+
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.breathe.BreatheActivity;
@@ -37,6 +38,8 @@ public class ExhaleState extends BreatheState {
         timerHandler.postDelayed(timerRunnableThreeSeconds, THREE_SECONDS);
         timerHandler.postDelayed(timerRunnableTenSeconds, TEN_SECONDS);
 
+        animation.cancel();
+
         startExhaleAnimation();
     }
 
@@ -44,9 +47,9 @@ public class ExhaleState extends BreatheState {
     public void handleOnTouch() {
         super.handleOnTouch();
 
-        if(isTransitionToInhaleState){
-            context.setState(context.getInhaleState());
-        }
+//        if(isTransitionToInhaleState){
+//            context.setState(context.getInhaleState());
+//        }
     }
 
     @Override
@@ -54,16 +57,12 @@ public class ExhaleState extends BreatheState {
         super.handleExit();
         timerHandler.removeCallbacks(timerRunnableThreeSeconds);
         timerHandler.removeCallbacks(timerRunnableTenSeconds);
-
-        // TODO - stop sound
-        stopAnimation();
-        isTransitionToInhaleState = false;
     }
 
     private void updateBreathesLeft() {
         Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
         btnBreatheState.setEnabled(true);
-
+        btnBreatheState.performClick();
 
         context.setRemainingBreaths(context.getRemainingBreaths() - 1);
         // TODO - display updated remaining breathes
@@ -72,7 +71,8 @@ public class ExhaleState extends BreatheState {
 
             // TODO - update guide text
             btnBreatheState.setText(R.string.breathe_state_in);
-            isTransitionToInhaleState = true;
+//            isTransitionToInhaleState = true;
+            context.setState(context.getInhaleState());
         } else {
             // TODO - update guide text
 
@@ -90,12 +90,13 @@ public class ExhaleState extends BreatheState {
         ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(context.getCircleAnimation(), ViewGroup.SCALE_X, 1f);
         ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(context.getCircleAnimation(), ViewGroup.SCALE_Y, 1f);
 
-        final int animationDuration = TEN_SECONDS*2;
+        final long animationDuration = TEN_SECONDS*(long)2.5;
         scaleDownX.setDuration(animationDuration);
         scaleDownY.setDuration(animationDuration);
 
         animation.play(scaleDownX).with(scaleDownY);
-        animation.setInterpolator(new LinearInterpolator());
+        animation.setInterpolator(new LinearOutSlowInInterpolator());
+        context.getCircleAnimation().setColorFilter(context.getColor(R.color.chalk_red_var));
 
         animation.start();
     }

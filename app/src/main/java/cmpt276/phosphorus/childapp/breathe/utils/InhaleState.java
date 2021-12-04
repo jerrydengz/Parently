@@ -25,6 +25,9 @@ public class InhaleState extends BreatheState {
         super.handleEnter();
         timerHandler.removeCallbacks(timerRunnableThreeSeconds);
         timerHandler.removeCallbacks(timerRunnableTenSeconds);
+
+        animation.cancel();
+        animation.end();
     }
 
     @Override
@@ -41,7 +44,8 @@ public class InhaleState extends BreatheState {
         // set timer for 10 seconds
         timerHandler.postDelayed(timerRunnableTenSeconds, TEN_SECONDS);
 
-        // TODO (jack) - play sound
+        // TODO (jack) - 1. stop sound from exhale state (if playing)
+        // TODO (jack) - 2. play sound for inhale state
         startInhaleAnimation();
     }
 
@@ -79,7 +83,8 @@ public class InhaleState extends BreatheState {
 
     private void handleTenSecsPassed() {
         hasHeldTenSecs = true;
-        // TODO (jack) - Stop sound
+        // TODO (jack) - Stop sound for inhale state
+        animation.cancel();
         animation.end();
     }
 
@@ -94,6 +99,8 @@ public class InhaleState extends BreatheState {
 
         animation.play(scaleUpX).with(scaleUpY);
         animation.setInterpolator(new LinearOutSlowInInterpolator());
+
+        context.getCircleAnimation().setColorFilter(context.getColor(R.color.chalk_red));
 
         animation.start();
     }
