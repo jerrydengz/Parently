@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -226,6 +227,12 @@ public class TimeoutActivity extends AppCompatActivity {
         int background = isTimerRunning ? R.drawable.relaxing_background : R.drawable.lavender_min_1;
         ConstraintLayout constraintLayout = findViewById(R.id.timeoutLayout);
         constraintLayout.setBackgroundResource(background);
+
+        if (isTimerRunning) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        } else {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
     }
 
     private void showTimerSpeed() {
