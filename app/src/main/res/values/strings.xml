@@ -122,6 +122,7 @@
     <string name="breathe_state_in">In</string>
     <string name="breathe_state_finished">Good job!</string>
     <string name="num_breathes_chosen_text">"Number of Breaths: "</string>
+    <string name="activity_breathe_title">Take Breathes to Calm Down</string>
     <string name="history_toggle">View History</string>
     <string name="no_child">No History</string>
     <string name="turn">Turn: %date%</string>

@@ -8,33 +8,6 @@
     android:background="@drawable/lavender_min_1"
     >
 
-    <Button
-        android:id="@+id/btnBreatheState"
-        android:layout_width="209dp"
-        android:layout_height="133dp"
-        android:text="@string/initial_state_btn_text"
-        android:textSize="28sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.908"
-        tools:ignore="TextContrastCheck" />
-
-    <TextView
-        android:id="@+id/guide_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="@string/guide_message"
-        android:textColor="@color/black"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <LinearLayout
         android:id="@+id/numBreathesLinearLayout"
         android:layout_width="wrap_content"
@@ -44,7 +17,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btnBreatheState"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guide_message">
+        app:layout_constraintTop_toBottomOf="@+id/guideMessage">
 
         <TextView
             android:id="@+id/numBreathesChosen"
@@ -77,5 +50,61 @@
             app:layout_constraintTop_toTopOf="parent" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/guideMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="@string/guide_message"
+        android:textColor="@color/black"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/circleBreatheAnimation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/btnBreatheState"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideMessage"
+        app:srcCompat="@drawable/circle"
+        tools:ignore="ContentDescription,ImageContrastCheck" />
+
+    <Button
+        android:id="@+id/btnBreatheState"
+        android:layout_width="213dp"
+        android:layout_height="96dp"
+        android:text="@string/initial_state_btn_text"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.965"
+        tools:ignore="TextContrastCheck" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--
+    <RelativeLayout
+        android:id="@+id/animationFrame"
+        android:layout_width="413dp"
+        android:layout_height="399dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/btnBreatheState"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guide_message">
+
+
+    </RelativeLayout>
+-->
