@@ -18,8 +18,6 @@ public class ExhaleState extends BreatheState {
         stopAnimation();
     };
 
-    private boolean isTransitionToInhaleState = false;
-
     public ExhaleState(BreatheActivity context) {
         super(context);
     }
@@ -62,7 +60,6 @@ public class ExhaleState extends BreatheState {
 
             // TODO - update guide text
             btnBreatheState.setText(R.string.breathe_state_in);
-//            isTransitionToInhaleState = true;
             context.setState(context.getInhaleState());
         } else {
             // TODO - update guide text

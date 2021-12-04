@@ -2,7 +2,6 @@ package cmpt276.phosphorus.childapp.breathe.utils;
 
 import android.animation.ObjectAnimator;
 import android.os.Handler;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 

@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -129,9 +128,6 @@ public class BreatheActivity extends AppCompatActivity {
                     break;
             }
 
-//            v.setVisibility(View.INVISIBLE);
-//            v.setVisibility(View.VISIBLE);
-
             return false;
         });
     }
@@ -140,6 +136,7 @@ public class BreatheActivity extends AppCompatActivity {
         return new Intent(context, BreatheActivity.class);
     }
 
+    // TODO - for later
     public int getChosenBreathes() {
         return chosenBreathes;
     }
