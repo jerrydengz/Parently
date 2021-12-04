@@ -36,18 +36,18 @@ public class TaskHistoryListAdapter extends ArrayAdapter<TaskHistory> {
         View taskView = convertView;
 
         if (taskView == null) {
-            taskView = LayoutInflater.from(getContext()).inflate(R.layout.task_item, parent, false);
+            taskView = LayoutInflater.from(getContext()).inflate(R.layout.task_history_layout, parent, false);
         }
 
         TaskHistory currentTask = getItem(position);
 
-        TextView taskName = taskView.findViewById(R.id.taskName);
+        TextView taskName = taskView.findViewById(R.id.taskChildName);
         taskName.setText(currentTask.getChildName());
         taskName.setTextColor(taskView.getResources().getColor(R.color.black, null));
         taskName.setTypeface(null, Typeface.BOLD);
 
         // Set the name of the child assigned to the task
-        TextView childTurnName = taskView.findViewById(R.id.currentTurnChildName);
+        TextView childTurnName = taskView.findViewById(R.id.taskTime);
         String dateTime = currentTask.getFormattedDate();
         String dialogTitle = taskView.getResources().getString(R.string.turn).replace("%date%", dateTime);
 
