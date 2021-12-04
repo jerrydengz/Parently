@@ -84,11 +84,8 @@
         <Button
             android:id="@+id/viewHistory"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:text="@string/history_toggle"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnTaskClose" />
+            android:layout_height="60sp"
+            android:text="@string/history_toggle" />
     </LinearLayout>
 
     <TextView

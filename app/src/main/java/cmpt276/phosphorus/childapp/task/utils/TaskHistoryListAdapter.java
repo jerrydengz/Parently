@@ -18,15 +18,12 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import cmpt276.phosphorus.childapp.R;
-import cmpt276.phosphorus.childapp.model.child.Child;
-import cmpt276.phosphorus.childapp.model.child.ChildManager;
-import cmpt276.phosphorus.childapp.model.task.Task;
 import cmpt276.phosphorus.childapp.model.task.TaskHistory;
 
 public class TaskHistoryListAdapter extends ArrayAdapter<TaskHistory> {
 
-    public TaskHistoryListAdapter(Context context, List<TaskHistory> taskHist){
-        super(context, R.layout.task_history_layout, taskHist);
+    public TaskHistoryListAdapter(Context context, List<TaskHistory> taskHist) {
+        super(context, R.layout.task_history_item, taskHist);
     }
 
     @SuppressLint("SetTextI18n")
@@ -36,7 +33,8 @@ public class TaskHistoryListAdapter extends ArrayAdapter<TaskHistory> {
         View taskView = convertView;
 
         if (taskView == null) {
-            taskView = LayoutInflater.from(getContext()).inflate(R.layout.task_history_layout, parent, false);
+            taskView = LayoutInflater.from(getContext())
+                    .inflate(R.layout.task_history_item, parent, false);
         }
 
         TaskHistory currentTask = getItem(position);
@@ -55,14 +53,12 @@ public class TaskHistoryListAdapter extends ArrayAdapter<TaskHistory> {
         childTurnName.setTextColor(taskView.getResources().getColor(R.color.black, null));
 
         ImageView icon = taskView.findViewById(R.id.childIconTaskHistory);
-        if(icon != null) {//problem here, icon is null for some reason?
-            if (currentTask.getChildIcon() != null) {
-                Glide.with(this.getContext())
-                        .load(currentTask.getChildIcon())
-                        .into(icon);
-            } else {
-                icon.setImageResource(R.drawable.child_portrait_default);
-            }
+        if (currentTask.getChildIcon() != null) {
+            Glide.with(this.getContext())
+                    .load(currentTask.getChildIcon())
+                    .into(icon);
+        } else {
+            icon.setImageResource(R.drawable.child_portrait_default);
         }
 
         return taskView;

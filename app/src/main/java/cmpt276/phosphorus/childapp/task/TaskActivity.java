@@ -120,7 +120,7 @@ public class TaskActivity extends AppCompatActivity {
         btnTaskClose.setOnClickListener(view -> this.alertDialog.dismiss());
 
         Button viewHistory = dialogView.findViewById(R.id.viewHistory);
-        viewHistory.setOnClickListener(v ->{
+        viewHistory.setOnClickListener(v -> {
             Intent taskHist = TaskHistoryActivity.makeIntent(this, selected);
             startActivity(taskHist);
         });
