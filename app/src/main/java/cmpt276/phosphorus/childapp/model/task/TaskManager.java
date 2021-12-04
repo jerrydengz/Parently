@@ -16,7 +16,6 @@ public class TaskManager {
     private static TaskManager instance;
 
     private List<Task> allTasks;
-    private Task viewHistory;
 
     public static TaskManager getInstance() {
         if (instance == null) {
@@ -26,7 +25,6 @@ public class TaskManager {
     }
 
     private TaskManager() {
-        this.viewHistory =  null;
         this.allTasks = new ArrayList<>();
     }
 
@@ -61,21 +59,5 @@ public class TaskManager {
 
     public boolean isEmpty() {
         return this.allTasks.isEmpty();
-    }
-
-    public void setHistory(int index){
-        this.viewHistory = this.allTasks.get(index);
-    }
-
-    public void setHistory(Task task){
-        this.viewHistory = task;
-    }
-
-    public void viewedHistory(){
-        this.viewHistory = null;
-    }
-
-    public Task getViewHistory() {
-        return this.viewHistory;
     }
 }

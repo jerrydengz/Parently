@@ -121,8 +121,8 @@ public class TaskActivity extends AppCompatActivity {
 
         Button viewHistory = dialogView.findViewById(R.id.viewHistory);
         viewHistory.setOnClickListener(v ->{
-            this.taskManager.setHistory(selected);
-            startActivity(TaskHistoryActivity.makeIntent(this));
+            Intent taskHist = TaskHistoryActivity.makeIntent(this, selected);
+            startActivity(taskHist);
         });
 
         TextView textCurrentTurn = dialogView.findViewById(R.id.textCurrentTurn);

@@ -59,11 +59,10 @@ public class Task {
 
     public void cycleChildren() {
         UUID doneChild = this.children.remove(this.FIRST_INDEX);
-        TaskHistory temp = new TaskHistory(doneChild);
         if(this.history == null){
             this.history = new ArrayList<>();
         }
-        this.history.add(temp);
+        this.history.add(new TaskHistory(doneChild));
         this.children.add(doneChild);
     }
 
