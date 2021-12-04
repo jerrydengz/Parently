@@ -114,6 +114,14 @@
     <string name="percent_300">300%</string>
     <string name="percent_400">400%</string>
     <string name="speed_rate_of_the_timer">Speed Rate of the Timer</string>
+    <string name="timer_speed">Time @ %1$d%%</string>
+    <string name="initial_state_btn_text">Begin</string>
+    <string name="guide_message">Guiding Message</string>
+    <string name="breathe_btn_text">Breathe</string>
+    <string name="breathe_state_out">Out</string>
+    <string name="breathe_state_in">In</string>
+    <string name="breathe_state_finished">Good job!</string>
+    <string name="num_breathes_chosen_text">"Number of Breaths: "</string>
 
     <string name="history_toggle">View History</string>
     <string name="no_child">No History</string>
