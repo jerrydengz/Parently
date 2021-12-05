@@ -32,14 +32,13 @@ public class BreatheActivity extends AppCompatActivity {
     private BreatheState currentState = new IdleState(this);
 
     private ImageView circleImgView;
+    private TextView remainBreathsText;
     private boolean isInitialized = false;
 
-    // TODO - save totalBreaths to sharedPrefs
-    private int chosenBreathes;
     private int remainingBreaths;
-
+    private int chosenBreaths;
     private final String APP_PREFS = "ParentApp";
-    private final String NUM_CHOSEN_BREATHES = "NumChosenBreathes - BreatheActivity.java";
+    private final String NUM_CHOSEN_BREATHS = "NumChosenBreaths - BreatheActivity.java";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +48,10 @@ public class BreatheActivity extends AppCompatActivity {
         this.setTitle(getString(R.string.activity_breathe_title));
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        this.getChosenBreathesFromPrefs();
+        this.getChosenBreathsFromPrefs();
+        this.setUpNumBreathsBtn();
+        this.setUpViewVisibility();
         this.setUpMainBreatheBtn();
-        this.setUpNumBreathesBtn();
         setState(inhaleState);
     }
 
@@ -81,36 +81,48 @@ public class BreatheActivity extends AppCompatActivity {
 
     // https://androidexample365.com/a-simple-android-library-to-implement-a-number-counter-with-increment/
     @SuppressLint("SetTextI18n")
-    private void setUpNumBreathesBtn() {
+    private void setUpNumBreathsBtn() {
         TextView numBreathsDisplayed = findViewById(R.id.numBreathesChosen);
-        numBreathsDisplayed.setText(getResources().getString(R.string.num_breathes_chosen_text) + chosenBreathes);
+        numBreathsDisplayed.setText(getString(
+                (chosenBreaths == 1) ? R.string.singular_breath_chosen_text
+                : R.string.num_breaths_chosen_text,
+                chosenBreaths));
 
         ElegantNumberButton btn = findViewById(R.id.elegantNumberButton);
-        btn.setNumber(String.valueOf(chosenBreathes));
+        btn.setNumber(String.valueOf(chosenBreaths));
         btn.setOnClickListener((ElegantNumberButton.OnClickListener) view -> {
-            chosenBreathes = Integer.parseInt(btn.getNumber());
-            numBreathsDisplayed.setText(getResources().getString(R.string.num_breathes_chosen_text) + chosenBreathes);
+            chosenBreaths = Integer.parseInt(btn.getNumber());
+            numBreathsDisplayed.setText(getString(
+                    (chosenBreaths == 1) ? R.string.singular_breath_chosen_text
+                            : R.string.num_breaths_chosen_text,
+                    chosenBreaths));
 
-            remainingBreaths = chosenBreathes;
+            remainingBreaths = chosenBreaths;
+            saveChosenBreathsToPrefs();
         });
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+    private void setUpViewVisibility() {
+        circleImgView = findViewById(R.id.circleBreatheAnimation);
+        remainBreathsText = findViewById(R.id.remainingBreathesText);
+        circleImgView.setVisibility(View.INVISIBLE);
+        remainBreathsText.setVisibility(View.INVISIBLE);
+    }
+
+    @SuppressLint({"ClickableViewAccessibility", "SetTextI18n"})
     private void setUpMainBreatheBtn() {
         Button btnBreatheState = findViewById(R.id.btnBreatheState);
         btnBreatheState.setText(getResources().getString(R.string.initial_state_btn_text));
-
-        circleImgView = findViewById(R.id.circleBreatheAnimation);
-        circleImgView.setVisibility(View.INVISIBLE);
 
         // https://stackoverflow.com/questions/49972106/android-button-ontouch-if-return-true-has-no-click-animation-effect-if-retu
         // https://stackoverflow.com/questions/11690504/how-to-use-view-ontouchlistener-instead-of-onclick
         btnBreatheState.setOnTouchListener((v, event) -> {
 
-            if(!isInitialized){
+            if (!isInitialized) {
                 findViewById(R.id.numBreathesLinearLayout).setVisibility(View.GONE);
                 circleImgView.setVisibility(View.VISIBLE);
-                saveChosenBreathesToPrefs();
+                remainBreathsText.setVisibility(View.VISIBLE);
+                remainBreathsText.setText(getString(R.string.remaining_breaths_text) + chosenBreaths);
                 isInitialized = true;
             }
 
@@ -131,8 +143,8 @@ public class BreatheActivity extends AppCompatActivity {
         return remainingBreaths;
     }
 
-    public void setRemainingBreaths(int remainingBreaths) {
-        this.remainingBreaths = remainingBreaths;
+    public void setRemainingBreaths(int remainingBreathes) {
+        this.remainingBreaths = remainingBreathes;
     }
 
     public BreatheState getInhaleState() {
@@ -147,23 +159,20 @@ public class BreatheActivity extends AppCompatActivity {
         return circleImgView;
     }
 
-    // shared prefs
-    private void saveChosenBreathesToPrefs(){
+    private void saveChosenBreathsToPrefs() {
         SharedPreferences numBreathesPrefs = this.getSharedPreferences(APP_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = numBreathesPrefs.edit();
-        editor.putInt(NUM_CHOSEN_BREATHES, chosenBreathes);
+        editor.putInt(NUM_CHOSEN_BREATHS, chosenBreaths);
         editor.apply();
     }
 
-    private void getChosenBreathesFromPrefs(){
-        SharedPreferences numBreathesPrefs = this.getSharedPreferences(APP_PREFS,MODE_PRIVATE);
-        chosenBreathes = numBreathesPrefs.getInt(NUM_CHOSEN_BREATHES,1);
+    private void getChosenBreathsFromPrefs() {
+        SharedPreferences numBreathesPrefs = this.getSharedPreferences(APP_PREFS, MODE_PRIVATE);
+        chosenBreaths = numBreathesPrefs.getInt(NUM_CHOSEN_BREATHS, 1);
+        remainingBreaths = chosenBreaths;
     }
 
-    @SuppressLint("SetTextI18n")
-    private void updateRemainingBreathes(){
-        TextView remainBreathes = findViewById(R.id.remainingBreathesText);
-        remainBreathes.setText(getString(R.string.num_breathes_chosen_text) + remainingBreaths);
+    public TextView getRemainBreathsView() {
+        return remainBreathsText;
     }
-
 }

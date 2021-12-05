@@ -43,7 +43,7 @@ public class InhaleState extends BreatheState {
         timerHandler.postDelayed(timerRunnableTenSeconds, TEN_SECONDS);
 
         // TODO (jack) - 1. stop sound from exhale state (if playing)
-        // TODO (jack) - 2. play sound for inhale state
+        // TODO (jack) - 2. play mc sound for inhale state {0:00 - 0:10}
         startInhaleAnimation();
     }
 
