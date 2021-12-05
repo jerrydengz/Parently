@@ -34,7 +34,7 @@ public class Task {
                 .collect(Collectors.toList());
         
         Collections.shuffle(this.children);
-        history = new ArrayList<>();
+        this.history = new ArrayList<>();
     }
 
     public String getName() {
@@ -59,6 +59,9 @@ public class Task {
 
     public void cycleChildren() {
         UUID doneChild = this.children.remove(this.FIRST_INDEX);
+        if(this.history == null){
+            this.history = new ArrayList<>();
+        }
         this.history.add(new TaskHistory(doneChild));
         this.children.add(doneChild);
     }
