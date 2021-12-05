@@ -74,8 +74,8 @@ public class ExhaleState extends BreatheState {
 
     private void startExhaleAnimation(){
         //https://stackoverflow.com/questions/33916287/android-scale-image-view-with-animation/33916973
-        ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(context.getCircleAnimation(), ViewGroup.SCALE_X, 1f);
-        ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(context.getCircleAnimation(), ViewGroup.SCALE_Y, 1f);
+        ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(context.getCircleAnimationView(), ViewGroup.SCALE_X, 1f);
+        ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(context.getCircleAnimationView(), ViewGroup.SCALE_Y, 1f);
 
         final long animationDuration = TEN_SECONDS*(long)2.5;
         scaleDownX.setDuration(animationDuration);
@@ -83,7 +83,7 @@ public class ExhaleState extends BreatheState {
 
         animation.play(scaleDownX).with(scaleDownY);
         animation.setInterpolator(new LinearOutSlowInInterpolator());
-        context.getCircleAnimation().setColorFilter(context.getColor(R.color.chalk_red_var));
+        context.getCircleAnimationView().setColorFilter(context.getColor(R.color.chalk_red_var));
 
         animation.start();
     }

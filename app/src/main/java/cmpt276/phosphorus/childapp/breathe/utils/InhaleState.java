@@ -86,8 +86,8 @@ public class InhaleState extends BreatheState {
 
     private void startInhaleAnimation(){
         //https://stackoverflow.com/questions/33916287/android-scale-image-view-with-animation/33916973
-        ObjectAnimator scaleUpX = ObjectAnimator.ofFloat(context.getCircleAnimation(), ViewGroup.SCALE_X, 8.5f);
-        ObjectAnimator scaleUpY = ObjectAnimator.ofFloat(context.getCircleAnimation(), ViewGroup.SCALE_Y, 8.5f);
+        ObjectAnimator scaleUpX = ObjectAnimator.ofFloat(context.getCircleAnimationView(), ViewGroup.SCALE_X, 8.5f);
+        ObjectAnimator scaleUpY = ObjectAnimator.ofFloat(context.getCircleAnimationView(), ViewGroup.SCALE_Y, 8.5f);
 
         final long animationDuration = TEN_SECONDS*(long)2.5;
         scaleUpX.setDuration(animationDuration);
@@ -96,7 +96,7 @@ public class InhaleState extends BreatheState {
         animation.play(scaleUpX).with(scaleUpY);
         animation.setInterpolator(new LinearOutSlowInInterpolator());
 
-        context.getCircleAnimation().setColorFilter(context.getColor(R.color.chalk_red));
+        context.getCircleAnimationView().setColorFilter(context.getColor(R.color.chalk_red));
 
         animation.start();
     }
