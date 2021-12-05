@@ -12,7 +12,6 @@ import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.breathe.BreatheActivity;
 
 public class ExhaleState extends BreatheState {
-    private final android.os.Handler timerHandler = new Handler();
     private final Runnable timerRunnableThreeSeconds = this::updateBreathesLeft;
     private final Runnable timerRunnableTenSeconds = () -> {
         // TODO (jack) - stop sound
@@ -46,7 +45,6 @@ public class ExhaleState extends BreatheState {
     public void handleExit() {
         super.handleExit();
         timerHandler.removeCallbacks(timerRunnableThreeSeconds);
-        timerHandler.removeCallbacks(timerRunnableTenSeconds);
     }
 
     @SuppressLint("SetTextI18n")

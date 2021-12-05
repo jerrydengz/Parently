@@ -1,6 +1,7 @@
 package cmpt276.phosphorus.childapp.breathe.utils;
 
 import android.animation.AnimatorSet;
+import android.os.Handler;
 
 import cmpt276.phosphorus.childapp.breathe.BreatheActivity;
 
@@ -12,6 +13,8 @@ public abstract class BreatheState {
 
     protected final int THREE_SECONDS = 3000;
     protected final int TEN_SECONDS = 10000;
+
+    protected final android.os.Handler timerHandler = new Handler();
 
     protected final AnimatorSet animation = new AnimatorSet();
 

@@ -11,7 +11,6 @@ import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.breathe.BreatheActivity;
 
 public class InhaleState extends BreatheState {
-    private final android.os.Handler timerHandler = new Handler();
     private final Runnable timerRunnableThreeSeconds = this::handleThreeSecsPassed;
     private final Runnable timerRunnableTenSeconds = this::handleTenSecsPassed;
 
@@ -22,9 +21,6 @@ public class InhaleState extends BreatheState {
     @Override
     public void handleEnter() {
         super.handleEnter();
-        timerHandler.removeCallbacks(timerRunnableThreeSeconds);
-        timerHandler.removeCallbacks(timerRunnableTenSeconds);
-
         stopAnimation();
     }
 
@@ -35,6 +31,10 @@ public class InhaleState extends BreatheState {
         // TODO (jack) - set guide text
         Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
         btnBreatheState.setText(R.string.breathe_state_in);
+
+        // remove the handler running the 10 second runnable from ExhaleState
+        // https://stackoverflow.com/questions/5883635/how-to-remove-all-callbacks-from-a-handler
+        timerHandler.removeCallbacksAndMessages(null);
 
         // set timer for 3 seconds
         timerHandler.postDelayed(timerRunnableThreeSeconds, THREE_SECONDS);
@@ -54,8 +54,7 @@ public class InhaleState extends BreatheState {
             context.setState(context.getExhaleState());
         } else {
             // stop the timer
-            timerHandler.removeCallbacks(timerRunnableThreeSeconds);
-            timerHandler.removeCallbacks(timerRunnableTenSeconds);
+            timerHandler.removeCallbacksAndMessages(null);
             resetAnimation();
         }
     }
@@ -63,8 +62,7 @@ public class InhaleState extends BreatheState {
     @Override
     public void handleExit() {
         super.handleExit();
-        timerHandler.removeCallbacks(timerRunnableThreeSeconds);
-        timerHandler.removeCallbacks(timerRunnableTenSeconds);
+        timerHandler.removeCallbacksAndMessages(null);
 
         hasHeldThreeSecs = false;
         hasHeldTenSecs = false;
@@ -81,6 +79,7 @@ public class InhaleState extends BreatheState {
     private void handleTenSecsPassed() {
         hasHeldTenSecs = true;
         // TODO (jack) - Stop sound for inhale state
+
         stopAnimation();
     }
 
