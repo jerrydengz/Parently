@@ -60,5 +60,4 @@ public class TaskManager {
     public boolean isEmpty() {
         return this.allTasks.isEmpty();
     }
-
 }

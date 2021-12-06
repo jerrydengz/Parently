@@ -51,15 +51,13 @@ import cmpt276.phosphorus.childapp.timeout.utils.TimeoutPrefConst;
 // ==============================================================================================
 public class TimeoutActivity extends AppCompatActivity {
 
+    private final float defaultTimerSpeed = 1;
     // Time is in milliseconds, 1000ms = 1s
     private long startTime = 60000;
     private long timeLeft;
     private long endTime;
     private long totalTime = 60000;
-
     private float newTimerSpeed = 1;
-    private final float defaultTimerSpeed = 1;
-
     private TextView tvCountDown;
     private RadioGroup timeGroup;
     private Button btnStartAndPause;
@@ -120,14 +118,15 @@ public class TimeoutActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.percent_75) {
             newTimerSpeed = 0.75f;
         } else if (item.getItemId() == R.id.percent_100) {
-            newTimerSpeed = 1;
+            newTimerSpeed = 1f;
         } else if (item.getItemId() == R.id.percent_200) {
-            newTimerSpeed = 2;
+            newTimerSpeed = 2f;
         } else if (item.getItemId() == R.id.percent_300) {
-            newTimerSpeed = 3;
+            newTimerSpeed = 3f;
         } else if (item.getItemId() == R.id.percent_400) {
-            newTimerSpeed = 4;
+            newTimerSpeed = 4f;
         }
+
         // Reset timer and start it with new speed rate
         pauseTimer();
         startTimer();
@@ -320,7 +319,7 @@ public class TimeoutActivity extends AppCompatActivity {
         float curProgress = (float) (((double) timeLeft / (double) totalTime) * TO_PERCENT);
 
         final int SECOND_IN_MS = 1000;
-        if (timeLeft <= SECOND_IN_MS){
+        if (timeLeft <= SECOND_IN_MS) {
             curProgress = 0;
         }
 

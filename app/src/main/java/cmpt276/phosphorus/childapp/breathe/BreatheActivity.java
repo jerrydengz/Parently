@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -31,7 +30,13 @@ import cmpt276.phosphorus.childapp.breathe.utils.ExhaleState;
 import cmpt276.phosphorus.childapp.breathe.utils.IdleState;
 import cmpt276.phosphorus.childapp.breathe.utils.InhaleState;
 
+// ==============================================================================================
+//
+// Breathing Activity which manages all the states
+//
+// ==============================================================================================
 public class BreatheActivity extends AppCompatActivity {
+
     private final BreatheState inhaleState = new InhaleState(this);
     private final BreatheState exhaleState = new ExhaleState(this);
     private final BreatheState configureState = new ConfigureState(this);
@@ -52,12 +57,12 @@ public class BreatheActivity extends AppCompatActivity {
     public final AnimatorSet animationInhale = new AnimatorSet();
     public final AnimatorSet animationExhale = new AnimatorSet();
 
-    private void initializeAnimationInhale(){
+    private void initializeAnimationInhale() {
         //https://stackoverflow.com/questions/33916287/android-scale-image-view-with-animation/33916973
         ObjectAnimator scaleUpX = ObjectAnimator.ofFloat(circleImgView, ViewGroup.SCALE_X, 1f, 8.5f);
         ObjectAnimator scaleUpY = ObjectAnimator.ofFloat(circleImgView, ViewGroup.SCALE_Y, 1f, 8.5f);
 
-        final long animationDuration = TEN_SECONDS*(long)ANIMATION_RATE;
+        final long animationDuration = TEN_SECONDS * (long) ANIMATION_RATE;
         scaleUpX.setDuration(animationDuration);
         scaleUpY.setDuration(animationDuration);
 
@@ -65,11 +70,11 @@ public class BreatheActivity extends AppCompatActivity {
         animationInhale.setInterpolator(new LinearOutSlowInInterpolator());
     }
 
-    private void initializeAnimationExhale(){
+    private void initializeAnimationExhale() {
         //https://stackoverflow.com/questions/33916287/android-scale-image-view-with-animation/33916973
         ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(circleImgView, ViewGroup.SCALE_X, 8.5f, 1f);
         ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(circleImgView, ViewGroup.SCALE_Y, 8.5f, 1f);
-        final long animationDuration = TEN_SECONDS*(long)ANIMATION_RATE;
+        final long animationDuration = TEN_SECONDS * (long) ANIMATION_RATE;
         scaleDownX.setDuration(animationDuration);
         scaleDownY.setDuration(animationDuration);
 

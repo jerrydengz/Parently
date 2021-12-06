@@ -1,15 +1,17 @@
 package cmpt276.phosphorus.childapp.breathe.utils;
 
-import android.animation.ObjectAnimator;
-import android.view.ViewGroup;
 import android.widget.Button;
-
-import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.breathe.BreatheActivity;
 
+// ==============================================================================================
+//
+// Exhale state with timing button presses
+//
+// ==============================================================================================
 public class ExhaleState extends BreatheState {
+
     private final Runnable timerRunnableThreeSeconds = this::updateBreathesLeft;
     private final Runnable timerRunnableTenSeconds = () -> {
         // TODO (jack) - stop sound

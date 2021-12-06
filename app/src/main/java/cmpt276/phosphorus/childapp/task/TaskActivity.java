@@ -119,6 +119,12 @@ public class TaskActivity extends AppCompatActivity {
         Button btnTaskClose = dialogView.findViewById(R.id.btnTaskClose);
         btnTaskClose.setOnClickListener(view -> this.alertDialog.dismiss());
 
+        Button viewHistory = dialogView.findViewById(R.id.viewHistory);
+        viewHistory.setOnClickListener(v -> {
+            Intent taskHist = TaskHistoryActivity.makeIntent(this, selected);
+            startActivity(taskHist);
+        });
+
         TextView textCurrentTurn = dialogView.findViewById(R.id.textCurrentTurn);
         String childName = (currChild == null)
                 ? getString(R.string.child_not_available)

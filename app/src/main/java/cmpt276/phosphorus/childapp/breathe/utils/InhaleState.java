@@ -1,6 +1,7 @@
 package cmpt276.phosphorus.childapp.breathe.utils;
 
 import android.animation.ObjectAnimator;
+import android.os.Handler;
 import android.view.ViewGroup;
 import android.widget.Button;
 
@@ -9,7 +10,14 @@ import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.breathe.BreatheActivity;
 
+// ==============================================================================================
+//
+// Inhale while holding down the button
+//
+// ==============================================================================================
 public class InhaleState extends BreatheState {
+
+    private final android.os.Handler timerHandler = new Handler();
     private final Runnable timerRunnableThreeSeconds = this::handleThreeSecsPassed;
     private final Runnable timerRunnableTenSeconds = this::handleTenSecsPassed;
 
