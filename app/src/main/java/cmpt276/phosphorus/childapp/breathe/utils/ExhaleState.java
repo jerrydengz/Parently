@@ -13,44 +13,16 @@ import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.breathe.BreatheActivity;
 
 public class ExhaleState extends BreatheState {
-//    private final Runnable timerRunnableThreeSeconds = this::updateBreathesLeft;
-//    private final Runnable timerRunnableTenSeconds = () -> {
-//        // TODO (jack) - stop sound
-//        stopAnimation();
-//
-//        // black = exhale ten seconds runnable stops
-//        context.getCircleAnimationView().setColorFilter(context.getColor(R.color.black));
-//    };
-
     public ExhaleState(BreatheActivity context) {
         super(context);
     }
 
-    @Override
-    public void handleEnter() {
-        super.handleEnter();
-
-        // TODO (jack) - play mc sound {0:10-0:20}
-        // TODO (jack) - update guide text
-
-        // disable button to be touched
-        Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
-        btnBreatheState.setEnabled(false);
-
-//        timerHandler.postDelayed(timerRunnableThreeSeconds, THREE_SECONDS);
-//        timerHandler.postDelayed(timerRunnableTenSeconds, TEN_SECONDS);
-
-        initializeExhaleCountDownTimer();
-
-        stopAnimation();
-        startExhaleAnimation();
-    }
-
     private void initializeExhaleCountDownTimer() {
-        timer = new CountDownTimer(TEN_SECONDS, 100) {
+        timer = null; // clear it just in case
+        timer = new CountDownTimer(TEN_SECONDS, TIMER_INTERVAL) {
             @Override
             public void onTick(long millisUntilFinished) {
-                if(millisUntilFinished == TEN_SECONDS - THREE_SECONDS){
+                if(millisUntilFinished <= (TEN_SECONDS - THREE_SECONDS) && !hasHeldThreeSecs){
                     updateBreathesLeft();
                 }
             }
@@ -66,10 +38,27 @@ public class ExhaleState extends BreatheState {
     }
 
     @Override
+    public void handleEnter() {
+        super.handleEnter();
+
+        // TODO (jack) - play mc sound {0:10-0:20}
+        // TODO (jack) - update guide text
+
+        // disable button to be touched
+        Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
+        btnBreatheState.setEnabled(false);
+
+        initializeExhaleCountDownTimer();
+        timer.start();
+
+//        stopAnimation();
+        startExhaleAnimation();
+    }
+
+    @Override
     public void handleExit() {
         super.handleExit();
-//        timerHandler.removeCallbacks(timerRunnableThreeSeconds);
-
+        hasHeldThreeSecs = false;
     }
 
     private void updateBreathesLeft() {
@@ -81,16 +70,14 @@ public class ExhaleState extends BreatheState {
                 context.getString(R.string.remaining_breaths_text, context.getRemainingBreaths()));
 
         if (context.getRemainingBreaths() > 0) {
-
             // TODO (jack) - update guide text
             btnBreatheState.setText(R.string.breathe_state_in);
             context.setState(context.getInhaleState());
         } else {
             // TODO (jack) - update guide text
-
             btnBreatheState.setText(R.string.breathe_state_finished);
             btnBreatheState.setOnClickListener(view -> {
-//                stopAnimation();
+                stopAnimation();
                 context.finish();
             });
         }
@@ -101,7 +88,7 @@ public class ExhaleState extends BreatheState {
         ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(context.getCircleAnimationView(), ViewGroup.SCALE_X, 1f);
         ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(context.getCircleAnimationView(), ViewGroup.SCALE_Y, 1f);
 
-        final long animationDuration = TEN_SECONDS * (long) 2.5;
+        final long animationDuration = TEN_SECONDS * (long) ANIMATION_RATE;
         scaleDownX.setDuration(animationDuration);
         scaleDownY.setDuration(animationDuration);
 

@@ -12,18 +12,16 @@ import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.breathe.BreatheActivity;
 
 public class InhaleState extends BreatheState {
-//    private final Runnable timerRunnableThreeSeconds = this::handleThreeSecsPassed;
-//    private final Runnable timerRunnableTenSeconds = this::handleTenSecsPassed;
-
     public InhaleState(BreatheActivity context) {
         super(context);
     }
 
     private void initializeInhaleCountDownTimer(){
-        timer = new CountDownTimer(TEN_SECONDS,100) {
+        timer = null; // clear it just in case
+        timer = new CountDownTimer(TEN_SECONDS,TIMER_INTERVAL) {
             @Override
             public void onTick(long millisUntilFinished) {
-                if(millisUntilFinished == TEN_SECONDS - THREE_SECONDS){
+                if((millisUntilFinished <= TEN_SECONDS - THREE_SECONDS) && !hasHeldThreeSecs){
                     handleThreeSecsPassed();
                 }
             }
@@ -38,10 +36,7 @@ public class InhaleState extends BreatheState {
     @Override
     public void handleEnter() {
         super.handleEnter();
-//        timerHandler.removeCallbacks(timerRunnableThreeSeconds);
-//        timerHandler.removeCallbacks(timerRunnableTenSeconds);
-        stopAnimation(); // TODO
-        initializeInhaleCountDownTimer();
+        stopAnimation(); // TODO ?
     }
 
     @Override
@@ -54,12 +49,14 @@ public class InhaleState extends BreatheState {
 
         // remove the handler running the 10 second runnable from ExhaleState
         // https://stackoverflow.com/questions/5883635/how-to-remove-all-callbacks-from-a-handler
-        // timerHandler.removeCallbacks(timerRunnableTenSeconds);
 
-//        timerHandler.postDelayed(timerRunnableThreeSeconds, THREE_SECONDS);
-//        timerHandler.postDelayed(timerRunnableTenSeconds, TEN_SECONDS);
+        // stop the timer from exhale for the 10 second event
+        if(timer != null){
+            timer.cancel();
+        }
 
         // start and/or restart the timer
+        initializeInhaleCountDownTimer();
         timer.start();
 
         // TODO (jack) - 1. stop sound from exhale state (if playing)
@@ -75,9 +72,6 @@ public class InhaleState extends BreatheState {
         if (hasHeldThreeSecs) {
             context.setState(context.getExhaleState());
         } else {
-//            timerHandler.removeCallbacks(timerRunnableThreeSeconds);
-//            timerHandler.removeCallbacks(timerRunnableTenSeconds);
-
             // stop the timer
             timer.cancel();
             resetAnimation();
@@ -87,9 +81,6 @@ public class InhaleState extends BreatheState {
     @Override
     public void handleExit() {
         super.handleExit();
-//        timerHandler.removeCallbacksAndMessages(null); // TODO
-//        timerHandler.removeCallbacks(timerRunnableThreeSeconds);
-//        timerHandler.removeCallbacks(timerRunnableTenSeconds);
 
         timer.cancel();
 
@@ -119,7 +110,7 @@ public class InhaleState extends BreatheState {
         ObjectAnimator scaleUpX = ObjectAnimator.ofFloat(context.getCircleAnimationView(), ViewGroup.SCALE_X, 8.5f);
         ObjectAnimator scaleUpY = ObjectAnimator.ofFloat(context.getCircleAnimationView(), ViewGroup.SCALE_Y, 8.5f);
 
-        final long animationDuration = TEN_SECONDS * (long) 2.5;
+        final long animationDuration = TEN_SECONDS * (long) ANIMATION_RATE;
         scaleUpX.setDuration(animationDuration);
         scaleUpY.setDuration(animationDuration);
 

@@ -11,13 +11,10 @@ public abstract class BreatheState {
 
     protected boolean hasHeldThreeSecs = false;
     protected boolean hasHeldTenSecs = false;
-
-    protected final int THREE_SECONDS = 3000;
-    protected final int TEN_SECONDS = 10000;
-
-    protected final android.os.Handler timerHandler = new Handler();
-//    protected Runnable timerRunnableTenSeconds;
-
+    protected final long THREE_SECONDS = 3000;
+    protected final long TEN_SECONDS = 10000;
+    protected final long TIMER_INTERVAL = 10;
+    protected final double ANIMATION_RATE = 2.5;
     protected CountDownTimer timer;
 
     protected final AnimatorSet animation = new AnimatorSet();
