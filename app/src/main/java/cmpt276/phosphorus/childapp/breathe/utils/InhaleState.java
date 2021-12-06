@@ -14,6 +14,7 @@ public class InhaleState extends BreatheState {
 
     private final Runnable timerRunnableThreeSeconds = this::handleThreeSecsPassed;
     private final Runnable timerRunnableTenSeconds = this::handleTenSecsPassed;
+    private boolean hasHeldThreeSecs = false;
 
     public InhaleState(BreatheActivity context) {
         super(context);
@@ -29,17 +30,18 @@ public class InhaleState extends BreatheState {
 
         // remove the handler running the 10 second runnable from ExhaleState
         // https://stackoverflow.com/questions/5883635/how-to-remove-all-callbacks-from-a-handler
-        context.timerHandler.removeCallbacksAndMessages(null);
-        context.animationExhale.cancel();
-        context.animationExhale.end();
+        context.getTimerHandler().removeCallbacksAndMessages(null);
+        context.getAnimationExhale().cancel();
+        context.getAnimationExhale().end();
 
-        context.timerHandler.postDelayed(timerRunnableThreeSeconds, THREE_SECONDS);
-        context.timerHandler.postDelayed(timerRunnableTenSeconds, TEN_SECONDS);
+        context.getTimerHandler().postDelayed(timerRunnableThreeSeconds, THREE_SECONDS);
+        context.getTimerHandler().postDelayed(timerRunnableTenSeconds, TEN_SECONDS);
 
         // TODO (jack) - 1. stop sound from exhale state (if playing)
         // TODO (jack) - 2. play mc sound for inhale state {0:00 - 0:10}
-        context.getCircleAnimationView().setColorFilter(context.getColor(R.color.chalk_red));
-        context.animationInhale.start();
+
+        context.getIvCircle().setColorFilter(context.getColor(R.color.chalk_red));
+        context.getAnimationInhale().start();
     }
 
     @Override
@@ -48,8 +50,8 @@ public class InhaleState extends BreatheState {
         if (hasHeldThreeSecs) {
             context.setState(context.getExhaleState());
         } else {
-            // stop the timer
-            context.timerHandler.removeCallbacksAndMessages(null);
+            // stop all queued timer runnable
+            context.getTimerHandler().removeCallbacksAndMessages(null);
             resetAnimationInhale();
         }
     }
@@ -57,7 +59,7 @@ public class InhaleState extends BreatheState {
     @Override
     public void handleExit() {
         super.handleExit();
-        context.timerHandler.removeCallbacksAndMessages(null);
+        context.getTimerHandler().removeCallbacksAndMessages(null);
 
         hasHeldThreeSecs = false;
 
@@ -75,20 +77,20 @@ public class InhaleState extends BreatheState {
 
         stopAnimationInhale();
 
-        // visual marker
-        context.getCircleAnimationView().setColorFilter(context.getColor(R.color.white));
+        // TODO - visual marker, remove when done
+        context.getIvCircle().setColorFilter(context.getColor(R.color.white));
     }
 
-    private void resetAnimationInhale(){
+    private void resetAnimationInhale() {
         // https://stackoverflow.com/questions/45629326/trying-to-reset-values-from-property-animator-to-be-used-in-recycler-view/45700580#45700580
-        context.animationInhale.cancel();
-        context.animationInhale.reverse();
-        context.animationInhale.end();
+        context.getAnimationInhale().cancel();
+        context.getAnimationInhale().reverse();
+        context.getAnimationInhale().end();
     }
 
-    private void stopAnimationInhale(){
-        context.animationInhale.cancel();
-        context.animationInhale.end();
+    private void stopAnimationInhale() {
+        context.getAnimationInhale().cancel();
+        context.getAnimationInhale().end();
     }
 
 }

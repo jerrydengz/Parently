@@ -40,8 +40,8 @@ public class BreatheActivity extends AppCompatActivity {
     private final BreatheState exhaleState = new ExhaleState(this);
     private BreatheState currentState = new IdleState(this);
 
-    private ImageView circleImgView;
-    private TextView remainBreathsText;
+    private ImageView ivCircle;
+    private TextView tvRemainingBreaths;
     private boolean isInitialized = false;
 
     private int remainingBreaths;
@@ -49,38 +49,16 @@ public class BreatheActivity extends AppCompatActivity {
     private final String APP_PREFS = "ParentApp";
     private final String NUM_CHOSEN_BREATHS = "NumChosenBreaths - BreatheActivity.java";
 
+    // TODO - turn into enum?
     private final long TEN_SECONDS = 10000;
     private final double ANIMATION_RATE = 2.5;
+    private final float ANIMATION_SCALE_RANGE_MIN = 1f;
+    private final float ANIMATION_SCALE_RANGE_MAX = 8.5f;
 
-    public final AnimatorSet animationInhale = new AnimatorSet();
-    public final AnimatorSet animationExhale = new AnimatorSet();
+    private final AnimatorSet animationInhale = new AnimatorSet();
+    private final AnimatorSet animationExhale = new AnimatorSet();
 
-    private void initializeAnimationInhale() {
-        //https://stackoverflow.com/questions/33916287/android-scale-image-view-with-animation/33916973
-        ObjectAnimator scaleUpX = ObjectAnimator.ofFloat(circleImgView, ViewGroup.SCALE_X, 1f, 8.5f);
-        ObjectAnimator scaleUpY = ObjectAnimator.ofFloat(circleImgView, ViewGroup.SCALE_Y, 1f, 8.5f);
-
-        final long animationDuration = TEN_SECONDS * (long) ANIMATION_RATE;
-        scaleUpX.setDuration(animationDuration);
-        scaleUpY.setDuration(animationDuration);
-
-        animationInhale.play(scaleUpX).with(scaleUpY);
-        animationInhale.setInterpolator(new LinearOutSlowInInterpolator());
-    }
-
-    private void initializeAnimationExhale() {
-        //https://stackoverflow.com/questions/33916287/android-scale-image-view-with-animation/33916973
-        ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(circleImgView, ViewGroup.SCALE_X, 8.5f, 1f);
-        ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(circleImgView, ViewGroup.SCALE_Y, 8.5f, 1f);
-        final long animationDuration = TEN_SECONDS * (long) ANIMATION_RATE;
-        scaleDownX.setDuration(animationDuration);
-        scaleDownY.setDuration(animationDuration);
-
-        animationExhale.play(scaleDownX).with(scaleDownY);
-        animationExhale.setInterpolator(new LinearOutSlowInInterpolator());
-    }
-
-    public final android.os.Handler timerHandler = new Handler();
+    private final android.os.Handler timerHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +74,7 @@ public class BreatheActivity extends AppCompatActivity {
         this.setUpMainBreatheBtn();
         this.initializeAnimationInhale();
         this.initializeAnimationExhale();
-        setState(inhaleState);
+        this.setState(inhaleState);
     }
 
     @Override
@@ -117,13 +95,6 @@ public class BreatheActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 
-    public void setState(BreatheState newState) {
-        currentState.handleExit();
-        currentState = newState;
-        currentState.handleEnter();
-    }
-
-    // https://androidexample365.com/a-simple-android-library-to-implement-a-number-counter-with-increment/
     private void setUpNumBreathsBtn() {
         TextView tvNumBreathesChosen = findViewById(R.id.numBreathesChosen);
         tvNumBreathesChosen.setText(getString(
@@ -131,6 +102,7 @@ public class BreatheActivity extends AppCompatActivity {
                         R.string.singular_breath_chosen_text :
                         R.string.num_breaths_chosen_text, chosenBreaths));
 
+        // https://androidexample365.com/a-simple-android-library-to-implement-a-number-counter-with-increment/
         ElegantNumberButton btnElegantNumber = findViewById(R.id.btnElegantNumber);
         btnElegantNumber.setNumber(String.valueOf(chosenBreaths));
         btnElegantNumber.setOnClickListener((ElegantNumberButton.OnClickListener) view -> {
@@ -146,13 +118,12 @@ public class BreatheActivity extends AppCompatActivity {
     }
 
     private void setUpViewVisibility() {
-        circleImgView = findViewById(R.id.circleBreatheAnimation);
-        remainBreathsText = findViewById(R.id.remainingBreathesText);
-        circleImgView.setVisibility(View.INVISIBLE);
-        remainBreathsText.setVisibility(View.INVISIBLE);
+        ivCircle = findViewById(R.id.ivCircle);
+        tvRemainingBreaths = findViewById(R.id.tvRemainingBreaths);
+        ivCircle.setVisibility(View.INVISIBLE);
+        tvRemainingBreaths.setVisibility(View.INVISIBLE);
     }
 
-//    @SuppressLint("ClickableViewAccessibility")
     @SuppressLint("ClickableViewAccessibility")
     private void setUpMainBreatheBtn() {
         Button btnBreatheState = findViewById(R.id.btnBreatheState);
@@ -165,9 +136,9 @@ public class BreatheActivity extends AppCompatActivity {
 
             if (!isInitialized) {
                 BreatheActivity.this.findViewById(R.id.numBreathesLinearLayout).setVisibility(View.GONE);
-                circleImgView.setVisibility(View.VISIBLE);
-                remainBreathsText.setVisibility(View.VISIBLE);
-                remainBreathsText.setText(BreatheActivity.this.getString(R.string.remaining_breaths_text, chosenBreaths));
+                ivCircle.setVisibility(View.VISIBLE);
+                tvRemainingBreaths.setVisibility(View.VISIBLE);
+                tvRemainingBreaths.setText(BreatheActivity.this.getString(R.string.remaining_breaths_text, chosenBreaths));
                 isInitialized = true;
             }
 
@@ -180,8 +151,36 @@ public class BreatheActivity extends AppCompatActivity {
         });
     }
 
-    public static Intent makeIntent(Context context) {
-        return new Intent(context, BreatheActivity.class);
+    private void initializeAnimationInhale() {
+        //https://stackoverflow.com/questions/33916287/android-scale-image-view-with-animation/33916973
+        ObjectAnimator scaleUpX = ObjectAnimator.ofFloat(ivCircle, ViewGroup.SCALE_X, ANIMATION_SCALE_RANGE_MIN, ANIMATION_SCALE_RANGE_MAX);
+        ObjectAnimator scaleUpY = ObjectAnimator.ofFloat(ivCircle, ViewGroup.SCALE_Y, ANIMATION_SCALE_RANGE_MIN, ANIMATION_SCALE_RANGE_MAX);
+
+        final long animationDuration = TEN_SECONDS * (long) ANIMATION_RATE;
+        scaleUpX.setDuration(animationDuration);
+        scaleUpY.setDuration(animationDuration);
+
+        animationInhale.play(scaleUpX).with(scaleUpY);
+        animationInhale.setInterpolator(new LinearOutSlowInInterpolator());
+    }
+
+    private void initializeAnimationExhale() {
+        //https://stackoverflow.com/questions/33916287/android-scale-image-view-with-animation/33916973
+        ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(ivCircle, ViewGroup.SCALE_X, ANIMATION_SCALE_RANGE_MAX, ANIMATION_SCALE_RANGE_MIN);
+        ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(ivCircle, ViewGroup.SCALE_Y, ANIMATION_SCALE_RANGE_MAX, ANIMATION_SCALE_RANGE_MIN);
+
+        final long animationDuration = TEN_SECONDS * (long) ANIMATION_RATE;
+        scaleDownX.setDuration(animationDuration);
+        scaleDownY.setDuration(animationDuration);
+
+        animationExhale.play(scaleDownX).with(scaleDownY);
+        animationExhale.setInterpolator(new LinearOutSlowInInterpolator());
+    }
+
+    public void setState(BreatheState newState) {
+        currentState.handleExit();
+        currentState = newState;
+        currentState.handleEnter();
     }
 
     public int getRemainingBreaths() {
@@ -200,24 +199,40 @@ public class BreatheActivity extends AppCompatActivity {
         return exhaleState;
     }
 
-    public ImageView getCircleAnimationView() {
-        return circleImgView;
+    public ImageView getIvCircle() {
+        return ivCircle;
     }
 
-    public TextView getRemainBreathsView() {
-        return remainBreathsText;
+    public TextView getTvRemainingBreaths() {
+        return tvRemainingBreaths;
     }
 
     private void saveChosenBreathsToPrefs() {
         SharedPreferences numBreathesPrefs = this.getSharedPreferences(APP_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = numBreathesPrefs.edit();
-        editor.putInt(NUM_CHOSEN_BREATHS, chosenBreaths);
-        editor.apply();
+        numBreathesPrefs.edit()
+                .putInt(NUM_CHOSEN_BREATHS, chosenBreaths)
+                .apply();
     }
 
     private void getChosenBreathsFromPrefs() {
         SharedPreferences numBreathesPrefs = this.getSharedPreferences(APP_PREFS, MODE_PRIVATE);
         chosenBreaths = numBreathesPrefs.getInt(NUM_CHOSEN_BREATHS, 1);
         remainingBreaths = chosenBreaths;
+    }
+
+    public AnimatorSet getAnimationInhale() {
+        return animationInhale;
+    }
+
+    public AnimatorSet getAnimationExhale() {
+        return animationExhale;
+    }
+
+    public Handler getTimerHandler() {
+        return timerHandler;
+    }
+
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, BreatheActivity.class);
     }
 }

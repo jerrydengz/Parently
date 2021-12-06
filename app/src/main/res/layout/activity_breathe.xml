@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/circleBreatheAnimation"
+        android:id="@+id/ivCircle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/btnBreatheState"
@@ -94,7 +94,7 @@
         tools:ignore="TextContrastCheck" />
 
     <TextView
-        android:id="@+id/remainingBreathesText"
+        android:id="@+id/tvRemainingBreaths"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

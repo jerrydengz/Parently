@@ -13,14 +13,7 @@ import cmpt276.phosphorus.childapp.breathe.BreatheActivity;
 public class ExhaleState extends BreatheState {
 
     private final Runnable timerRunnableThreeSeconds = this::updateBreathesLeft;
-    private final Runnable timerRunnableTenSeconds = () -> {
-        // TODO (jack) - stop sound
-
-        stopAnimationExhale();
-
-        // visual marker
-        context.getCircleAnimationView().setColorFilter(context.getColor(R.color.black));
-    };
+    private final Runnable timerRunnableTenSeconds = this::handleTenSecsPassed;
 
     public ExhaleState(BreatheActivity context) {
         super(context);
@@ -30,25 +23,18 @@ public class ExhaleState extends BreatheState {
     public void handleEnter() {
         super.handleEnter();
 
-        // TODO (jack) - play mc sound {0:10-0:20}
-        // TODO (jack) - update guide text
-
         // disable button to be touched
         Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
         btnBreatheState.setEnabled(false);
 
-        context.timerHandler.postDelayed(timerRunnableThreeSeconds, THREE_SECONDS);
-        context.timerHandler.postDelayed(timerRunnableTenSeconds, TEN_SECONDS);
+        context.getTimerHandler().postDelayed(timerRunnableThreeSeconds, THREE_SECONDS);
+        context.getTimerHandler().postDelayed(timerRunnableTenSeconds, TEN_SECONDS);
 
-        context.getCircleAnimationView().setColorFilter(context.getColor(R.color.chalk_red_var));
-        context.animationExhale.start();
-    }
+        // TODO (jack) - play mc sound {0:10-0:20}
+        // TODO (jack) - update guide text
 
-    @Override
-    public void handleExit() {
-        super.handleExit();
-        context.timerHandler.removeCallbacks(timerRunnableThreeSeconds);
-
+        context.getIvCircle().setColorFilter(context.getColor(R.color.chalk_red_var));
+        context.getAnimationExhale().start();
     }
 
     private void updateBreathesLeft() {
@@ -56,7 +42,7 @@ public class ExhaleState extends BreatheState {
         btnBreatheState.setEnabled(true);
 
         context.setRemainingBreaths(context.getRemainingBreaths() - 1);
-        context.getRemainBreathsView().setText(
+        context.getTvRemainingBreaths().setText(
                 context.getString(R.string.remaining_breaths_text, context.getRemainingBreaths()));
 
         if (context.getRemainingBreaths() > 0) {
@@ -73,8 +59,17 @@ public class ExhaleState extends BreatheState {
         }
     }
 
-    private void stopAnimationExhale(){
-        context.animationExhale.cancel();
-        context.animationExhale.end();
+    private void handleTenSecsPassed() {
+        // TODO (jack) - stop exhale sound
+
+        stopAnimationExhale();
+
+        // TODO - visual marker, remove when done
+        context.getIvCircle().setColorFilter(context.getColor(R.color.black));
+    }
+
+    private void stopAnimationExhale() {
+        context.getAnimationExhale().cancel();
+        context.getAnimationExhale().end();
     }
 }
