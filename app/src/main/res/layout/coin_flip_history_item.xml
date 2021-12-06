@@ -73,7 +73,7 @@
         app:layout_constraintEnd_toStartOf="@+id/coinFlipResultIcon"
         app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toEndOf="@+id/childPortraitFlipHistory"
-        app:layout_constraintTop_toBottomOf="@+id/nameFlipHistory" >
+        app:layout_constraintTop_toBottomOf="@+id/nameFlipHistory">
 
         <TextView
             android:id="@+id/coinFlipChoice"
