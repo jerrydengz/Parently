@@ -80,22 +80,21 @@ public class BreatheActivity extends AppCompatActivity {
     }
 
     // https://androidexample365.com/a-simple-android-library-to-implement-a-number-counter-with-increment/
-    @SuppressLint("SetTextI18n")
     private void setUpNumBreathsBtn() {
-        TextView numBreathsDisplayed = findViewById(R.id.numBreathesChosen);
-        numBreathsDisplayed.setText(getString(
-                (chosenBreaths == 1) ? R.string.singular_breath_chosen_text
-                : R.string.num_breaths_chosen_text,
-                chosenBreaths));
+        TextView tvNumBreathesChosen = findViewById(R.id.numBreathesChosen);
+        tvNumBreathesChosen.setText(getString(
+                (chosenBreaths == 1) ?
+                        R.string.singular_breath_chosen_text :
+                        R.string.num_breaths_chosen_text, chosenBreaths));
 
-        ElegantNumberButton btn = findViewById(R.id.elegantNumberButton);
-        btn.setNumber(String.valueOf(chosenBreaths));
-        btn.setOnClickListener((ElegantNumberButton.OnClickListener) view -> {
-            chosenBreaths = Integer.parseInt(btn.getNumber());
-            numBreathsDisplayed.setText(getString(
-                    (chosenBreaths == 1) ? R.string.singular_breath_chosen_text
-                            : R.string.num_breaths_chosen_text,
-                    chosenBreaths));
+        ElegantNumberButton btnElegantNumber = findViewById(R.id.btnElegantNumber);
+        btnElegantNumber.setNumber(String.valueOf(chosenBreaths));
+        btnElegantNumber.setOnClickListener((ElegantNumberButton.OnClickListener) view -> {
+            chosenBreaths = Integer.parseInt(btnElegantNumber.getNumber());
+            tvNumBreathesChosen.setText(getString(
+                    (chosenBreaths == 1) ?
+                            R.string.singular_breath_chosen_text :
+                            R.string.num_breaths_chosen_text, chosenBreaths));
 
             remainingBreaths = chosenBreaths;
             saveChosenBreathsToPrefs();
@@ -109,7 +108,7 @@ public class BreatheActivity extends AppCompatActivity {
         remainBreathsText.setVisibility(View.INVISIBLE);
     }
 
-    @SuppressLint({"ClickableViewAccessibility", "SetTextI18n"})
+    @SuppressLint("ClickableViewAccessibility")
     private void setUpMainBreatheBtn() {
         Button btnBreatheState = findViewById(R.id.btnBreatheState);
         btnBreatheState.setText(getResources().getString(R.string.initial_state_btn_text));
@@ -122,7 +121,7 @@ public class BreatheActivity extends AppCompatActivity {
                 findViewById(R.id.numBreathesLinearLayout).setVisibility(View.GONE);
                 circleImgView.setVisibility(View.VISIBLE);
                 remainBreathsText.setVisibility(View.VISIBLE);
-                remainBreathsText.setText(getString(R.string.remaining_breaths_text) + chosenBreaths);
+                remainBreathsText.setText(getString(R.string.remaining_breaths_text, chosenBreaths));
                 isInitialized = true;
             }
 
