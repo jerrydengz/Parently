@@ -37,7 +37,7 @@
             android:id="@+id/textSideChooseTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5sp"
+            android:layout_marginBottom="10sp"
             android:background="@color/purple_c1"
             android:gravity="center"
             android:paddingLeft="10sp"
@@ -49,8 +49,8 @@
 
         <ImageView
             android:id="@+id/childPortraitCoinFlip"
-            android:layout_width="125sp"
-            android:layout_height="125sp"
+            android:layout_width="115sp"
+            android:layout_height="115sp"
             android:layout_marginBottom="5sp"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/child_portrait_default"
