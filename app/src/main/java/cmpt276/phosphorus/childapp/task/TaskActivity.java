@@ -83,7 +83,7 @@ public class TaskActivity extends AppCompatActivity {
         taskDialog.setView(dialogView);
 
         String dialogTitle = getResources().getString(R.string.task_info_title).replace("%name%", selected.getName());
-        TextView title = dialogView.findViewById(R.id.textTaskDialougeName);
+        TextView title = dialogView.findViewById(R.id.textTaskDialogName);
         title.setText(dialogTitle);
 
         Child currChild = ChildManager.getInstance().getChildByUUID(selected.getCurrentChild());

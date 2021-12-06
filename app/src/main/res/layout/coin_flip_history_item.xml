@@ -10,7 +10,7 @@
         android:id="@+id/coinFlipResultIcon"
         android:layout_width="81dp"
         android:layout_height="87dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="16dp"
         android:minWidth="70sp"
         android:minHeight="70sp"
@@ -22,7 +22,7 @@
     <Space
         android:id="@+id/space2"
         android:layout_width="20sp"
-        android:layout_height="20sp"
+        android:layout_height="15sp"
         android:layout_marginStart="348dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/coinFlipResultIcon"
@@ -30,8 +30,8 @@
 
     <Space
         android:id="@+id/space"
-        android:layout_width="16dp"
-        android:layout_height="15sp"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
         android:layout_marginStart="160dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -41,12 +41,12 @@
         android:id="@+id/nameFlipHistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:gravity="center_horizontal"
         android:text="@string/child_name_txt"
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.059"
+        app:layout_constraintHorizontal_bias="0.065"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/space"
         tools:ignore="TextContrastCheck" />
@@ -71,9 +71,9 @@
         android:dividerHeight="5.0sp"
         android:orientation="vertical"
         app:layout_constraintEnd_toStartOf="@+id/coinFlipResultIcon"
-        app:layout_constraintHorizontal_bias="0.411"
+        app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toEndOf="@+id/childPortraitFlipHistory"
-        app:layout_constraintTop_toBottomOf="@+id/nameFlipHistory">
+        app:layout_constraintTop_toBottomOf="@+id/nameFlipHistory" >
 
         <TextView
             android:id="@+id/coinFlipChoice"

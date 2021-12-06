@@ -124,6 +124,6 @@
     <string name="num_breathes_chosen_text">"Number of Breaths: "</string>
     <string name="activity_breathe_title">Take Breathes to Calm Down</string>
     <string name="history_toggle">View History</string>
-    <string name="no_child">No History</string>
-    <string name="turn">Turn: %date%</string>
+    <string name="no_task_history_list">No History</string>
+    <string name="task_history_completed_turn">Completed: %date%</string>
 </resources>

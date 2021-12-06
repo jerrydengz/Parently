@@ -52,7 +52,7 @@ public class TaskHistoryActivity extends AppCompatActivity {
     }
 
     private void makeList() {
-        ListView historyList = findViewById(R.id.historyList);
+        ListView historyList = findViewById(R.id.lvTaskHistory);
         TextView noHistory = findViewById(R.id.noHistory);
 
         if (this.task.getHistory() != null) {
