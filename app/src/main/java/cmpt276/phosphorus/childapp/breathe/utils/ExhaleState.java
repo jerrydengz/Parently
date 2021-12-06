@@ -1,9 +1,7 @@
 package cmpt276.phosphorus.childapp.breathe.utils;
 
 import android.animation.ObjectAnimator;
-import android.annotation.SuppressLint;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.view.ViewGroup;
 import android.widget.Button;
 
@@ -13,28 +11,9 @@ import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.breathe.BreatheActivity;
 
 public class ExhaleState extends BreatheState {
+    private final Runnable timerHandlerThreeSecs = this::updateBreathesLeft;
     public ExhaleState(BreatheActivity context) {
         super(context);
-    }
-
-    private void initializeExhaleCountDownTimer() {
-        timer = null; // clear it just in case
-        timer = new CountDownTimer(TEN_SECONDS, TIMER_INTERVAL) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                if(millisUntilFinished <= (TEN_SECONDS - THREE_SECONDS) && !hasHeldThreeSecs){
-                    updateBreathesLeft();
-                }
-            }
-
-            @Override
-            public void onFinish() {
-                stopAnimation();
-
-                // black = exhale ten seconds runnable stops
-                context.getCircleAnimationView().setColorFilter(context.getColor(R.color.black));
-            }
-        };
     }
 
     @Override
@@ -48,17 +27,29 @@ public class ExhaleState extends BreatheState {
         Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
         btnBreatheState.setEnabled(false);
 
-        initializeExhaleCountDownTimer();
-        timer.start();
+        context.getTimer().start();
+        System.out.println("Exhale 10 second timer started!");
+        timerHandler.postDelayed(timerHandlerThreeSecs, THREE_SECONDS);
 
-//        stopAnimation();
+        context.getAnimationExhale().cancel();
+        context.getAnimationExhale().end();
         startExhaleAnimation();
     }
 
-    @Override
-    public void handleExit() {
-        super.handleExit();
-        hasHeldThreeSecs = false;
+    private void startExhaleAnimation() {
+        //https://stackoverflow.com/questions/33916287/android-scale-image-view-with-animation/33916973
+        ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(context.getCircleAnimationView(), ViewGroup.SCALE_X, 1f);
+        ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(context.getCircleAnimationView(), ViewGroup.SCALE_Y, 1f);
+
+        final long animationDuration = TEN_SECONDS * (long) ANIMATION_RATE;
+        scaleDownX.setDuration(animationDuration);
+        scaleDownY.setDuration(animationDuration);
+
+        context.getAnimationExhale().play(scaleDownX).with(scaleDownY);
+        context.getAnimationExhale().setInterpolator(new LinearOutSlowInInterpolator());
+        context.getCircleAnimationView().setColorFilter(context.getColor(R.color.chalk_red_var));
+
+        context.getAnimationExhale().start();
     }
 
     private void updateBreathesLeft() {
@@ -77,30 +68,11 @@ public class ExhaleState extends BreatheState {
             // TODO (jack) - update guide text
             btnBreatheState.setText(R.string.breathe_state_finished);
             btnBreatheState.setOnClickListener(view -> {
-                stopAnimation();
+                context.getAnimationExhale().cancel();
+                context.getAnimationExhale().end();
                 context.finish();
             });
         }
     }
 
-    private void startExhaleAnimation() {
-        //https://stackoverflow.com/questions/33916287/android-scale-image-view-with-animation/33916973
-        ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(context.getCircleAnimationView(), ViewGroup.SCALE_X, 1f);
-        ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(context.getCircleAnimationView(), ViewGroup.SCALE_Y, 1f);
-
-        final long animationDuration = TEN_SECONDS * (long) ANIMATION_RATE;
-        scaleDownX.setDuration(animationDuration);
-        scaleDownY.setDuration(animationDuration);
-
-        animation.play(scaleDownX).with(scaleDownY);
-        animation.setInterpolator(new LinearOutSlowInInterpolator());
-        context.getCircleAnimationView().setColorFilter(context.getColor(R.color.chalk_red_var));
-
-        animation.start();
-    }
-
-    private void stopAnimation() {
-        animation.cancel();
-        animation.end();
-    }
 }

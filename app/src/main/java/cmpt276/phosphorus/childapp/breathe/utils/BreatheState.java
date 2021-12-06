@@ -4,20 +4,18 @@ import android.animation.AnimatorSet;
 import android.os.CountDownTimer;
 import android.os.Handler;
 
+import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.breathe.BreatheActivity;
 
 public abstract class BreatheState {
     protected BreatheActivity context;
+    protected final double ANIMATION_RATE = 2.5;
 
     protected boolean hasHeldThreeSecs = false;
-    protected boolean hasHeldTenSecs = false;
     protected final long THREE_SECONDS = 3000;
     protected final long TEN_SECONDS = 10000;
-    protected final long TIMER_INTERVAL = 10;
-    protected final double ANIMATION_RATE = 2.5;
-    protected CountDownTimer timer;
 
-    protected final AnimatorSet animation = new AnimatorSet();
+    protected android.os.Handler timerHandler = new Handler();
 
     // Ensure BreatheState holds reference to BreatheActivity
     public BreatheState(BreatheActivity context) {

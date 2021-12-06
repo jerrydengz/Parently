@@ -12,31 +12,18 @@ import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.breathe.BreatheActivity;
 
 public class InhaleState extends BreatheState {
+    private final Runnable timerHandlerThreeSecs = this::handleThreeSecsPassed;
+    private final Runnable timerHandlerTenSecs = this::handleTenSecsPassed;
+
     public InhaleState(BreatheActivity context) {
         super(context);
-    }
-
-    private void initializeInhaleCountDownTimer(){
-        timer = null; // clear it just in case
-        timer = new CountDownTimer(TEN_SECONDS,TIMER_INTERVAL) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                if((millisUntilFinished <= TEN_SECONDS - THREE_SECONDS) && !hasHeldThreeSecs){
-                    handleThreeSecsPassed();
-                }
-            }
-
-            @Override
-            public void onFinish() {
-                handleTenSecsPassed();
-            }
-        };
     }
 
     @Override
     public void handleEnter() {
         super.handleEnter();
-        stopAnimation(); // TODO ?
+        context.getAnimationExhale().cancel();
+        context.getAnimationExhale().end();
     }
 
     @Override
@@ -47,62 +34,15 @@ public class InhaleState extends BreatheState {
         Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
         btnBreatheState.setText(R.string.breathe_state_in);
 
-        // remove the handler running the 10 second runnable from ExhaleState
-        // https://stackoverflow.com/questions/5883635/how-to-remove-all-callbacks-from-a-handler
-
-        // stop the timer from exhale for the 10 second event
-        if(timer != null){
-            timer.cancel();
-        }
+        // stop the timer from ExhaleState for the 10 secs timer
+        context.getTimer().cancel();
 
         // start and/or restart the timer
-        initializeInhaleCountDownTimer();
-        timer.start();
+        timerHandler.postDelayed(timerHandlerThreeSecs, THREE_SECONDS);
+        timerHandler.postDelayed(timerHandlerTenSecs, TEN_SECONDS);
 
-        // TODO (jack) - 1. stop sound from exhale state (if playing)
-        // TODO (jack) - 2. play mc sound for inhale state {0:00 - 0:10}
+        // TODO (jack) - play mc sound for inhale state {0:00 - 0:10}
         startInhaleAnimation();
-    }
-
-
-
-    @Override
-    public void handleOnRelease() {
-        super.handleOnRelease();
-        if (hasHeldThreeSecs) {
-            context.setState(context.getExhaleState());
-        } else {
-            // stop the timer
-            timer.cancel();
-            resetAnimation();
-        }
-    }
-
-    @Override
-    public void handleExit() {
-        super.handleExit();
-
-        timer.cancel();
-
-        hasHeldThreeSecs = false;
-        hasHeldTenSecs = false; // TODO - prob useless
-
-        stopAnimation();
-    }
-
-    private void handleThreeSecsPassed() {
-        hasHeldThreeSecs = true;
-        Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
-        btnBreatheState.setText(R.string.breathe_state_out);
-    }
-
-    private void handleTenSecsPassed() {
-        hasHeldTenSecs = true;
-        // TODO (jack) - Stop sound for inhale state
-
-        stopAnimation();
-        // white = inhale ten seconds runnable stops
-        context.getCircleAnimationView().setColorFilter(context.getColor(R.color.white));
     }
 
     private void startInhaleAnimation() {
@@ -114,23 +54,61 @@ public class InhaleState extends BreatheState {
         scaleUpX.setDuration(animationDuration);
         scaleUpY.setDuration(animationDuration);
 
-        animation.play(scaleUpX).with(scaleUpY);
-        animation.setInterpolator(new LinearOutSlowInInterpolator());
+        context.getAnimationInhale().play(scaleUpX).with(scaleUpY);
+        context.getAnimationInhale().setInterpolator(new LinearOutSlowInInterpolator());
 
         context.getCircleAnimationView().setColorFilter(context.getColor(R.color.chalk_red));
 
-        animation.start();
+        context.getAnimationInhale().start();
+    }
+
+    @Override
+    public void handleOnRelease() {
+        super.handleOnRelease();
+        if (hasHeldThreeSecs) {
+            context.setState(context.getExhaleState());
+        } else {
+            // stop the timer
+            timerHandler.removeCallbacksAndMessages(null);
+            resetAnimation();
+        }
+    }
+
+    @Override
+    public void handleExit() {
+        super.handleExit();
+
+        // https://stackoverflow.com/questions/5883635/how-to-remove-all-callbacks-from-a-handler
+        timerHandler.removeCallbacksAndMessages(null);
+        hasHeldThreeSecs = false;
+
+        context.getAnimationInhale().cancel();
+        context.getAnimationInhale().end();
+    }
+
+    private void handleThreeSecsPassed() {
+        hasHeldThreeSecs = true;
+        Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
+        btnBreatheState.setText(R.string.breathe_state_out);
+    }
+
+    private void handleTenSecsPassed() {
+
+        // TODO (jack) - Stop sound for inhale state
+        context.getAnimationInhale().cancel();
+        context.getAnimationInhale().end();
+
+        // TODO - jack, use this as visual indicator for 10 secs has passed, remove when you're done
+        // white = inhale ten seconds runnable stops
+        context.getCircleAnimationView().setColorFilter(context.getColor(R.color.white));
     }
 
     private void resetAnimation() {
         // https://stackoverflow.com/questions/45629326/trying-to-reset-values-from-property-animator-to-be-used-in-recycler-view/45700580#45700580
-        animation.cancel();
-        animation.reverse();
-        animation.end();
+        context.getAnimationInhale().cancel();
+        context.getAnimationInhale().reverse();
+        context.getAnimationInhale().end();
     }
 
-    private void stopAnimation() {
-        animation.cancel();
-        animation.end();
-    }
+
 }

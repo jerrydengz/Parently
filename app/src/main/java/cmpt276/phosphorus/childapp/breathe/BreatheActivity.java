@@ -2,11 +2,13 @@ package cmpt276.phosphorus.childapp.breathe;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.AnimatorSet;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -39,6 +41,44 @@ public class BreatheActivity extends AppCompatActivity {
     private int chosenBreaths;
     private final String APP_PREFS = "ParentApp";
     private final String NUM_CHOSEN_BREATHS = "NumChosenBreaths - BreatheActivity.java";
+
+    private final AnimatorSet animationInhale = new AnimatorSet();
+    private final AnimatorSet animationExhale = new AnimatorSet();
+
+    private final int TIMER_INTERVAL = 10;
+    private final long TEN_SECONDS = 10000;
+
+    // CountDownTimer JUST for ExhaleState 10 secs, needed to exist over in InhaleState
+    private final CountDownTimer timer = new CountDownTimer(TEN_SECONDS, TIMER_INTERVAL) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+        }
+
+        @Override
+        public void onFinish() {
+            animationExhale.cancel();
+            animationExhale.end();
+
+            System.out.println("Exhale 10 Second Timer Finished!");
+
+            // TODO (jack) - stop sound
+
+            // TODO - jack, use this as visual indicator for 10 secs has passed, remove when you're done
+            // black = exhale ten seconds runnable stops
+            circleImgView.setColorFilter(getColor(R.color.black));
+        }
+    };
+
+    public CountDownTimer getTimer() {
+        return timer;
+    }
+
+    public AnimatorSet getAnimationInhale() {
+        return animationInhale;
+    }
+    public AnimatorSet getAnimationExhale() {
+        return animationExhale;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,6 +198,10 @@ public class BreatheActivity extends AppCompatActivity {
         return circleImgView;
     }
 
+    public TextView getRemainBreathsView() {
+        return remainBreathsText;
+    }
+
     private void saveChosenBreathsToPrefs() {
         SharedPreferences numBreathesPrefs = this.getSharedPreferences(APP_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = numBreathesPrefs.edit();
@@ -169,9 +213,5 @@ public class BreatheActivity extends AppCompatActivity {
         SharedPreferences numBreathesPrefs = this.getSharedPreferences(APP_PREFS, MODE_PRIVATE);
         chosenBreaths = numBreathesPrefs.getInt(NUM_CHOSEN_BREATHS, 1);
         remainingBreaths = chosenBreaths;
-    }
-
-    public TextView getRemainBreathsView() {
-        return remainBreathsText;
     }
 }
