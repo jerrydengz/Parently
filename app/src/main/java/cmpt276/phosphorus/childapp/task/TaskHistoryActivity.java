@@ -37,10 +37,10 @@ public class TaskHistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_history);
+        extractIntent();
         this.setTitle(this.task.getName());
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        extractIntent();
         this.makeList();
     }
 
