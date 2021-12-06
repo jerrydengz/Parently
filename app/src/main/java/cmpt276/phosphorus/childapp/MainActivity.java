@@ -44,33 +44,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createChildrenBtn() {
-        Button button = findViewById(R.id.btnChildren);
-        button.setOnClickListener(view -> startActivity(ChildrenActivity.makeIntent(this)));
+        Button btnChildren = findViewById(R.id.btnChildren);
+        btnChildren.setOnClickListener(view -> startActivity(ChildrenActivity.makeIntent(this)));
     }
 
     private void createFlipCoinBtn() {
-        Button button = findViewById(R.id.btnFlipCoin);
-        button.setOnClickListener(view -> startActivity(ChooseSideActivity.makeIntent(this)));
+        Button btnFlipCoin = findViewById(R.id.btnFlipCoin);
+        btnFlipCoin.setOnClickListener(view -> startActivity(ChooseSideActivity.makeIntent(this)));
     }
 
     private void createTimeoutBtn() {
-        Button button = findViewById(R.id.btnTimeout);
-        button.setOnClickListener(view -> startActivity(TimeoutActivity.makeIntent(this)));
+        Button btnTimeout = findViewById(R.id.btnTimeout);
+        btnTimeout.setOnClickListener(view -> startActivity(TimeoutActivity.makeIntent(this)));
     }
 
     private void createTaskBtn() {
-        Button button = findViewById(R.id.btnTask);
-        button.setOnClickListener(view -> startActivity(TaskActivity.makeIntent(this)));
+        Button btnTask = findViewById(R.id.btnTask);
+        btnTask.setOnClickListener(view -> startActivity(TaskActivity.makeIntent(this)));
     }
 
     private void createBreatheBtn() {
-        Button button = findViewById(R.id.btnBreathe);
-        button.setOnClickListener(view -> startActivity(BreatheActivity.makeIntent(this)));
+        Button btnBreathe = findViewById(R.id.btnBreathe);
+        btnBreathe.setOnClickListener(view -> startActivity(BreatheActivity.makeIntent(this)));
     }
 
     private void createHelpBtn() {
-        Button button = findViewById(R.id.btnHelp);
-        button.setOnClickListener(view -> startActivity(HelpActivity.makeIntent(this)));
+        Button btnHelp = findViewById(R.id.btnHelp);
+        btnHelp.setOnClickListener(view -> startActivity(HelpActivity.makeIntent(this)));
     }
 
 }

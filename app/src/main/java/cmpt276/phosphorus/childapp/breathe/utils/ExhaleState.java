@@ -10,7 +10,13 @@ import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.breathe.BreatheActivity;
 
+// ==============================================================================================
+//
+// Exhale state with timing button presses
+//
+// ==============================================================================================
 public class ExhaleState extends BreatheState {
+
     private final android.os.Handler timerHandler = new Handler();
     private final Runnable timerRunnableThreeSeconds = this::updateBreathesLeft;
     private final Runnable timerRunnableTenSeconds = () -> {
@@ -72,23 +78,24 @@ public class ExhaleState extends BreatheState {
         }
     }
 
-    private void startExhaleAnimation(){
+    private void startExhaleAnimation() {
         //https://stackoverflow.com/questions/33916287/android-scale-image-view-with-animation/33916973
         ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(context.getCircleAnimation(), ViewGroup.SCALE_X, 1f);
         ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(context.getCircleAnimation(), ViewGroup.SCALE_Y, 1f);
 
-        final long animationDuration = TEN_SECONDS*(long)2.5;
-        scaleDownX.setDuration(animationDuration);
-        scaleDownY.setDuration(animationDuration);
+        final long ANIMATION_DURATION = TEN_SECONDS * (long) 2.5;
+        scaleDownX.setDuration(ANIMATION_DURATION);
+        scaleDownY.setDuration(ANIMATION_DURATION);
 
         animation.play(scaleDownX).with(scaleDownY);
         animation.setInterpolator(new LinearOutSlowInInterpolator());
+
         context.getCircleAnimation().setColorFilter(context.getColor(R.color.chalk_red_var));
 
         animation.start();
     }
 
-    private void stopAnimation(){
+    private void stopAnimation() {
         animation.cancel();
         animation.end();
     }

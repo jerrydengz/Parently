@@ -25,13 +25,19 @@ import cmpt276.phosphorus.childapp.breathe.utils.ExhaleState;
 import cmpt276.phosphorus.childapp.breathe.utils.IdleState;
 import cmpt276.phosphorus.childapp.breathe.utils.InhaleState;
 
+// ==============================================================================================
+//
+// Breathing Activity which manages all the states
+//
+// ==============================================================================================
 public class BreatheActivity extends AppCompatActivity {
+    
     private final BreatheState inhaleState = new InhaleState(this);
     private final BreatheState exhaleState = new ExhaleState(this);
     private final BreatheState configureState = new ConfigureState(this);
     private BreatheState currentState = new IdleState(this);
 
-    private ImageView circle;
+    private ImageView circleBreatheAnimation;
 
     // TODO - save totalBreaths to sharedPrefs
     private int chosenBreathes;
@@ -76,7 +82,6 @@ public class BreatheActivity extends AppCompatActivity {
 
             remainingBreaths = chosenBreathes;
         });
-
     }
 
     public void setState(BreatheState newState) {
@@ -91,7 +96,7 @@ public class BreatheActivity extends AppCompatActivity {
 
         this.initialize();
         toggleChooseBreathesOff(View.VISIBLE);
-        circle.setVisibility(View.GONE);
+        circleBreatheAnimation.setVisibility(View.GONE);
     }
 
     @Override
@@ -111,13 +116,13 @@ public class BreatheActivity extends AppCompatActivity {
         Button btnBreatheState = findViewById(R.id.btnBreatheState);
         btnBreatheState.setText(getResources().getString(R.string.initial_state_btn_text));
 
-        circle = findViewById(R.id.circleBreatheAnimation);
+        circleBreatheAnimation = findViewById(R.id.circleBreatheAnimation);
 
         // https://stackoverflow.com/questions/49972106/android-button-ontouch-if-return-true-has-no-click-animation-effect-if-retu
         // https://stackoverflow.com/questions/11690504/how-to-use-view-ontouchlistener-instead-of-onclick
         btnBreatheState.setOnTouchListener((v, event) -> {
             toggleChooseBreathesOff(View.GONE);
-            circle.setVisibility(View.VISIBLE);
+            circleBreatheAnimation.setVisibility(View.VISIBLE);
 
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
@@ -157,7 +162,7 @@ public class BreatheActivity extends AppCompatActivity {
         return exhaleState;
     }
 
-    public ImageView getCircleAnimation(){ return circle;}
+    public ImageView getCircleAnimation(){ return circleBreatheAnimation;}
 
     private void toggleChooseBreathesOff(int visibility){
         LinearLayout numBreathesConfigure = findViewById(R.id.numBreathesLinearLayout);

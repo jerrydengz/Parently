@@ -18,6 +18,11 @@ import cmpt276.phosphorus.childapp.model.task.TaskManager;
 import cmpt276.phosphorus.childapp.task.utils.TaskHistoryListAdapter;
 import cmpt276.phosphorus.childapp.utils.Intents;
 
+// ==============================================================================================
+//
+// Activity to view all done pasts tasks
+//
+// ==============================================================================================
 public class TaskHistoryActivity extends AppCompatActivity {
 
     private Task task;
@@ -31,10 +36,11 @@ public class TaskHistoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        extractIntent();
         setContentView(R.layout.activity_task_history);
         this.setTitle(this.task.getName());
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
+        extractIntent();
         this.makeList();
     }
 
@@ -45,18 +51,18 @@ public class TaskHistoryActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     private void makeList() {
-        ListView history = findViewById(R.id.historyList);
-        TextView none = findViewById(R.id.noHistory);
+        ListView historyList = findViewById(R.id.historyList);
+        TextView noHistory = findViewById(R.id.noHistory);
+
         if (this.task.getHistory() != null) {
             TaskHistoryListAdapter adapt = new TaskHistoryListAdapter(this, this.task.getHistory());
-            history.setAdapter(adapt);
-            history.setVisibility(View.VISIBLE);
-            none.setVisibility(View.GONE);
+            historyList.setAdapter(adapt);
+            historyList.setVisibility(View.VISIBLE);
+            noHistory.setVisibility(View.GONE);
         } else {
-            history.setVisibility(View.GONE);
-            none.setVisibility(View.VISIBLE);
+            historyList.setVisibility(View.GONE);
+            noHistory.setVisibility(View.VISIBLE);
         }
     }
 

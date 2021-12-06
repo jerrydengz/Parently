@@ -20,6 +20,11 @@ import java.util.List;
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.model.task.TaskHistory;
 
+// ==============================================================================================
+//
+// ListAdapter to display all the task's
+//
+// ==============================================================================================
 public class TaskHistoryListAdapter extends ArrayAdapter<TaskHistory> {
 
     public TaskHistoryListAdapter(Context context, List<TaskHistory> taskHist) {
@@ -45,20 +50,20 @@ public class TaskHistoryListAdapter extends ArrayAdapter<TaskHistory> {
         taskName.setTypeface(null, Typeface.BOLD);
 
         // Set the name of the child assigned to the task
-        TextView childTurnName = taskView.findViewById(R.id.taskTime);
+        TextView taskTime = taskView.findViewById(R.id.taskTime);
         String dateTime = currentTask.getFormattedDate();
         String dialogTitle = taskView.getResources().getString(R.string.turn).replace("%date%", dateTime);
 
-        childTurnName.setText(dialogTitle);
-        childTurnName.setTextColor(taskView.getResources().getColor(R.color.black, null));
+        taskTime.setText(dialogTitle);
+        taskTime.setTextColor(taskView.getResources().getColor(R.color.black, null));
 
-        ImageView icon = taskView.findViewById(R.id.childIconTaskHistory);
+        ImageView childIconTaskHistory = taskView.findViewById(R.id.childIconTaskHistory);
         if (currentTask.getChildIcon() != null) {
             Glide.with(this.getContext())
                     .load(currentTask.getChildIcon())
-                    .into(icon);
+                    .into(childIconTaskHistory);
         } else {
-            icon.setImageResource(R.drawable.child_portrait_default);
+            childIconTaskHistory.setImageResource(R.drawable.child_portrait_default);
         }
 
         return taskView;

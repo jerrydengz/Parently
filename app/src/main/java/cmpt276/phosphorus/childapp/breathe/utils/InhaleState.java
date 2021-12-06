@@ -10,7 +10,13 @@ import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.breathe.BreatheActivity;
 
+// ==============================================================================================
+//
+// Inhale while holding down the button
+//
+// ==============================================================================================
 public class InhaleState extends BreatheState {
+
     private final android.os.Handler timerHandler = new Handler();
     private final Runnable timerRunnableThreeSeconds = this::handleThreeSecsPassed;
     private final Runnable timerRunnableTenSeconds = this::handleTenSecsPassed;
@@ -63,6 +69,7 @@ public class InhaleState extends BreatheState {
     @Override
     public void handleExit() {
         super.handleExit();
+
         timerHandler.removeCallbacks(timerRunnableThreeSeconds);
         timerHandler.removeCallbacks(timerRunnableTenSeconds);
 
@@ -89,9 +96,9 @@ public class InhaleState extends BreatheState {
         ObjectAnimator scaleUpX = ObjectAnimator.ofFloat(context.getCircleAnimation(), ViewGroup.SCALE_X, 8.5f);
         ObjectAnimator scaleUpY = ObjectAnimator.ofFloat(context.getCircleAnimation(), ViewGroup.SCALE_Y, 8.5f);
 
-        final long animationDuration = TEN_SECONDS*(long)2.5;
-        scaleUpX.setDuration(animationDuration);
-        scaleUpY.setDuration(animationDuration);
+        final long ANIMATION_DURATION = TEN_SECONDS*(long)2.5;
+        scaleUpX.setDuration(ANIMATION_DURATION);
+        scaleUpY.setDuration(ANIMATION_DURATION);
 
         animation.play(scaleUpX).with(scaleUpY);
         animation.setInterpolator(new LinearOutSlowInInterpolator());

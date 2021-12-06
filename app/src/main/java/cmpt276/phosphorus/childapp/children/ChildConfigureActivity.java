@@ -46,12 +46,12 @@ import cmpt276.phosphorus.childapp.model.data.DataType;
 import cmpt276.phosphorus.childapp.model.task.TaskManager;
 import cmpt276.phosphorus.childapp.utils.Intents;
 
-    /* Code assistance regarding Camera & Gallery from
-        https://developer.android.com/training/basics/intents/result#separate
-        https://developer.android.com/training/camera/photobasics#TaskPhotoView
-        https://www.youtube.com/watch?v=qO3FFuBrT2E
-        https://www.youtube.com/watch?v=HxlAktedIhM
-    */
+/* Code assistance regarding Camera & Gallery from
+     https://developer.android.com/training/basics/intents/result#separate
+     https://developer.android.com/training/camera/photobasics#TaskPhotoView
+     https://www.youtube.com/watch?v=qO3FFuBrT2E
+     https://www.youtube.com/watch?v=HxlAktedIhM
+*/
 
 // ==============================================================================================
 //
