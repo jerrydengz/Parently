@@ -25,7 +25,6 @@ import java.util.Objects;
 
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.breathe.utils.BreatheState;
-import cmpt276.phosphorus.childapp.breathe.utils.ConfigureState;
 import cmpt276.phosphorus.childapp.breathe.utils.ExhaleState;
 import cmpt276.phosphorus.childapp.breathe.utils.IdleState;
 import cmpt276.phosphorus.childapp.breathe.utils.InhaleState;
@@ -39,7 +38,6 @@ public class BreatheActivity extends AppCompatActivity {
 
     private final BreatheState inhaleState = new InhaleState(this);
     private final BreatheState exhaleState = new ExhaleState(this);
-    private final BreatheState configureState = new ConfigureState(this);
     private BreatheState currentState = new IdleState(this);
 
     private ImageView circleImgView;
@@ -154,6 +152,7 @@ public class BreatheActivity extends AppCompatActivity {
         remainBreathsText.setVisibility(View.INVISIBLE);
     }
 
+//    @SuppressLint("ClickableViewAccessibility")
     @SuppressLint("ClickableViewAccessibility")
     private void setUpMainBreatheBtn() {
         Button btnBreatheState = findViewById(R.id.btnBreatheState);
@@ -162,12 +161,13 @@ public class BreatheActivity extends AppCompatActivity {
         // https://stackoverflow.com/questions/49972106/android-button-ontouch-if-return-true-has-no-click-animation-effect-if-retu
         // https://stackoverflow.com/questions/11690504/how-to-use-view-ontouchlistener-instead-of-onclick
         btnBreatheState.setOnTouchListener((v, event) -> {
+            v.performClick();
 
             if (!isInitialized) {
-                findViewById(R.id.numBreathesLinearLayout).setVisibility(View.GONE);
+                BreatheActivity.this.findViewById(R.id.numBreathesLinearLayout).setVisibility(View.GONE);
                 circleImgView.setVisibility(View.VISIBLE);
                 remainBreathsText.setVisibility(View.VISIBLE);
-                remainBreathsText.setText(getString(R.string.remaining_breaths_text, chosenBreaths));
+                remainBreathsText.setText(BreatheActivity.this.getString(R.string.remaining_breaths_text, chosenBreaths));
                 isInitialized = true;
             }
 

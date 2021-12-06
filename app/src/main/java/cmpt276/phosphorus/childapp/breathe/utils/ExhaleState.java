@@ -48,6 +48,7 @@ public class ExhaleState extends BreatheState {
     public void handleExit() {
         super.handleExit();
         context.timerHandler.removeCallbacks(timerRunnableThreeSeconds);
+
     }
 
     private void updateBreathesLeft() {

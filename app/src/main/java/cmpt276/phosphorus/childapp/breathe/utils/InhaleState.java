@@ -1,11 +1,6 @@
 package cmpt276.phosphorus.childapp.breathe.utils;
 
-import android.animation.ObjectAnimator;
-import android.os.Handler;
-import android.view.ViewGroup;
 import android.widget.Button;
-
-import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.breathe.BreatheActivity;
@@ -17,18 +12,11 @@ import cmpt276.phosphorus.childapp.breathe.BreatheActivity;
 // ==============================================================================================
 public class InhaleState extends BreatheState {
 
-    private final android.os.Handler timerHandler = new Handler();
     private final Runnable timerRunnableThreeSeconds = this::handleThreeSecsPassed;
     private final Runnable timerRunnableTenSeconds = this::handleTenSecsPassed;
 
     public InhaleState(BreatheActivity context) {
         super(context);
-    }
-
-    @Override
-    public void handleEnter() {
-        super.handleEnter();
-//        stopAnimation();
     }
 
     @Override
@@ -42,11 +30,10 @@ public class InhaleState extends BreatheState {
         // remove the handler running the 10 second runnable from ExhaleState
         // https://stackoverflow.com/questions/5883635/how-to-remove-all-callbacks-from-a-handler
         context.timerHandler.removeCallbacksAndMessages(null);
+        context.animationExhale.cancel();
+        context.animationExhale.end();
 
-        // set timer for 3 seconds
         context.timerHandler.postDelayed(timerRunnableThreeSeconds, THREE_SECONDS);
-
-        // set timer for 10 seconds
         context.timerHandler.postDelayed(timerRunnableTenSeconds, TEN_SECONDS);
 
         // TODO (jack) - 1. stop sound from exhale state (if playing)
