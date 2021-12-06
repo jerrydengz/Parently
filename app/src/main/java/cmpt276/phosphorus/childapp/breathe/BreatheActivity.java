@@ -1,17 +1,21 @@
 package cmpt276.phosphorus.childapp.breathe;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 
 import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -42,43 +46,38 @@ public class BreatheActivity extends AppCompatActivity {
     private final String APP_PREFS = "ParentApp";
     private final String NUM_CHOSEN_BREATHS = "NumChosenBreaths - BreatheActivity.java";
 
-    private final AnimatorSet animationInhale = new AnimatorSet();
-    private final AnimatorSet animationExhale = new AnimatorSet();
-
-    private final int TIMER_INTERVAL = 10;
     private final long TEN_SECONDS = 10000;
+    private final double ANIMATION_RATE = 2.5;
 
-    // CountDownTimer JUST for ExhaleState 10 secs, needed to exist over in InhaleState
-    private final CountDownTimer timer = new CountDownTimer(TEN_SECONDS, TIMER_INTERVAL) {
-        @Override
-        public void onTick(long millisUntilFinished) {
-        }
+    public final AnimatorSet animationInhale = new AnimatorSet();
+    public final AnimatorSet animationExhale = new AnimatorSet();
 
-        @Override
-        public void onFinish() {
-            animationExhale.cancel();
-            animationExhale.end();
+    private void initializeAnimationInhale(){
+        //https://stackoverflow.com/questions/33916287/android-scale-image-view-with-animation/33916973
+        ObjectAnimator scaleUpX = ObjectAnimator.ofFloat(circleImgView, ViewGroup.SCALE_X, 1f, 8.5f);
+        ObjectAnimator scaleUpY = ObjectAnimator.ofFloat(circleImgView, ViewGroup.SCALE_Y, 1f, 8.5f);
 
-            System.out.println("Exhale 10 Second Timer Finished!");
+        final long animationDuration = TEN_SECONDS*(long)ANIMATION_RATE;
+        scaleUpX.setDuration(animationDuration);
+        scaleUpY.setDuration(animationDuration);
 
-            // TODO (jack) - stop sound
-
-            // TODO - jack, use this as visual indicator for 10 secs has passed, remove when you're done
-            // black = exhale ten seconds runnable stops
-            circleImgView.setColorFilter(getColor(R.color.black));
-        }
-    };
-
-    public CountDownTimer getTimer() {
-        return timer;
+        animationInhale.play(scaleUpX).with(scaleUpY);
+        animationInhale.setInterpolator(new LinearOutSlowInInterpolator());
     }
 
-    public AnimatorSet getAnimationInhale() {
-        return animationInhale;
+    private void initializeAnimationExhale(){
+        //https://stackoverflow.com/questions/33916287/android-scale-image-view-with-animation/33916973
+        ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(circleImgView, ViewGroup.SCALE_X, 8.5f, 1f);
+        ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(circleImgView, ViewGroup.SCALE_Y, 8.5f, 1f);
+        final long animationDuration = TEN_SECONDS*(long)ANIMATION_RATE;
+        scaleDownX.setDuration(animationDuration);
+        scaleDownY.setDuration(animationDuration);
+
+        animationExhale.play(scaleDownX).with(scaleDownY);
+        animationExhale.setInterpolator(new LinearOutSlowInInterpolator());
     }
-    public AnimatorSet getAnimationExhale() {
-        return animationExhale;
-    }
+
+    public final android.os.Handler timerHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +91,8 @@ public class BreatheActivity extends AppCompatActivity {
         this.setUpNumBreathsBtn();
         this.setUpViewVisibility();
         this.setUpMainBreatheBtn();
+        this.initializeAnimationInhale();
+        this.initializeAnimationExhale();
         setState(inhaleState);
     }
 

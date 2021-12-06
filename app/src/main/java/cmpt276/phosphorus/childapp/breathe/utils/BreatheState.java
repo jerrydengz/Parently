@@ -9,13 +9,11 @@ import cmpt276.phosphorus.childapp.breathe.BreatheActivity;
 
 public abstract class BreatheState {
     protected BreatheActivity context;
-    protected final double ANIMATION_RATE = 2.5;
 
     protected boolean hasHeldThreeSecs = false;
-    protected final long THREE_SECONDS = 3000;
-    protected final long TEN_SECONDS = 10000;
 
-    protected android.os.Handler timerHandler = new Handler();
+    protected final int THREE_SECONDS = 3000;
+    protected final int TEN_SECONDS = 10000;
 
     // Ensure BreatheState holds reference to BreatheActivity
     public BreatheState(BreatheActivity context) {

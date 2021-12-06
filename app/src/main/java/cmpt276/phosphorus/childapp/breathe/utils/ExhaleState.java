@@ -1,7 +1,6 @@
 package cmpt276.phosphorus.childapp.breathe.utils;
 
 import android.animation.ObjectAnimator;
-import android.os.CountDownTimer;
 import android.view.ViewGroup;
 import android.widget.Button;
 
@@ -11,7 +10,16 @@ import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.breathe.BreatheActivity;
 
 public class ExhaleState extends BreatheState {
-    private final Runnable timerHandlerThreeSecs = this::updateBreathesLeft;
+    private final Runnable timerRunnableThreeSeconds = this::updateBreathesLeft;
+    private final Runnable timerRunnableTenSeconds = () -> {
+        // TODO (jack) - stop sound
+
+        stopAnimationExhale();
+
+        // visual marker
+        context.getCircleAnimationView().setColorFilter(context.getColor(R.color.black));
+    };
+
     public ExhaleState(BreatheActivity context) {
         super(context);
     }
@@ -27,29 +35,17 @@ public class ExhaleState extends BreatheState {
         Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
         btnBreatheState.setEnabled(false);
 
-        context.getTimer().start();
-        System.out.println("Exhale 10 second timer started!");
-        timerHandler.postDelayed(timerHandlerThreeSecs, THREE_SECONDS);
+        context.timerHandler.postDelayed(timerRunnableThreeSeconds, THREE_SECONDS);
+        context.timerHandler.postDelayed(timerRunnableTenSeconds, TEN_SECONDS);
 
-        context.getAnimationExhale().cancel();
-        context.getAnimationExhale().end();
-        startExhaleAnimation();
+        context.getCircleAnimationView().setColorFilter(context.getColor(R.color.chalk_red_var));
+        context.animationExhale.start();
     }
 
-    private void startExhaleAnimation() {
-        //https://stackoverflow.com/questions/33916287/android-scale-image-view-with-animation/33916973
-        ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(context.getCircleAnimationView(), ViewGroup.SCALE_X, 1f);
-        ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(context.getCircleAnimationView(), ViewGroup.SCALE_Y, 1f);
-
-        final long animationDuration = TEN_SECONDS * (long) ANIMATION_RATE;
-        scaleDownX.setDuration(animationDuration);
-        scaleDownY.setDuration(animationDuration);
-
-        context.getAnimationExhale().play(scaleDownX).with(scaleDownY);
-        context.getAnimationExhale().setInterpolator(new LinearOutSlowInInterpolator());
-        context.getCircleAnimationView().setColorFilter(context.getColor(R.color.chalk_red_var));
-
-        context.getAnimationExhale().start();
+    @Override
+    public void handleExit() {
+        super.handleExit();
+        context.timerHandler.removeCallbacks(timerRunnableThreeSeconds);
     }
 
     private void updateBreathesLeft() {
@@ -68,11 +64,14 @@ public class ExhaleState extends BreatheState {
             // TODO (jack) - update guide text
             btnBreatheState.setText(R.string.breathe_state_finished);
             btnBreatheState.setOnClickListener(view -> {
-                context.getAnimationExhale().cancel();
-                context.getAnimationExhale().end();
+                stopAnimationExhale();
                 context.finish();
             });
         }
     }
 
+    private void stopAnimationExhale(){
+        context.animationExhale.cancel();
+        context.animationExhale.end();
+    }
 }
