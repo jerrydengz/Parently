@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -105,6 +106,8 @@ public class ChooseSideActivity extends AppCompatActivity {
             } else {
                 childPortrait.setImageResource(R.drawable.child_portrait_default);
             }
+        }else{
+            childPortrait.setVisibility(View.GONE);
         }
 
         childPortrait.setOnClickListener(view -> {

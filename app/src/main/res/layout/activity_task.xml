@@ -24,7 +24,7 @@
 
     <ListView
         android:id="@+id/taskListView"
-        android:layout_width="400sp"
+        android:layout_width="375sp"
         android:layout_height="match_parent"
         android:divider="@android:color/transparent"
         android:dividerHeight="10.0sp"
