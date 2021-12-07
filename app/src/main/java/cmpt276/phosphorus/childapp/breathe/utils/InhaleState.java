@@ -2,6 +2,7 @@ package cmpt276.phosphorus.childapp.breathe.utils;
 
 import android.media.MediaPlayer;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.io.IOException;
 
@@ -29,7 +30,9 @@ public class InhaleState extends BreatheState {
     public void handleOnTouch() {
         super.handleOnTouch();
 
-        // TODO (jack) - set guide text
+        TextView guideMessage = context.findViewById(R.id.guideMessage);
+        guideMessage.setText(R.string.guide_message);
+
         Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
         btnBreatheState.setText(R.string.breathe_state_in);
 
@@ -77,6 +80,9 @@ public class InhaleState extends BreatheState {
         hasHeldThreeSecs = true;
         Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
         btnBreatheState.setText(R.string.breathe_state_out);
+
+        TextView guideMessage = context.findViewById(R.id.guideMessage);
+        guideMessage.setText(R.string.guide_exhale);
     }
 
     private void handleTenSecsPassed() {
