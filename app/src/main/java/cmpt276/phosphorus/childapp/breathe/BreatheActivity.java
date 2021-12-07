@@ -83,6 +83,7 @@ public class BreatheActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         finish();
+        this.setState(inhaleState);
         return super.onOptionsItemSelected(item);
     }
 

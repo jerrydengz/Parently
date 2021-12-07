@@ -42,6 +42,11 @@ public class ExhaleState extends BreatheState {
         context.getAnimationExhale().start();
     }
 
+    @Override
+    public void handleExit() {
+        super.handleExit();
+    }
+
     private void updateBreathesLeft() {
         Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
         btnBreatheState.setEnabled(true);
@@ -54,10 +59,12 @@ public class ExhaleState extends BreatheState {
             // TODO (jack) - update guide text
             btnBreatheState.setText(R.string.breathe_state_in);
             context.setState(context.getInhaleState());
+            btnBreatheState.setOnClickListener(view -> this.stopSound());
         } else {
             // TODO (jack) - update guide text
             btnBreatheState.setText(R.string.breathe_state_finished);
             btnBreatheState.setOnClickListener(view -> {
+                this.stopSound();
                 stopAnimationExhale();
                 context.finish();
             });
