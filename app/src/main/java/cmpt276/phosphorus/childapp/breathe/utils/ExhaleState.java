@@ -1,6 +1,5 @@
 package cmpt276.phosphorus.childapp.breathe.utils;
 
-import android.media.MediaPlayer;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -19,12 +18,8 @@ public class ExhaleState extends BreatheState {
     private final Runnable timerRunnableThreeSeconds = this::updateBreathesLeft;
     private final Runnable timerRunnableTenSeconds = this::handleTenSecsPassed;
 
-    // Ref https://developer.android.com/reference/android/media/MediaPlayer
-    private MediaPlayer currentSound;
-
     public ExhaleState(BreatheActivity context) {
         super(context);
-        currentSound = MediaPlayer.create(context, R.raw.exhale);
     }
 
     @Override
@@ -41,9 +36,9 @@ public class ExhaleState extends BreatheState {
         TextView guideMessage = context.findViewById(R.id.guideMessage);
         guideMessage.setText(R.string.guide_exhale);
 
-        currentSound.start();
+        context.getCurrentSoundExhale().start();
 
-        context.getIvCircle().setColorFilter(context.getColor(R.color.chalk_red_var));
+        context.getIvCircle().setColorFilter(context.getColor(R.color.green_c1));
         context.getAnimationExhale().start();
     }
 
@@ -66,7 +61,6 @@ public class ExhaleState extends BreatheState {
             btnBreatheState.setText(R.string.breathe_state_in);
 
             context.setState(context.getInhaleState());
-            btnBreatheState.setOnClickListener(view -> this.stopSound());
         } else {
             guideMessage.setText(R.string.guide_complete);
             btnBreatheState.setText(R.string.breathe_state_finished);
@@ -82,7 +76,6 @@ public class ExhaleState extends BreatheState {
     private void handleTenSecsPassed() {
         stopSound();
         stopAnimationExhale();
-
         context.getIvCircle().setColorFilter(context.getColor(R.color.black));
     }
 
@@ -91,10 +84,10 @@ public class ExhaleState extends BreatheState {
         context.getAnimationExhale().end();
     }
 
-    private void stopSound(){
+    private void stopSound() {
         try {
-            currentSound.stop();
-            currentSound.prepare();
+            context.getCurrentSoundExhale().stop();
+            context.getCurrentSoundExhale().prepare();
         } catch (IOException e) {
             e.printStackTrace();
         }

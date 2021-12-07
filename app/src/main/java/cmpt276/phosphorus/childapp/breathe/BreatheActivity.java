@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
@@ -59,6 +60,10 @@ public class BreatheActivity extends AppCompatActivity {
 
     private final android.os.Handler timerHandler = new Handler();
 
+    // Ref https://developer.android.com/reference/android/media/MediaPlayer
+    private MediaPlayer currentSoundExhale;
+    private MediaPlayer currentSoundInhale;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +73,7 @@ public class BreatheActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         this.inhaleState = new InhaleState(this);
-        this.exhaleState  = new ExhaleState(this);
+        this.exhaleState = new ExhaleState(this);
 
         this.getChosenBreathsFromPrefs();
         this.setUpNumBreathsBtn();
@@ -76,7 +81,13 @@ public class BreatheActivity extends AppCompatActivity {
         this.setUpMainBreatheBtn();
         this.initializeAnimationInhale();
         this.initializeAnimationExhale();
+        this.initializeBreathSounds();
         this.setState(inhaleState);
+    }
+
+    private void initializeBreathSounds() {
+        currentSoundExhale = MediaPlayer.create(this, R.raw.exhale);
+        currentSoundInhale = MediaPlayer.create(this, R.raw.inhale);
     }
 
     @Override
@@ -99,7 +110,7 @@ public class BreatheActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop () {
+    protected void onStop() {
         super.onStop();
         exhaleState.handleOnQuit();
     }
@@ -239,6 +250,14 @@ public class BreatheActivity extends AppCompatActivity {
 
     public Handler getTimerHandler() {
         return timerHandler;
+    }
+
+    public MediaPlayer getCurrentSoundExhale() {
+        return currentSoundExhale;
+    }
+
+    public MediaPlayer getCurrentSoundInhale() {
+        return currentSoundInhale;
     }
 
     public static Intent makeIntent(Context context) {

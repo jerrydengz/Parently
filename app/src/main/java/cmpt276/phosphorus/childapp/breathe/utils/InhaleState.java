@@ -1,6 +1,5 @@
 package cmpt276.phosphorus.childapp.breathe.utils;
 
-import android.media.MediaPlayer;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -20,12 +19,8 @@ public class InhaleState extends BreatheState {
     private final Runnable timerRunnableTenSeconds = this::handleTenSecsPassed;
     private boolean hasHeldThreeSecs = false;
 
-    // Ref https://developer.android.com/reference/android/media/MediaPlayer
-    private MediaPlayer currentSound;
-
     public InhaleState(BreatheActivity context) {
         super(context);
-        currentSound = MediaPlayer.create(context, R.raw.inhale);
     }
 
     @Override
@@ -40,17 +35,15 @@ public class InhaleState extends BreatheState {
 
         // remove the handler running the 10 second runnable from ExhaleState
         // https://stackoverflow.com/questions/5883635/how-to-remove-all-callbacks-from-a-handler
-        context.getTimerHandler().removeCallbacksAndMessages(null);
-        context.getAnimationExhale().cancel();
-        context.getAnimationExhale().end();
+        stopExhaleStateActivities();
 
         context.getTimerHandler().postDelayed(timerRunnableThreeSeconds, THREE_SECONDS);
         context.getTimerHandler().postDelayed(timerRunnableTenSeconds, TEN_SECONDS);
 
-        currentSound.start();
 
         context.getIvCircle().setColorFilter(context.getColor(R.color.chalk_red));
         context.getAnimationInhale().start();
+        context.getCurrentSoundInhale().start();
     }
 
     @Override
@@ -106,10 +99,22 @@ public class InhaleState extends BreatheState {
         context.getAnimationInhale().end();
     }
 
-    private void stopSound(){
+    private void stopExhaleStateActivities() {
+        context.getTimerHandler().removeCallbacksAndMessages(null);
+        context.getAnimationExhale().cancel();
+        context.getAnimationExhale().end();
+
         try {
-            currentSound.stop();
-            currentSound.prepare();
+            context.getCurrentSoundExhale().stop();
+            context.getCurrentSoundExhale().prepare();
+        } catch (IOException ignored) {
+        }
+    }
+
+    private void stopSound() {
+        try {
+            context.getCurrentSoundInhale().stop();
+            context.getCurrentSoundInhale().prepare();
         } catch (IOException e) {
             e.printStackTrace();
         }

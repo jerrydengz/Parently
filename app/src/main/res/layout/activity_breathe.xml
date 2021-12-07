@@ -4,21 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".breathe.BreatheActivity"
-    android:background="@drawable/lavender_min_1">
-
+    android:background="@drawable/lavender_min_1"
+    tools:context=".breathe.BreatheActivity">
 
     <TextView
         android:id="@+id/guideMessage"
-        android:layout_width="wrap_content"
+        android:layout_width="350sp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="20sp"
+        android:gravity="center_horizontal"
         android:text="@string/guide_message"
         android:textColor="@color/black"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:text="@string/num_breaths_chosen_text"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/btnElegantNumber"
             app:layout_constraintEnd_toEndOf="parent"

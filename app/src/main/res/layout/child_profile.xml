@@ -20,11 +20,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:scaleType="centerCrop"
         android:maxWidth="80sp"
         android:maxHeight="80sp"
         android:minWidth="60sp"
         android:minHeight="60sp"
+        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/space"
         tools:ignore="ContentDescription" />

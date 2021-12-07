@@ -7,7 +7,7 @@
     android:background="@drawable/lavender_min_1"
     tools:context=".children.ChildrenActivity">
 
-<!--https://stackoverflow.com/questions/4984313/how-to-set-space-between-listview-items-in-android-->
+    <!--https://stackoverflow.com/questions/4984313/how-to-set-space-between-listview-items-in-android-->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/configure_child_fab"
@@ -28,9 +28,9 @@
         android:id="@+id/listViewChildren"
         android:layout_width="375sp"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
         android:divider="@android:color/transparent"
         android:dividerHeight="10.0sp"
+        android:gravity="center_horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

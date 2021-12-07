@@ -47,7 +47,8 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="@+id/timeoutCircularBtn"
         app:layout_constraintTop_toBottomOf="@+id/tvCountDown"
-        app:layout_constraintVertical_bias="0.285" />
+        app:layout_constraintVertical_bias="0.285"
+        tools:ignore="TextContrastCheck" />
 
     <Button
         android:id="@+id/btnReset"
@@ -60,6 +61,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timeoutCircularBtn"
+        tools:ignore="TextContrastCheck"
         tools:visibility="visible" />
 
     <RadioGroup
@@ -88,7 +90,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioGroupTimeOptions"
-        tools:ignore="Autofill"
+        tools:ignore="Autofill,TextContrastCheck"
         tools:visibility="visible" />
 
     <TextView
@@ -98,10 +100,13 @@
         android:layout_marginBottom="20dp"
         android:text="@string/timer_speed"
         android:textColor="@color/chalk_red"
+        android:textSize="16sp"
+        android:textStyle="bold"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TextContrastCheck"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
