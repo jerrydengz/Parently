@@ -288,17 +288,10 @@ public class ChildConfigureActivity extends AppCompatActivity {
                 ? Manifest.permission.CAMERA
                 : Manifest.permission.READ_EXTERNAL_STORAGE;
 
-        PermissionsEnumHelper requestPerm = PermissionsEnumHelper.WRITE_EXTERNAL_STORAGE;
-
-        return requestAPermission(requestPerm, type);
+        return requestAPermission(type);
     }
 
-    private boolean requestAPermission(PermissionsEnumHelper storageType, String permissionType) {
-        /*
-            Note that we have already checked for proper Build.VERSION.SDK_INT in setUpAPermission,
-            so just ignore this warning as it's already been accounted for and would be redundant
-         */
-        @SuppressLint("InlinedApi")
+    private boolean requestAPermission(String permissionType) {
         String storage = Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
         boolean hasPermissionType = (ContextCompat.checkSelfPermission(this, permissionType) != PackageManager.PERMISSION_GRANTED);
