@@ -1,6 +1,9 @@
 package cmpt276.phosphorus.childapp.breathe.utils;
 
+import android.media.MediaPlayer;
 import android.widget.Button;
+
+import java.io.IOException;
 
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.breathe.BreatheActivity;
@@ -15,9 +18,11 @@ public class InhaleState extends BreatheState {
     private final Runnable timerRunnableThreeSeconds = this::handleThreeSecsPassed;
     private final Runnable timerRunnableTenSeconds = this::handleTenSecsPassed;
     private boolean hasHeldThreeSecs = false;
+    private MediaPlayer currentSound;
 
     public InhaleState(BreatheActivity context) {
         super(context);
+        currentSound = MediaPlayer.create(context, R.raw.inhale);
     }
 
     @Override
@@ -37,8 +42,7 @@ public class InhaleState extends BreatheState {
         context.getTimerHandler().postDelayed(timerRunnableThreeSeconds, THREE_SECONDS);
         context.getTimerHandler().postDelayed(timerRunnableTenSeconds, TEN_SECONDS);
 
-        // TODO (jack) - 1. stop sound from exhale state (if playing)
-        // TODO (jack) - 2. play mc sound for inhale state {0:00 - 0:10}
+        currentSound.start();
 
         context.getIvCircle().setColorFilter(context.getColor(R.color.chalk_red));
         context.getAnimationInhale().start();
@@ -54,7 +58,9 @@ public class InhaleState extends BreatheState {
             context.getTimerHandler().removeCallbacksAndMessages(null);
             resetAnimationInhale();
         }
+        this.stopSound();
     }
+
 
     @Override
     public void handleExit() {
@@ -63,6 +69,7 @@ public class InhaleState extends BreatheState {
 
         hasHeldThreeSecs = false;
 
+        stopSound();
         stopAnimationInhale();
     }
 
@@ -73,8 +80,7 @@ public class InhaleState extends BreatheState {
     }
 
     private void handleTenSecsPassed() {
-        // TODO (jack) - Stop sound for inhale state
-
+        stopSound();
         stopAnimationInhale();
 
         // TODO - visual marker, remove when done
@@ -91,6 +97,15 @@ public class InhaleState extends BreatheState {
     private void stopAnimationInhale() {
         context.getAnimationInhale().cancel();
         context.getAnimationInhale().end();
+    }
+
+    private void stopSound(){
+        try {
+            currentSound.stop();
+            currentSound.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

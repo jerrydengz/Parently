@@ -36,8 +36,8 @@ import cmpt276.phosphorus.childapp.breathe.utils.InhaleState;
 // ==============================================================================================
 public class BreatheActivity extends AppCompatActivity {
 
-    private final BreatheState inhaleState = new InhaleState(this);
-    private final BreatheState exhaleState = new ExhaleState(this);
+    private BreatheState inhaleState;
+    private BreatheState exhaleState;
     private BreatheState currentState = new IdleState(this);
 
     private ImageView ivCircle;
@@ -67,6 +67,9 @@ public class BreatheActivity extends AppCompatActivity {
 
         this.setTitle(getString(R.string.activity_breathe_title));
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
+        this.inhaleState = new InhaleState(this);
+        this.exhaleState  = new ExhaleState(this);
 
         this.getChosenBreathsFromPrefs();
         this.setUpNumBreathsBtn();
