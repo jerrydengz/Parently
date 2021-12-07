@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -289,9 +288,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
                 ? Manifest.permission.CAMERA
                 : Manifest.permission.READ_EXTERNAL_STORAGE;
 
-        PermissionsEnumHelper requestPerm = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
-                ? PermissionsEnumHelper.MANAGE_EXTERNAL_STORAGE
-                : PermissionsEnumHelper.WRITE_EXTERNAL_STORAGE;
+        PermissionsEnumHelper requestPerm = PermissionsEnumHelper.WRITE_EXTERNAL_STORAGE;
 
         return requestAPermission(requestPerm, type);
     }
@@ -302,9 +299,7 @@ public class ChildConfigureActivity extends AppCompatActivity {
             so just ignore this warning as it's already been accounted for and would be redundant
          */
         @SuppressLint("InlinedApi")
-        String storage = (storageType == PermissionsEnumHelper.MANAGE_EXTERNAL_STORAGE)
-                ? Manifest.permission.MANAGE_EXTERNAL_STORAGE
-                : Manifest.permission.WRITE_EXTERNAL_STORAGE;
+        String storage = Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
         boolean hasPermissionType = (ContextCompat.checkSelfPermission(this, permissionType) != PackageManager.PERMISSION_GRANTED);
         boolean hasStoragePermission = (ContextCompat.checkSelfPermission(this, storage) != PackageManager.PERMISSION_GRANTED);
