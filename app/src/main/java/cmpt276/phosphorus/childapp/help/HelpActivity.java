@@ -51,6 +51,7 @@ public class HelpActivity extends AppCompatActivity {
         TextView appBackgroundLink = findViewById(R.id.appBgLink);
         TextView victorySoundLink = findViewById(R.id.victorySoundLink);
         TextView defeatSoundLink = findViewById(R.id.defeatSoundLink);
+        TextView inhaleExhaleSoundLink = findViewById(R.id.inhaleExhaleSoundLink);
 
         // Sets the hyperlink functionality to be clickable
         coinImgLink.setMovementMethod(LinkMovementMethod.getInstance());
@@ -60,5 +61,6 @@ public class HelpActivity extends AppCompatActivity {
         appBackgroundLink.setMovementMethod(LinkMovementMethod.getInstance());
         victorySoundLink.setMovementMethod(LinkMovementMethod.getInstance());
         defeatSoundLink.setMovementMethod(LinkMovementMethod.getInstance());
+        inhaleExhaleSoundLink.setMovementMethod(LinkMovementMethod.getInstance());
     }
 }

@@ -94,6 +94,8 @@
     <string name="coin_sound_link"> • <a href="https://www.youtube.com/watch?v=Hy7DORHmiKY">Link to coin flipping sound</a></string>
     <string name="victory_sound_link"> • <a href="https://www.youtube.com/watch?v=lcJH8JtgZoE">Link to coin flip victory sound</a></string>
     <string name="defeat_sound_link"> • <a href="https://www.youtube.com/watch?v=8Xt1kUK71lc">Link to coin flip defeat sound</a></string>
+    <string name="inhale_exhale_sounds_link"> • <a href="https://youtu.be/n_-9mrBMLA8?t=108">Link to Inhale and Exhale Sounds</a></string>
+
     <string name="tasks_button_name">tasks to do</string>
     <string name="task_activity_title">Who\'s Turn Is It?</string>
     <string name="configure_task_activity_title">Configure Task</string>
@@ -116,13 +118,15 @@
     <string name="speed_rate_of_the_timer">Speed Rate of the Timer</string>
     <string name="timer_speed">Time @ %1$d%%</string>
     <string name="initial_state_btn_text">Begin</string>
-    <string name="guide_message">Guiding Message</string>
+    <string name="guide_message">Hold the button</string>
+    <string name="guide_exhale">Let go!</string>
+    <string name="guide_complete">Complete!</string>
     <string name="breathe_btn_text">Breathe</string>
     <string name="breathe_state_out">Out</string>
     <string name="breathe_state_in">In</string>
     <string name="breathe_state_finished">Good job!</string>
-    <string name="singular_breath_chosen_text">Let\'s take %1$d Breath</string>
-    <string name="num_breaths_chosen_text">Let\'s take %1$d Breaths</string>
+    <string name="singular_breath_chosen_text">Let\'s take %1$d Breath Together</string>
+    <string name="num_breaths_chosen_text">Let\'s take %1$d Breaths Together</string>
     <string name="activity_breathe_title">Take Breaths to Calm Down</string>
     <string name="remaining_breaths_text">"Remaining Breaths: %1$d"</string>
     <string name="history_toggle">View History</string>
