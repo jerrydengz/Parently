@@ -93,6 +93,7 @@ public class Task {
         return this.history;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Task{" +
