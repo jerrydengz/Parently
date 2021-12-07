@@ -50,7 +50,7 @@ public class BreatheActivity extends AppCompatActivity {
     private final String NUM_CHOSEN_BREATHS = "NumChosenBreaths - BreatheActivity.java";
 
     // TODO - turn into enum?
-    private final long TEN_SECONDS = 10000;
+    private final long TEN_SECONDS_IN_MILLISECONDS = 10000;
     private final double ANIMATION_RATE = 2.5;
     private final float ANIMATION_SCALE_RANGE_MIN = 1f;
     private final float ANIMATION_SCALE_RANGE_MAX = 8.5f;
@@ -156,7 +156,7 @@ public class BreatheActivity extends AppCompatActivity {
         ObjectAnimator scaleUpX = ObjectAnimator.ofFloat(ivCircle, ViewGroup.SCALE_X, ANIMATION_SCALE_RANGE_MIN, ANIMATION_SCALE_RANGE_MAX);
         ObjectAnimator scaleUpY = ObjectAnimator.ofFloat(ivCircle, ViewGroup.SCALE_Y, ANIMATION_SCALE_RANGE_MIN, ANIMATION_SCALE_RANGE_MAX);
 
-        final long animationDuration = TEN_SECONDS * (long) ANIMATION_RATE;
+        final long animationDuration = TEN_SECONDS_IN_MILLISECONDS * (long) ANIMATION_RATE;
         scaleUpX.setDuration(animationDuration);
         scaleUpY.setDuration(animationDuration);
 
@@ -169,7 +169,7 @@ public class BreatheActivity extends AppCompatActivity {
         ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(ivCircle, ViewGroup.SCALE_X, ANIMATION_SCALE_RANGE_MAX, ANIMATION_SCALE_RANGE_MIN);
         ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(ivCircle, ViewGroup.SCALE_Y, ANIMATION_SCALE_RANGE_MAX, ANIMATION_SCALE_RANGE_MIN);
 
-        final long animationDuration = TEN_SECONDS * (long) ANIMATION_RATE;
+        final long animationDuration = TEN_SECONDS_IN_MILLISECONDS * (long) ANIMATION_RATE;
         scaleDownX.setDuration(animationDuration);
         scaleDownY.setDuration(animationDuration);
 
