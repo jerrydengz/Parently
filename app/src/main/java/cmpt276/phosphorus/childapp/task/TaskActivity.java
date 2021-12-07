@@ -83,8 +83,8 @@ public class TaskActivity extends AppCompatActivity {
         taskDialog.setView(dialogView);
 
         String dialogTitle = getResources().getString(R.string.task_info_title).replace("%name%", selected.getName());
-        TextView title = dialogView.findViewById(R.id.textTaskDialogName);
-        title.setText(dialogTitle);
+        TextView textTaskDialogName = dialogView.findViewById(R.id.textTaskDialogName);
+        textTaskDialogName.setText(dialogTitle);
 
         Child currChild = ChildManager.getInstance().getChildByUUID(selected.getCurrentChild());
         ImageView taskChildIcon = dialogView.findViewById(R.id.imgTaskChildIcon);
