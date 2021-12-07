@@ -81,7 +81,6 @@ public class ExhaleState extends BreatheState {
         stopSound();
         stopAnimationExhale();
 
-        // TODO - visual marker, remove when done
         context.getIvCircle().setColorFilter(context.getColor(R.color.black));
     }
 
