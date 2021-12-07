@@ -5,56 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".breathe.BreatheActivity"
-    android:background="@drawable/lavender_min_1"
-    >
+    android:background="@drawable/lavender_min_1">
 
-    <LinearLayout
-        android:id="@+id/numBreathesLinearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/btnBreatheState"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideMessage">
-
-        <TextView
-            android:id="@+id/numBreathesChosen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/num_breathes_chosen_text"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/elegantNumberButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20sp" />
-
-        <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
-            android:id="@+id/elegantNumberButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:backGroundColor="@color/chalk_red"
-            app:finalNumber="10"
-            app:initialNumber="1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </LinearLayout>
 
     <TextView
         android:id="@+id/guideMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="44dp"
         android:text="@string/guide_message"
         android:textColor="@color/black"
         android:textSize="28sp"
@@ -64,18 +22,63 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <ImageView
-        android:id="@+id/circleBreatheAnimation"
+        android:id="@+id/ivCircle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/btnBreatheState"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideMessage"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.607"
         app:srcCompat="@drawable/circle"
         tools:ignore="ContentDescription,ImageContrastCheck" />
+
+    <LinearLayout
+        android:id="@+id/numBreathesLinearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/btnBreatheState"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideMessage"
+        app:layout_constraintVertical_bias="0.523">
+
+        <TextView
+            android:id="@+id/numBreathesChosen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/num_breaths_chosen_text"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/btnElegantNumber"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20sp" />
+
+        <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+            android:id="@+id/btnElegantNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:backGroundColor="@color/chalk_red"
+            app:finalNumber="10"
+            app:initialNumber="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:textSize="11sp" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnBreatheState"
@@ -87,24 +90,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.965"
+        app:layout_constraintVertical_bias="0.908"
         tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/tvRemainingBreaths"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/remaining_breaths_text"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideMessage" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--
-    <RelativeLayout
-        android:id="@+id/animationFrame"
-        android:layout_width="413dp"
-        android:layout_height="399dp"
-        android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/btnBreatheState"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guide_message">
-
-
-    </RelativeLayout>
--->

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="1250dp"
+    android:layout_height="wrap_content"
     android:background="@color/lavender_darker"
     app:layout_constraintHeight_default="spread"
     tools:layout_editor_absoluteX="42dp"
@@ -18,12 +18,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textTaskDialougeName"
-        app:srcCompat="@drawable/child_portrait_default" />
+        app:layout_constraintTop_toBottomOf="@+id/textTaskDialogName"
+        app:srcCompat="@drawable/child_portrait_default"
+        tools:ignore="ContentDescription,ImageContrastCheck" />
 
     <TextView
-        android:id="@+id/textTaskDialougeName"
-        android:layout_width="800px"
+        android:id="@+id/textTaskDialogName"
+        android:layout_width="325sp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center"
@@ -60,32 +61,36 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textCurrentTurn"
-        app:layout_constraintVertical_bias="0.418">
+        app:layout_constraintVertical_bias="0.422" >
 
         <Button
             android:id="@+id/btnTaskComplete"
             android:layout_width="match_parent"
             android:layout_height="60sp"
-            android:text="@string/complete_btn_text" />
+            android:text="@string/complete_btn_text"
+            tools:ignore="TextContrastCheck" />
 
         <Button
             android:id="@+id/btnTaskEdit"
             android:layout_width="match_parent"
             android:layout_height="60sp"
-            android:text="@string/edit_btn_text" />
+            android:text="@string/edit_btn_text"
+            tools:ignore="TextContrastCheck" />
 
         <Button
             android:id="@+id/btnTaskClose"
             android:layout_width="match_parent"
             android:layout_height="60sp"
             android:minHeight="48dp"
-            android:text="@string/close_btn_txt" />
+            android:text="@string/close_btn_txt"
+            tools:ignore="TextContrastCheck" />
 
         <Button
             android:id="@+id/viewHistory"
             android:layout_width="match_parent"
             android:layout_height="60sp"
-            android:text="@string/history_toggle" />
+            android:text="@string/history_toggle"
+            tools:ignore="TextContrastCheck" />
     </LinearLayout>
 
     <TextView

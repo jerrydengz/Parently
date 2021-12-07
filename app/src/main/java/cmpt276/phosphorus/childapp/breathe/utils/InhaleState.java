@@ -1,11 +1,6 @@
 package cmpt276.phosphorus.childapp.breathe.utils;
 
-import android.animation.ObjectAnimator;
-import android.os.Handler;
-import android.view.ViewGroup;
 import android.widget.Button;
-
-import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 
 import cmpt276.phosphorus.childapp.R;
 import cmpt276.phosphorus.childapp.breathe.BreatheActivity;
@@ -17,21 +12,12 @@ import cmpt276.phosphorus.childapp.breathe.BreatheActivity;
 // ==============================================================================================
 public class InhaleState extends BreatheState {
 
-    private final android.os.Handler timerHandler = new Handler();
     private final Runnable timerRunnableThreeSeconds = this::handleThreeSecsPassed;
     private final Runnable timerRunnableTenSeconds = this::handleTenSecsPassed;
+    private boolean hasHeldThreeSecs = false;
 
     public InhaleState(BreatheActivity context) {
         super(context);
-    }
-
-    @Override
-    public void handleEnter() {
-        super.handleEnter();
-        timerHandler.removeCallbacks(timerRunnableThreeSeconds);
-        timerHandler.removeCallbacks(timerRunnableTenSeconds);
-
-        stopAnimation();
     }
 
     @Override
@@ -42,15 +28,20 @@ public class InhaleState extends BreatheState {
         Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
         btnBreatheState.setText(R.string.breathe_state_in);
 
-        // set timer for 3 seconds
-        timerHandler.postDelayed(timerRunnableThreeSeconds, THREE_SECONDS);
+        // remove the handler running the 10 second runnable from ExhaleState
+        // https://stackoverflow.com/questions/5883635/how-to-remove-all-callbacks-from-a-handler
+        context.getTimerHandler().removeCallbacksAndMessages(null);
+        context.getAnimationExhale().cancel();
+        context.getAnimationExhale().end();
 
-        // set timer for 10 seconds
-        timerHandler.postDelayed(timerRunnableTenSeconds, TEN_SECONDS);
+        context.getTimerHandler().postDelayed(timerRunnableThreeSeconds, THREE_SECONDS);
+        context.getTimerHandler().postDelayed(timerRunnableTenSeconds, TEN_SECONDS);
 
         // TODO (jack) - 1. stop sound from exhale state (if playing)
-        // TODO (jack) - 2. play sound for inhale state
-        startInhaleAnimation();
+        // TODO (jack) - 2. play mc sound for inhale state {0:00 - 0:10}
+
+        context.getIvCircle().setColorFilter(context.getColor(R.color.chalk_red));
+        context.getAnimationInhale().start();
     }
 
     @Override
@@ -59,24 +50,20 @@ public class InhaleState extends BreatheState {
         if (hasHeldThreeSecs) {
             context.setState(context.getExhaleState());
         } else {
-            // stop the timer
-            timerHandler.removeCallbacks(timerRunnableThreeSeconds);
-            timerHandler.removeCallbacks(timerRunnableTenSeconds);
-            resetAnimation();
+            // stop all queued timer runnable
+            context.getTimerHandler().removeCallbacksAndMessages(null);
+            resetAnimationInhale();
         }
     }
 
     @Override
     public void handleExit() {
         super.handleExit();
-
-        timerHandler.removeCallbacks(timerRunnableThreeSeconds);
-        timerHandler.removeCallbacks(timerRunnableTenSeconds);
+        context.getTimerHandler().removeCallbacksAndMessages(null);
 
         hasHeldThreeSecs = false;
-        hasHeldTenSecs = false;
 
-        stopAnimation();
+        stopAnimationInhale();
     }
 
     private void handleThreeSecsPassed() {
@@ -86,38 +73,24 @@ public class InhaleState extends BreatheState {
     }
 
     private void handleTenSecsPassed() {
-        hasHeldTenSecs = true;
         // TODO (jack) - Stop sound for inhale state
-        stopAnimation();
+
+        stopAnimationInhale();
+
+        // TODO - visual marker, remove when done
+        context.getIvCircle().setColorFilter(context.getColor(R.color.white));
     }
 
-    private void startInhaleAnimation(){
-        //https://stackoverflow.com/questions/33916287/android-scale-image-view-with-animation/33916973
-        ObjectAnimator scaleUpX = ObjectAnimator.ofFloat(context.getCircleAnimation(), ViewGroup.SCALE_X, 8.5f);
-        ObjectAnimator scaleUpY = ObjectAnimator.ofFloat(context.getCircleAnimation(), ViewGroup.SCALE_Y, 8.5f);
-
-        final long ANIMATION_DURATION = TEN_SECONDS*(long)2.5;
-        scaleUpX.setDuration(ANIMATION_DURATION);
-        scaleUpY.setDuration(ANIMATION_DURATION);
-
-        animation.play(scaleUpX).with(scaleUpY);
-        animation.setInterpolator(new LinearOutSlowInInterpolator());
-
-        context.getCircleAnimation().setColorFilter(context.getColor(R.color.chalk_red));
-
-        animation.start();
-    }
-
-    private void resetAnimation(){
+    private void resetAnimationInhale() {
         // https://stackoverflow.com/questions/45629326/trying-to-reset-values-from-property-animator-to-be-used-in-recycler-view/45700580#45700580
-        animation.cancel();
-        animation.reverse();
-        animation.end();
+        context.getAnimationInhale().cancel();
+        context.getAnimationInhale().reverse();
+        context.getAnimationInhale().end();
     }
 
-    private void stopAnimation(){
-        animation.cancel();
-        animation.end();
+    private void stopAnimationInhale() {
+        context.getAnimationInhale().cancel();
+        context.getAnimationInhale().end();
     }
 
 }

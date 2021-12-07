@@ -7,19 +7,19 @@
     android:background="@drawable/lavender_min_1"
     tools:context=".MainActivity">
 
-
     <!--https://stackoverflow.com/questions/3470420/is-it-possible-to-evenly-distribute-buttons-across-the-width-of-a-linearlayout/3470733#3470733-->
     <!--https://stackoverflow.com/questions/56954471/button-drawable-icon-not-showing/56954619-->
     <!--https://material.io/components/buttons/android#using-buttons-->
 
     <ImageView
         android:id="@+id/family_menu_img"
-        android:layout_width="197dp"
-        android:layout_height="185dp"
+        android:layout_width="189dp"
+        android:layout_height="172dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.484"
         app:srcCompat="@drawable/family_image_vector_min_1"
         tools:ignore="ContentDescription" />
 
@@ -34,12 +34,12 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.881">
+        app:layout_constraintVertical_bias="0.916">
 
         <Button
             android:id="@+id/btnChildren"
             android:layout_width="250sp"
-            android:layout_height="60sp"
+            android:layout_height="55sp"
             android:text="@string/children_button"
             app:icon="@drawable/children_icon"
             tools:ignore="TextContrastCheck" />
@@ -52,7 +52,7 @@
         <Button
             android:id="@+id/btnFlipCoin"
             android:layout_width="250sp"
-            android:layout_height="60sp"
+            android:layout_height="55sp"
             android:text="@string/flip_coin_button"
             app:icon="@drawable/coin_flip_icon"
             tools:ignore="TextContrastCheck" />
@@ -65,7 +65,7 @@
         <Button
             android:id="@+id/btnTimeout"
             android:layout_width="250sp"
-            android:layout_height="60sp"
+            android:layout_height="55sp"
             android:text="@string/timeout_button"
             app:icon="@drawable/timer_icon_filled"
             tools:ignore="TextContrastCheck" />
@@ -78,7 +78,7 @@
         <Button
             android:id="@+id/btnTask"
             android:layout_width="250sp"
-            android:layout_height="60sp"
+            android:layout_height="55sp"
             android:text="@string/tasks_button_name"
             app:icon="@drawable/task_icon"
             tools:ignore="TextContrastCheck" />
@@ -91,7 +91,7 @@
         <Button
             android:id="@+id/btnBreathe"
             android:layout_width="250sp"
-            android:layout_height="60sp"
+            android:layout_height="55sp"
             android:text="@string/breathe_btn_text"
             app:icon="@drawable/breathe_air_icon"
             tools:ignore="TextContrastCheck" />
@@ -104,11 +104,10 @@
         <Button
             android:id="@+id/btnHelp"
             android:layout_width="250sp"
-            android:layout_height="60sp"
+            android:layout_height="55sp"
             android:text="@string/help_button"
             app:icon="@drawable/help_icon"
             tools:ignore="TextContrastCheck" />
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
