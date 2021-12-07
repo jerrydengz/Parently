@@ -49,7 +49,6 @@ public class BreatheActivity extends AppCompatActivity {
     private final String APP_PREFS = "ParentApp";
     private final String NUM_CHOSEN_BREATHS = "NumChosenBreaths - BreatheActivity.java";
 
-    // TODO - turn into enum?
     private final long TEN_SECONDS_IN_MILLISECONDS = 10000;
     private final double ANIMATION_RATE = 2.5;
     private final float ANIMATION_SCALE_RANGE_MIN = 1f;
