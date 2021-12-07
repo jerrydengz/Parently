@@ -19,6 +19,8 @@ public class InhaleState extends BreatheState {
     private final Runnable timerRunnableThreeSeconds = this::handleThreeSecsPassed;
     private final Runnable timerRunnableTenSeconds = this::handleTenSecsPassed;
     private boolean hasHeldThreeSecs = false;
+
+    // Ref https://developer.android.com/reference/android/media/MediaPlayer
     private MediaPlayer currentSound;
 
     public InhaleState(BreatheActivity context) {
