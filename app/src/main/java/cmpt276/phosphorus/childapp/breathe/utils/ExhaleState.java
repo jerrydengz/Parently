@@ -2,6 +2,7 @@ package cmpt276.phosphorus.childapp.breathe.utils;
 
 import android.media.MediaPlayer;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.io.IOException;
 
@@ -35,7 +36,9 @@ public class ExhaleState extends BreatheState {
         context.getTimerHandler().postDelayed(timerRunnableThreeSeconds, THREE_SECONDS);
         context.getTimerHandler().postDelayed(timerRunnableTenSeconds, TEN_SECONDS);
 
-        // TODO (jack) - update guide text
+        TextView guideMessage = context.findViewById(R.id.guideMessage);
+        guideMessage.setText(R.string.guide_exhale);
+
         currentSound.start();
 
         context.getIvCircle().setColorFilter(context.getColor(R.color.chalk_red_var));
@@ -51,18 +54,21 @@ public class ExhaleState extends BreatheState {
     private void updateBreathesLeft() {
         Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
         btnBreatheState.setEnabled(true);
+        TextView guideMessage = context.findViewById(R.id.guideMessage);
 
         context.setRemainingBreaths(context.getRemainingBreaths() - 1);
         context.getTvRemainingBreaths().setText(context.getString(R.string.remaining_breaths_text, context.getRemainingBreaths()));
 
         if (context.getRemainingBreaths() > 0) {
-            // TODO (jack) - update guide text
+            guideMessage.setText(R.string.guide_message);
             btnBreatheState.setText(R.string.breathe_state_in);
+
             context.setState(context.getInhaleState());
             btnBreatheState.setOnClickListener(view -> this.stopSound());
         } else {
-            // TODO (jack) - update guide text
+            guideMessage.setText(R.string.guide_complete);
             btnBreatheState.setText(R.string.breathe_state_finished);
+
             btnBreatheState.setOnClickListener(view -> {
                 this.stopSound();
                 stopAnimationExhale();
@@ -73,7 +79,6 @@ public class ExhaleState extends BreatheState {
 
     private void handleTenSecsPassed() {
         stopSound();
-
         stopAnimationExhale();
 
         // TODO - visual marker, remove when done
