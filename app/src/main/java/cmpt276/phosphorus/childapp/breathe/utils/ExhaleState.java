@@ -42,15 +42,6 @@ public class ExhaleState extends BreatheState {
         context.getAnimationExhale().start();
     }
 
-    private void stopSound(){
-        try {
-            currentSound.stop();
-            currentSound.prepare();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void updateBreathesLeft() {
         Button btnBreatheState = context.findViewById(R.id.btnBreatheState);
         btnBreatheState.setEnabled(true);
@@ -85,5 +76,14 @@ public class ExhaleState extends BreatheState {
     private void stopAnimationExhale() {
         context.getAnimationExhale().cancel();
         context.getAnimationExhale().end();
+    }
+
+    private void stopSound(){
+        try {
+            currentSound.stop();
+            currentSound.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
