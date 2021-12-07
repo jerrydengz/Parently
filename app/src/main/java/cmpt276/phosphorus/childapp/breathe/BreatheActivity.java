@@ -99,6 +99,12 @@ public class BreatheActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 
+    @Override
+    protected void onStop () {
+        super.onStop();
+        exhaleState.handleOnQuit();
+    }
+
     private void setUpNumBreathsBtn() {
         TextView tvNumBreathesChosen = findViewById(R.id.numBreathesChosen);
         tvNumBreathesChosen.setText(getString(

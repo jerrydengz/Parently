@@ -43,8 +43,9 @@ public class ExhaleState extends BreatheState {
     }
 
     @Override
-    public void handleExit() {
-        super.handleExit();
+    public void handleOnQuit() {
+        super.handleOnQuit();
+        this.stopSound();
     }
 
     private void updateBreathesLeft() {
@@ -52,8 +53,7 @@ public class ExhaleState extends BreatheState {
         btnBreatheState.setEnabled(true);
 
         context.setRemainingBreaths(context.getRemainingBreaths() - 1);
-        context.getTvRemainingBreaths().setText(
-                context.getString(R.string.remaining_breaths_text, context.getRemainingBreaths()));
+        context.getTvRemainingBreaths().setText(context.getString(R.string.remaining_breaths_text, context.getRemainingBreaths()));
 
         if (context.getRemainingBreaths() > 0) {
             // TODO (jack) - update guide text

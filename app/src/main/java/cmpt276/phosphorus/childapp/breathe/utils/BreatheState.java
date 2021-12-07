@@ -22,5 +22,6 @@ public abstract class BreatheState {
     public void handleExit(){}
     public void handleOnTouch(){}
     public void handleOnRelease(){}
+    public void handleOnQuit(){}
 
 }
