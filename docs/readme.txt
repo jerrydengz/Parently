@@ -1,3 +1,6 @@
+Parently
+- an android parenting app to help parents manage their children
+
 Cautions:
 =========
 * Make sure animations are enabled on your testing device, coin flip will not properly work w/o them
