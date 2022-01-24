@@ -1,19 +1,17 @@
-Parently
-- an android parenting app to help parents manage their children
+# Parently
+- an Android parenting app to help parents easily manage their children
+- features tools such as coin flips, timers, and turn-based tasks systems to make sure you won't have a hard time dealing with many kids!
 
-Cautions:
-=========
+### Cautions:
 * Make sure animations are enabled on your testing device, coin flip will not properly work w/o them
 * Make sure you properly sync your gradle for our custom imports. If either GSON or konfetti error, refresh.
   We've found just commenting out a "implementation ...", and then un-commenting it to trigger a sync works
 
-Style Guide Reference:
-======================
+### Style Guide Reference:
 - based off Twitter's style guide + modifications based on the Team's preference
 - https://github.com/twitter-archive/commons/blob/master/src/java/com/twitter/common/styleguide.md
 
-Style Guide Modification Off Twitter Style Guide:
-=========================
+### Style Guide Modification Off Twitter Style Guide:
 1. Okay to use tabs for spacing. Android studio converts tabs to spaces, so it's interchangeable.
 2. For chained method calls, should separate them on new lines if there are 3 or more of them
 
@@ -30,8 +28,7 @@ Style Guide Modification Off Twitter Style Guide:
 4. Add `this.` for class fields to make distinction between local variables and class fields
 5. Use camelCase for R.id tag's and snake_case for R.string tag's
 
-Resource Ref:
-=============
+### Resource Ref:
 - Coin sides: https://en.wikipedia.org/wiki/Quarter_(Canadian_coin)
 - Coin Flip sound: https://www.youtube.com/watch?v=Hy7DORHmiKY
 - Victory sound: https://www.youtube.com/watch?v=lcJH8JtgZoE
